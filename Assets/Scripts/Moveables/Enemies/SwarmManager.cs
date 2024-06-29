@@ -1,0 +1,72 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class SwarmManager : MonoBehaviour {
+    public List<Enemy> zombies;
+    public GameObject mainTarget;
+    private GameObject _target;
+
+    #region Unity Methods
+    private void Start() {
+        _target = mainTarget;
+        
+        // Start coroutine for targeting
+        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
+    }
+    
+    #endregion
+    
+    #region Class Public Methods
+    
+    public void Subscribe(Enemy zombie) {
+        zombie.SetTarget(_target);
+        zombies.Add(zombie);
+    }
+
+    public void Unsubscribe(Enemy zombie) {
+        zombies.Remove(zombie);
+    }
+    
+    #endregion
+    
+    #region Class Private Emthods
+    
+    private void UpdateTarget() {
+        Enemy leader = zombies.FirstOrDefault();
+
+        if (leader == null) {
+            Destroy(gameObject);
+            return;
+        }
+        
+        if (_target && _target != mainTarget) {
+            return;
+        }
+        int maxColliders = 100;
+        Collider[] hitColliders = new Collider[maxColliders];
+        int numColliders = Physics.OverlapSphereNonAlloc(leader.transform.position, leader.perceptionRange, hitColliders);
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+        
+        for (int i = 0; i < numColliders; i++) {
+            Collider enemy = hitColliders[i];
+            
+            if (enemy.CompareTag(leader.enemyTag)) {
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            
+                if (distanceToEnemy < shortestDistance) {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy.gameObject;
+                }
+            }
+        }
+        _target = nearestEnemy;
+
+        foreach (Enemy zombie in zombies) {
+            zombie.SetTarget(_target);
+        }
+    }
+    
+    #endregion
+}
