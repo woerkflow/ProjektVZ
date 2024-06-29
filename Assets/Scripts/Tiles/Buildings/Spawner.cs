@@ -6,9 +6,10 @@ public class Spawner : MonoBehaviour {
     public GameObject[] spawnPrefabs;
     public Transform[] spawnPoints;
     public float spawnTime;
-    public List<GameObject> spawns = new List<GameObject>();
+    public List<GameObject> spawns;
     
     private void Start() {
+        spawns = new List<GameObject>();
         InvokeRepeating(nameof(Spawn), 0f, spawnTime);
     }
     

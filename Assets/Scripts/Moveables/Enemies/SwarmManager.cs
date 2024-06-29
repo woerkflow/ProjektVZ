@@ -8,6 +8,7 @@ public class SwarmManager : MonoBehaviour {
     private GameObject _target;
 
     #region Unity Methods
+    
     private void Start() {
         _target = mainTarget;
         
@@ -17,7 +18,7 @@ public class SwarmManager : MonoBehaviour {
     
     #endregion
     
-    #region Class Public Methods
+    #region Zombie Subscription
     
     public void Subscribe(Enemy zombie) {
         zombie.SetTarget(_target);
@@ -30,7 +31,7 @@ public class SwarmManager : MonoBehaviour {
     
     #endregion
     
-    #region Class Private Emthods
+    #region Zombie Targeting
     
     private void UpdateTarget() {
         Enemy leader = zombies.FirstOrDefault();
