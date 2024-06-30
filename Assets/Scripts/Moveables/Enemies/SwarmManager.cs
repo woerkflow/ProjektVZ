@@ -20,12 +20,12 @@ public class SwarmManager : MonoBehaviour {
     
     #region Zombie Subscription
     
-    public void Subscribe(Enemy zombie) {
+    public void Join(Enemy zombie) {
         zombie.SetTarget(_target);
         zombies.Add(zombie);
     }
 
-    public void Unsubscribe(Enemy zombie) {
+    public void Leave(Enemy zombie) {
         zombies.Remove(zombie);
     }
     

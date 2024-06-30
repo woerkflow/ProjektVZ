@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour {
     private void DestroyEnemy() {
         if (_pool != null) {
             _animator.SetFloat(walkParameter, 0f);
-            swarmManager.Unsubscribe(this);
+            swarmManager.Leave(this);
             _pool.Release(this);
         } else {
             Destroy(gameObject);

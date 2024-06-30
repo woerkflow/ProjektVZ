@@ -17,6 +17,7 @@ public class EnemySpawner : MonoBehaviour {
     public Camera userCamera;
     public Canvas timer;
     public TMP_Text timerText;
+    public TMP_Text amountText;
     
     // Object pool
     private ObjectPool<Enemy> _pool;
@@ -25,6 +26,7 @@ public class EnemySpawner : MonoBehaviour {
     private float _buildCountDown;
     private string _state;
     private Transform _currentSpawnPoint;
+    private int _currentEnemyAmount;
     private List<SwarmManager> _swarmManagers;
     
     
@@ -45,6 +47,7 @@ public class EnemySpawner : MonoBehaviour {
         _state = "Build";
         _buildCountDown = 10f;
         _currentSpawnPoint = spawnPoints[0];
+        _currentEnemyAmount = 10;
         ActivateTimer();
     }
     
@@ -57,13 +60,12 @@ public class EnemySpawner : MonoBehaviour {
                 // Set build timer
                 _buildCountDown -= Time.deltaTime;
                 _buildCountDown = Mathf.Clamp(_buildCountDown, 0f, Mathf.Infinity);
-                RefreshTimer(_buildCountDown);
+                RefreshTimer();
                 RotateTimerToCamera();
                 return;
             }
-            // Spawn randomly amount of enemies
-            int enemyAmount = Random.Range(1, maxEnemyAmount);
-            StartCoroutine(SpawnWave(enemyAmount));
+            // Spawn enemies
+            StartCoroutine(SpawnWave(_currentEnemyAmount));
             
             // Start fighting phase
             DeactivateTimer();
@@ -78,6 +80,9 @@ public class EnemySpawner : MonoBehaviour {
             }
             // Choose randomly spawn point
             _currentSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            
+            // Get randomly amount of enemies
+            _currentEnemyAmount = Random.Range(1, maxEnemyAmount);
             
             // Start building phase
             _buildCountDown = maxCountDown;
@@ -132,8 +137,8 @@ public class EnemySpawner : MonoBehaviour {
         for (var i = 0; i < enemyAmount; i++) {
             Enemy zombie = _pool.Get();
             zombie.swarmManager = swarmManager;
-            swarmManager.Subscribe(zombie);
-            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+            swarmManager.Join(zombie);
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         }
     }
     
@@ -143,19 +148,23 @@ public class EnemySpawner : MonoBehaviour {
     #region Timer
 
     private void ActivateTimer() {
+        
+        // Translate timer to spawn point & rotate it to the user camera
         Vector3 direction = _currentSpawnPoint.position - timer.transform.position;
         timer.transform.Translate(new Vector3(direction.x, 0f, direction.z));
         RotateTimerToCamera();
+        
+        amountText.SetText(_currentEnemyAmount.ToString());
         timer.gameObject.SetActive(true);
     }
 
-    private void RefreshTimer(float time) {
-        timerText.SetText(System.TimeSpan.FromSeconds(time).ToString("mm':'ss"));
+    private void RefreshTimer() {
+        timerText.SetText(System.TimeSpan.FromSeconds(_buildCountDown).ToString("mm':'ss"));
     }
 
     private void RotateTimerToCamera() {
         Vector3 direction = timer.transform.position - userCamera.transform.position;
-        timer.transform.rotation = Quaternion.LookRotation(direction);
+        timer.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
 
     private void DeactivateTimer() {
