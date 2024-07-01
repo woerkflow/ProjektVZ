@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
     
-    public GameObject[] spawnPrefabs;
+    public GameObject spawnPrefab;
     public Transform[] spawnPoints;
     public float spawnTime;
     public List<GameObject> spawns;
@@ -22,7 +22,13 @@ public class Spawner : MonoBehaviour {
         if (spawns.Count >= spawnPoints.Length) {
             return;
         }
-        GameObject spawn = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
+        GameObject spawn = spawnPrefab;
+        float randomSize = Random.Range(0.5f, 1f);
+        spawn.transform.localScale = new Vector3(
+            randomSize, 
+            randomSize, 
+            randomSize
+            );
         Transform spawnPoint = spawnPoints[spawns.Count];
         GameObject obj = Instantiate(spawn, spawnPoint.position, spawnPoint.rotation);
         spawns.Add(obj);

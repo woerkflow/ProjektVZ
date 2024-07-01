@@ -168,6 +168,7 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     private void DeactivateTimer() {
+        timer.transform.position = new Vector3(0f, timer.transform.position.y, 0f);
         timer.gameObject.SetActive(false);
     }
     
