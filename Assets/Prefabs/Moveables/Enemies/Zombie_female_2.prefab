@@ -5362,7 +5362,7 @@ MonoBehaviour:
   turnSpeed: 5
   attackSpeed: 2
   damage: 1
-  maxHealth: 1
+  maxHealth: 10
   walkParameter: Walk
   attackParameter: Attack
   dieParameter: Die

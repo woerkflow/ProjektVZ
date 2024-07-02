@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectEffect: {fileID: 1979119369340776124}
+  selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
+    type: 3}
   selectColor: {fileID: 2100000, guid: c1399537a9e153d4dbdc107333889cbd, type: 2}
   standardColor: {fileID: 2100000, guid: 96f93388b5e23a543896c9bedb3f7010, type: 2}
   rend: {fileID: 5861413862589450018}
@@ -347,6 +348,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2570323039501236417, guid: c808dddb85cb0e64086a0d4567f9a52c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.002799999
+      objectReference: {fileID: 0}
     - target: {fileID: 5401690204603387244, guid: c808dddb85cb0e64086a0d4567f9a52c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,17 +403,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9097111065717908584, guid: c808dddb85cb0e64086a0d4567f9a52c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0028
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097111065717908584, guid: c808dddb85cb0e64086a0d4567f9a52c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c808dddb85cb0e64086a0d4567f9a52c, type: 3}
---- !u!1 &1979119369340776124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1346917903996458106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6361226917500492054 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5401690204603387244, guid: c808dddb85cb0e64086a0d4567f9a52c,
