@@ -5,7 +5,13 @@ public class Building : MonoBehaviour {
     [Header("Building")]
     public int maxHealth;
     public GameObject destroyedBuildingPrefab;
+    
+    // Health
     private int _currentHealth;
+    
+    // Parent tile
+    private Tile _parentTile;
+    
     
     #region Unity Methods
 
@@ -15,7 +21,8 @@ public class Building : MonoBehaviour {
     
     #endregion
     
-    #region Public methods
+    
+    #region Public class methods
 
     public void SetHealth(int value) {
         _currentHealth = value;
@@ -28,14 +35,18 @@ public class Building : MonoBehaviour {
     public int GetHealth() {
         return _currentHealth;
     }
+
+    public void SetParentTile(Tile tile) {
+        _parentTile = tile;
+    }
     
     #endregion
     
-    #region Class methods
+    
+    #region Private class methods
 
     private void DestroyBuilding() {
-        Instantiate(destroyedBuildingPrefab, transform.position, transform.rotation);
-        Destroy(gameObject);
+        _parentTile.Destroy(destroyedBuildingPrefab);
     }
     
     #endregion

@@ -131,7 +131,7 @@ public class Enemy : MonoBehaviour {
         
         _targetBuildingComponent = target?.GetComponent<Building>();
         
-        CapsuleCollider targetCapsuleCollider = target?.GetComponentInChildren<CapsuleCollider>();
+        CapsuleCollider targetCapsuleCollider = target?.GetComponent<CapsuleCollider>();
         _targetCapsuleRadius = targetCapsuleCollider
             ? targetCapsuleCollider.radius 
             : 0.01f;

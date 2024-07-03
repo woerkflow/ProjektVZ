@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 4506415319558869479}
   - component: {fileID: 4417343126261770150}
   m_Layer: 0
-  m_Name: EmptyGrass
+  m_Name: ObstaclePlayerHouse
   m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile:
     type: Empty
-    obj: {fileID: 0}
+    obj: {fileID: 4061063016824445286, guid: 3d29ebaf582ca0e429cb43648162d56b, type: 3}
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 5401690204603387244, guid: c808dddb85cb0e64086a0d4567f9a52c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.03813
+      value: 0.0367
       objectReference: {fileID: 0}
     - target: {fileID: 5401690204603387244, guid: c808dddb85cb0e64086a0d4567f9a52c,
         type: 3}

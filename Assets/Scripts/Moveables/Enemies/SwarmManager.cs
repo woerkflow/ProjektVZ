@@ -44,17 +44,17 @@ public class SwarmManager : MonoBehaviour {
         if (_target && _target != mainTarget) {
             return;
         }
-        int maxColliders = 100;
+        int maxColliders = 10;
         Collider[] hitColliders = new Collider[maxColliders];
         int numColliders = Physics.OverlapSphereNonAlloc(leader.transform.position, leader.perceptionRange, hitColliders);
-        float shortestDistance = Mathf.Infinity;
+        float shortestDistance = leader.perceptionRange;
         GameObject nearestEnemy = null;
         
         for (int i = 0; i < numColliders; i++) {
             Collider enemy = hitColliders[i];
             
             if (enemy.CompareTag(leader.enemyTag)) {
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                float distanceToEnemy = Vector3.Distance(leader.transform.position, enemy.transform.position);
             
                 if (distanceToEnemy < shortestDistance) {
                     shortestDistance = distanceToEnemy;
