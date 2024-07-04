@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class Spawnpoint : MonoBehaviour {
+public class SpawnPoint : MonoBehaviour {
+    
+    public float spawnRange;
     
     #region Unity Mehtods
     
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 0.04f);
+        Gizmos.DrawWireSphere(transform.position, spawnRange);
     }
     
     #endregion

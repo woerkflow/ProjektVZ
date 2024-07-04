@@ -4,7 +4,7 @@ public class Building : MonoBehaviour {
     
     [Header("Building")]
     public int maxHealth;
-    public GameObject destroyedBuildingPrefab;
+    public GameObject ruinPrefab;
     
     // Health
     private int _currentHealth;
@@ -28,7 +28,7 @@ public class Building : MonoBehaviour {
         _currentHealth = value;
 
         if (_currentHealth <= 0) {
-            DestroyBuilding();
+            _parentTile.ReplaceObject(Tile.Type.Resource, ruinPrefab);
         }
     }
 
@@ -38,15 +38,6 @@ public class Building : MonoBehaviour {
 
     public void SetParentTile(Tile tile) {
         _parentTile = tile;
-    }
-    
-    #endregion
-    
-    
-    #region Private class methods
-
-    private void DestroyBuilding() {
-        _parentTile.Destroy(destroyedBuildingPrefab);
     }
     
     #endregion
