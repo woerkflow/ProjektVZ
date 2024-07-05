@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -59,7 +58,7 @@ public class EnemySpawner : MonoBehaviour {
         // Initiate state machine
         _swarmManagers = new List<SwarmManager>();
         state = State.Build;
-        _buildCountDown = 10f;
+        _buildCountDown = 30f;
         _currentSpawnPoint = spawnPoints[0];
         _currentEnemyAmount = 10;
         timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
@@ -67,7 +66,7 @@ public class EnemySpawner : MonoBehaviour {
     
     private void Update() {
         
-        if (state == State.Fight) {
+        if (state == State.Build) {
 
             if (_buildCountDown > 0f) {
                 

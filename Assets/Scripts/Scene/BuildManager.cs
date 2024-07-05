@@ -3,12 +3,17 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour {
     
     public static BuildManager Instance;
-    public BuildingBlueprint flameLauncher;
-    public BuildingBlueprint bladeLauncher;
-    public BuildingBlueprint pumpkinSpawner;
-    public BuildingBlueprint fenceObstacle;
     
-    private BuildingBlueprint _selectedBuilding;
+    [Header("Building Blueprints")]
+    public Building flameLauncher;
+    public Building bladeLauncher;
+    public Building pumpkinSpawner;
+    public Building fenceObstacle;
+
+    [Header("Menu")] 
+    public UIMenu buildMenu;
+    
+    private Building _selectedBuilding;
     private Tile _selectedTile;
     
     
@@ -22,7 +27,11 @@ public class BuildManager : MonoBehaviour {
             Instance = this;
         }
     }
-    
+
+    private void Start() {
+        buildMenu.Deactivate();
+    }
+
     #endregion
     
     
@@ -30,6 +39,7 @@ public class BuildManager : MonoBehaviour {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
+        buildMenu.Activate();
     }
     
     #endregion
@@ -39,7 +49,7 @@ public class BuildManager : MonoBehaviour {
     
     private bool canBuild => _selectedBuilding != null;
     
-    private void SelectBuildingToBuild(BuildingBlueprint building) {
+    private void SelectBuildingToBuild(Building building) {
         _selectedBuilding = building;
     }
     
@@ -68,12 +78,12 @@ public class BuildManager : MonoBehaviour {
 
         if (canBuild) {
             _selectedTile.Build(_selectedBuilding);
-            Close();
+            buildMenu.Deactivate();
         }
     }
 
     public void Close() {
-        _selectedTile.CloseMenu();
+        buildMenu.Deactivate();
         _selectedTile = null;
         _selectedBuilding = null;
     }

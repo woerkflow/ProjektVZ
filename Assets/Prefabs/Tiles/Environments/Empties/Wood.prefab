@@ -94,6 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5755044925177780619}
+  - component: {fileID: 1605522303391706060}
   m_Layer: 0
   m_Name: Wood
   m_TagString: Untagged
@@ -117,3 +118,21 @@ Transform:
   - {fileID: 4156057540470536173}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1605522303391706060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610112922642875445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b981d4c36ac19b4c8225d9a8d51997a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueprint:
+    type: 0
+    prefab: {fileID: 6610112922642875445}
+    resourceWood: 0
+    resourceWaste: 0
+    resourceWhiskey: 0

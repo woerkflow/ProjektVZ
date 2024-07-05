@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Building : MonoBehaviour {
+public class Building : TileObject {
     
     [Header("Building")]
     public int maxHealth;
-    public GameObject ruinPrefab;
+    public TileObject ruin;
     
     // Health
     private int _currentHealth;
@@ -28,7 +28,7 @@ public class Building : MonoBehaviour {
         _currentHealth = value;
 
         if (_currentHealth <= 0) {
-            _parentTile.ReplaceObject(Tile.Type.Resource, ruinPrefab);
+            _parentTile.ReplaceObject(ruin);
         }
     }
 

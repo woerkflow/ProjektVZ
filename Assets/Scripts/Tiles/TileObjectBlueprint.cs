@@ -1,11 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
-public class TileBlueprint {
+public class TileObjectBlueprint {
     
     public Tile.Type type;
-    public GameObject obj;
+    public GameObject prefab;
     public int resourceWood;
     public int resourceWaste;
     public int resourceWhiskey;

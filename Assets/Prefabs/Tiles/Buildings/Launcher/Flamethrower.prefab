@@ -220,9 +220,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blueprint:
+    type: 1
+    prefab: {fileID: 7407422453547077386}
+    resourceWood: 0
+    resourceWaste: 0
+    resourceWhiskey: 0
   maxHealth: 50
-  destroyedBuildingPrefab: {fileID: 1897936333670252998, guid: d609da79c2ac1e842b3e72ebffa86571,
-    type: 3}
+  ruin:
+    type: 0
+    prefab: {fileID: 0}
+    resourceWood: 0
+    resourceWaste: 0
+    resourceWhiskey: 0
 --- !u!114 &4642131767922159957
 MonoBehaviour:
   m_ObjectHideFlags: 0

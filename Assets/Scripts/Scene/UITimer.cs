@@ -12,8 +12,11 @@ public class UITimer : MonoBehaviour {
     public void ActivateTimer(Transform currentSpawnPoint, int currentEnemyAmount) {
         
         // Translate timer to spawn point & rotate it to the user camera
-        Vector3 direction = currentSpawnPoint.position - transform.position;
-        transform.Translate(new Vector3(direction.x, 0f, direction.z));
+        transform.position = new Vector3(
+            currentSpawnPoint.position.x,
+            transform.position.y,
+            currentSpawnPoint.position.z
+        );
         
         // Rotate timer
         RotateTimerToCamera();
@@ -37,7 +40,11 @@ public class UITimer : MonoBehaviour {
     public void DeactivateTimer() {
         
         // Reset position
-        transform.position = new Vector3(0f, transform.position.y, 0f);
+        transform.position = new Vector3(
+            0f,
+            transform.position.y,
+            0f
+        );
         
         // Set inactive
         gameObject.SetActive(false);

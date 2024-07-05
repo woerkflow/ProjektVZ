@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 4506415319558869479}
   - component: {fileID: 4417343126261770150}
   m_Layer: 0
-  m_Name: EmptyGrass
+  m_Name: Tile
   m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,12 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile:
-    type: Empty
-    obj: {fileID: 0}
-    resourceWood: 0
-    resourceWaste: 0
-    resourceWhiskey: 0
+  tileObject: {fileID: 7011444188280615907, guid: 3bfb98c423a9fb549b4b93b60feba27c,
+    type: 3}
   spawnPoint: {fileID: 5362550174723985197}
   selectEffect: {fileID: 9196053881767803094}
 --- !u!1001 &8527841246774510096
