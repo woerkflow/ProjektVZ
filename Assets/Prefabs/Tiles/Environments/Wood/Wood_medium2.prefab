@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4255821212691055687}
   - component: {fileID: 2441104791664193355}
   m_Layer: 0
-  m_Name: Wood2
+  m_Name: Wood_medium2
   m_TagString: Resource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   blueprint:
     type: 2
     prefab: {fileID: 7266769124286350973}
+    timeCosts: 10
     resourceWood: 100
     resourceWaste: 0
     resourceWhiskey: 0

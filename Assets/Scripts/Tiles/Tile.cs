@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class Tile : MonoBehaviour
-{
+public class Tile : MonoBehaviour {
 
     [Header("Tile")] 
     public TileObject tileObject;
     public GameObject spawnPoint;
     public GameObject selectEffect;
+    public TileObject[] randomObjects;
+    public bool isBlocked;
     
     [HideInInspector]
     public int ResourceWood { get; set; }
@@ -33,19 +34,15 @@ public class Tile : MonoBehaviour
     #region Unity methods
     
     public void Start() {
-        _tileType = tileObject.blueprint.type;
-        ResourceWood = tileObject.blueprint.resourceWood;
-        ResourceWaste = tileObject.blueprint.resourceWaste;
-        ResourceWhiskey = tileObject.blueprint.resourceWhiskey;
-        
-        if (tileObject.blueprint.prefab == null) {
-            return;
-        }
-        _objectRotation = spawnPoint.transform.rotation;
-        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
         _buildManager = BuildManager.Instance;
         _farmManager = FarmManager.Instance;
         _enemySpawner = EnemySpawner.Instance;
+        _objectRotation = spawnPoint.transform.rotation;
+
+        if (!isBlocked) {
+            tileObject = GetRandomObject();
+        }
+        ReplaceObject(tileObject);
     }
 
     public void OnMouseEnter() {
@@ -106,11 +103,23 @@ public class Tile : MonoBehaviour
             return;
         }
         tileObject = newObject;
+        TransformTile(tileObject);
+        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, _objectRotation);
+    }
+    
+    #endregion
+    
+    #region Private class Methods
+
+    private void TransformTile(TileObject tileObject) {
         _tileType = tileObject.blueprint.type;
         ResourceWaste += tileObject.blueprint.resourceWaste;
         ResourceWood += tileObject.blueprint.resourceWood;
         ResourceWhiskey += tileObject.blueprint.resourceWhiskey;
-        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, _objectRotation);
+    }
+
+    private TileObject GetRandomObject() {
+        return randomObjects[Random.Range(0, randomObjects.Length)];
     }
     
     #endregion

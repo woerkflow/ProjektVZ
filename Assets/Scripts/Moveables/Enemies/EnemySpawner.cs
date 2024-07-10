@@ -26,12 +26,14 @@ public class EnemySpawner : MonoBehaviour {
         Fight
     }
     
-    [HideInInspector] public State state { get; private set; }
+    [HideInInspector] 
+    public State state { get; private set; }
     
     private float _buildCountDown;
     private SpawnPoint _currentSpawnPoint;
     private int _currentEnemyAmount;
     private List<SwarmManager> _swarmManagers;
+    private bool _isActive;
     
     
     #region Unity Methods
@@ -61,12 +63,17 @@ public class EnemySpawner : MonoBehaviour {
         _buildCountDown = 30f;
         _currentSpawnPoint = spawnPoints[0];
         _currentEnemyAmount = 10;
+        SetActive(false);
         timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
     }
     
     private void Update() {
         
         if (state == State.Build) {
+
+            if (!_isActive) {
+                return;
+            }
 
             if (_buildCountDown > 0f) {
                 
@@ -99,6 +106,7 @@ public class EnemySpawner : MonoBehaviour {
             // Start building phase
             _buildCountDown = maxCountDown;
             timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
+            SetActive(false);
             state = State.Build;
         }
     }
@@ -114,6 +122,10 @@ public class EnemySpawner : MonoBehaviour {
     public void SetTimer(float newTime) {
         _buildCountDown = newTime;
         timer.RefreshTimer(_buildCountDown);
+    }
+
+    public void SetActive(bool value) {
+        _isActive = value;
     }
     
     #endregion

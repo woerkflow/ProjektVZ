@@ -72,18 +72,21 @@ public class FarmManager : MonoBehaviour {
     public void Farm() {
 
         if (CanFarm()) {
+            
             if (_selectedTile.ResourceWood > 0) {
                 _playerManager.SetResourceWood(
                     _playerManager.GetResourceWood() + _selectedTile.ResourceWood
                 );
                 _selectedTile.ResourceWood = 0;
             }
+            
             if (_selectedTile.ResourceWaste > 0) {
                 _playerManager.SetResourceWaste(
                     _playerManager.GetResourceWaste() + _selectedTile.ResourceWaste
                 );
                 _selectedTile.ResourceWaste = 0;
             }
+            
             if (_selectedTile.ResourceWhiskey > 0) {
                 _playerManager.SetResourceWhiskey(
                     _playerManager.GetResourceWhiskey() + _selectedTile.ResourceWhiskey
@@ -93,9 +96,7 @@ public class FarmManager : MonoBehaviour {
             _enemySpawner.SetTimer(
                 _enemySpawner.GetTime() - _selectedTile.tileObject.blueprint.timeCosts
             );
-            
             _selectedTile.ReplaceObject(null);
-            
             Close();
         }
     }

@@ -381,6 +381,12 @@ MonoBehaviour:
     type: 3}
   spawnPoint: {fileID: 5362550174723985197}
   selectEffect: {fileID: 9196053881767803094}
+  randomObjects:
+  - {fileID: 5242010435094883783, guid: 6eb0d5bf66a369e47baec02a7e97e3a7, type: 3}
+  - {fileID: 2441104791664193355, guid: 7323a92a626f59a479b1998a85264f1f, type: 3}
+  - {fileID: 1170577978572592442, guid: 33528e100d52d884a831c3c984d65f11, type: 3}
+  - {fileID: 8824301914423260603, guid: 21f2c33978091a14391a0b34de6d400f, type: 3}
+  - {fileID: 1605522303391706060, guid: ab1f2860d9c15184a829d6601e00901d, type: 3}
 --- !u!1001 &8527841246774510096
 PrefabInstance:
   m_ObjectHideFlags: 0
