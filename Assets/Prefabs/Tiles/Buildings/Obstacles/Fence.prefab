@@ -189,8 +189,9 @@ MonoBehaviour:
   blueprint:
     type: 1
     prefab: {fileID: 5132727365380226385}
+    timeCosts: 0
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
   maxHealth: 50
-  ruinPrefab: {fileID: 0}
+  ruin: {fileID: 7011444188280615907, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}

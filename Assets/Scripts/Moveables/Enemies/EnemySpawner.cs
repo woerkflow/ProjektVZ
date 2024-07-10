@@ -105,6 +105,19 @@ public class EnemySpawner : MonoBehaviour {
     
     #endregion
     
+    #region Timer Methods
+
+    public float GetTime() {
+        return _buildCountDown;
+    }
+
+    public void SetTimer(float newTime) {
+        _buildCountDown = newTime;
+        timer.RefreshTimer(_buildCountDown);
+    }
+    
+    #endregion
+    
     
     #region Object Pooling
     

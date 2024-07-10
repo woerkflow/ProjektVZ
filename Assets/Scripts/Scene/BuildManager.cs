@@ -4,16 +4,17 @@ public class BuildManager : MonoBehaviour {
     
     public static BuildManager Instance;
     
-    [Header("Building Blueprints")]
+    [Header("Buildings")]
     public Building flameLauncher;
     public Building bladeLauncher;
     public Building pumpkinSpawner;
     public Building fenceObstacle;
 
-    [Header("Menu")] 
+    [Header("Menu")]
     public UIMenu buildMenu;
     
     private Building _selectedBuilding;
+    private PlayerManager _playerManager;
     private Tile _selectedTile;
     
     
@@ -29,6 +30,7 @@ public class BuildManager : MonoBehaviour {
     }
 
     private void Start() {
+        _playerManager = PlayerManager.Instance;
         buildMenu.Deactivate();
     }
 
@@ -46,8 +48,14 @@ public class BuildManager : MonoBehaviour {
     
     
     #region Private class methods
-    
-    private bool canBuild => _selectedBuilding != null;
+
+    private bool CanBuild() {
+        
+        return _selectedBuilding != null
+               && _playerManager.GetResourceWood() >= _selectedBuilding.blueprint.resourceWood
+               && _playerManager.GetResourceWaste() >= _selectedBuilding.blueprint.resourceWaste
+               && _playerManager.GetResourceWhiskey() >= _selectedBuilding.blueprint.resourceWhiskey;
+    }
     
     private void SelectBuildingToBuild(Building building) {
         _selectedBuilding = building;
@@ -76,10 +84,38 @@ public class BuildManager : MonoBehaviour {
 
     public void Build() {
 
-        if (canBuild) {
+        if (CanBuild()) {
+
+            // Take resources from the player
+            _playerManager.SetResourceWood(
+                _playerManager.GetResourceWood() - _selectedBuilding.blueprint.resourceWood
+            );
+            _playerManager.SetResourceWaste(
+                _playerManager.GetResourceWaste() - _selectedBuilding.blueprint.resourceWaste
+            );
+            _playerManager.SetResourceWhiskey(
+                _playerManager.GetResourceWhiskey() - _selectedBuilding.blueprint.resourceWhiskey
+            );
+
+            // Give resources to the tile
+            _selectedTile.ResourceWood += _selectedBuilding.blueprint.resourceWood;
+            _selectedTile.ResourceWaste += _selectedBuilding.blueprint.resourceWaste;
+            _selectedTile.ResourceWhiskey += _selectedBuilding.blueprint.resourceWhiskey;
+            
+            // Build building
             _selectedTile.Build(_selectedBuilding);
-            buildMenu.Deactivate();
+            
+            // Close menu
+            Close();
         }
+    }
+
+    public void RotateClockwise() {
+        _selectedTile.RotateObject(90f);
+    }
+
+    public void RotateCounterClockwise() {
+        _selectedTile.RotateObject(-90f);
     }
 
     public void Close() {

@@ -1,11 +1,17 @@
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
-    
-    [Header("Tile")]
+public class Tile : MonoBehaviour
+{
+
+    [Header("Tile")] 
     public TileObject tileObject;
     public GameObject spawnPoint;
     public GameObject selectEffect;
+    
+    [HideInInspector]
+    public int ResourceWood { get; set; }
+    public int ResourceWaste { get; set; }
+    public int ResourceWhiskey { get; set; }
     
     public enum Type {
         Empty,
@@ -15,29 +21,31 @@ public class Tile : MonoBehaviour {
     
     // Tile
     private GameObject _tileObject;
+    private Quaternion _objectRotation;
     private Type _tileType;
-    private int _resourceWood;
-    private int _resourceWaste;
-    private int _resourceWhiskey;
     
     // Common
     private BuildManager _buildManager;
+    private FarmManager _farmManager;
     private EnemySpawner _enemySpawner;
+    
     
     #region Unity methods
     
     public void Start() {
-        _buildManager = BuildManager.Instance;
-        _enemySpawner = EnemySpawner.Instance;
-        
         _tileType = tileObject.blueprint.type;
-        _resourceWood = tileObject.blueprint.resourceWood;
-        _resourceWaste = tileObject.blueprint.resourceWaste;
-        _resourceWhiskey = tileObject.blueprint.resourceWhiskey;
+        ResourceWood = tileObject.blueprint.resourceWood;
+        ResourceWaste = tileObject.blueprint.resourceWaste;
+        ResourceWhiskey = tileObject.blueprint.resourceWhiskey;
         
-        if (tileObject.blueprint.prefab != null) {
-            _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        if (tileObject.blueprint.prefab == null) {
+            return;
         }
+        _objectRotation = spawnPoint.transform.rotation;
+        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        _buildManager = BuildManager.Instance;
+        _farmManager = FarmManager.Instance;
+        _enemySpawner = EnemySpawner.Instance;
     }
 
     public void OnMouseEnter() {
@@ -45,11 +53,22 @@ public class Tile : MonoBehaviour {
     }
 
     public void OnMouseDown() {
-
+        
         if (_enemySpawner.state == EnemySpawner.State.Fight) {
             return;
         }
-        _buildManager.SelectTile(gameObject.GetComponent<Tile>());
+        
+        switch (_tileType) {
+            case Type.Empty:
+                _buildManager.SelectTile(gameObject.GetComponent<Tile>());
+                break;
+            case Type.Resource:
+                _farmManager.SelectTile(gameObject.GetComponent<Tile>());
+                break;
+            case Type.Building:
+                // Todo: Implement upgrade manager  
+                break;
+        }
     }
 
     public void OnMouseExit() {
@@ -71,14 +90,11 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    public void Repair() {
-        
+    public void RotateObject(float value) {
+        Vector3 objectRotationEuler = Quaternion.Normalize(_objectRotation).eulerAngles;
+        _objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
     }
-
-    public void Collect() {
-        
-    }
-
+    
     public void ReplaceObject(TileObject newObject) {
 
         if (_tileObject != null) {
@@ -86,14 +102,15 @@ public class Tile : MonoBehaviour {
         }
 
         if (newObject == null) {
+            _tileType = Type.Empty;
             return;
         }
         tileObject = newObject;
         _tileType = tileObject.blueprint.type;
-        _resourceWaste += tileObject.blueprint.resourceWaste;
-        _resourceWood += tileObject.blueprint.resourceWood;
-        _resourceWhiskey += tileObject.blueprint.resourceWhiskey;
-        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        ResourceWaste += tileObject.blueprint.resourceWaste;
+        ResourceWood += tileObject.blueprint.resourceWood;
+        ResourceWhiskey += tileObject.blueprint.resourceWhiskey;
+        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, _objectRotation);
     }
     
     #endregion

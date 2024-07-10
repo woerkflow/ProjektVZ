@@ -168,16 +168,12 @@ MonoBehaviour:
   blueprint:
     type: 1
     prefab: {fileID: 3107079855565471411}
+    timeCosts: 0
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
   maxHealth: 25
-  ruin:
-    type: 0
-    prefab: {fileID: 0}
-    resourceWood: 0
-    resourceWaste: 0
-    resourceWhiskey: 0
+  ruin: {fileID: 7011444188280615907, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
 --- !u!114 &7807359902068598578
 MonoBehaviour:
   m_ObjectHideFlags: 0
