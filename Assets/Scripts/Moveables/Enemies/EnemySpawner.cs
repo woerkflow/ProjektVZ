@@ -72,6 +72,7 @@ public class EnemySpawner : MonoBehaviour {
         if (state == State.Build) {
 
             if (!_isActive) {
+                timer.RefreshTimer(_buildCountDown);
                 return;
             }
 
@@ -83,6 +84,7 @@ public class EnemySpawner : MonoBehaviour {
                 timer.RefreshTimer(_buildCountDown);
                 return;
             }
+            
             // Spawn enemies
             StartCoroutine(SpawnWave(_currentEnemyAmount));
             
@@ -112,6 +114,7 @@ public class EnemySpawner : MonoBehaviour {
     }
     
     #endregion
+    
     
     #region Timer Methods
 

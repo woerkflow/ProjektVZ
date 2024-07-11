@@ -41,6 +41,7 @@ public class Tile : MonoBehaviour {
 
         if (!isBlocked) {
             tileObject = GetRandomObject();
+            _objectRotation = GetRandomRotation();
         }
         ReplaceObject(tileObject);
     }
@@ -109,6 +110,7 @@ public class Tile : MonoBehaviour {
     
     #endregion
     
+    
     #region Private class Methods
 
     private void TransformTile(TileObject tileObject) {
@@ -120,6 +122,11 @@ public class Tile : MonoBehaviour {
 
     private TileObject GetRandomObject() {
         return randomObjects[Random.Range(0, randomObjects.Length)];
+    }
+
+    private Quaternion GetRandomRotation() {
+        float randomDegrees = Random.Range(0, 4) * 90f;
+        return Quaternion.Euler(0f, randomDegrees, 0f);
     }
     
     #endregion
