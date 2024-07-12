@@ -5,6 +5,9 @@ public class FarmManager : MonoBehaviour {
     
     public static FarmManager Instance;
 
+    [Header("Tile")] 
+    public TileObject empty;
+
     [Header("Timer")] 
     public UITimer timer;
     
@@ -96,7 +99,7 @@ public class FarmManager : MonoBehaviour {
             _enemySpawner.SetTimer(
                 _enemySpawner.GetTime() - _selectedTile.tileObject.blueprint.timeCosts
             );
-            _selectedTile.ReplaceObject(null);
+            _selectedTile.ReplaceObject(empty);
             Close();
         }
     }

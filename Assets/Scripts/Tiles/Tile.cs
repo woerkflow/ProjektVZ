@@ -79,13 +79,7 @@ public class Tile : MonoBehaviour {
     #region Public class methods
 
     public void Build(Building buildingToBuild) {
-        
-        // Replace object
         ReplaceObject(buildingToBuild);
-
-        if (buildingToBuild != null) {
-            buildingToBuild.SetParentTile(this);
-        }
     }
 
     public void RotateObject(float value) {
@@ -100,12 +94,32 @@ public class Tile : MonoBehaviour {
         }
 
         if (newObject == null) {
-            _tileType = Type.Empty;
+            
+            TransformTile(
+                Type.Empty,
+                0,
+                0,
+                0
+            );
             return;
         }
         tileObject = newObject;
-        TransformTile(tileObject);
-        _tileObject = Instantiate(tileObject.blueprint.prefab, spawnPoint.transform.position, _objectRotation);
+        
+        TransformTile(
+            tileObject.blueprint.type,
+            tileObject.blueprint.resourceWood,
+            tileObject.blueprint.resourceWaste,
+            tileObject.blueprint.resourceWhiskey
+        );
+
+        _tileObject = 
+            Instantiate(
+                tileObject.blueprint.prefab, 
+                spawnPoint.transform.position, 
+                _objectRotation
+            );
+
+        _tileObject.GetComponent<TileObject>().parentTile = this;
     }
     
     #endregion
@@ -113,11 +127,11 @@ public class Tile : MonoBehaviour {
     
     #region Private class Methods
 
-    private void TransformTile(TileObject tileObject) {
-        _tileType = tileObject.blueprint.type;
-        ResourceWaste += tileObject.blueprint.resourceWaste;
-        ResourceWood += tileObject.blueprint.resourceWood;
-        ResourceWhiskey += tileObject.blueprint.resourceWhiskey;
+    private void TransformTile(Type type, int wood, int waste, int whiskey) {
+        _tileType = type;
+        ResourceWood = wood;
+        ResourceWaste = waste;
+        ResourceWhiskey = whiskey;
     }
 
     private TileObject GetRandomObject() {

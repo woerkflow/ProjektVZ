@@ -44,7 +44,7 @@ public class SwarmManager : MonoBehaviour {
         if (_target && _target != mainTarget) {
             return;
         }
-        int maxColliders = 10;
+        int maxColliders = 50;
         Collider[] hitColliders = new Collider[maxColliders];
         int numColliders = Physics.OverlapSphereNonAlloc(leader.transform.position, leader.perceptionRange, hitColliders);
         float shortestDistance = leader.perceptionRange;
