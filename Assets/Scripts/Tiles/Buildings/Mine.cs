@@ -13,22 +13,64 @@ public class Mine : MonoBehaviour {
     public float timer;
     
     private GameObject _target;
+    private Collider[] _hitColliders;
+    private GameObject _parentSpawner;
+    
+    
+    #region Unity methods
     
     private void Start() {
-        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+        int maxColliders = 30;
+        _hitColliders = new Collider[maxColliders];
+        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
     }
+    
+    
+    private void Update() {
+        
+        if (_parentSpawner == null) {
+            Explode();
+            StartImpactEffect();
+        }
+        
+        if (_target == null) {
+            return;
+        }
+
+        if (timer >= 0) {
+            timer -= Time.deltaTime;
+        } else {
+            Explode();
+            StartImpactEffect();
+        }
+    }
+    
+    #endregion
+    
+    
+    #region Public class methods
+
+    public void SetParent(GameObject parent) {
+        _parentSpawner = parent;
+    }
+    
+    #endregion
+    
+    
+    #region Private class methods
     
     private void UpdateTarget() {
 
         if (_target != null && _target.CompareTag(enemyTag)) {
             return;
         }
-        
-        Collider[] enemies = Physics.OverlapSphere(transform.position, perceptionRange);
+        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, perceptionRange, _hitColliders);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (Collider enemy in enemies) {
+        for (int i = 0; i < enemyCount; i++) {
+            Collider enemy = _hitColliders[i];
+            
             if (enemy.CompareTag(enemyTag)) {
                 float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
             
@@ -45,31 +87,19 @@ public class Mine : MonoBehaviour {
             _target = null;
         }
     }
-
-    private void Update() {
-        
-        if (_target == null) {
-            return;
-        }
-
-        if (timer >= 0) {
-            timer -= Time.deltaTime;
-        } else {
-            Explode();
-            StartImpactEffect();
-        }
-    }
     
     private void Damage(Enemy enemy) {
         enemy.SetHealth(enemy.GetHealth() - damage);
     }
     
     private void Explode() {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, _hitColliders);
         
-        foreach (Collider collider in colliders) {
-            if (collider.CompareTag(enemyTag)) {
-                Damage(collider.GetComponent<Enemy>());
+        for (int i = 0; i < enemyCount; i++) {
+            Collider enemy = _hitColliders[i];
+            
+            if (enemy.CompareTag(enemyTag)) {
+                Damage(enemy.GetComponent<Enemy>());
             }
         }
     }
@@ -79,4 +109,6 @@ public class Mine : MonoBehaviour {
         Destroy(effectInst, 1f);
         Destroy(gameObject);
     }
+    
+    #endregion
 }

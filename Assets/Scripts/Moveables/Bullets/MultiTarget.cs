@@ -4,9 +4,14 @@ public class MultiTarget : Bullet {
     
     public float explosionRadius;
     public string enemyTag;
-    public int maxTargets;
+
+    private Collider[] _hitColliders;
     
     #region Unity methods
+
+    private void Start() {
+        _hitColliders = new Collider[18];
+    }
     
     private void Update() {
 
@@ -34,14 +39,13 @@ public class MultiTarget : Bullet {
     }
     
     private void Explode() {
-        Collider[] hitColliders = new Collider[maxTargets];
-        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, hitColliders);
+        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, _hitColliders);
         
         for (int i = 0; i < numColliders; i++) {
-            Collider enemy = hitColliders[i];
+            Collider obj = _hitColliders[i];
             
-            if (enemy.CompareTag(enemyTag)) {
-                Damage(enemy.GetComponent<Enemy>());
+            if (obj.CompareTag(enemyTag)) {
+                Damage(obj.GetComponent<Enemy>());
             }
         }
     }

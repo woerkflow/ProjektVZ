@@ -15,9 +15,8 @@ public class Bullet : MonoBehaviour {
     #region Unity methods
     
     private void Start() {
-        Quaternion lookRotation = Quaternion.LookRotation(_targetPosition);
-        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime).eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        Vector3 direction = _targetPosition - transform.position;
+        transform.rotation = Quaternion.LookRotation(direction);
     }
     
     #endregion

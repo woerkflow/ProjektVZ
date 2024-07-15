@@ -43,6 +43,10 @@ public class BuildManager : MonoBehaviour {
         _selectedTile = tile;
         buildMenu.Activate();
     }
+
+    public bool MenuIsActive() {
+        return buildMenu.IsActive();
+    }
     
     #endregion
     
@@ -98,9 +102,9 @@ public class BuildManager : MonoBehaviour {
             );
 
             // Give resources to the tile
-            _selectedTile.ResourceWood += _selectedBuilding.blueprint.resourceWood;
-            _selectedTile.ResourceWaste += _selectedBuilding.blueprint.resourceWaste;
-            _selectedTile.ResourceWhiskey += _selectedBuilding.blueprint.resourceWhiskey;
+            _selectedTile.resourceWood += _selectedBuilding.blueprint.resourceWood;
+            _selectedTile.resourceWaste += _selectedBuilding.blueprint.resourceWaste;
+            _selectedTile.resourceWhiskey += _selectedBuilding.blueprint.resourceWhiskey;
             
             // Build building
             _selectedTile.Build(_selectedBuilding);

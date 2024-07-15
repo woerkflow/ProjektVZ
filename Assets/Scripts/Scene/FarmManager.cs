@@ -45,11 +45,15 @@ public class FarmManager : MonoBehaviour {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
-        SetMenuResourceValue(resourceWoodAmount, _selectedTile.ResourceWood);
-        SetMenuResourceValue(resourceWasteAmount, _selectedTile.ResourceWaste);
-        SetMenuResourceValue(resourceWhiskeyAmount, _selectedTile.ResourceWhiskey);
+        SetMenuResourceValue(resourceWoodAmount, _selectedTile.resourceWood);
+        SetMenuResourceValue(resourceWasteAmount, _selectedTile.resourceWaste);
+        SetMenuResourceValue(resourceWhiskeyAmount, _selectedTile.resourceWhiskey);
         SetMenuResourceValue(timeCosts, _selectedTile.tileObject.blueprint.timeCosts);
         farmMenu.Activate();
+    }
+    
+    public bool MenuIsActive() {
+        return farmMenu.IsActive();
     }
     
     #endregion
@@ -58,10 +62,10 @@ public class FarmManager : MonoBehaviour {
 
     private bool CanFarm() {
         
-        return _enemySpawner.GetTime() > _selectedTile.tileObject.blueprint.timeCosts
-               && (_selectedTile.ResourceWood > 0
-               || _selectedTile.ResourceWaste > 0
-               || _selectedTile.ResourceWhiskey > 0);
+        return _enemySpawner.GetTime() >= _selectedTile.tileObject.blueprint.timeCosts
+               && (_selectedTile.resourceWood > 0
+               || _selectedTile.resourceWaste > 0
+               || _selectedTile.resourceWhiskey > 0);
     }
     
     private void SetMenuResourceValue(TMP_Text element, int value) {
@@ -76,25 +80,25 @@ public class FarmManager : MonoBehaviour {
 
         if (CanFarm()) {
             
-            if (_selectedTile.ResourceWood > 0) {
+            if (_selectedTile.resourceWood > 0) {
                 _playerManager.SetResourceWood(
-                    _playerManager.GetResourceWood() + _selectedTile.ResourceWood
+                    _playerManager.GetResourceWood() + _selectedTile.resourceWood
                 );
-                _selectedTile.ResourceWood = 0;
+                _selectedTile.resourceWood = 0;
             }
             
-            if (_selectedTile.ResourceWaste > 0) {
+            if (_selectedTile.resourceWaste > 0) {
                 _playerManager.SetResourceWaste(
-                    _playerManager.GetResourceWaste() + _selectedTile.ResourceWaste
+                    _playerManager.GetResourceWaste() + _selectedTile.resourceWaste
                 );
-                _selectedTile.ResourceWaste = 0;
+                _selectedTile.resourceWaste = 0;
             }
             
-            if (_selectedTile.ResourceWhiskey > 0) {
+            if (_selectedTile.resourceWhiskey > 0) {
                 _playerManager.SetResourceWhiskey(
-                    _playerManager.GetResourceWhiskey() + _selectedTile.ResourceWhiskey
+                    _playerManager.GetResourceWhiskey() + _selectedTile.resourceWhiskey
                 );
-                _selectedTile.ResourceWhiskey = 0;
+                _selectedTile.resourceWhiskey = 0;
             }
             _enemySpawner.SetTimer(
                 _enemySpawner.GetTime() - _selectedTile.tileObject.blueprint.timeCosts

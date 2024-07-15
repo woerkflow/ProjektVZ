@@ -143,7 +143,7 @@ public class EnemySpawner : MonoBehaviour {
     private void OnTakeFromPool(Enemy enemy) {
         
         Vector3 GetRandomPosition() {
-            float RandomCoordinate(float value) => value + Random.Range(0f, _currentSpawnPoint.spawnRange);
+            float RandomCoordinate(float value) => value + Random.Range(-_currentSpawnPoint.spawnRange, _currentSpawnPoint.spawnRange);
             return new Vector3(
                 RandomCoordinate(_currentSpawnPoint.transform.position.x),
                 _currentSpawnPoint.transform.position.y,

@@ -10,9 +10,9 @@ public class Tile : MonoBehaviour {
     public bool isBlocked;
     
     [HideInInspector]
-    public int ResourceWood { get; set; }
-    public int ResourceWaste { get; set; }
-    public int ResourceWhiskey { get; set; }
+    public int resourceWood { get; set; }
+    public int resourceWaste { get; set; }
+    public int resourceWhiskey { get; set; }
     
     public enum Type {
         Empty,
@@ -48,12 +48,21 @@ public class Tile : MonoBehaviour {
 
     public void OnMouseEnter() {
         selectEffect.SetActive(true);
+        selectEffect.transform.position = spawnPoint.transform.position;
     }
 
     public void OnMouseDown() {
         
         if (_enemySpawner.state == EnemySpawner.State.Fight) {
             return;
+        }
+
+        if (_buildManager.MenuIsActive()) {
+            _buildManager.Close();
+        }
+        
+        if (_farmManager.MenuIsActive()) {
+            _farmManager.Close();
         }
         
         switch (_tileType) {
@@ -71,6 +80,7 @@ public class Tile : MonoBehaviour {
 
     public void OnMouseExit() {
         selectEffect.SetActive(false);
+        selectEffect.transform.position = Vector3.zero;
     }
 
     #endregion
@@ -120,6 +130,8 @@ public class Tile : MonoBehaviour {
             );
 
         _tileObject.GetComponent<TileObject>().parentTile = this;
+        GameObject[] tileObj = {_tileObject};
+        StaticBatchingUtility.Combine(tileObj, gameObject);
     }
     
     #endregion
@@ -129,9 +141,9 @@ public class Tile : MonoBehaviour {
 
     private void TransformTile(Type type, int wood, int waste, int whiskey) {
         _tileType = type;
-        ResourceWood = wood;
-        ResourceWaste = waste;
-        ResourceWhiskey = whiskey;
+        resourceWood = wood;
+        resourceWaste = waste;
+        resourceWhiskey = whiskey;
     }
 
     private TileObject GetRandomObject() {

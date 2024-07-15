@@ -21,6 +21,10 @@ public class UIMenu : MonoBehaviour {
     public void Deactivate() {
         gameObject.SetActive(false);
     }
+
+    public bool IsActive() {
+        return gameObject.activeSelf;
+    }
     
     #endregion
     

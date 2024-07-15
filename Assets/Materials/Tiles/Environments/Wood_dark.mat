@@ -29,6 +29,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Cull: 2
+    - _ReceiveShadows: 1
     - _Smoothness: 0.4
     - _SmoothnessTextureChannel: 1
     - _WorkflowMode: 0

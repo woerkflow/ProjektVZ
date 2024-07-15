@@ -17,8 +17,11 @@ public class Launcher : MonoBehaviour {
 
     private GameObject _target;
     private float _fireCountDown;
+    private Collider[] _hitColliders;
     
     private void Start() {
+        int maxColliders = 30;
+        _hitColliders = new Collider[maxColliders];
         InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
     }
     
@@ -27,12 +30,13 @@ public class Launcher : MonoBehaviour {
         if (_target != null && _target.CompareTag(enemyTag)) {
             return;
         }
-        
-        Collider[] enemies = Physics.OverlapSphere(transform.position, perceptionRange);
+        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, perceptionRange, _hitColliders);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (Collider enemy in enemies) {
+        for (int i = 0; i < enemyCount; i++) {
+            Collider enemy = _hitColliders[i];
+            
             if (enemy.CompareTag(enemyTag)) {
                 float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
             

@@ -22,15 +22,24 @@ public class Spawner : MonoBehaviour {
         if (spawns.Count >= spawnPoints.Length) {
             return;
         }
+        Transform spawnPoint = spawnPoints[spawns.Count];
+        GameObject obj = Instantiate(GetRandomSpawn(), spawnPoint.position, spawnPoint.rotation);
+        
+        // Add object to list
+        spawns.Add(obj);
+        
+        // Set spawner as parent
+        obj.GetComponent<Mine>().SetParent(gameObject);
+    }
+
+    private GameObject GetRandomSpawn() {
         GameObject spawn = spawnPrefab;
         float randomSize = Random.Range(0.5f, 1f);
         spawn.transform.localScale = new Vector3(
             randomSize, 
             randomSize, 
             randomSize
-            );
-        Transform spawnPoint = spawnPoints[spawns.Count];
-        GameObject obj = Instantiate(spawn, spawnPoint.position, spawnPoint.rotation);
-        spawns.Add(obj);
+        );
+        return spawn;
     }
 }

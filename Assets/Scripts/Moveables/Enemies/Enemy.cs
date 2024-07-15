@@ -157,9 +157,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void RotateToTarget(Vector3 direction) {
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, DeltaSpeed(turnSpeed)).eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        transform.rotation = Quaternion.LookRotation(direction);
     }
     
     private void AttackTarget() {

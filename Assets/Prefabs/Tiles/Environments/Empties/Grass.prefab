@@ -47,6 +47,8 @@ MonoBehaviour:
   blueprint:
     type: 0
     prefab: {fileID: 1897936333670252998}
+    timeCosts: 0
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
+  parentTile: {fileID: 0}

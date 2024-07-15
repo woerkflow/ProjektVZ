@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 3551453537848986520}
   - component: {fileID: 52110862033868609}
   - component: {fileID: 2152357948062514371}
+  - component: {fileID: 804585838675561617}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -204,6 +205,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2cfbe090979a7945b37492f702cdb82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  empty: {fileID: 0}
+  timer: {fileID: 0}
+  farmMenu: {fileID: 0}
+  resourceWoodAmount: {fileID: 0}
+  resourceWasteAmount: {fileID: 0}
+  resourceWhiskeyAmount: {fileID: 0}
+  timeCosts: {fileID: 0}
+--- !u!114 &804585838675561617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140745236491714394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803f862f15514bb4db01ad01140b7ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1782107301633826271

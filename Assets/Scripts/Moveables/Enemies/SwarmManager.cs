@@ -5,12 +5,16 @@ using UnityEngine;
 public class SwarmManager : MonoBehaviour {
     public List<Enemy> zombies;
     public GameObject mainTarget;
+    
     private GameObject _target;
+    private Collider[] _hitColliders;
 
     #region Unity Methods
     
     private void Start() {
         _target = mainTarget;
+        int maxColliders = 50;
+        _hitColliders = new Collider[maxColliders];
         
         // Start coroutine for targeting
         InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
@@ -44,14 +48,12 @@ public class SwarmManager : MonoBehaviour {
         if (_target && _target != mainTarget) {
             return;
         }
-        int maxColliders = 50;
-        Collider[] hitColliders = new Collider[maxColliders];
-        int numColliders = Physics.OverlapSphereNonAlloc(leader.transform.position, leader.perceptionRange, hitColliders);
+        int numColliders = Physics.OverlapSphereNonAlloc(leader.transform.position, leader.perceptionRange, _hitColliders);
         float shortestDistance = leader.perceptionRange;
         GameObject nearestEnemy = null;
         
         for (int i = 0; i < numColliders; i++) {
-            Collider enemy = hitColliders[i];
+            Collider enemy = _hitColliders[i];
             
             if (enemy.CompareTag(leader.enemyTag)) {
                 float distanceToEnemy = Vector3.Distance(leader.transform.position, enemy.transform.position);
