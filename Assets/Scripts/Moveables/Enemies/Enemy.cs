@@ -38,10 +38,14 @@ public class Enemy : MonoBehaviour {
     private Building _targetBuildingComponent;
     private float _targetCapsuleRadius;
     private Vector3 _targetPosition;
+    private PlayerManager _playerManager;
     
     #region Unity Methods
     
     void Start() {
+        
+        //Initialize player
+        _playerManager = PlayerManager.Instance;
         
         // Initialize enemy values
         _attackCountDown = 0f;
@@ -118,6 +122,13 @@ public class Enemy : MonoBehaviour {
         _currentHealth = value;
         
         if (_currentHealth <= 0) {
+            
+            // Reward player
+            _playerManager.SetResourceWhiskey(
+                _playerManager.GetResourceWhiskey() + 1
+            );
+            
+            // Kill zombie
             gameObject.tag = "ZombieDead";
             _animator.SetTrigger(dieParameter);
             _deadCounter = 2f;

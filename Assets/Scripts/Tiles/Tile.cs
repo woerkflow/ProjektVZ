@@ -28,14 +28,16 @@ public class Tile : MonoBehaviour {
     // Common
     private BuildManager _buildManager;
     private FarmManager _farmManager;
+    private UpgradeManager _upgradeManager;
     private EnemySpawner _enemySpawner;
     
     
     #region Unity methods
     
-    public void Start() {
+    private void Start() {
         _buildManager = BuildManager.Instance;
         _farmManager = FarmManager.Instance;
+        _upgradeManager = UpgradeManager.Instance;
         _enemySpawner = EnemySpawner.Instance;
         _objectRotation = spawnPoint.transform.rotation;
 
@@ -58,22 +60,29 @@ public class Tile : MonoBehaviour {
         }
 
         if (_buildManager.MenuIsActive()) {
-            _buildManager.Close();
+            _buildManager.CloseMenu();
         }
         
         if (_farmManager.MenuIsActive()) {
-            _farmManager.Close();
+            _farmManager.CloseMenu();
+        }
+
+        if (_upgradeManager.MenuIsActive()) {
+            _upgradeManager.CloseMenu();
         }
         
         switch (_tileType) {
             case Type.Empty:
                 _buildManager.SelectTile(gameObject.GetComponent<Tile>());
+                _buildManager.ActivateMenu();
                 break;
             case Type.Resource:
                 _farmManager.SelectTile(gameObject.GetComponent<Tile>());
+                _farmManager.ActivateMenu();
                 break;
             case Type.Building:
-                // Todo: Implement upgrade manager  
+                _upgradeManager.SelectTile(gameObject.GetComponent<Tile>());
+                _upgradeManager.ActivateMenu();
                 break;
         }
     }
@@ -130,8 +139,6 @@ public class Tile : MonoBehaviour {
             );
 
         _tileObject.GetComponent<TileObject>().parentTile = this;
-        GameObject[] tileObj = {_tileObject};
-        StaticBatchingUtility.Combine(tileObj, gameObject);
     }
     
     #endregion

@@ -4,10 +4,10 @@ public class Building : TileObject {
     
     [Header("Building")]
     public int maxHealth;
-    public TileObject ruin;
+    public Building upgrade;
     
     private int _currentHealth;
-    
+
     
     #region Unity Methods
 
@@ -24,12 +24,18 @@ public class Building : TileObject {
         _currentHealth = value;
 
         if (_currentHealth <= 0) {
-            parentTile.ReplaceObject(ruin);
+            Destroy();
         }
     }
 
     public int GetHealth() {
         return _currentHealth;
+    }
+    
+    public void Destroy() {
+        parentTile.ReplaceObject(
+            blueprint.ruin.GetComponent<TileObject>()
+        );
     }
     
     #endregion

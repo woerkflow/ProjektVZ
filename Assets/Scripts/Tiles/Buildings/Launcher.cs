@@ -19,11 +19,28 @@ public class Launcher : MonoBehaviour {
     private float _fireCountDown;
     private Collider[] _hitColliders;
     
+    
+    #region Unity methods
+    
     private void Start() {
         int maxColliders = 30;
         _hitColliders = new Collider[maxColliders];
         InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
     }
+    
+    void Update() {
+        
+        if (_target == null) {
+            return;
+        }
+        LockOnTarget();
+        Shoot();
+    }
+    
+    #endregion
+    
+    
+    #region Private class methods
     
     private void UpdateTarget() {
 
@@ -54,15 +71,6 @@ public class Launcher : MonoBehaviour {
         }
     }
     
-    void Update() {
-        
-        if (_target == null) {
-            return;
-        }
-        LockOnTarget();
-        Shoot();
-    }
-    
     private void LockOnTarget() {
         Vector3 direction = _target.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -84,4 +92,6 @@ public class Launcher : MonoBehaviour {
             _fireCountDown -= Time.deltaTime;
         }
     }
+    
+    #endregion
 }

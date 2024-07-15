@@ -99,11 +99,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6793012422627259873}
-  - component: {fileID: 2274352632245639020}
-  - component: {fileID: 3551453537848986520}
   - component: {fileID: 52110862033868609}
+  - component: {fileID: 3551453537848986520}
   - component: {fileID: 2152357948062514371}
-  - component: {fileID: 804585838675561617}
+  - component: {fileID: 2274352632245639020}
+  - component: {fileID: 5308043839096930250}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -128,6 +128,61 @@ Transform:
   - {fileID: 5540885715125199947}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &52110862033868609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140745236491714394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c47c39f050e1804ba6de2b894f8d4b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceWoodText: {fileID: 0}
+  resourceWasteText: {fileID: 0}
+  resourceWhiskeyText: {fileID: 0}
+--- !u!114 &3551453537848986520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140745236491714394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86229878b027f6d4485f2afee4f9f388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flameLauncher: {fileID: 7771365858584795891, guid: 7ba093ad82e9f8442ba9ae7c28a393f6,
+    type: 3}
+  bladeLauncher: {fileID: 2091069740397988407, guid: bfef0f181fc1459419a54bef2e6b5d5a,
+    type: 3}
+  pumpkinSpawner: {fileID: 4238989307836447172, guid: 8e584b1af62168b4783478b8398a4ee8,
+    type: 3}
+  fenceObstacle: {fileID: 2405142771648647729, guid: bec9330b6182e4f438e712f0c8e62310,
+    type: 3}
+  buildMenu: {fileID: 0}
+--- !u!114 &2152357948062514371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140745236491714394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cfbe090979a7945b37492f702cdb82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  empty: {fileID: 0}
+  timer: {fileID: 0}
+  farmMenu: {fileID: 0}
+  resourceWoodAmount: {fileID: 0}
+  resourceWasteAmount: {fileID: 0}
+  resourceWhiskeyAmount: {fileID: 0}
+  timeCosts: {fileID: 0}
 --- !u!114 &2274352632245639020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +214,7 @@ MonoBehaviour:
   maxEnemyAmount: 500
   maxCountDown: 60
   timer: {fileID: 0}
---- !u!114 &3551453537848986520
+--- !u!114 &5308043839096930250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,62 +223,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1140745236491714394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86229878b027f6d4485f2afee4f9f388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flameLauncher: {fileID: 7771365858584795891, guid: 7ba093ad82e9f8442ba9ae7c28a393f6,
-    type: 3}
-  bladeLauncher: {fileID: 2091069740397988407, guid: bfef0f181fc1459419a54bef2e6b5d5a,
-    type: 3}
-  pumpkinSpawner: {fileID: 4238989307836447172, guid: 8e584b1af62168b4783478b8398a4ee8,
-    type: 3}
-  fenceObstacle: {fileID: 2405142771648647729, guid: bec9330b6182e4f438e712f0c8e62310,
-    type: 3}
-  buildMenu: {fileID: 0}
---- !u!114 &52110862033868609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140745236491714394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c47c39f050e1804ba6de2b894f8d4b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceWoodText: {fileID: 0}
-  resourceWasteText: {fileID: 0}
-  resourceWhiskeyText: {fileID: 0}
---- !u!114 &2152357948062514371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140745236491714394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2cfbe090979a7945b37492f702cdb82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  empty: {fileID: 0}
-  timer: {fileID: 0}
-  farmMenu: {fileID: 0}
-  resourceWoodAmount: {fileID: 0}
-  resourceWasteAmount: {fileID: 0}
-  resourceWhiskeyAmount: {fileID: 0}
-  timeCosts: {fileID: 0}
---- !u!114 &804585838675561617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140745236491714394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 803f862f15514bb4db01ad01140b7ed0, type: 3}
+  m_Script: {fileID: 11500000, guid: acb1d46f9765e0e4ba033c2b1e50401d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1782107301633826271

@@ -41,11 +41,18 @@ public class BuildManager : MonoBehaviour {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
+    }
+
+    public void ActivateMenu() {
         buildMenu.Activate();
     }
 
     public bool MenuIsActive() {
         return buildMenu.IsActive();
+    }
+    
+    public void SelectBuildingToBuild(Building building) {
+        _selectedBuilding = building;
     }
     
     #endregion
@@ -59,10 +66,6 @@ public class BuildManager : MonoBehaviour {
                && _playerManager.GetResourceWood() >= _selectedBuilding.blueprint.resourceWood
                && _playerManager.GetResourceWaste() >= _selectedBuilding.blueprint.resourceWaste
                && _playerManager.GetResourceWhiskey() >= _selectedBuilding.blueprint.resourceWhiskey;
-    }
-    
-    private void SelectBuildingToBuild(Building building) {
-        _selectedBuilding = building;
     }
     
     #endregion
@@ -110,7 +113,7 @@ public class BuildManager : MonoBehaviour {
             _selectedTile.Build(_selectedBuilding);
             
             // Close menu
-            Close();
+            CloseMenu();
         }
     }
 
@@ -122,7 +125,7 @@ public class BuildManager : MonoBehaviour {
         _selectedTile.RotateObject(-90f);
     }
 
-    public void Close() {
+    public void CloseMenu() {
         buildMenu.Deactivate();
         _selectedTile = null;
         _selectedBuilding = null;

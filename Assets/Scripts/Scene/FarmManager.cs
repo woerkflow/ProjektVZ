@@ -1,3 +1,4 @@
+using Meta.WitAi;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class FarmManager : MonoBehaviour {
     private void Awake() {
 
         if (Instance != null) {
-            Debug.Log("More than one BuildManager at once;");
+            Debug.Log("More than one FarmManager at once;");
         } else {
             Instance = this;
         }
@@ -45,6 +46,9 @@ public class FarmManager : MonoBehaviour {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
+    }
+
+    public void ActivateMenu() {
         SetMenuResourceValue(resourceWoodAmount, _selectedTile.resourceWood);
         SetMenuResourceValue(resourceWasteAmount, _selectedTile.resourceWaste);
         SetMenuResourceValue(resourceWhiskeyAmount, _selectedTile.resourceWhiskey);
@@ -103,12 +107,12 @@ public class FarmManager : MonoBehaviour {
             _enemySpawner.SetTimer(
                 _enemySpawner.GetTime() - _selectedTile.tileObject.blueprint.timeCosts
             );
-            _selectedTile.ReplaceObject(empty);
-            Close();
+            _selectedTile.tileObject.GetComponent<Resource>().Destroy();
+            CloseMenu();
         }
     }
     
-    public void Close() {
+    public void CloseMenu() {
         farmMenu.Deactivate();
         _selectedTile = null;
     }

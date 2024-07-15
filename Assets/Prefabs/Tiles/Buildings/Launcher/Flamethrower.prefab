@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &3997289586254580380
 Transform:
@@ -130,7 +130,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1497481790192192295
 Transform:
@@ -304,13 +304,14 @@ MonoBehaviour:
   blueprint:
     type: 1
     prefab: {fileID: 7407422453547077386}
+    ruin: {fileID: 1897936333670252998, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
     timeCosts: 0
-    resourceWood: 0
-    resourceWaste: 0
-    resourceWhiskey: 0
+    resourceWood: 50
+    resourceWaste: 50
+    resourceWhiskey: 50
   parentTile: {fileID: 0}
   maxHealth: 50
-  ruin: {fileID: 7011444188280615907, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
+  buildingType: 0
 --- !u!114 &4642131767922159957
 MonoBehaviour:
   m_ObjectHideFlags: 0
