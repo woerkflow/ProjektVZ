@@ -1,4 +1,3 @@
-using Meta.WitAi;
 using TMPro;
 using UnityEngine;
 
@@ -78,7 +77,7 @@ public class FarmManager : MonoBehaviour {
     
     #endregion
     
-    #region Menu Methods
+    #region Menu button methods
 
     public void Farm() {
 
@@ -107,7 +106,7 @@ public class FarmManager : MonoBehaviour {
             _enemySpawner.SetTimer(
                 _enemySpawner.GetTime() - _selectedTile.tileObject.blueprint.timeCosts
             );
-            _selectedTile.tileObject.GetComponent<Resource>().Destroy();
+            _selectedTile.GetTileObject().DestroyObject();
             CloseMenu();
         }
     }

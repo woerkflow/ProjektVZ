@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour {
     
     [Header("Perception")]
     public float perceptionRange;
-    public float turnSpeed;
     
     [Header("Attack")]
     public float attackSpeed;
@@ -60,6 +59,7 @@ public class Enemy : MonoBehaviour {
     
     void Update() {
         
+        // If zombie is really dead...
         if (_currentHealth <= 0) {
             
             if (_deadCounter > 0) {
@@ -70,6 +70,7 @@ public class Enemy : MonoBehaviour {
             return;
         }
 
+        // If zombie has no target stop...
         if (target == null) {
             _animator.SetFloat(walkParameter, 0f);
             return;
@@ -77,17 +78,26 @@ public class Enemy : MonoBehaviour {
         Vector3 direction = _targetPosition - new Vector3(transform.position.x, 0f, transform.position.z);
         RotateToTarget(direction);
         
+        // If distance is greater than the sum of both hit box radii...
         if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
             
             // Start walking animation
             _animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
+            
+            // Translate zombie
             MoveToTarget(direction);
+        
+        // If distance is not greater than the sum of both hit box radii...
         } else if (target != mainTarget) {
             
             // Stop walking animation
             _animator.SetFloat(walkParameter, 0f);
+            
+            // Start attack target
             AttackTarget();
         } else {
+            
+            // Stop walking animation
             _animator.SetFloat(walkParameter, 0f);
         }
     }

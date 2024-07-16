@@ -51,9 +51,8 @@ MonoBehaviour:
   attackHeight: 0
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
-  explosionRadius: 0.01
+  explosionRadius: 0.0075
   enemyTag: Zombie
-  maxTargets: 10
 --- !u!1 &2932873408101990794
 GameObject:
   m_ObjectHideFlags: 0

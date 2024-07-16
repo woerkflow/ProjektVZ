@@ -68,7 +68,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 10
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -344,4 +344,5 @@ MonoBehaviour:
   - {fileID: 1170577978572592442, guid: 33528e100d52d884a831c3c984d65f11, type: 3}
   - {fileID: 8824301914423260603, guid: 21f2c33978091a14391a0b34de6d400f, type: 3}
   - {fileID: -1454818735957703438, guid: ab1f2860d9c15184a829d6601e00901d, type: 3}
+  - {fileID: 9112291376493757235, guid: c305260b6b63733489cb7a0a48827113, type: 3}
   isBlocked: 0

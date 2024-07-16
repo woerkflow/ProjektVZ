@@ -71,7 +71,7 @@ public class BuildManager : MonoBehaviour {
     #endregion
     
     
-    #region Menu methods
+    #region Menu button methods
     
     public void SelectFlameLauncher() {
         SelectBuildingToBuild(flameLauncher);

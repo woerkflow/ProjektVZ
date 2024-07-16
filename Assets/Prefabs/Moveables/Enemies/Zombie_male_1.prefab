@@ -4232,12 +4232,12 @@ MonoBehaviour:
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
   enemyTag: Building
-  maxSpeed: 0.004
+  maxSpeed: 0.005
   perceptionRange: 0.06
   turnSpeed: 5
   attackSpeed: 2
   damage: 1
-  maxHealth: 3
+  maxHealth: 5
   walkParameter: Walk
   attackParameter: Attack
   dieParameter: Die

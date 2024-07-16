@@ -15,11 +15,17 @@ public class UIMenu : MonoBehaviour {
     #region Public class methods
 
     public void Activate() {
-        gameObject.SetActive(true);
+
+        if (!IsActive()) {
+            gameObject.SetActive(true);
+        }
     }
 
     public void Deactivate() {
-        gameObject.SetActive(false);
+
+        if (IsActive()) {
+            gameObject.SetActive(false);
+        }
     }
 
     public bool IsActive() {

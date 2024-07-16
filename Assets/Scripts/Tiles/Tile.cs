@@ -101,6 +101,10 @@ public class Tile : MonoBehaviour {
         ReplaceObject(buildingToBuild);
     }
 
+    public TileObject GetTileObject() {
+        return _tileObject.GetComponent<TileObject>();
+    }
+
     public void RotateObject(float value) {
         Vector3 objectRotationEuler = Quaternion.Normalize(_objectRotation).eulerAngles;
         _objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
@@ -138,7 +142,7 @@ public class Tile : MonoBehaviour {
                 _objectRotation
             );
 
-        _tileObject.GetComponent<TileObject>().parentTile = this;
+        GetTileObject().SetParentTile(this);
     }
     
     #endregion

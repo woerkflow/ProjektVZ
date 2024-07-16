@@ -24,18 +24,12 @@ public class Building : TileObject {
         _currentHealth = value;
 
         if (_currentHealth <= 0) {
-            Destroy();
+            DestroyObject();
         }
     }
 
     public int GetHealth() {
         return _currentHealth;
-    }
-    
-    public void Destroy() {
-        parentTile.ReplaceObject(
-            blueprint.ruin.GetComponent<TileObject>()
-        );
     }
     
     #endregion

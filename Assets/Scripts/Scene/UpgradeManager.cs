@@ -31,6 +31,12 @@ public class UpgradeManager : MonoBehaviour {
         }
     }
     
+    private void Start() {
+        _buildManager = BuildManager.Instance;
+        _playerManager = PlayerManager.Instance;
+        upgradeMenu.Deactivate();
+    }
+    
     #endregion
     
     
@@ -58,7 +64,7 @@ public class UpgradeManager : MonoBehaviour {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
-        _tileBuilding = _selectedTile.tileObject.gameObject.GetComponent<Building>();
+        _tileBuilding = _selectedTile.GetTileObject().GetComponent<Building>();
         upgradeMenu.Activate();
     }
     
@@ -74,7 +80,7 @@ public class UpgradeManager : MonoBehaviour {
     #endregion
     
     
-    #region Menu methods
+    #region Menu button methods
 
     public void Upgrade() {
 
@@ -98,8 +104,11 @@ public class UpgradeManager : MonoBehaviour {
     }
 
     public void Destroy() {
-        _tileBuilding.Destroy();
-        CloseMenu();
+
+        if (_tileBuilding) {
+            _tileBuilding.DestroyObject();
+            CloseMenu();
+        }
     }
     
     public void CloseMenu() {

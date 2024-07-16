@@ -32479,6 +32479,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 949588781}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1211813868 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3038703962756936927, guid: 0fca3052138b10947b97582932a6fa0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1120911399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1212041791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55935,6 +55947,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1857908181}
+    - target: {fileID: 2924317153956383439, guid: 71882f5e98c07374691b015936b533b1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 3513335223144527808, guid: 71882f5e98c07374691b015936b533b1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -56252,6 +56269,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1685055512}
+    - target: {fileID: 5534479861468886091, guid: c6eef31b0c109624eb45d9bdb8823051,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 5561779962375932182, guid: c6eef31b0c109624eb45d9bdb8823051,
         type: 3}
       propertyPath: m_Pivot.x
@@ -56970,6 +56992,11 @@ PrefabInstance:
       propertyPath: maxCountDown
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 2274352632245639020, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: maxEnemyAmount
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 3551453537848986520, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}
       propertyPath: buildMenu
@@ -56985,6 +57012,11 @@ PrefabInstance:
       propertyPath: upgradeMenu
       value: 
       objectReference: {fileID: 1120911400}
+    - target: {fileID: 5308043839096930250, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: buildingHealth
+      value: 
+      objectReference: {fileID: 1211813868}
     - target: {fileID: 6793012422627259873, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}
       propertyPath: m_LocalPosition.x
