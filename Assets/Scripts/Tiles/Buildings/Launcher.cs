@@ -87,7 +87,7 @@ public class Launcher : MonoBehaviour {
             if (bullet != null) {
                 bullet.Seek(_target);
             }
-            _fireCountDown = 1f / fireRate;
+            _fireCountDown = fireRate;
         } else {
             _fireCountDown -= Time.deltaTime;
         }

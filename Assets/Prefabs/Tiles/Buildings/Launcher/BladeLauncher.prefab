@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5290928166236636523
 Transform:
@@ -108,11 +108,11 @@ MonoBehaviour:
     prefab: {fileID: 4683555475994284069}
     ruin: {fileID: 1897936333670252998, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
     timeCosts: 0
-    resourceWood: 50
-    resourceWaste: 25
+    resourceWood: 100
+    resourceWaste: 50
     resourceWhiskey: 0
-  parentTile: {fileID: 0}
-  maxHealth: 50
+  maxHealth: 500
+  upgrade: {fileID: 0}
 --- !u!114 &1126827043327354030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6983134e4a57ea4ca3ea1b1d00df51f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.5
+  fireRate: 2.5
   firePoint: {fileID: 867962620658126615}
   prefabBullet: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
     type: 3}
@@ -263,7 +263,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4371698698464141477
 Transform:

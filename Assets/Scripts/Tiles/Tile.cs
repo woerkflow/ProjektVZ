@@ -3,7 +3,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
 
     [Header("Tile")] 
-    public TileObject tileObject;
+    public TileObject startObject;
     public GameObject spawnPoint;
     public GameObject selectEffect;
     public TileObject[] randomObjects;
@@ -42,10 +42,10 @@ public class Tile : MonoBehaviour {
         _objectRotation = spawnPoint.transform.rotation;
 
         if (!isBlocked) {
-            tileObject = GetRandomObject();
+            startObject = GetRandomObject();
             _objectRotation = GetRandomRotation();
         }
-        ReplaceObject(tileObject);
+        ReplaceObject(startObject);
     }
 
     public void OnMouseEnter() {
@@ -113,35 +113,40 @@ public class Tile : MonoBehaviour {
     public void ReplaceObject(TileObject newObject) {
 
         if (_tileObject != null) {
+            
+            // Remove building from building list
+            if (GetTileObject().blueprint.type == Type.Building) {
+                _buildManager.RemoveBuilding(_tileObject);
+            }
+            
+            // Destroy tile object
             Destroy(_tileObject);
         }
-
-        if (newObject == null) {
-            
-            TransformTile(
-                Type.Empty,
-                0,
-                0,
-                0
-            );
-            return;
-        }
-        tileObject = newObject;
         
         TransformTile(
-            tileObject.blueprint.type,
-            tileObject.blueprint.resourceWood,
-            tileObject.blueprint.resourceWaste,
-            tileObject.blueprint.resourceWhiskey
+            newObject.blueprint.type,
+            newObject.blueprint.resourceWood,
+            newObject.blueprint.resourceWaste,
+            newObject.blueprint.resourceWhiskey
         );
 
         _tileObject = 
             Instantiate(
-                tileObject.blueprint.prefab, 
+                newObject.blueprint.prefab, 
                 spawnPoint.transform.position, 
-                _objectRotation
+                _objectRotation,
+                gameObject.transform
             );
-
+        
+        // Reset rotation
+        _objectRotation = spawnPoint.transform.rotation;
+        
+        // Add building to building list
+        if (newObject.blueprint.type == Type.Building) {
+            _buildManager.AddBuilding(_tileObject);
+        }
+        
+        // Set this tile as parent tile of tile object
         GetTileObject().SetParentTile(this);
     }
     

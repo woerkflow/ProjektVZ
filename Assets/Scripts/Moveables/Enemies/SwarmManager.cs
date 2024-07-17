@@ -6,26 +6,24 @@ public class SwarmManager : MonoBehaviour {
     public List<Enemy> zombies;
     public GameObject mainTarget;
     
-    private GameObject _target;
-    private Collider[] _hitColliders;
+    private BuildManager _buildManager;
 
+    
     #region Unity Methods
     
     private void Start() {
-        _target = mainTarget;
-        int maxColliders = 50;
-        _hitColliders = new Collider[maxColliders];
+        _buildManager = BuildManager.Instance;
         
         // Start coroutine for targeting
-        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
+        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
     }
     
     #endregion
     
+    
     #region Zombie Subscription
     
     public void Join(Enemy zombie) {
-        zombie.SetTarget(_target);
         zombies.Add(zombie);
     }
 
@@ -34,6 +32,7 @@ public class SwarmManager : MonoBehaviour {
     }
     
     #endregion
+    
     
     #region Zombie Targeting
     
@@ -44,30 +43,30 @@ public class SwarmManager : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
+        GameObject leaderTarget = leader.GetTarget();
         
-        if (_target && _target != mainTarget) {
+        if (leaderTarget && leaderTarget != mainTarget) {
             return;
         }
-        int numColliders = Physics.OverlapSphereNonAlloc(leader.transform.position, leader.perceptionRange, _hitColliders);
+        List<GameObject> buildings = _buildManager.GetBuildings();
         float shortestDistance = leader.perceptionRange;
-        GameObject nearestEnemy = null;
+        GameObject nearestBuilding = null;
         
-        for (int i = 0; i < numColliders; i++) {
-            Collider enemy = _hitColliders[i];
-            
-            if (enemy.CompareTag(leader.enemyTag)) {
-                float distanceToEnemy = Vector3.Distance(leader.transform.position, enemy.transform.position);
-            
-                if (distanceToEnemy < shortestDistance) {
-                    shortestDistance = distanceToEnemy;
-                    nearestEnemy = enemy.gameObject;
-                }
+        foreach (GameObject building in buildings) {
+            float distanceToEnemy = Vector3.Distance(leader.transform.position, building.transform.position);
+        
+            if (distanceToEnemy < shortestDistance) {
+                shortestDistance = distanceToEnemy;
+                nearestBuilding = building;
             }
         }
-        _target = nearestEnemy;
+
+        if (nearestBuilding == null) {
+            return;
+        }
 
         foreach (Enemy zombie in zombies) {
-            zombie.SetTarget(_target);
+            zombie.SetTarget(nearestBuilding);
         }
     }
     

@@ -176,7 +176,7 @@ public class EnemySpawner : MonoBehaviour {
         
         for (var i = 0; i < enemyAmount; i++) {
             Enemy zombie = _pool.Get();
-            zombie.swarmManager = swarmManager;
+            zombie.SetSwarmManager(swarmManager);
             swarmManager.Join(zombie);
             yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         }

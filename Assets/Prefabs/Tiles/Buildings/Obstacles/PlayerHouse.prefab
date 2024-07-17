@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &81289210623418769
 Transform:
@@ -99,7 +99,7 @@ GameObject:
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3877440763414206681
 Transform:
@@ -160,6 +160,5 @@ MonoBehaviour:
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
-  parentTile: {fileID: 0}
-  maxHealth: 100
-  buildingType: 1
+  maxHealth: 1000
+  upgrade: {fileID: 0}

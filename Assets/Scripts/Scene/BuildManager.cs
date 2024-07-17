@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour {
     
     public static BuildManager Instance;
     
-    [Header("Buildings")]
+    [Header("Prefabs")]
     public Building flameLauncher;
     public Building bladeLauncher;
     public Building pumpkinSpawner;
@@ -12,6 +14,9 @@ public class BuildManager : MonoBehaviour {
 
     [Header("Menu")]
     public UIMenu buildMenu;
+    
+    [Header("Buildings")]
+    public List<GameObject> buildings;
     
     private Building _selectedBuilding;
     private PlayerManager _playerManager;
@@ -53,6 +58,18 @@ public class BuildManager : MonoBehaviour {
     
     public void SelectBuildingToBuild(Building building) {
         _selectedBuilding = building;
+    }
+
+    public void AddBuilding(GameObject building) {
+        buildings.Add(building);
+    }
+
+    public void RemoveBuilding(GameObject building) {
+        buildings.Remove(building);
+    }
+
+    public List<GameObject> GetBuildings() {
+        return buildings;
     }
     
     #endregion

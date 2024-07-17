@@ -45,10 +45,10 @@ public class UpgradeManager : MonoBehaviour {
     private bool CanRepair() {
         
         if (_tileBuilding.GetHealth() < _tileBuilding.maxHealth) {
-            float costFactor = 1 - (_tileBuilding.GetHealth() / _tileBuilding.maxHealth);
-            _woodCost = (int) Mathf.Floor(_selectedTile.tileObject.blueprint.resourceWood * costFactor);
-            _wasteCost = (int) Mathf.Floor(_selectedTile.tileObject.blueprint.resourceWaste * costFactor);
-            _whiskeyCost = (int) Mathf.Floor(_selectedTile.tileObject.blueprint.resourceWhiskey * costFactor);
+            float costFactor = 1 - _tileBuilding.GetHealth() / (_tileBuilding.maxHealth * 1f);
+            _woodCost = (int) Mathf.Floor(_selectedTile.GetTileObject().blueprint.resourceWood * costFactor);
+            _wasteCost = (int) Mathf.Floor(_selectedTile.GetTileObject().blueprint.resourceWaste * costFactor);
+            _whiskeyCost = (int) Mathf.Floor(_selectedTile.GetTileObject().blueprint.resourceWhiskey * costFactor);
 
             return _playerManager.GetResourceWood() >= _woodCost
                    && _playerManager.GetResourceWaste() >= _wasteCost

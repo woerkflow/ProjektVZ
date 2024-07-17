@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour {
     [Header("Target")]
     public GameObject mainTarget;
     public string enemyTag;
-    public float maxSpeed;
+    public float speed;
     
     [Header("Perception")]
     public float perceptionRange;
@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour {
     public string dieParameter;
     
     // GameObject
-    private float _speed;
     private int _currentHealth;
     private Animator _animator;
     private float _attackCountDown;
@@ -32,8 +31,8 @@ public class Enemy : MonoBehaviour {
     private float _deadCounter;
     
     // Target
-    public GameObject target { get; set; }
-    public SwarmManager swarmManager { private get; set; }
+    private GameObject _target;
+    private SwarmManager _swarmManager;
     private Building _targetBuildingComponent;
     private float _targetCapsuleRadius;
     private Vector3 _targetPosition;
@@ -49,7 +48,6 @@ public class Enemy : MonoBehaviour {
         // Initialize enemy values
         _attackCountDown = 0f;
         _currentHealth = maxHealth;
-        _speed = Random.Range(0.004f, maxSpeed);
         _animator = GetComponentInChildren<Animator>();
         _capsuleRadius = GetComponent<CapsuleCollider>().radius;
         
@@ -66,13 +64,19 @@ public class Enemy : MonoBehaviour {
                 _deadCounter -= Time.deltaTime;
                 return;
             }
+            
+            // Reward player
+            _playerManager.SetResourceWhiskey(
+                _playerManager.GetResourceWhiskey() + 1
+            );
             DestroyEnemy();
             return;
         }
 
         // If zombie has no target stop...
-        if (target == null) {
+        if (_target == null) {
             _animator.SetFloat(walkParameter, 0f);
+            _target = mainTarget;
             return;
         }
         Vector3 direction = _targetPosition - new Vector3(transform.position.x, 0f, transform.position.z);
@@ -88,7 +92,7 @@ public class Enemy : MonoBehaviour {
             MoveToTarget(direction);
         
         // If distance is not greater than the sum of both hit box radii...
-        } else if (target != mainTarget) {
+        } else if (_target != mainTarget) {
             
             // Stop walking animation
             _animator.SetFloat(walkParameter, 0f);
@@ -111,9 +115,10 @@ public class Enemy : MonoBehaviour {
     }
     
     private void DestroyEnemy() {
+        
         if (_pool != null) {
             _animator.SetFloat(walkParameter, 0f);
-            swarmManager.Leave(this);
+            _swarmManager.Leave(this);
             _pool.Release(this);
         } else {
             Destroy(gameObject);
@@ -133,11 +138,6 @@ public class Enemy : MonoBehaviour {
         
         if (_currentHealth <= 0) {
             
-            // Reward player
-            _playerManager.SetResourceWhiskey(
-                _playerManager.GetResourceWhiskey() + 1
-            );
-            
             // Kill zombie
             gameObject.tag = "ZombieDead";
             _animator.SetTrigger(dieParameter);
@@ -145,21 +145,20 @@ public class Enemy : MonoBehaviour {
         }
     }
     
+    public GameObject GetTarget() {
+        return _target;
+    }
+    
     public void SetTarget(GameObject newTarget) {
-        target = newTarget
-            ? newTarget
-            : mainTarget;
-        
-        _targetBuildingComponent = target?.GetComponent<Building>();
-        
-        CapsuleCollider targetCapsuleCollider = target?.GetComponent<CapsuleCollider>();
-        _targetCapsuleRadius = targetCapsuleCollider
-            ? targetCapsuleCollider.radius 
-            : 0.01f;
-        
-        _targetPosition = target
-            ? new Vector3(target.transform.position.x, 0, target.transform.position.z) 
-            : new Vector3(mainTarget.transform.position.x, 0, mainTarget.transform.position.z);
+        _target = newTarget;
+        _targetBuildingComponent = _target.GetComponent<Building>();
+        CapsuleCollider targetCapsuleCollider = _target.GetComponent<CapsuleCollider>();
+        _targetCapsuleRadius = targetCapsuleCollider.radius;
+        _targetPosition = new Vector3(_target.transform.position.x, 0, _target.transform.position.z);
+    }
+
+    public void SetSwarmManager(SwarmManager swarmManager) {
+        _swarmManager = swarmManager;
     }
 
     public void ResetValues() {
@@ -174,7 +173,7 @@ public class Enemy : MonoBehaviour {
     private float DeltaSpeed(float value) => value * Time.deltaTime;
     
     private void MoveToTarget(Vector3 direction) {
-        transform.Translate(direction.normalized * DeltaSpeed(_speed), Space.World);
+        transform.Translate(direction.normalized * DeltaSpeed(speed), Space.World);
     }
 
     private void RotateToTarget(Vector3 direction) {
@@ -182,15 +181,15 @@ public class Enemy : MonoBehaviour {
     }
     
     private void AttackTarget() {
-        if (_attackCountDown <= 0) {
+        if (_attackCountDown > 0) {
+            _attackCountDown -= Time.deltaTime;
+        } else {
             _animator.SetTrigger(attackParameter);
             
-            if (target != null) {
+            if (_target != null) {
                 Damage(_targetBuildingComponent);
             }
-            _attackCountDown = 1f / attackSpeed;
-        } else {
-            _attackCountDown -= Time.deltaTime;
+            _attackCountDown = attackSpeed;
         }
     }
     

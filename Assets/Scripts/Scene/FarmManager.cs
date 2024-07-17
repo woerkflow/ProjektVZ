@@ -51,7 +51,7 @@ public class FarmManager : MonoBehaviour {
         SetMenuResourceValue(resourceWoodAmount, _selectedTile.resourceWood);
         SetMenuResourceValue(resourceWasteAmount, _selectedTile.resourceWaste);
         SetMenuResourceValue(resourceWhiskeyAmount, _selectedTile.resourceWhiskey);
-        SetMenuResourceValue(timeCosts, _selectedTile.tileObject.blueprint.timeCosts);
+        SetMenuResourceValue(timeCosts, _selectedTile.GetTileObject().blueprint.timeCosts);
         farmMenu.Activate();
     }
     
@@ -65,7 +65,7 @@ public class FarmManager : MonoBehaviour {
 
     private bool CanFarm() {
         
-        return _enemySpawner.GetTime() >= _selectedTile.tileObject.blueprint.timeCosts
+        return _enemySpawner.GetTime() >= _selectedTile.GetTileObject().blueprint.timeCosts
                && (_selectedTile.resourceWood > 0
                || _selectedTile.resourceWaste > 0
                || _selectedTile.resourceWhiskey > 0);
@@ -104,7 +104,7 @@ public class FarmManager : MonoBehaviour {
                 _selectedTile.resourceWhiskey = 0;
             }
             _enemySpawner.SetTimer(
-                _enemySpawner.GetTime() - _selectedTile.tileObject.blueprint.timeCosts
+                _enemySpawner.GetTime() - _selectedTile.GetTileObject().blueprint.timeCosts
             );
             _selectedTile.GetTileObject().DestroyObject();
             CloseMenu();
