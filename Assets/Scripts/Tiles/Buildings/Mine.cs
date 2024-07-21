@@ -1,10 +1,6 @@
 using UnityEngine;
 
-public class Mine : MonoBehaviour {
-    
-    [Header("Enemy")]
-    public string enemyTag;
-    public float perceptionRange;
+public class Mine : Seeker {
 
     [Header("Explode")]
     public GameObject impactEffect;
@@ -12,19 +8,10 @@ public class Mine : MonoBehaviour {
     public float explosionRadius;
     public float timer;
     
-    private GameObject _target;
-    private Collider[] _hitColliders;
     private GameObject _parentSpawner;
     
     
     #region Unity methods
-    
-    private void Start() {
-        int maxColliders = 30;
-        _hitColliders = new Collider[maxColliders];
-        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
-    }
-    
     
     private void Update() {
         
@@ -33,7 +20,7 @@ public class Mine : MonoBehaviour {
             StartImpactEffect();
         }
         
-        if (_target == null) {
+        if (Target == null) {
             return;
         }
 
@@ -59,44 +46,15 @@ public class Mine : MonoBehaviour {
     
     #region Private class methods
     
-    private void UpdateTarget() {
-
-        if (_target != null && _target.CompareTag(enemyTag)) {
-            return;
-        }
-        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, perceptionRange, _hitColliders);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        for (int i = 0; i < enemyCount; i++) {
-            Collider enemy = _hitColliders[i];
-            
-            if (enemy.CompareTag(enemyTag)) {
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            
-                if (distanceToEnemy < shortestDistance) {
-                    shortestDistance = distanceToEnemy;
-                    nearestEnemy = enemy.gameObject;
-                }
-            }
-        }
-
-        if (nearestEnemy != null && shortestDistance <= perceptionRange) {
-            _target = nearestEnemy;
-        } else {
-            _target = null;
-        }
-    }
-    
     private void Damage(Enemy enemy) {
         enemy.SetHealth(enemy.GetHealth() - damage);
     }
     
     private void Explode() {
-        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, _hitColliders);
+        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, HitColliders);
         
         for (int i = 0; i < enemyCount; i++) {
-            Collider enemy = _hitColliders[i];
+            Collider enemy = HitColliders[i];
             
             if (enemy.CompareTag(enemyTag)) {
                 Damage(enemy.GetComponent<Enemy>());

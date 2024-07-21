@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3354563489808736414}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0765}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4856,15 +4856,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8428514640838481261}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.0017, y: 0.0144, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4936194982853844508}
   - {fileID: 1262230341042123472}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &2180915785089963818
 LineRenderer:
   serializedVersion: 2
@@ -4909,7 +4909,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0.0000000041813992, y: 0, z: 0.077167116}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -4984,8 +4984,9 @@ MonoBehaviour:
   lineRenderer: {fileID: 2180915785089963818}
   effectFirePoint: {fileID: 8896097095524556420}
   effectTarget: {fileID: 3354563489808736414}
-  effectArea: {fileID: 0}
+  effectArea: {fileID: 3354563489808736414}
   damage: 1
+  damageTick: 2
 --- !u!1 &8896097095524556420
 GameObject:
   m_ObjectHideFlags: 0
@@ -5013,7 +5014,7 @@ Transform:
   m_GameObject: {fileID: 8896097095524556420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.00165}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

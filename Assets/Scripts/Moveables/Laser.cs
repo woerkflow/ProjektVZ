@@ -8,9 +8,11 @@ public class Laser : MonoBehaviour {
     public GameObject effectTarget;
     public GameObject effectArea;
     public int damage;
+    public float damageTick;
     
     private GameObject _effectArea;
     private Enemy _target;
+    private float _damageTick;
 
     
     #region Unity methods
@@ -23,6 +25,12 @@ public class Laser : MonoBehaviour {
         }
         
         if (_target.GetHealth() > 0) {
+
+            if (_damageTick > 0) {
+                _damageTick -= Time.deltaTime;
+                return;
+            }
+            _damageTick = damageTick;
             Damage(_target);
         } else if (_target.GetHealth() <= 0 && _effectArea == null) {
             CreateDamageArea();
