@@ -4,12 +4,6 @@ using UnityEngine;
 public class FarmManager : MonoBehaviour {
     
     public static FarmManager Instance;
-
-    [Header("Tile")] 
-    public TileObject empty;
-
-    [Header("Timer")] 
-    public UITimer timer;
     
     [Header("Menu")]
     public UIMenu farmMenu;

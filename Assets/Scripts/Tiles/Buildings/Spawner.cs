@@ -6,10 +6,11 @@ public class Spawner : MonoBehaviour {
     public GameObject spawnPrefab;
     public Transform[] spawnPoints;
     public float spawnTime;
+    
+    [HideInInspector]
     public List<GameObject> spawns;
     
     private void Start() {
-        spawns = new List<GameObject>();
         InvokeRepeating(nameof(Spawn), 0f, spawnTime);
     }
     

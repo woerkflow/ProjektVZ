@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2087186087413735228
+--- !u!1 &6900164193496561834
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6482718518743689063}
-  - component: {fileID: 9018267390360614350}
+  - component: {fileID: 3584488371915848171}
+  - component: {fileID: 33261198043442286}
   m_Layer: 0
   m_Name: Wood_large
   m_TagString: Resource
@@ -17,29 +17,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6482718518743689063
+--- !u!4 &3584488371915848171
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087186087413735228}
+  m_GameObject: {fileID: 6900164193496561834}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6884773086090980895}
+  - {fileID: 7025380744644257613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9018267390360614350
+--- !u!114 &33261198043442286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087186087413735228}
+  m_GameObject: {fileID: 6900164193496561834}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72f3ad5370611c2408411976873a9084, type: 3}
@@ -47,13 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprint:
     type: 2
-    prefab: {fileID: 2087186087413735228}
+    prefab: {fileID: 6900164193496561834}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 20
     resourceWood: 200
     resourceWaste: 0
     resourceWhiskey: 0
---- !u!1 &4830358540637441497
+--- !u!1 &7106053888996748101
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,51 +61,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6884773086090980895}
-  - component: {fileID: 1089741424759490802}
-  - component: {fileID: 6151147594535024391}
+  - component: {fileID: 7025380744644257613}
+  - component: {fileID: 4341602238097803765}
+  - component: {fileID: 1004261434250042635}
   m_Layer: 0
-  m_Name: Wood_large
+  m_Name: tile_wood_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
---- !u!4 &6884773086090980895
+--- !u!4 &7025380744644257613
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4830358540637441497}
+  m_GameObject: {fileID: 7106053888996748101}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25050288, y: 0.25050294, z: 0.2505029}
+  m_LocalScale: {x: 0.25050288, y: 0.25050288, z: 0.25050285}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6482718518743689063}
+  m_Father: {fileID: 3584488371915848171}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!33 &1089741424759490802
+--- !u!33 &4341602238097803765
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4830358540637441497}
-  m_Mesh: {fileID: -8810314792159346440, guid: 35cee41deba6c304e8cfb11537bc3a7a, type: 3}
---- !u!23 &6151147594535024391
+  m_GameObject: {fileID: 7106053888996748101}
+  m_Mesh: {fileID: 1103719774071097141, guid: 35cee41deba6c304e8cfb11537bc3a7a, type: 3}
+--- !u!23 &1004261434250042635
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4830358540637441497}
+  m_GameObject: {fileID: 7106053888996748101}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -114,7 +114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a7591030681ca9408ec0536b59c0f7f, type: 2}
+  - {fileID: 2100000, guid: e1053bd4a9a05224e96b169a720bcec1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

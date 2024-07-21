@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour {
@@ -15,7 +14,7 @@ public class BuildManager : MonoBehaviour {
     [Header("Menu")]
     public UIMenu buildMenu;
     
-    [Header("Buildings")]
+    [HideInInspector]
     public List<GameObject> buildings;
     
     private Building _selectedBuilding;
