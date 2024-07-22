@@ -25,7 +25,7 @@ public class Blaster : Turret {
     private void Shoot() {
         
         if (FireCountDown <= 0f) {
-            GameObject laserObj = Instantiate(prefabLaser, firePoint.position, firePoint.rotation);
+            GameObject laserObj = Instantiate(prefabLaser, Vector3.zero, Quaternion.identity);
             Laser laser = laserObj.GetComponent<Laser>();
 
             if (laser != null) {

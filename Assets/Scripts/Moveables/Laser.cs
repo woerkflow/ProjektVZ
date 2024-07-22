@@ -13,18 +13,15 @@ public class Laser : MonoBehaviour {
     private GameObject _effectArea;
     private Enemy _target;
     private float _damageTick;
+    private Transform _firePoint;
 
     
     #region Unity methods
 
     private void Update() {
         
-        if (_target == null) {
-            Destroy(gameObject);
-            return;
-        }
-        
         if (_target.GetHealth() > 0) {
+            SetPositions();
 
             if (_damageTick > 0) {
                 _damageTick -= Time.deltaTime;
@@ -34,6 +31,7 @@ public class Laser : MonoBehaviour {
             Damage(_target);
         } else if (_target.GetHealth() <= 0 && _effectArea == null) {
             CreateDamageArea();
+            Destroy(gameObject);
         }
     }
     
@@ -44,23 +42,28 @@ public class Laser : MonoBehaviour {
 
     public void Seek(Transform firePoint, GameObject target) {
         _target = target.GetComponent<Enemy>();
-        
-        // Set line renderer
-        lineRenderer.SetPosition(0, firePoint.position);
-        lineRenderer.SetPosition(1, target.transform.position);
-        
-        // Create fire point effect
-        effectFirePoint.transform.position = firePoint.position;
-        effectFirePoint.transform.rotation = firePoint.rotation;
-        
-        // Create target effect
-        effectTarget.transform.position = target.transform.position;
+        _firePoint = firePoint;
+        SetPositions();
     }
     
     #endregion
     
     
     #region Private class methods
+
+    private void SetPositions() {
+        
+        // Set line renderer
+        lineRenderer.SetPosition(0, _firePoint.position);
+        lineRenderer.SetPosition(1, _target.transform.position);
+        
+        // Create fire point effect
+        effectFirePoint.transform.position = _firePoint.position;
+        effectFirePoint.transform.rotation = _firePoint.rotation;
+        
+        // Create target effect
+        effectTarget.transform.position = _target.transform.position;
+    }
     
     private void Damage(Enemy enemy) {
         enemy.SetHealth(enemy.GetHealth() - damage);
