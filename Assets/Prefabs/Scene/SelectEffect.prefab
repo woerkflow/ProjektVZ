@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2081689138653829541}
   - component: {fileID: 8097815571121945368}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: GhostRays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4875,7 +4875,7 @@ GameObject:
   - component: {fileID: 2723278863644774202}
   - component: {fileID: 4651456469158048855}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

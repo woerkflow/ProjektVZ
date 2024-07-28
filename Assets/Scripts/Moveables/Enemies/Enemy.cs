@@ -6,7 +6,6 @@ public class Enemy : MonoBehaviour {
     
     [Header("Target")]
     public GameObject mainTarget;
-    public string enemyTag;
     public float speed;
     
     [Header("Perception")]
@@ -16,6 +15,7 @@ public class Enemy : MonoBehaviour {
     public float attackSpeed;
     public int damage;
     public int maxHealth;
+    public CapsuleCollider capsuleCollider;
 
     [Header("Animation")] 
     public string walkParameter;
@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour {
     private int _currentHealth;
     private Animator _animator;
     private float _attackCountDown;
+    private CapsuleCollider _capsuleCollider;
     private float _capsuleRadius;
     private ObjectPool<Enemy> _pool;
     private float _deadCounter;
@@ -49,7 +50,7 @@ public class Enemy : MonoBehaviour {
         _attackCountDown = 0f;
         _currentHealth = maxHealth;
         _animator = GetComponentInChildren<Animator>();
-        _capsuleRadius = GetComponent<CapsuleCollider>().radius;
+        _capsuleRadius = capsuleCollider.radius;
         
         // Initialize main target
         SetTarget(mainTarget);
@@ -140,6 +141,7 @@ public class Enemy : MonoBehaviour {
             
             // Kill zombie
             gameObject.tag = "ZombieDead";
+            capsuleCollider.enabled = false;
             _animator.SetTrigger(dieParameter);
             _deadCounter = 2f;
         }
@@ -152,8 +154,7 @@ public class Enemy : MonoBehaviour {
     public void SetTarget(GameObject newTarget) {
         _target = newTarget;
         _targetBuildingComponent = _target.GetComponent<Building>();
-        CapsuleCollider targetCapsuleCollider = _target.GetComponent<CapsuleCollider>();
-        _targetCapsuleRadius = targetCapsuleCollider.radius;
+        _targetCapsuleRadius = _target.GetComponent<CapsuleCollider>().radius;
         _targetPosition = new Vector3(_target.transform.position.x, 0, _target.transform.position.z);
     }
 
@@ -163,6 +164,7 @@ public class Enemy : MonoBehaviour {
 
     public void ResetValues() {
         SetHealth(maxHealth);
+        capsuleCollider.enabled = true;
         gameObject.tag = "Zombie";
     }
     

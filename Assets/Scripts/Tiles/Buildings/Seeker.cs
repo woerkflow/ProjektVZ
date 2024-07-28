@@ -7,35 +7,45 @@ public class Seeker : MonoBehaviour {
     public float perceptionRange;
     
     protected GameObject Target;
-    protected Collider[] HitColliders;
+    
+    private Collider[] _hitColliders;
     
     
     #region Unity methods
     
     private void Start() {
-        int maxColliders = 30;
-        HitColliders = new Collider[maxColliders];
-        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+        
+        // Calculate maxColliders by perception range
+        float radiusInTiles = perceptionRange / 0.04f;
+        float diameterInTiles = radiusInTiles * 2;
+        float quadInTiles = Mathf.Pow(diameterInTiles, 2);
+        int maxColliders = (int)(quadInTiles + 5);
+        _hitColliders = new Collider[maxColliders];
+        
+        // Start coroutine
+        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
     }
     
     #endregion
     
     
-    #region Protected class methods
+    #region Private class methods
     
     private void UpdateTarget() {
 
-        if (Target != null && Target.CompareTag(enemyTag)) {
+        if (Target != null 
+            && Target.gameObject.activeSelf
+            && Target.CompareTag(enemyTag)) {
             return;
         }
-        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, perceptionRange, HitColliders);
+        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, perceptionRange, _hitColliders);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
         for (int i = 0; i < enemyCount; i++) {
-            Collider enemy = HitColliders[i];
+            Collider enemy = _hitColliders[i];
             
-            if (enemy.CompareTag(enemyTag)) {
+            if (enemy.gameObject.activeSelf && enemy.CompareTag(enemyTag)) {
                 float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
             
                 if (distanceToEnemy < shortestDistance) {
@@ -50,6 +60,11 @@ public class Seeker : MonoBehaviour {
         } else {
             Target = null;
         }
+    }
+    
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, perceptionRange);
     }
     
     #endregion

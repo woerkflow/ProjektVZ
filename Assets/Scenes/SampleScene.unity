@@ -1202,7 +1202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &37966941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,7 +1210,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37966940}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5125c2f5d7023e54c8929c8f8d1c11bb, type: 3}
   m_Name: 
@@ -10049,6 +10049,12 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
+        type: 3}
+      propertyPath: startObject
+      value: 
+      objectReference: {fileID: 7413094481793581927, guid: 7ba093ad82e9f8442ba9ae7c28a393f6,
+        type: 3}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
       propertyPath: selectEffect
@@ -21997,6 +22003,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
+      propertyPath: startObject
+      value: 
+      objectReference: {fileID: 615848428092340932, guid: bfef0f181fc1459419a54bef2e6b5d5a,
+        type: 3}
+    - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
+        type: 3}
       propertyPath: selectEffect
       value: 
       objectReference: {fileID: 1848722109}
@@ -23332,17 +23344,17 @@ PrefabInstance:
     - target: {fileID: 8046258550029809878, guid: 8be42a01ab299a843b0e950e0c2ebc3f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8046258550029809878, guid: 8be42a01ab299a843b0e950e0c2ebc3f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8046258550029809878, guid: 8be42a01ab299a843b0e950e0c2ebc3f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8046258550029809878, guid: 8be42a01ab299a843b0e950e0c2ebc3f,
         type: 3}
@@ -28013,7 +28025,7 @@ PrefabInstance:
     - target: {fileID: 3642352042163518208, guid: f54012181eacade4ea242c65f804720f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3642352042163518208, guid: f54012181eacade4ea242c65f804720f,
         type: 3}
@@ -44872,6 +44884,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
+      propertyPath: startObject
+      value: 
+      objectReference: {fileID: 5070567566666232820, guid: 8e584b1af62168b4783478b8398a4ee8,
+        type: 3}
+    - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
+        type: 3}
       propertyPath: selectEffect
       value: 
       objectReference: {fileID: 1848722109}
@@ -56596,6 +56614,12 @@ PrefabInstance:
       propertyPath: pumpkinSpawner
       value: 
       objectReference: {fileID: 5070567566666232820, guid: 8e584b1af62168b4783478b8398a4ee8,
+        type: 3}
+    - target: {fileID: 3551453537848986520, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: toxicWasteBlaster
+      value: 
+      objectReference: {fileID: 2326920699968995894, guid: 155f621011db87b47af17146ff12cfbe,
         type: 3}
     - target: {fileID: 4777350099106395028, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}

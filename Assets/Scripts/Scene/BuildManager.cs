@@ -10,6 +10,7 @@ public class BuildManager : MonoBehaviour {
     public Building bladeLauncher;
     public Building pumpkinSpawner;
     public Building fenceObstacle;
+    public Building toxicWasteBlaster;
 
     [Header("Menu")]
     public UIMenu buildMenu;
@@ -103,6 +104,10 @@ public class BuildManager : MonoBehaviour {
     
     public void SelectFenceObstacle() {
         SelectBuildingToBuild(fenceObstacle);
+    }
+
+    public void SelectToxicWasteBlaster() {
+        SelectBuildingToBuild(toxicWasteBlaster);
     }
 
     public void Build() {

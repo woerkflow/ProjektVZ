@@ -6202,7 +6202,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0015
+  m_Radius: 0.002
   m_Height: 0.015
   m_Direction: 1
   m_Center: {x: 0, y: 0.006, z: 0}
@@ -6220,12 +6220,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
-  enemyTag: Building
-  speed: 0.005
+  speed: 0.006
   perceptionRange: 0.1
   attackSpeed: 3
   damage: 1
   maxHealth: 5
+  capsuleCollider: {fileID: 2336787883423994718}
   walkParameter: Walk
   attackParameter: Attack
   dieParameter: Die

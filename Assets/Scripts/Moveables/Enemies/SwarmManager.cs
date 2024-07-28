@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 
 public class SwarmManager : MonoBehaviour {
+    
+    [Header("Swarm")]
     public List<Enemy> zombies;
     public GameObject mainTarget;
     

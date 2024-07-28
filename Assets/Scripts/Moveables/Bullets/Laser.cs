@@ -54,8 +54,12 @@ public class Laser : MonoBehaviour {
     private void SetPositions() {
         
         // Set line renderer
-        lineRenderer.SetPosition(0, _firePoint.position);
-        lineRenderer.SetPosition(1, _target.transform.position);
+        lineRenderer.SetPosition(0, 
+            _firePoint.position
+        );
+        lineRenderer.SetPosition(1, 
+            _target.transform.position + _target.GetComponent<CapsuleCollider>().center
+        );
         
         // Create fire point effect
         effectFirePoint.transform.position = _firePoint.position;

@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 3202521542788254968}
   - component: {fileID: 5665478613386403082}
   - component: {fileID: 615848428092340932}
-  - component: {fileID: 6292862815433485006}
+  - component: {fileID: 4961349031111582701}
   m_Layer: 0
   m_Name: BladeLauncher
   m_TagString: Building
@@ -195,7 +195,7 @@ MonoBehaviour:
     resourceWhiskey: 0
   maxHealth: 500
   upgrade: {fileID: 0}
---- !u!114 &6292862815433485006
+--- !u!114 &4961349031111582701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,17 +204,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4201152157588848215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6983134e4a57ea4ca3ea1b1d00df51f, type: 3}
+  m_Script: {fileID: 11500000, guid: 18238ed1445c77f4f97b606fe67f6006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTag: Zombie
+  perceptionRange: 0.1
   fireRate: 2.5
   firePoint: {fileID: 1375928718055682521}
-  prefabBullet: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
-    type: 3}
-  enemyTag: Zombie
-  perceptionRange: 0.12
   partToRotate: {fileID: 2477221193001325512}
   turnSpeed: 5
+  type: 0
+  projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
+    type: 3}
 --- !u!1 &7567849528967252978
 GameObject:
   m_ObjectHideFlags: 0

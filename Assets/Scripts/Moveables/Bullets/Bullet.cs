@@ -3,50 +3,123 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
     
     [Header("Bullet")]
+    public Type type;
     public float speed;
     public int damage;
-    public float attackHeight;
     public GameObject impactEffect;
     
-    protected GameObject Target;
-    
-    private Vector3 _targetPosition;
+    [Header("Explosion")]
+    public Explosive explosive;
 
+    public enum Type {
+        SingleTarget,
+        MultiTarget
+    }
+    
+    // Target
+    private GameObject _target;
+    
+    // Curve
+    private float _timeElapsed;
+    private Vector3 _endPoint;
+    private Vector3 _startPoint;
+    private Vector3 _controlPoint;
+    private float _travelTime;
+    
+    
     #region Unity methods
     
-    private void Start() {
-        Vector3 direction = _targetPosition - transform.position;
-        transform.rotation = Quaternion.LookRotation(direction);
-    }
-    
-    #endregion
-    
-    #region Public methods
+    private void Update() {
 
-    public void Seek(GameObject turretTarget) {
-        Target = turretTarget;
-        _targetPosition = Target.transform.position;
+        if (_target == null) {
+            Destroy(gameObject);
+            return;
+        }
+        
+        // Get new t value
+        _timeElapsed += Time.deltaTime;
+        float t = _timeElapsed / _travelTime;
+        t = Mathf.Clamp01(t);
+
+        if (t < 1f) {
+            Vector3 position = CalculateParabolicPosition(_startPoint, _controlPoint, _endPoint, t);
+            Vector3 nextPosition = CalculateParabolicPosition(_startPoint, _controlPoint, _endPoint, t + 0.001f);
+            transform.position = position;
+            transform.rotation = Quaternion.LookRotation(nextPosition - position);
+        } else {
+            HitTarget(_target);
+        }
     }
     
     #endregion
     
-    #region Class methods
     
-    protected void Damage(Enemy enemy) {
+    #region Public class methods
+
+    public void Seek(Transform firePoint, GameObject turretTarget) {
+        _target = turretTarget;
+        _startPoint = firePoint.position;
+        SetPositions();
+    }
+    
+    #endregion
+    
+    
+    #region Private class methods
+
+    private void SetPositions() {
+        _endPoint = _target.transform.position;
+        _controlPoint = CalculateControlPoint(_startPoint, _endPoint);
+        
+        // Set travel time
+        _travelTime = Vector3.Distance(_startPoint, _endPoint) / speed;
+
+        // Set timer
+        _timeElapsed = 0f;
+    }
+    
+    #endregion
+
+    
+    #region Trajetory
+
+    private Vector3 CalculateControlPoint(Vector3 start, Vector3 end) {
+        Vector3 mid = (start + end) * 0.5f;
+        return new Vector3(mid.x, start.y, mid.z);
+    }
+    
+    private Vector3 CalculateParabolicPosition(Vector3 start, Vector3 control, Vector3 end, float t) {
+        Vector3 startToControl = Vector3.Lerp(start, control, t);
+        Vector3 controlToEnd = Vector3.Lerp(control, end, t);
+        return Vector3.Lerp(startToControl, controlToEnd, t);
+    }
+
+    #endregion
+    
+    
+    #region Impact effect methods
+    
+    private void Damage(Enemy enemy) {
         enemy.SetHealth(enemy.GetHealth() - damage);
     }
     
-    protected void StartImpactEffect() {
+    private void StartImpactEffect() {
         GameObject effectInst = Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(effectInst, 1f);
         Destroy(gameObject);
     }
+    
+    private void HitTarget(GameObject target) {
 
-    protected Vector3 GetTargetDirection() {
-        _targetPosition = Target.transform.position;
-        float targetHeight = (Target.GetComponent<CapsuleCollider>().height * attackHeight) + _targetPosition.y;
-        Vector3 newPos = new Vector3(_targetPosition.x, targetHeight, _targetPosition.z);
-        return newPos - transform.position;
+        switch (type) {
+            case Type.SingleTarget:
+                Damage(target.GetComponent<Enemy>());
+                break;
+            case Type.MultiTarget:
+                explosive.Explode(damage);
+                break;
+        }
+        StartImpactEffect();
     }
     
     #endregion

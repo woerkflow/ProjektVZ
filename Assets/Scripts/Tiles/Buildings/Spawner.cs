@@ -24,7 +24,12 @@ public class Spawner : MonoBehaviour {
             return;
         }
         Transform spawnPoint = spawnPoints[spawns.Count];
-        GameObject obj = Instantiate(GetRandomSpawn(), spawnPoint.position, spawnPoint.rotation);
+        GameObject obj = Instantiate(
+            GetRandomSpawn(), 
+            spawnPoint.position, 
+            spawnPoint.rotation,
+            gameObject.transform
+        );
         
         // Add object to list
         spawns.Add(obj);

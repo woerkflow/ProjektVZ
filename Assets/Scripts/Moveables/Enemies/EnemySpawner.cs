@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour {
     public Enemy[] enemyPrefabs = new Enemy[4];
     public SpawnPoint[] spawnPoints = new SpawnPoint[8];
     public SwarmManager swarmManagerPrefab;
+    public List<SwarmManager> swarmManagers;
     public int maxEnemyAmount;
     public float maxCountDown;
     
@@ -32,7 +33,6 @@ public class EnemySpawner : MonoBehaviour {
     private float _buildCountDown;
     private SpawnPoint _currentSpawnPoint;
     private int _currentEnemyAmount;
-    private List<SwarmManager> _swarmManagers;
     private bool _isActive;
     
     
@@ -58,12 +58,12 @@ public class EnemySpawner : MonoBehaviour {
             );
         
         // Initiate state machine
-        _swarmManagers = new List<SwarmManager>();
+        swarmManagers = new List<SwarmManager>();
         state = State.Build;
         _buildCountDown = 30f;
         _currentSpawnPoint = spawnPoints[0];
         _currentEnemyAmount = 10;
-        SetActive(false);
+        SetActive(true);
         timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
     }
     
@@ -95,8 +95,8 @@ public class EnemySpawner : MonoBehaviour {
 
         if (state == State.Fight) {
             
-            if (_swarmManagers.Count > 0) {
-                _swarmManagers.RemoveAll(spawn => spawn == null);
+            if (swarmManagers.Count > 0) {
+                swarmManagers.RemoveAll(spawn => spawn == null);
                 return;
             }
             // Choose randomly spawn point
@@ -171,8 +171,8 @@ public class EnemySpawner : MonoBehaviour {
     #region Spawn Loop
     
     private IEnumerator SpawnWave(int enemyAmount) {
-        SwarmManager swarmManager = Instantiate(swarmManagerPrefab, transform.position, transform.rotation);
-        _swarmManagers.Add(swarmManager);
+        SwarmManager swarmManager = Instantiate(swarmManagerPrefab);
+        swarmManagers.Add(swarmManager);
         
         for (var i = 0; i < enemyAmount; i++) {
             Enemy zombie = _pool.Get();
