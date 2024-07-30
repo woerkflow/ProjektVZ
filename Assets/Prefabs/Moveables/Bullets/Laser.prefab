@@ -4840,7 +4840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7073013031397643512}
   - component: {fileID: 2180915785089963818}
-  - component: {fileID: 6389231655306767556}
+  - component: {fileID: -8165072237450216475}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -4969,7 +4969,7 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &6389231655306767556
+--- !u!114 &-8165072237450216475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

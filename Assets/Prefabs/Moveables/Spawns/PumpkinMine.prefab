@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4935498289256623925}
   - component: {fileID: 3422659713731089772}
-  - component: {fileID: 8331057377343052627}
+  - component: {fileID: -723218778986860671}
   m_Layer: 0
   m_Name: PumpkinMine
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.77906644, y: 0.77906644, z: 0.77906644}
+  m_LocalScale: {x: 0.605594, y: 0.605594, z: 0.605594}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2465151309780240792}
@@ -49,7 +49,7 @@ MonoBehaviour:
   enemyTag: Zombie
   radius: 0.01
   maxTargets: 10
---- !u!114 &8331057377343052627
+--- !u!114 &-723218778986860671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,10 +63,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTag: Zombie
   perceptionRange: 0.01
+  timer: 5
+  damage: 1
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
-  timer: 5
-  damage: 0
   explosive: {fileID: 3422659713731089772}
 --- !u!1 &5542549694050275579
 GameObject:

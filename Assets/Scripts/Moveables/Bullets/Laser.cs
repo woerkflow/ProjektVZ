@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour {
     
-    [Header("Laser parts")] 
+    [Header("Line Renderer")] 
     public LineRenderer lineRenderer;
     public GameObject effectFirePoint;
     public GameObject effectTarget;
     public GameObject effectArea;
+    
+    [Header("Laser")]
     public int damage;
     public float damageTick;
     

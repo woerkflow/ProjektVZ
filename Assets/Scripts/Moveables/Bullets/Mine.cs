@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class Mine : Seeker {
 
-    [Header("Explosion")]
-    public GameObject impactEffect;
+    [Header("Mine")]
     public float timer;
     public int damage;
+    
+    [Header("Explosion")]
+    public GameObject impactEffect;
     public Explosive explosive;
     
     private GameObject _parentSpawner;

@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour {
         _buildCountDown = 30f;
         _currentSpawnPoint = spawnPoints[0];
         _currentEnemyAmount = 10;
-        SetActive(true);
+        SetActive(false);
         timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
     }
     
