@@ -7,8 +7,7 @@ public class Seeker : MonoBehaviour {
     public float perceptionRange;
     
     protected GameObject Target;
-    
-    private Collider[] _hitColliders;
+    protected Collider[] _hitColliders;
     
     
     #region Unity methods
@@ -31,7 +30,7 @@ public class Seeker : MonoBehaviour {
     
     #region Private class methods
     
-    private void UpdateTarget() {
+    protected void UpdateTarget() {
 
         if (Target != null 
             && Target.gameObject.activeSelf
@@ -54,12 +53,7 @@ public class Seeker : MonoBehaviour {
                 }
             }
         }
-
-        if (nearestEnemy != null && shortestDistance <= perceptionRange) {
-            Target = nearestEnemy;
-        } else {
-            Target = null;
-        }
+        Target = nearestEnemy != null ? nearestEnemy : null;
     }
     
     private void OnDrawGizmosSelected() {
