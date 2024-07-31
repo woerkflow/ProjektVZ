@@ -106,7 +106,6 @@ public class Bullet : MonoBehaviour {
     private void StartImpactEffect() {
         GameObject effectInst = Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(effectInst, 1f);
-        Destroy(gameObject);
     }
     
     private void HitTarget(GameObject target) {
@@ -120,6 +119,7 @@ public class Bullet : MonoBehaviour {
                 break;
         }
         StartImpactEffect();
+        Destroy(gameObject);
     }
     
     #endregion

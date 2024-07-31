@@ -3,9 +3,17 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
     
+    public Type type;
     public GameObject spawnPrefab;
     public Transform[] spawnPoints;
     public float spawnTime;
+    public float minSize;
+    public float maxSize;
+
+    public enum Type {
+        Pumpkin,
+        Chicken
+    }
     
     [HideInInspector]
     public List<GameObject> spawns;
@@ -35,12 +43,14 @@ public class Spawner : MonoBehaviour {
         spawns.Add(obj);
         
         // Set spawner as parent
-        obj.GetComponent<Mine>().SetParent(gameObject);
+        if (type == Type.Pumpkin) {
+            obj.GetComponent<Mine>().SetParent(gameObject);
+        }
     }
 
     private GameObject GetRandomSpawn() {
         GameObject spawn = spawnPrefab;
-        float randomSize = Random.Range(0.5f, 1f);
+        float randomSize = Random.Range(minSize, maxSize);
         spawn.transform.localScale = new Vector3(
             randomSize, 
             randomSize, 

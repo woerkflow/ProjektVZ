@@ -30,8 +30,13 @@ public class Explosive : MonoBehaviour {
     
     #region Public class methods
     
-    public void Explode(int damage) {
+    public void Explode(int damage, GameObject impactEffect = null) {
         int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, radius, _hitColliders);
+        
+        if (impactEffect) {
+            GameObject effectInst = Instantiate(impactEffect, transform.position, transform.rotation);
+            Destroy(effectInst, 1f);
+        }
         
         for (int i = 0; i < enemyCount; i++) {
             Collider enemy = _hitColliders[i];

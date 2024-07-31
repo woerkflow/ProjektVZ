@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d376f3d2902bb7b46b21ecf46b3339af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   spawnPrefab: {fileID: 4140861100569360921, guid: 8e96108c72229c64bbbd54ed7853788e,
     type: 3}
   spawnPoints:
@@ -374,6 +375,8 @@ MonoBehaviour:
   - {fileID: 4373978704068919787}
   - {fileID: 4105512738532954488}
   spawnTime: 10
+  minSize: 0.5
+  maxSize: 1
   spawns: []
 --- !u!1 &6369643693133566875
 GameObject:

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour {
     
@@ -74,7 +73,7 @@ public class Enemy : MonoBehaviour {
             return;
         }
 
-        // If zombie has no target stop...
+        // If zombie has no target...
         if (_target == null) {
             _animator.SetFloat(walkParameter, 0f);
             _target = mainTarget;
