@@ -6,32 +6,23 @@ public class Mine : Seeker {
     public float timer;
     public int damage;
     
+    private GameObject _parentSpawner;
+    
     [Header("Explosion")]
     public GameObject impactEffect;
     public Explosive explosive;
     
-    private GameObject _parentSpawner;
-    
     
     #region Unity methods
     
-    private void Update() {
+    private void Start() {
         
-        if (_parentSpawner == null) {
-            explosive.Explode(damage, impactEffect);
-            Destroy(gameObject);
-        }
+        // Calculate maxColliders by perception range
+        HitColliders = new Collider[GetMaxColliders(perceptionRange)];
         
-        if (Target == null) {
-            return;
-        }
-
-        if (timer >= 0) {
-            timer -= Time.deltaTime;
-        } else {
-            explosive.Explode(damage, impactEffect);
-            Destroy(gameObject);
-        }
+        // Start coroutines
+        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
+        InvokeRepeating(nameof(UpdateTimer), 0f, 0.5f);
     }
     
     #endregion
@@ -41,6 +32,30 @@ public class Mine : Seeker {
 
     public void SetParent(GameObject parent) {
         _parentSpawner = parent;
+    }
+    
+    #endregion
+    
+    
+    #region Private class methods
+    
+    private void UpdateTimer() {
+        
+        if (_parentSpawner == null) {
+            explosive.Explode(damage, impactEffect);
+            Destroy(gameObject);
+            return;
+        }
+        
+        if (Target == null) {
+            return;
+        }
+
+        if (timer > 0) {
+            timer -= 0.5f;
+            return;
+        }
+        _parentSpawner = null;
     }
     
     #endregion

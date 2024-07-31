@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour {
     
@@ -12,18 +14,28 @@ public class Spawner : MonoBehaviour {
 
     public enum Type {
         Pumpkin,
-        Chicken
+        Chicken,
+        Bull,
     }
     
     [HideInInspector]
     public List<GameObject> spawns;
     
+    
+    #region Unity methods
+    
     private void Start() {
         InvokeRepeating(nameof(Spawn), 0f, spawnTime);
     }
     
+    #endregion
+    
+    
+    #region Private class methods
+    
     private void Spawn() {
 
+        // Cleanse list
         if (spawns.Count > 0) {
             spawns.RemoveAll(spawn => spawn == null);
         }
@@ -31,9 +43,13 @@ public class Spawner : MonoBehaviour {
         if (spawns.Count >= spawnPoints.Length) {
             return;
         }
+        CreateSpawn();
+    }
+
+    private void CreateSpawn() {
         Transform spawnPoint = spawnPoints[spawns.Count];
         GameObject obj = Instantiate(
-            GetRandomSpawn(), 
+            GetRandomSpawn(spawnPrefab, minSize, maxSize), 
             spawnPoint.position, 
             spawnPoint.rotation,
             gameObject.transform
@@ -43,12 +59,22 @@ public class Spawner : MonoBehaviour {
         spawns.Add(obj);
         
         // Set spawner as parent
-        if (type == Type.Pumpkin) {
-            obj.GetComponent<Mine>().SetParent(gameObject);
+        switch (type) {
+            case Type.Pumpkin: 
+                obj.GetComponent<Mine>().SetParent(gameObject);
+                break;
+            case Type.Chicken:
+                obj.GetComponent<Spawn>().SetParent(gameObject);
+                break;
+            case Type.Bull:
+                obj.GetComponent<Spawn>().SetParent(gameObject);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
-    private GameObject GetRandomSpawn() {
+    private static GameObject GetRandomSpawn(GameObject spawnPrefab, float minSize, float maxSize) {
         GameObject spawn = spawnPrefab;
         float randomSize = Random.Range(minSize, maxSize);
         spawn.transform.localScale = new Vector3(
@@ -58,4 +84,6 @@ public class Spawner : MonoBehaviour {
         );
         return spawn;
     }
+    
+    #endregion
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
@@ -8,9 +9,6 @@ public class Bullet : MonoBehaviour {
     public int damage;
     public GameObject impactEffect;
     
-    [Header("Explosion")]
-    public Explosive explosive;
-
     public enum Type {
         SingleTarget,
         MultiTarget
@@ -25,6 +23,9 @@ public class Bullet : MonoBehaviour {
     private Vector3 _startPoint;
     private Vector3 _controlPoint;
     private float _travelTime;
+    
+    [Header("Explosion")]
+    public Explosive explosive;
     
     
     #region Unity methods
@@ -46,9 +47,9 @@ public class Bullet : MonoBehaviour {
             Vector3 nextPosition = CalculateParabolicPosition(_startPoint, _controlPoint, _endPoint, t + 0.001f);
             transform.position = position;
             transform.rotation = Quaternion.LookRotation(nextPosition - position);
-        } else {
-            HitTarget(_target);
+            return;
         }
+        HitTarget(_target);
     }
     
     #endregion
@@ -81,14 +82,14 @@ public class Bullet : MonoBehaviour {
     #endregion
 
     
-    #region Trajetory
+    #region Trajectory
 
-    private Vector3 CalculateControlPoint(Vector3 start, Vector3 end) {
+    private static Vector3 CalculateControlPoint(Vector3 start, Vector3 end) {
         Vector3 mid = (start + end) * 0.5f;
         return new Vector3(mid.x, start.y, mid.z);
     }
     
-    private Vector3 CalculateParabolicPosition(Vector3 start, Vector3 control, Vector3 end, float t) {
+    private static Vector3 CalculateParabolicPosition(Vector3 start, Vector3 control, Vector3 end, float t) {
         Vector3 startToControl = Vector3.Lerp(start, control, t);
         Vector3 controlToEnd = Vector3.Lerp(control, end, t);
         return Vector3.Lerp(startToControl, controlToEnd, t);
@@ -117,6 +118,8 @@ public class Bullet : MonoBehaviour {
             case Type.MultiTarget:
                 explosive.Explode(damage);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();  
         }
         StartImpactEffect();
         Destroy(gameObject);

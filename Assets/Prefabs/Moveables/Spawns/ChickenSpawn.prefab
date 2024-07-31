@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 4935498289256623925}
   - component: {fileID: 1225672579551020913}
   - component: {fileID: 3422659713731089772}
-  - component: {fileID: 3263220726947884333}
+  - component: {fileID: 5426830648720794665}
   m_Layer: 0
   m_Name: ChickenSpawn
   m_TagString: Untagged
@@ -4904,7 +4904,7 @@ MonoBehaviour:
   enemyTag: Zombie
   radius: 0.01
   maxTargets: 10
---- !u!114 &3263220726947884333
+--- !u!114 &5426830648720794665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4913,11 +4913,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4140861100569360921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11bbd6621a60da04e922bbeaeaea0496, type: 3}
+  m_Script: {fileID: 11500000, guid: 8094bd4da7a43a143a3c05203662a2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTag: Zombie
   perceptionRange: 0.06
+  type: 0
   speed: 0.01
   capsuleCollider: {fileID: 1225672579551020913}
   damage: 1

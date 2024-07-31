@@ -16,6 +16,7 @@ public class FarmManager : MonoBehaviour {
     private PlayerManager _playerManager;
     private Tile _selectedTile;
     
+    
     #region Unity methods
     
     private void Awake() {
@@ -34,6 +35,7 @@ public class FarmManager : MonoBehaviour {
     }
     
     #endregion
+    
     
     #region Public class methods
     
@@ -55,27 +57,28 @@ public class FarmManager : MonoBehaviour {
     
     #endregion
     
+    
     #region Private class methods
 
-    private bool CanFarm() {
-        
-        return _enemySpawner.GetTime() >= _selectedTile.GetTileObject().blueprint.timeCosts
-               && (_selectedTile.resourceWood > 0
-               || _selectedTile.resourceWaste > 0
-               || _selectedTile.resourceWhiskey > 0);
+    private static bool CanFarm(EnemySpawner enemySpawner, Tile selectedTile) {
+        return enemySpawner.GetTime() >= selectedTile.GetTileObject().blueprint.timeCosts
+               && (selectedTile.resourceWood > 0
+               || selectedTile.resourceWaste > 0
+               || selectedTile.resourceWhiskey > 0);
     }
     
-    private void SetMenuResourceValue(TMP_Text element, int value) {
+    private static void SetMenuResourceValue(TMP_Text element, int value) {
         element.SetText(value.ToString());
     }
     
     #endregion
     
+    
     #region Menu button methods
 
     public void Farm() {
 
-        if (CanFarm()) {
+        if (CanFarm(_enemySpawner, _selectedTile)) {
             
             if (_selectedTile.resourceWood > 0) {
                 _playerManager.SetResourceWood(

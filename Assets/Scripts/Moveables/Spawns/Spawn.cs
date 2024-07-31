@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawn : Seeker {
     
@@ -9,6 +11,8 @@ public class Spawn : Seeker {
         Chicken,
         Bull
     }
+
+    private GameObject _parentSpawner;
     
     [Header("Movement")] 
     public float speed;
@@ -21,9 +25,9 @@ public class Spawn : Seeker {
     public int damage;
     public GameObject impactEffect;
     public Explosive explosive;
-
+    
     private CapsuleCollider _targetCollider;
-
+    
     
     #region Unity methods
     
@@ -41,26 +45,34 @@ public class Spawn : Seeker {
             Vector3.right,
             new Vector3(1,0,1),
         };
+        
+        // Initialize direction
         _direction = Vector3.zero;
         
         // Calculate maxColliders by perception range
-        float radiusInTiles = perceptionRange / 0.04f;
-        float diameterInTiles = radiusInTiles * 2;
-        float quadInTiles = Mathf.Pow(diameterInTiles, 2);
-        int maxColliders = (int)(quadInTiles + 5);
-        _hitColliders = new Collider[maxColliders];
+        HitColliders = new Collider[GetMaxColliders(perceptionRange)];
         
-        // Start coroutine
+        // Start coroutines
         InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
         InvokeRepeating(nameof(UpdateDirection), 0f, 1f);
     }
     
-    void Update() {
+    private void Update() {
         
-        if (_direction != Vector3.zero) {
-            RotateToTarget(_direction);
-            MoveToTarget(_direction);
+        if (_direction == Vector3.zero) {
+            return;
         }
+        RotateToTarget(_direction);
+        MoveToTarget(_direction);
+    }
+    
+    #endregion
+    
+    
+    #region Public class methods
+
+    public void SetParent(GameObject parent) {
+        _parentSpawner = parent;
     }
     
     #endregion
@@ -93,15 +105,17 @@ public class Spawn : Seeker {
                 break;
             case Type.Bull:
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
     
-    private float DeltaSpeed(float value) => value * Time.deltaTime;
+    private static float DeltaSpeed(float value) => value * Time.deltaTime;
     
     private void MoveToTarget(Vector3 direction) {
         transform.Translate(direction.normalized * DeltaSpeed(speed), Space.World);
     }
-
+    
     private void RotateToTarget(Vector3 direction) {
         transform.rotation = Quaternion.LookRotation(direction);
     }

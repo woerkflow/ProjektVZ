@@ -142,26 +142,27 @@ public class EnemySpawner : MonoBehaviour {
     
     private void OnTakeFromPool(Enemy enemy) {
         
-        Vector3 GetRandomPosition() {
-            float RandomCoordinate(float value) => value + Random.Range(-_currentSpawnPoint.spawnRange, _currentSpawnPoint.spawnRange);
-            return new Vector3(
-                RandomCoordinate(_currentSpawnPoint.transform.position.x),
-                _currentSpawnPoint.transform.position.y,
-                RandomCoordinate(_currentSpawnPoint.transform.position.z)
-            );
-        }
-        enemy.transform.position = GetRandomPosition();
+        Vector3 GetRandomPosition(SpawnPoint currentSpawnPoint) => new (
+            RandomCoordinate(currentSpawnPoint.transform.position.x, currentSpawnPoint.spawnRange),
+            currentSpawnPoint.transform.position.y,
+            RandomCoordinate(currentSpawnPoint.transform.position.z, currentSpawnPoint.spawnRange)
+        );
+        
+        float RandomCoordinate(float value, float spawnRange) => 
+            value + Random.Range(-spawnRange, spawnRange);
+        
+        enemy.transform.position = GetRandomPosition(_currentSpawnPoint);
         enemy.transform.rotation = _currentSpawnPoint.transform.rotation;
         enemy.ResetValues();
         enemy.SetPool(_pool);
         enemy.gameObject.SetActive(true);
     }
     
-    private void OnReturnedToPool(Enemy enemy) {
+    private static void OnReturnedToPool(Enemy enemy) {
         enemy.gameObject.SetActive(false);
     }
     
-    private void OnDestroyPoolObject(Enemy enemy) {
+    private static void OnDestroyPoolObject(Enemy enemy) {
         Destroy(enemy.gameObject);
     }
     

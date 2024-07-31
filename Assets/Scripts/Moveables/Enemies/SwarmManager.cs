@@ -17,7 +17,7 @@ public class SwarmManager : MonoBehaviour {
         _buildManager = BuildManager.Instance;
         
         // Start coroutine for targeting
-        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
     }
     
     #endregion

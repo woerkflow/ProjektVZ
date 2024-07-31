@@ -77,12 +77,11 @@ public class BuildManager : MonoBehaviour {
     
     #region Private class methods
 
-    private bool CanBuild() {
-        
-        return _selectedBuilding != null
-               && _playerManager.GetResourceWood() >= _selectedBuilding.blueprint.resourceWood
-               && _playerManager.GetResourceWaste() >= _selectedBuilding.blueprint.resourceWaste
-               && _playerManager.GetResourceWhiskey() >= _selectedBuilding.blueprint.resourceWhiskey;
+    private static bool CanBuild(PlayerManager playerManager, Building selectedBuilding) {
+        return selectedBuilding != null
+               && playerManager.GetResourceWood() >= selectedBuilding.blueprint.resourceWood
+               && playerManager.GetResourceWaste() >= selectedBuilding.blueprint.resourceWaste
+               && playerManager.GetResourceWhiskey() >= selectedBuilding.blueprint.resourceWhiskey;
     }
     
     #endregion
@@ -112,7 +111,7 @@ public class BuildManager : MonoBehaviour {
 
     public void Build() {
 
-        if (CanBuild()) {
+        if (CanBuild(_playerManager, _selectedBuilding)) {
 
             // Take resources from the player
             _playerManager.SetResourceWood(

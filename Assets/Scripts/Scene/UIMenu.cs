@@ -4,13 +4,15 @@ public class UIMenu : MonoBehaviour {
     
     public Camera userCamera;
     
+    
     #region Unity Methods
 
     private void Update() {
-        RotateMenuToCamera();
+        transform.rotation = RotateMenuToCamera(transform, userCamera);
     }
 
     #endregion
+    
     
     #region Public class methods
 
@@ -34,11 +36,12 @@ public class UIMenu : MonoBehaviour {
     
     #endregion
     
-    #region Privat class mehtods
     
-    private void RotateMenuToCamera() {
+    #region Private class methods
+    
+    private static Quaternion RotateMenuToCamera(Transform transform, Camera userCamera) {
         Vector3 direction = transform.position - userCamera.transform.position;
-        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+        return Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
     
     #endregion

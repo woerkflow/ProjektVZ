@@ -30,9 +30,9 @@ public class Laser : MonoBehaviour {
                 return;
             }
             _damageTick = damageTick;
-            Damage(_target);
+            Damage(_target, damage);
         } else if (_target.GetHealth() <= 0 && _effectArea == null) {
-            CreateDamageArea();
+            _effectArea = CreateDamageArea(effectArea, _target);
             Destroy(gameObject);
         }
     }
@@ -71,12 +71,12 @@ public class Laser : MonoBehaviour {
         effectTarget.transform.position = _target.transform.position;
     }
     
-    private void Damage(Enemy enemy) {
+    private static void Damage(Enemy enemy, int damage) {
         enemy.SetHealth(enemy.GetHealth() - damage);
     }
 
-    private void CreateDamageArea() {
-        _effectArea = Instantiate(effectArea, _target.transform.position, _target.transform.rotation);
+    private static GameObject CreateDamageArea(GameObject effectArea, Enemy target) {
+        return Instantiate(effectArea, target.transform.position, target.transform.rotation);
     }
     
     #endregion

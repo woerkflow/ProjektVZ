@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Turret : Seeker {
@@ -6,6 +7,13 @@ public class Turret : Seeker {
     public Type type;
     public Transform firePoint;
     
+    public enum Type {
+        Launcher,
+        Beamer
+    }
+    
+    private float _fireCountDown;
+    
     [Header("Rotation")]
     public Transform partToRotate;
     public float turnSpeed;
@@ -13,19 +21,28 @@ public class Turret : Seeker {
     [Header("Projectile")] 
     public GameObject projectilePrefab;
     public float fireRate;
-
-    private float _fireCountDown;
+    
     private GameObject _projectile;
-
-    public enum Type {
-        Launcher,
-        Beamer
-    }
     
     
     #region Unity methods
     
-    private void Update() {
+    private void Start() {
+        
+        // Calculate maxColliders by perception range
+        HitColliders = new Collider[GetMaxColliders(perceptionRange)];
+        
+        // Start coroutines
+        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
+        InvokeRepeating(nameof(Shoot), 0f, 0.5f);
+    }
+    
+    #endregion
+    
+    
+    #region Private class methods
+    
+    private void Shoot() {
         
         if (Target == null || !Target.CompareTag(enemyTag)) {
             _fireCountDown = fireRate;
@@ -39,18 +56,20 @@ public class Turret : Seeker {
         }
 
         if (_fireCountDown > 0f) {
-            _fireCountDown -= Time.deltaTime;
+            _fireCountDown -= 0.5f;
             return;
         }
-        Shoot();
+        CreateProjectile();
     }
     
-    #endregion
+    private void LockOnTarget() {
+        Vector3 direction = Target.transform.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+    }
     
-    
-    #region Private class methods
-    
-    private void Shoot() {
+    private void CreateProjectile() {
         _projectile = Instantiate(projectilePrefab);
         
         switch(type) {
@@ -60,14 +79,9 @@ public class Turret : Seeker {
             case Type.Beamer:
                 _projectile.GetComponent<Laser>().Seek(firePoint, Target);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-    }
-    
-    private void LockOnTarget() {
-        Vector3 direction = Target.transform.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-        partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
     }
 
     #endregion

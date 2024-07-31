@@ -42,7 +42,7 @@ public class Tile : MonoBehaviour {
         _objectRotation = spawnPoint.transform.rotation;
 
         if (!isBlocked) {
-            startObject = GetRandomObject();
+            startObject = GetRandomObject(randomObjects);
             _objectRotation = GetRandomRotation();
         }
         ReplaceObject(startObject);
@@ -162,11 +162,11 @@ public class Tile : MonoBehaviour {
         resourceWhiskey = whiskey;
     }
 
-    private TileObject GetRandomObject() {
+    private static TileObject GetRandomObject(TileObject[] randomObjects) {
         return randomObjects[Random.Range(0, randomObjects.Length)];
     }
 
-    private Quaternion GetRandomRotation() {
+    private static Quaternion GetRandomRotation() {
         float randomDegrees = Random.Range(0, 4) * 90f;
         return Quaternion.Euler(0f, randomDegrees, 0f);
     }

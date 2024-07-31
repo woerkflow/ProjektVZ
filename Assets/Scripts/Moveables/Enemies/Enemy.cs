@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour {
     
     #region Unity Methods
     
-    void Start() {
+    private void Start() {
         
         //Initialize player
         _playerManager = PlayerManager.Instance;
@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour {
         SetTarget(mainTarget);
     }
     
-    void Update() {
+    private void Update() {
         
         // If zombie is really dead...
         if (_currentHealth <= 0) {
@@ -171,7 +171,7 @@ public class Enemy : MonoBehaviour {
     
     #region Enemy Private Methods
     
-    private float DeltaSpeed(float value) => value * Time.deltaTime;
+    private static float DeltaSpeed(float value) => value * Time.deltaTime;
     
     private void MoveToTarget(Vector3 direction) {
         transform.Translate(direction.normalized * DeltaSpeed(speed), Space.World);

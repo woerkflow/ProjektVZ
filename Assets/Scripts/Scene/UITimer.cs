@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
 
-public class UITimer : MonoBehaviour {
+public class UITimer : UIMenu {
     
-    public Camera userCamera;
     public TMP_Text timerText;
     public TMP_Text amountText;
+    
     
     #region Public class methods
     
@@ -18,9 +18,6 @@ public class UITimer : MonoBehaviour {
             currentSpawnPoint.position.z
         );
         
-        // Rotate timer
-        RotateTimerToCamera();
-        
         // Set text
         amountText.SetText(currentEnemyAmount.ToString());
         
@@ -29,9 +26,6 @@ public class UITimer : MonoBehaviour {
     }
 
     public void RefreshTimer(float buildCountDown) {
-        
-        // Rotate timer
-        RotateTimerToCamera();
         
         // Set text
         timerText.SetText(System.TimeSpan.FromSeconds(buildCountDown).ToString("mm':'ss"));
@@ -48,15 +42,6 @@ public class UITimer : MonoBehaviour {
         
         // Set inactive
         gameObject.SetActive(false);
-    }
-    
-    #endregion
-    
-    #region Private Class Methods
-
-    private void RotateTimerToCamera() {
-        Vector3 direction = transform.position - userCamera.transform.position;
-        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
     
     #endregion

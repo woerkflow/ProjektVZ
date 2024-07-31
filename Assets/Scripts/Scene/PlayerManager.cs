@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour {
     
     #region Private class methods
 
-    private void SetMenuResourceValue(TMP_Text element, int value) {
+    private static void SetMenuResourceValue(TMP_Text element, int value) {
         element.SetText(value.ToString());
     }
     

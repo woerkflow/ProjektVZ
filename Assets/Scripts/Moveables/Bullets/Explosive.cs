@@ -21,7 +21,7 @@ public class Explosive : MonoBehaviour {
 
     #region Private class methods
 
-    private void Damage(Enemy enemy, int damage) {
+    private static void Damage(Enemy enemy, int damage) {
         enemy.SetHealth(enemy.GetHealth() - damage);
     }
     
