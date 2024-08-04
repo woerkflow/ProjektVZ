@@ -345,9 +345,9 @@ MonoBehaviour:
     prefab: {fileID: 5574299052485252495}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 25
-    resourceWaste: 25
-    resourceWhiskey: 25
+    resourceWood: 50
+    resourceWaste: 50
+    resourceWhiskey: 50
   maxHealth: 100
   upgrade: {fileID: 0}
 --- !u!114 &4930080924524937751

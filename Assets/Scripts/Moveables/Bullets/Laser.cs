@@ -14,7 +14,7 @@ public class Laser : MonoBehaviour {
     
     private GameObject _effectArea;
     private Enemy _target;
-    private float _damageTick;
+    private float _elapsedTickTime;
     private Transform _firePoint;
 
     
@@ -25,16 +25,20 @@ public class Laser : MonoBehaviour {
         if (_target.GetHealth() > 0) {
             SetPositions();
 
-            if (_damageTick > 0) {
-                _damageTick -= Time.deltaTime;
+            if (_elapsedTickTime < damageTick) {
+                _elapsedTickTime += Time.deltaTime;
                 return;
             }
-            _damageTick = damageTick;
+            _elapsedTickTime = damageTick;
             Damage(_target, damage);
-        } else if (_target.GetHealth() <= 0 && _effectArea == null) {
-            _effectArea = CreateDamageArea(effectArea, _target);
-            Destroy(gameObject);
+            return;
         }
+
+        if (_effectArea != null) {
+            return;
+        }
+        _effectArea = CreateDamageArea(effectArea, _target);
+        Destroy(gameObject);
     }
     
     #endregion

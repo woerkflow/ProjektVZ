@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 5665478613386403082}
   - component: {fileID: 615848428092340932}
   - component: {fileID: 4961349031111582701}
+  - component: {fileID: -4551436469092166664}
   m_Layer: 0
   m_Name: BladeLauncher
   m_TagString: Building
@@ -169,7 +170,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.015
+  m_Radius: 0.0175
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
@@ -207,15 +208,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18238ed1445c77f4f97b606fe67f6006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Zombie
-  perceptionRange: 0.1
   type: 0
   firePoint: {fileID: 1375928718055682521}
   partToRotate: {fileID: 2477221193001325512}
-  turnSpeed: 5
+  speed: 5
+  direction: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
     type: 3}
   fireRate: 2.5
+--- !u!114 &-4551436469092166664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201152157588848215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTag: Zombie
+  perceptionRange: 0.1
+  type: 0
+  turret: {fileID: 4961349031111582701}
+  spawn: {fileID: 0}
+  mine: {fileID: 0}
 --- !u!1 &7567849528967252978
 GameObject:
   m_ObjectHideFlags: 0

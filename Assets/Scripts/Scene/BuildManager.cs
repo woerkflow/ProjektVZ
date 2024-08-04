@@ -9,8 +9,9 @@ public class BuildManager : MonoBehaviour {
     public Building flameLauncher;
     public Building bladeLauncher;
     public Building pumpkinSpawner;
+    public Building chickenSpawner;
     public Building fenceObstacle;
-    public Building toxicWasteBlaster;
+    public Building toxicWasteBeamer;
 
     [Header("Menu")]
     public UIMenu buildMenu;
@@ -101,40 +102,45 @@ public class BuildManager : MonoBehaviour {
         SelectBuildingToBuild(pumpkinSpawner);
     }
     
+    public void SelectTntChickenSpawner() {
+        SelectBuildingToBuild(chickenSpawner);
+    }
+    
     public void SelectFenceObstacle() {
         SelectBuildingToBuild(fenceObstacle);
     }
 
-    public void SelectToxicWasteBlaster() {
-        SelectBuildingToBuild(toxicWasteBlaster);
+    public void SelectToxicWasteBeamer() {
+        SelectBuildingToBuild(toxicWasteBeamer);
     }
 
     public void Build() {
-
-        if (CanBuild(_playerManager, _selectedBuilding)) {
-
-            // Take resources from the player
-            _playerManager.SetResourceWood(
-                _playerManager.GetResourceWood() - _selectedBuilding.blueprint.resourceWood
-            );
-            _playerManager.SetResourceWaste(
-                _playerManager.GetResourceWaste() - _selectedBuilding.blueprint.resourceWaste
-            );
-            _playerManager.SetResourceWhiskey(
-                _playerManager.GetResourceWhiskey() - _selectedBuilding.blueprint.resourceWhiskey
-            );
-
-            // Give resources to the tile
-            _selectedTile.resourceWood += _selectedBuilding.blueprint.resourceWood;
-            _selectedTile.resourceWaste += _selectedBuilding.blueprint.resourceWaste;
-            _selectedTile.resourceWhiskey += _selectedBuilding.blueprint.resourceWhiskey;
-            
-            // Build building
-            _selectedTile.Build(_selectedBuilding);
-            
-            // Close menu
-            CloseMenu();
+        
+        if (!CanBuild(_playerManager, _selectedBuilding)) {
+            return;
         }
+
+        // Take resources from the player
+        _playerManager.SetResourceWood(
+            _playerManager.GetResourceWood() - _selectedBuilding.blueprint.resourceWood
+        );
+        _playerManager.SetResourceWaste(
+            _playerManager.GetResourceWaste() - _selectedBuilding.blueprint.resourceWaste
+        );
+        _playerManager.SetResourceWhiskey(
+            _playerManager.GetResourceWhiskey() - _selectedBuilding.blueprint.resourceWhiskey
+        );
+
+        // Give resources to the tile
+        _selectedTile.resourceWood += _selectedBuilding.blueprint.resourceWood;
+        _selectedTile.resourceWaste += _selectedBuilding.blueprint.resourceWaste;
+        _selectedTile.resourceWhiskey += _selectedBuilding.blueprint.resourceWhiskey;
+            
+        // Build building
+        _selectedTile.Build(_selectedBuilding);
+            
+        // Close menu
+        CloseMenu();
     }
 
     public void RotateClockwise() {

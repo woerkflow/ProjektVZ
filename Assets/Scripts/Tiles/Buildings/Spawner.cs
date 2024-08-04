@@ -45,8 +45,20 @@ public class Spawner : MonoBehaviour {
         }
         CreateSpawn();
     }
+    
+    private static GameObject GetRandomSpawn(GameObject spawnPrefab, float minSize, float maxSize) {
+        GameObject spawn = spawnPrefab;
+        float randomSize = Random.Range(minSize, maxSize);
+        spawn.transform.localScale = new Vector3(
+            randomSize, 
+            randomSize, 
+            randomSize
+        );
+        return spawn;
+    }
 
     private void CreateSpawn() {
+        
         Transform spawnPoint = spawnPoints[spawns.Count];
         GameObject obj = Instantiate(
             GetRandomSpawn(spawnPrefab, minSize, maxSize), 
@@ -72,17 +84,6 @@ public class Spawner : MonoBehaviour {
             default:
                 throw new ArgumentOutOfRangeException();
         }
-    }
-
-    private static GameObject GetRandomSpawn(GameObject spawnPrefab, float minSize, float maxSize) {
-        GameObject spawn = spawnPrefab;
-        float randomSize = Random.Range(minSize, maxSize);
-        spawn.transform.localScale = new Vector3(
-            randomSize, 
-            randomSize, 
-            randomSize
-        );
-        return spawn;
     }
     
     #endregion

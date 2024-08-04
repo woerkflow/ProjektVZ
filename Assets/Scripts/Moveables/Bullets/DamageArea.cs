@@ -8,13 +8,17 @@ public class DamageArea : MonoBehaviour {
     public int damage;
     public Explosive explosive;
     
-    private float _timeElapsedDuration;
+    private float _elapsedDurationTime;
     
     
     #region Unity methods
     
-    void Start() {
-        _timeElapsedDuration = 0f;
+    private void Start() {
+        
+        // Initialize timer
+        _elapsedDurationTime = 0f;
+        
+        // Start coroutine
         InvokeRepeating(nameof(UpdateTick), 0, tickTime);
     }
     
@@ -25,12 +29,12 @@ public class DamageArea : MonoBehaviour {
     
     private void UpdateTick() {
 
-        if (_timeElapsedDuration >= duration) {
-            Destroy(gameObject);
+        if (_elapsedDurationTime < duration) {
+            _elapsedDurationTime += tickTime;
+            explosive.Explode(damage);
             return;
         }
-        _timeElapsedDuration += tickTime;
-        explosive.Explode(damage);
+        Destroy(gameObject);
     }
     
     #endregion

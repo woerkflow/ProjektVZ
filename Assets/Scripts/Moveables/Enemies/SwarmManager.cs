@@ -6,9 +6,10 @@ public class SwarmManager : MonoBehaviour {
     
     [Header("Swarm")]
     public List<Enemy> zombies;
-    public GameObject mainTarget;
     
     private BuildManager _buildManager;
+    private SpawnPoint _spawnPoint;
+    private GameObject _target;
 
     
     #region Unity Methods
@@ -32,6 +33,10 @@ public class SwarmManager : MonoBehaviour {
     public void Leave(Enemy zombie) {
         zombies.Remove(zombie);
     }
+
+    public void SetSpawnPoint(SpawnPoint spawnPoint) {
+        _spawnPoint = spawnPoint;
+    }
     
     #endregion
     
@@ -39,35 +44,30 @@ public class SwarmManager : MonoBehaviour {
     #region Zombie Targeting
     
     private void UpdateTarget() {
-        Enemy leader = zombies.FirstOrDefault();
-
-        if (leader == null) {
+        
+        if (!zombies.FirstOrDefault()) {
             Destroy(gameObject);
             return;
         }
-        GameObject leaderTarget = leader.GetTarget();
-        
-        if (leaderTarget && leaderTarget != mainTarget) {
-            return;
-        }
         List<GameObject> buildings = _buildManager.GetBuildings();
-        float shortestDistance = leader.perceptionRange;
+        float shortestDistance = Mathf.Infinity;
         GameObject nearestBuilding = null;
         
         foreach (GameObject building in buildings) {
-            float distanceToEnemy = Vector3.Distance(leader.transform.position, building.transform.position);
-        
+            float distanceToEnemy = Vector3.Distance(_spawnPoint.transform.position, building.transform.position);
+
             if (distanceToEnemy < shortestDistance) {
                 shortestDistance = distanceToEnemy;
                 nearestBuilding = building;
             }
         }
+        _target = nearestBuilding;
 
-        if (nearestBuilding == null) {
+        if (!nearestBuilding) {
             return;
         }
-
-        foreach (Enemy zombie in zombies) {
+        
+        foreach (var zombie in zombies.Where(zombie => zombie.GetTarget() != _target)) {
             zombie.SetTarget(nearestBuilding);
         }
     }

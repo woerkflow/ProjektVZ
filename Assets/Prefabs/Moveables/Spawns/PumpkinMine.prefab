@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4935498289256623925}
   - component: {fileID: 3422659713731089772}
   - component: {fileID: -723218778986860671}
+  - component: {fileID: 6849995664411990647}
   m_Layer: 0
   m_Name: PumpkinMine
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6653191, y: 0.6653191, z: 0.6653191}
+  m_LocalScale: {x: 0.81945735, y: 0.81945735, z: 0.81945735}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2465151309780240792}
@@ -61,13 +62,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a5f003d8d89ae449725d7e385d119e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Zombie
-  perceptionRange: 0.01
   timer: 5
   damage: 1
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
   explosive: {fileID: 3422659713731089772}
+--- !u!114 &6849995664411990647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140861100569360921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTag: Zombie
+  perceptionRange: 0.01
+  type: 2
+  turret: {fileID: 0}
+  spawn: {fileID: 0}
+  mine: {fileID: -723218778986860671}
 --- !u!1 &5542549694050275579
 GameObject:
   m_ObjectHideFlags: 0

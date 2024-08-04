@@ -5,50 +5,66 @@ public class Enemy : MonoBehaviour {
     
     [Header("Target")]
     public GameObject mainTarget;
-    public float speed;
-    
-    [Header("Perception")]
     public float perceptionRange;
+    
+    private GameObject _target;
+    private Building _targetBuildingComponent;
+    private float _targetCapsuleRadius;
+    
+    [Header("Movement")]
+    public float speed;
+
+    [HideInInspector] 
+    public Vector3 direction;
+    [HideInInspector]
+    public float currentSpeed;
+    
+    private EnemyJobManager _enemyJobManager;
     
     [Header("Attack")]
     public float attackSpeed;
     public int damage;
     public int maxHealth;
     public CapsuleCollider capsuleCollider;
+    public float deadTime;
+    
+    private float _capsuleRadius;
+    private float _elapsedAttackTime;
+    private int _currentHealth;
+    private float _elapsedDeadTime;
 
     [Header("Animation")] 
+    public Animator animator;
     public string walkParameter;
     public string attackParameter;
     public string dieParameter;
     
-    // GameObject
-    private int _currentHealth;
-    private Animator _animator;
-    private float _attackCountDown;
-    private CapsuleCollider _capsuleCollider;
-    private float _capsuleRadius;
     private ObjectPool<Enemy> _pool;
-    private float _deadCounter;
-    
-    // Target
-    private GameObject _target;
     private SwarmManager _swarmManager;
-    private Building _targetBuildingComponent;
-    private float _targetCapsuleRadius;
-    private Vector3 _targetPosition;
     private PlayerManager _playerManager;
+    
     
     #region Unity Methods
     
     private void Start() {
         
-        //Initialize player
+        // Get enemy job manager
+        _enemyJobManager = FindObjectOfType<EnemyJobManager>();
+        
+        // Register motion job
+        if (_enemyJobManager != null) {
+            _enemyJobManager.Register(this);
+        } else {
+            Debug.LogError("EnemyJobManager not found in the scene.");
+        }
+        
+        // Initialize player
         _playerManager = PlayerManager.Instance;
         
         // Initialize enemy values
-        _attackCountDown = 0f;
+        _elapsedAttackTime = attackSpeed;
         _currentHealth = maxHealth;
-        _animator = GetComponentInChildren<Animator>();
+        _elapsedDeadTime = 0f;
         _capsuleRadius = capsuleCollider.radius;
         
         // Initialize main target
@@ -57,56 +73,49 @@ public class Enemy : MonoBehaviour {
     
     private void Update() {
         
-        // If zombie is really dead...
         if (_currentHealth <= 0) {
             
-            if (_deadCounter > 0) {
-                _deadCounter -= Time.deltaTime;
+            if (_elapsedDeadTime < deadTime) {
+                _elapsedDeadTime += Time.deltaTime;
                 return;
             }
-            
-            // Reward player
             _playerManager.SetResourceWhiskey(
                 _playerManager.GetResourceWhiskey() + 1
             );
             DestroyEnemy();
             return;
         }
-
-        // If zombie has no target...
+        
         if (_target == null) {
-            _animator.SetFloat(walkParameter, 0f);
             _target = mainTarget;
             return;
         }
-        Vector3 direction = _targetPosition - new Vector3(transform.position.x, 0f, transform.position.z);
-        RotateToTarget(direction);
+        direction = Moveable.Direction(
+            _target.transform.position, 
+            transform.position
+        );
         
-        // If distance is greater than the sum of both hit box radii...
         if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
-            
-            // Start walking animation
-            _animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
-            
-            // Translate zombie
-            MoveToTarget(direction);
-        
-        // If distance is not greater than the sum of both hit box radii...
-        } else if (_target != mainTarget) {
-            
-            // Stop walking animation
-            _animator.SetFloat(walkParameter, 0f);
-            
-            // Start attack target
-            AttackTarget();
-        } else {
-            
-            // Stop walking animation
-            _animator.SetFloat(walkParameter, 0f);
+            animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
+            currentSpeed = speed;
+            return;
         }
+        
+        if (_target != mainTarget) {
+            AttackTarget();
+            return;
+        }
+        DestroyEnemy();
+    }
+    
+    private void OnDestroy() {
+        
+        // Unregister motion job
+        _enemyJobManager.Unregister(this);
     }
     
     #endregion
+    
     
     #region Object Pooling
 
@@ -115,9 +124,10 @@ public class Enemy : MonoBehaviour {
     }
     
     private void DestroyEnemy() {
+        animator.SetFloat(walkParameter, 0f);
+        currentSpeed = 0f;
         
         if (_pool != null) {
-            _animator.SetFloat(walkParameter, 0f);
             _swarmManager.Leave(this);
             _pool.Release(this);
         } else {
@@ -127,6 +137,7 @@ public class Enemy : MonoBehaviour {
     
     #endregion
     
+    
     #region Public Enemy Methods
     
     public int GetHealth() {
@@ -135,15 +146,13 @@ public class Enemy : MonoBehaviour {
 
     public void SetHealth(int value) {
         _currentHealth = value;
-        
-        if (_currentHealth <= 0) {
-            
-            // Kill zombie
-            gameObject.tag = "ZombieDead";
-            capsuleCollider.enabled = false;
-            _animator.SetTrigger(dieParameter);
-            _deadCounter = 2f;
+
+        if (_currentHealth > 0) {
+            return;
         }
+        gameObject.tag = "ZombieDead";
+        capsuleCollider.enabled = false;
+        animator.SetTrigger(dieParameter);
     }
     
     public GameObject GetTarget() {
@@ -154,7 +163,6 @@ public class Enemy : MonoBehaviour {
         _target = newTarget;
         _targetBuildingComponent = _target.GetComponent<Building>();
         _targetCapsuleRadius = _target.GetComponent<CapsuleCollider>().radius;
-        _targetPosition = new Vector3(_target.transform.position.x, 0, _target.transform.position.z);
     }
 
     public void SetSwarmManager(SwarmManager swarmManager) {
@@ -169,32 +177,26 @@ public class Enemy : MonoBehaviour {
     
     #endregion
     
-    #region Enemy Private Methods
     
-    private static float DeltaSpeed(float value) => value * Time.deltaTime;
-    
-    private void MoveToTarget(Vector3 direction) {
-        transform.Translate(direction.normalized * DeltaSpeed(speed), Space.World);
-    }
-
-    private void RotateToTarget(Vector3 direction) {
-        transform.rotation = Quaternion.LookRotation(direction);
-    }
+    #region Private Enemy Methods
     
     private void AttackTarget() {
-        if (_attackCountDown > 0) {
-            _attackCountDown -= Time.deltaTime;
-        } else {
-            _animator.SetTrigger(attackParameter);
-            
-            if (_target != null) {
-                Damage(_targetBuildingComponent);
-            }
-            _attackCountDown = attackSpeed;
+        animator.SetFloat(walkParameter, 0f);
+        currentSpeed = 0f;
+        
+        if (_elapsedAttackTime < attackSpeed) {
+            _elapsedAttackTime += Time.deltaTime;
+            return;
         }
+        animator.SetTrigger(attackParameter);
+            
+        if (_target != null) {
+            Damage(_targetBuildingComponent, damage);
+        }
+        _elapsedAttackTime = 0f;
     }
     
-    private void Damage(Building building) {
+    private static void Damage(Building building, int damage) {
         building.SetHealth(building.GetHealth() - damage);
     }
     

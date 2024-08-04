@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class Spawn : Seeker {
+public class Spawn : MonoBehaviour {
     
     [Header("Spawn")] 
     public Type type;
@@ -13,12 +12,18 @@ public class Spawn : Seeker {
     }
 
     private GameObject _parentSpawner;
+    private GameObject _target;
+    private CapsuleCollider _targetCollider;
     
     [Header("Movement")] 
     public float speed;
     
-    private Vector3[] _points;
-    private Vector3 _direction;
+    [HideInInspector]
+    public Vector3 direction;
+    [HideInInspector]
+    public float currentSpeed;
+
+    private SpawnJobManager _spawnJobManager;
     
     [Header("Explosion")]
     public CapsuleCollider capsuleCollider;
@@ -26,46 +31,48 @@ public class Spawn : Seeker {
     public GameObject impactEffect;
     public Explosive explosive;
     
-    private CapsuleCollider _targetCollider;
-    
     
     #region Unity methods
     
     private void Start() {
         
-        // Set direction points
-        _points = new [] {
-            new Vector3(-1,0,-1), 
-            Vector3.left,
-            new Vector3(-1,0,1), 
-            Vector3.back,
-            Vector3.zero, 
-            Vector3.forward,
-            new Vector3(1,0,-1), 
-            Vector3.right,
-            new Vector3(1,0,1),
-        };
+        // Get bullet job manager
+        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
+        
+        // Register motion job
+        if (_spawnJobManager != null) {
+            _spawnJobManager.Register(this);
+        } else {
+            Debug.LogError("SpawnManager not found in the scene.");
+        }
         
         // Initialize direction
-        _direction = Vector3.zero;
+        direction = Vector3.zero;
         
-        // Calculate maxColliders by perception range
-        HitColliders = new Collider[GetMaxColliders(perceptionRange)];
-        
-        // Start coroutines
-        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
+        // Start coroutine
         InvokeRepeating(nameof(UpdateDirection), 0f, 1f);
     }
     
     private void Update() {
         
-        if (_direction == Vector3.zero) {
+        if (_parentSpawner == null) {
+            Explode();
             return;
         }
-        RotateToTarget(_direction);
-        MoveToTarget(_direction);
+        
+        if (direction == Vector3.zero) {
+            currentSpeed = 0f;
+            return;
+        }
+        currentSpeed = speed;
     }
-    
+
+    private void OnDestroy() {
+        
+        // Unregister motion job
+        _spawnJobManager.Unregister(this);
+    }
+
     #endregion
     
     
@@ -74,50 +81,50 @@ public class Spawn : Seeker {
     public void SetParent(GameObject parent) {
         _parentSpawner = parent;
     }
+
+    public void SetTarget(GameObject target) {
+        _target = target;
+        _targetCollider = target?.GetComponent<CapsuleCollider>();
+    }
     
     #endregion
     
     
     #region Private class methods
-    
-    private void UpdateDirection() {
-        
-        if (Target == null) {
-            Vector3 newRandomPosition = new Vector3(transform.position.x, 0f, transform.position.z) + _points[Random.Range(0, _points.Length)] * 0.001f;
-            _direction = newRandomPosition - new Vector3(transform.position.x, 0f, transform.position.z);
-            _targetCollider = null;
-            return;
-        }
-            
-        if (_targetCollider == null) {
-            _targetCollider = Target.GetComponent<CapsuleCollider>();
-        }
-        _direction = new Vector3(Target.transform.position.x, 0f, Target.transform.position.z) - new Vector3(transform.position.x, 0f, transform.position.z);
-    
-        if (_direction.magnitude > capsuleCollider.radius + _targetCollider.radius) {
-            return;
-        }
 
+    private void Explode() {
+        
         switch (type) {
             case Type.Chicken:
                 explosive.Explode(damage, impactEffect);
-                Destroy(gameObject);
                 break;
             case Type.Bull:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        Destroy(gameObject);
     }
     
-    private static float DeltaSpeed(float value) => value * Time.deltaTime;
+    private void UpdateDirection() {
+        
+        if (_target == null || !_target.activeSelf) {
+            direction = Moveable.Direction(
+                Moveable.GetRandomPosition(transform), 
+                transform.position
+            );
+            _target = null;
+            return;
+        }
+        direction = Moveable.Direction(
+            _target.transform.position, 
+            transform.position
+        );
     
-    private void MoveToTarget(Vector3 direction) {
-        transform.Translate(direction.normalized * DeltaSpeed(speed), Space.World);
-    }
-    
-    private void RotateToTarget(Vector3 direction) {
-        transform.rotation = Quaternion.LookRotation(direction);
+        if (direction.magnitude > capsuleCollider.radius + _targetCollider.radius) {
+            return;
+        }
+        Explode();
     }
     
     #endregion

@@ -11,28 +11,26 @@ public class EnemySpawner : MonoBehaviour {
     public Enemy[] enemyPrefabs = new Enemy[4];
     public SpawnPoint[] spawnPoints = new SpawnPoint[8];
     public SwarmManager swarmManagerPrefab;
-    public List<SwarmManager> swarmManagers;
     public int maxEnemyAmount;
     public float maxCountDown;
     
-    [Header("Timer")]
-    public UITimer timer;
+    [HideInInspector]
+    public List<SwarmManager> swarmManagers;
+    public State state { get; private set; }
     
-    // Object pool
-    private ObjectPool<Enemy> _pool;
-    
-    // State
     public enum State {
         Build,
         Fight
     }
     
-    [HideInInspector] 
-    public State state { get; private set; }
-    
+    private ObjectPool<Enemy> _pool;
     private float _buildCountDown;
     private SpawnPoint _currentSpawnPoint;
     private int _currentEnemyAmount;
+    
+    [Header("Timer")]
+    public UITimer timer;
+    
     private bool _isActive;
     
     
@@ -60,9 +58,9 @@ public class EnemySpawner : MonoBehaviour {
         // Initiate state machine
         swarmManagers = new List<SwarmManager>();
         state = State.Build;
-        _buildCountDown = 30f;
         _currentSpawnPoint = spawnPoints[0];
-        _currentEnemyAmount = 10;
+        _buildCountDown = 10f;
+        _currentEnemyAmount = 1000;
         SetActive(true);
         timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
     }
@@ -136,24 +134,23 @@ public class EnemySpawner : MonoBehaviour {
     
     #region Object Pooling
     
+    private static float RandomCoordinate(float value, float spawnRange) => 
+        value + Random.Range(-spawnRange, spawnRange);
+        
+    private static Vector3 GetRandomPosition(SpawnPoint currentSpawnPoint) => new (
+        RandomCoordinate(currentSpawnPoint.transform.position.x, currentSpawnPoint.spawnRange),
+        currentSpawnPoint.transform.position.y,
+        RandomCoordinate(currentSpawnPoint.transform.position.z, currentSpawnPoint.spawnRange)
+    );
+    
     private Enemy CreatePooledItem() {
         return Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]);
     }
     
     private void OnTakeFromPool(Enemy enemy) {
-        
-        Vector3 GetRandomPosition(SpawnPoint currentSpawnPoint) => new (
-            RandomCoordinate(currentSpawnPoint.transform.position.x, currentSpawnPoint.spawnRange),
-            currentSpawnPoint.transform.position.y,
-            RandomCoordinate(currentSpawnPoint.transform.position.z, currentSpawnPoint.spawnRange)
-        );
-        
-        float RandomCoordinate(float value, float spawnRange) => 
-            value + Random.Range(-spawnRange, spawnRange);
-        
+        enemy.ResetValues();
         enemy.transform.position = GetRandomPosition(_currentSpawnPoint);
         enemy.transform.rotation = _currentSpawnPoint.transform.rotation;
-        enemy.ResetValues();
         enemy.SetPool(_pool);
         enemy.gameObject.SetActive(true);
     }
@@ -173,6 +170,7 @@ public class EnemySpawner : MonoBehaviour {
     
     private IEnumerator SpawnWave(int enemyAmount) {
         SwarmManager swarmManager = Instantiate(swarmManagerPrefab);
+        swarmManager.SetSpawnPoint(_currentSpawnPoint);
         swarmManagers.Add(swarmManager);
         
         for (var i = 0; i < enemyAmount; i++) {

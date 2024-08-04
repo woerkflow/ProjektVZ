@@ -4232,11 +4232,13 @@ MonoBehaviour:
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
   speed: 0.006
-  perceptionRange: 0.1
+  perceptionRange: 0.14
   attackSpeed: 3
   damage: 1
   maxHealth: 5
   capsuleCollider: {fileID: 9195502220633551029}
+  deadTime: 2
+  animator: {fileID: 2999599987466021196}
   walkParameter: Walk
   attackParameter: Attack
   dieParameter: Die
