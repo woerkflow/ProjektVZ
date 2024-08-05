@@ -6220,11 +6220,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
-  speed: 0.006
   perceptionRange: 0.14
+  speed: 0.006
+  direction: {x: 0, y: 0, z: 0}
+  currentSpeed: 0
   attackSpeed: 3
   damage: 1
-  maxHealth: 5
+  maxHealth: 4
   capsuleCollider: {fileID: 2336787883423994718}
   deadTime: 2
   animator: {fileID: 6028515782268007583}

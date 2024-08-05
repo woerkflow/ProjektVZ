@@ -28,11 +28,12 @@ public static class Moveable {
     
     #region Rectlinear Motion
     
-    public static void LinearMoveFor(
+    public static JobHandle LinearMoveFor(
         NativeArray<Vector3> directions,
         NativeArray<float> speeds,
         NativeArray<Vector3> currentPositions,
-        NativeArray<Vector3> results
+        NativeArray<Vector3> results,
+        JobHandle dependency = default
     ) {
         LinearMoveJobFor moveJob = new LinearMoveJobFor {
             Directions = directions,
@@ -41,8 +42,7 @@ public static class Moveable {
             DeltaTime = Time.deltaTime,
             Results = results
         };
-        JobHandle moveHandle = moveJob.Schedule(directions.Length, 64);
-        moveHandle.Complete();
+        return moveJob.Schedule(directions.Length, 64, dependency);
     }
     
     #endregion
@@ -54,12 +54,13 @@ public static class Moveable {
         return new Vector3(mid.x, start.y, mid.z);
     }
     
-    public static void ParabolicMoveFor(
+    public static JobHandle ParabolicMoveFor(
         NativeArray<Vector3> starts, 
         NativeArray<Vector3> controls, 
         NativeArray<Vector3> ends,
         NativeArray<float> ts, 
-        NativeArray<Vector3> results
+        NativeArray<Vector3> results,
+        JobHandle dependency = default
     ) {
         ParabolicMoveJobFor moveJob = new ParabolicMoveJobFor {
             Starts = starts,
@@ -68,40 +69,39 @@ public static class Moveable {
             Ts = ts,
             Results = results
         };
-        JobHandle moveHandle = moveJob.Schedule(starts.Length, 64);
-        moveHandle.Complete();
+        return moveJob.Schedule(starts.Length, 64, dependency);
     }
     
     #endregion
 
     #region Rotational Motion
     
-    public static void InstantRotationFor(
+    public static JobHandle InstantRotationFor(
         NativeArray<Vector3> directions, 
-        NativeArray<Quaternion> results
+        NativeArray<Quaternion> results,
+        JobHandle dependency = default
     ) {
         InstantRotationJobFor rotateJob = new InstantRotationJobFor {
             Directions = directions,
             Results = results
         };
-        JobHandle rotateHandle = rotateJob.Schedule(directions.Length, 64);
-        rotateHandle.Complete();
+        return rotateJob.Schedule(directions.Length, 64, dependency);
     }
     
-    public static void InterpolatedRotationFor(
+    public static JobHandle InterpolatedRotationFor(
         NativeArray<Vector3> directions,
         NativeArray<Quaternion> rotations,
         NativeArray<float> speeds,
-        NativeArray<Quaternion> results
+        NativeArray<Quaternion> results,
+        JobHandle dependency = default
     ) {
         InterpolatedRotationJobFor rotateJob = new InterpolatedRotationJobFor() {
             Directions = directions,
             Rotations = rotations,
             Speeds = speeds,
             Results = results
-        };
-        JobHandle rotateHandle = rotateJob.Schedule(directions.Length, 64);
-        rotateHandle.Complete();
+        }; 
+        return rotateJob.Schedule(directions.Length, 64, dependency);
     }
 
     #endregion

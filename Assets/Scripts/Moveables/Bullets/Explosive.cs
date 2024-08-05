@@ -39,10 +39,10 @@ public class Explosive : MonoBehaviour {
         }
         
         for (int i = 0; i < enemyCount; i++) {
-            Collider enemy = _hitColliders[i];
+            Collider coll = _hitColliders[i];
             
-            if (enemy.CompareTag(enemyTag)) {
-                Damage(enemy.GetComponent<Enemy>(), damage);
+            if (coll.CompareTag(enemyTag)) {
+                Damage(coll.GetComponent<Enemy>(), damage);
             }
         }
     }

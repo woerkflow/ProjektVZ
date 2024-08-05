@@ -243,12 +243,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   firePoint: {fileID: 328129164580279045}
+  enemyTag: Zombie
+  perceptionRange: 0.1
+  _target: {fileID: 0}
   partToRotate: {fileID: 8511082067177431578}
-  speed: 5
+  speed: 0.25
   direction: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 105228381973529086, guid: a1ffafe186887214fb24dcaf4f402dc7,
     type: 3}
-  fireRate: 5
+  fireRate: 4
 --- !u!114 &6558157183060962003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,8 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Zombie
-  perceptionRange: 0.1
   type: 0
   turret: {fileID: 189898130358512659}
   spawn: {fileID: 0}

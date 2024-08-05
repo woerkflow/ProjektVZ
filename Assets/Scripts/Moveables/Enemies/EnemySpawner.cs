@@ -14,14 +14,14 @@ public class EnemySpawner : MonoBehaviour {
     public int maxEnemyAmount;
     public float maxCountDown;
     
-    [HideInInspector]
-    public List<SwarmManager> swarmManagers;
-    public State state { get; private set; }
-    
     public enum State {
         Build,
         Fight
     }
+    
+    [HideInInspector]
+    public List<SwarmManager> swarmManagers;
+    public State state { get; private set; }
     
     private ObjectPool<Enemy> _pool;
     private float _buildCountDown;
@@ -46,22 +46,19 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     private void Start() {
-        
-        // Initiate ObjectPool
+
         _pool = new ObjectPool<Enemy>(
             CreatePooledItem, 
             OnTakeFromPool, 
             OnReturnedToPool, 
             OnDestroyPoolObject
-            );
-        
-        // Initiate state machine
+        );
         swarmManagers = new List<SwarmManager>();
         state = State.Build;
         _currentSpawnPoint = spawnPoints[0];
-        _buildCountDown = 10f;
-        _currentEnemyAmount = 1000;
-        SetActive(true);
+        _buildCountDown = 30f;
+        _currentEnemyAmount = 10;
+        SetActive(false);
         timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
     }
     
@@ -75,18 +72,21 @@ public class EnemySpawner : MonoBehaviour {
             }
 
             if (_buildCountDown > 0f) {
-                
-                // Set build timer
                 _buildCountDown -= Time.deltaTime;
                 _buildCountDown = Mathf.Clamp(_buildCountDown, 0f, Mathf.Infinity);
                 timer.RefreshTimer(_buildCountDown);
                 return;
             }
             
-            // Spawn enemies
-            StartCoroutine(SpawnWave(_currentEnemyAmount));
-            
-            // Start fighting phase
+            StartCoroutine(
+                SpawnWave(
+                    _currentEnemyAmount,
+                    Instantiate(swarmManagerPrefab),
+                    swarmManagers,
+                    _currentSpawnPoint,
+                    _pool
+                )
+            );
             timer.DeactivateTimer();
             state = State.Fight;
         }
@@ -97,13 +97,8 @@ public class EnemySpawner : MonoBehaviour {
                 swarmManagers.RemoveAll(spawn => spawn == null);
                 return;
             }
-            // Choose randomly spawn point
             _currentSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            
-            // Get randomly amount of enemies
             _currentEnemyAmount = Random.Range(1, maxEnemyAmount);
-            
-            // Start building phase
             _buildCountDown = maxCountDown;
             timer.ActivateTimer(_currentSpawnPoint.transform, _currentEnemyAmount);
             SetActive(false);
@@ -168,13 +163,18 @@ public class EnemySpawner : MonoBehaviour {
     
     #region Spawn Loop
     
-    private IEnumerator SpawnWave(int enemyAmount) {
-        SwarmManager swarmManager = Instantiate(swarmManagerPrefab);
-        swarmManager.SetSpawnPoint(_currentSpawnPoint);
+    private static IEnumerator SpawnWave(
+        int enemyAmount, 
+        SwarmManager swarmManager, 
+        List<SwarmManager> swarmManagers, 
+        SpawnPoint currentSpawnPoint,
+        ObjectPool<Enemy> pool
+    ) {
+        swarmManager.SetSpawnPoint(currentSpawnPoint);
         swarmManagers.Add(swarmManager);
         
         for (var i = 0; i < enemyAmount; i++) {
-            Enemy zombie = _pool.Get();
+            Enemy zombie = pool.Get();
             zombie.SetSwarmManager(swarmManager);
             swarmManager.Join(zombie);
             yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));

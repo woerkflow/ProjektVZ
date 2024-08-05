@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 public class EnemyJobManager : MonoBehaviour {
@@ -20,26 +21,21 @@ public class EnemyJobManager : MonoBehaviour {
         NativeArray<Vector3> positionResults = new NativeArray<Vector3>(enemyCount, Allocator.TempJob);
         NativeArray<Quaternion> rotationResults = new NativeArray<Quaternion>(enemyCount, Allocator.TempJob);
         
-        // Add enemy values into native arrays
         for (int i = 0; i < enemyCount; i++) {
             Enemy enemy = _enemies[i];
             directions[i] = enemy.direction;
             currentPositions[i] = enemy.transform.position;
             speeds[i] = enemy.currentSpeed;
         }
-        
-        // Position
-        Moveable.LinearMoveFor(directions, speeds, currentPositions, positionResults);
-        
-        // Rotation
-        Moveable.InstantRotationFor(directions, rotationResults);
+        JobHandle moveJob = Moveable.LinearMoveFor(directions, speeds, currentPositions, positionResults);
+        JobHandle rotationJob = Moveable.InstantRotationFor(directions, rotationResults, moveJob);
+        rotationJob.Complete();
         
         for (int i = 0; i < enemyCount; i++) {
             Enemy enemy = _enemies[i];
             enemy.transform.position = positionResults[i];
             enemy.transform.rotation = rotationResults[i];
         }
-        
         directions.Dispose();
         currentPositions.Dispose();
         speeds.Dispose();

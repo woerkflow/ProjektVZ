@@ -38,11 +38,8 @@ public class Bullet : MonoBehaviour {
     #region Unity methods
 
     private void Start() {
-        
-        // Get bullet job manager
         _bulletJobManager = FindObjectOfType<BulletJobManager>();
         
-        // Register motion job
         if (_bulletJobManager != null) {
             _bulletJobManager.Register(this);
         } else {
@@ -56,13 +53,10 @@ public class Bullet : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
-        
-        // Get new t value
         _timeElapsed += Time.deltaTime;
         t = _timeElapsed / _travelTime;
         t = Mathf.Clamp01(t);
-
-        // If the bullet has not yet reached the target...
+        
         if (t < 1f) {
             return;
         }
@@ -70,8 +64,6 @@ public class Bullet : MonoBehaviour {
     }
     
     private void OnDestroy() {
-        
-        // Unregister motion job
         _bulletJobManager.Unregister(this);
     }
     
@@ -82,16 +74,10 @@ public class Bullet : MonoBehaviour {
 
     public void Seek(Transform firePoint, GameObject target) {
         _target = target;
-        
-        // Set Points
         startPoint = firePoint.position;
         endPoint = new Vector3 (_target.transform.position.x, _target.transform.position.y + impactHeight, _target.transform.position.z);
         controlPoint = Moveable.CalculateControlPoint(startPoint, endPoint);
-        
-        // Set travel time
         _travelTime = (Vector3.Distance(startPoint, controlPoint) + Vector3.Distance(controlPoint, endPoint)) / speed;
-
-        // Set timer
         _timeElapsed = 0f;
     }
     

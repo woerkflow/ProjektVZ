@@ -3,6 +3,8 @@ using UnityEngine;
 public class Mine : MonoBehaviour {
 
     [Header("Mine")]
+    public string enemyTag;
+    public float perceptionRange;
     public float explosionTimer;
     public int damage;
     
@@ -56,7 +58,10 @@ public class Mine : MonoBehaviour {
             return;
         }
         
-        if (_target == null || !_target.activeSelf) {
+        if (_target == null 
+            || !_target.activeSelf
+            || Vector3.Distance(_target.transform.position, transform.position) > perceptionRange
+        ) {
             _elapsedExplosionTime = 0f;
             _target = null;
             return;

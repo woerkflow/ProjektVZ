@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 public class TurretJobManager : MonoBehaviour {
@@ -20,22 +21,24 @@ public class TurretJobManager : MonoBehaviour {
         NativeArray<float> speeds = new NativeArray<float>(turretCount, Allocator.TempJob);
         NativeArray<Quaternion> rotationResults = new NativeArray<Quaternion>(turretCount, Allocator.TempJob);
         
-        // Add turret values into native arrays
         for (int i = 0; i < turretCount; i++) {
             Turret turret = _turrets[i];
             directions[i] = turret.direction;
             rotations[i] = turret.partToRotate.transform.rotation;
             speeds[i] = turret.speed;
         }
-        
-        // Rotation
-        Moveable.InterpolatedRotationFor(directions, rotations, speeds, rotationResults);
+        JobHandle rotationJob = Moveable.InterpolatedRotationFor(
+            directions, 
+            rotations, 
+            speeds, 
+            rotationResults
+        );
+        rotationJob.Complete();
         
         for (int i = 0; i < turretCount; i++) {
             Turret turret = _turrets[i];
             turret.partToRotate.transform.rotation = rotationResults[i];
         }
-        
         directions.Dispose();
         rotations.Dispose();
         speeds.Dispose();

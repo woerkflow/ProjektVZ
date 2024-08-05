@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Laser : MonoBehaviour {
@@ -10,7 +11,8 @@ public class Laser : MonoBehaviour {
     
     [Header("Laser")]
     public int damage;
-    public float damageTick;
+    public int duration;
+    public int tickTime;
     
     private GameObject _effectArea;
     private Enemy _target;
@@ -24,20 +26,12 @@ public class Laser : MonoBehaviour {
         
         if (_target.GetHealth() > 0) {
             SetPositions();
-
-            if (_elapsedTickTime < damageTick) {
-                _elapsedTickTime += Time.deltaTime;
-                return;
-            }
-            _elapsedTickTime = damageTick;
-            Damage(_target, damage);
             return;
         }
-
-        if (_effectArea != null) {
-            return;
+        
+        if (_effectArea == null) {
+            _effectArea = CreateDamageArea(effectArea, _target);
         }
-        _effectArea = CreateDamageArea(effectArea, _target);
         Destroy(gameObject);
     }
     
@@ -49,7 +43,16 @@ public class Laser : MonoBehaviour {
     public void Seek(Transform firePoint, GameObject target) {
         _target = target.GetComponent<Enemy>();
         _firePoint = firePoint;
-        SetPositions();
+        
+        StartCoroutine(
+            StartTickDamage(
+                duration, 
+                tickTime,
+                _target, 
+                damage, 
+                gameObject
+            )
+        );
     }
     
     #endregion
@@ -58,29 +61,39 @@ public class Laser : MonoBehaviour {
     #region Private class methods
 
     private void SetPositions() {
-        
-        // Set line renderer
-        lineRenderer.SetPosition(0, 
+        lineRenderer.SetPosition(
+            0, 
             _firePoint.position
         );
-        lineRenderer.SetPosition(1, 
+        lineRenderer.SetPosition(
+            1, 
             _target.transform.position + _target.GetComponent<CapsuleCollider>().center
         );
-        
-        // Create fire point effect
         effectFirePoint.transform.position = _firePoint.position;
         effectFirePoint.transform.rotation = _firePoint.rotation;
-        
-        // Create target effect
         effectTarget.transform.position = _target.transform.position;
+    }
+
+    private static GameObject CreateDamageArea(GameObject effectArea, Enemy target) {
+        return Instantiate(effectArea, target.transform.position, target.transform.rotation);
     }
     
     private static void Damage(Enemy enemy, int damage) {
         enemy.SetHealth(enemy.GetHealth() - damage);
     }
 
-    private static GameObject CreateDamageArea(GameObject effectArea, Enemy target) {
-        return Instantiate(effectArea, target.transform.position, target.transform.rotation);
+    private static IEnumerator StartTickDamage(
+        int duration,
+        int tickTime,
+        Enemy enemy,
+        int damage,
+        GameObject gameObject
+    ) {
+        for (var i = 0; i < duration; i++) {
+            Damage(enemy, damage);
+            yield return new WaitForSeconds(tickTime);
+        }
+        Destroy(gameObject);
     }
     
     #endregion

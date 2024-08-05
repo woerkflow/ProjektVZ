@@ -20,6 +20,7 @@ public class UpgradeManager : MonoBehaviour {
     private int _wasteCost;
     private int _whiskeyCost;
     
+    
     #region Unity methods
     
     private void Awake() {

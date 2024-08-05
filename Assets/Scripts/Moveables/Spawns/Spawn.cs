@@ -5,6 +5,8 @@ public class Spawn : MonoBehaviour {
     
     [Header("Spawn")] 
     public Type type;
+    public string enemyTag;
+    public float perceptionRange;
     
     public enum Type {
         Chicken,
@@ -55,11 +57,6 @@ public class Spawn : MonoBehaviour {
     
     private void Update() {
         
-        if (_parentSpawner == null) {
-            Explode();
-            return;
-        }
-        
         if (direction == Vector3.zero) {
             currentSpeed = 0f;
             return;
@@ -108,11 +105,22 @@ public class Spawn : MonoBehaviour {
     
     private void UpdateDirection() {
         
-        if (_target == null || !_target.activeSelf) {
-            direction = Moveable.Direction(
-                Moveable.GetRandomPosition(transform), 
-                transform.position
-            );
+        if (_parentSpawner == null) {
+            Explode();
+            return;
+        }
+        
+        if (_target == null 
+            || !_target.activeSelf
+            || Vector3.Distance(_target.transform.position, transform.position) > perceptionRange
+        ) {
+            direction = 
+                Moveable.Direction(
+                    Vector3.Distance(_parentSpawner.transform.position, transform.position) < perceptionRange 
+                            ? Moveable.GetRandomPosition(transform) 
+                            : _parentSpawner.transform.position, 
+                    transform.position
+                );
             _target = null;
             return;
         }

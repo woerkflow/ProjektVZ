@@ -4918,7 +4918,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  enemyTag: Zombie
+  perceptionRange: 0.06
   speed: 0.01
+  direction: {x: 0, y: 0, z: 0}
+  currentSpeed: 0
   capsuleCollider: {fileID: 1225672579551020913}
   damage: 1
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
@@ -4936,8 +4940,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Zombie
-  perceptionRange: 0.06
   type: 1
   turret: {fileID: 0}
   spawn: {fileID: 5426830648720794665}

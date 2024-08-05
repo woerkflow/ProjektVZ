@@ -16,8 +16,7 @@ public class SwarmManager : MonoBehaviour {
     
     private void Start() {
         _buildManager = BuildManager.Instance;
-        
-        // Start coroutine for targeting
+
         InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
     }
     
@@ -45,7 +44,7 @@ public class SwarmManager : MonoBehaviour {
     
     private void UpdateTarget() {
         
-        if (!zombies.FirstOrDefault()) {
+        if (zombies.Count <= 0) {
             Destroy(gameObject);
             return;
         }

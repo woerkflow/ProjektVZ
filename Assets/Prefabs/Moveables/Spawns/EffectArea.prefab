@@ -14435,7 +14435,6 @@ MonoBehaviour:
   enemyTag: Zombie
   radius: 0.005
   maxTargets: 10
-  damage: 1
 --- !u!199 &2330162657734004993
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -14524,4 +14523,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   tickTime: 1
+  damage: 1
   explosive: {fileID: -7659686065697239092}

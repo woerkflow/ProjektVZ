@@ -6,6 +6,8 @@ public class Turret : MonoBehaviour {
     [Header("Turret")]
     public Type type;
     public Transform firePoint;
+    public string enemyTag;
+    public float perceptionRange;
     
     public enum Type {
         Launcher,
@@ -13,7 +15,7 @@ public class Turret : MonoBehaviour {
     }
     
     private float _elapsedTime;
-    private GameObject _target;
+    public GameObject _target;
     
     [Header("Rotation")]
     public Transform partToRotate;
@@ -34,11 +36,8 @@ public class Turret : MonoBehaviour {
     #region Unity methods
     
     private void Start() {
-        
-        // Get bullet job manager
         _turretJobManager = FindObjectOfType<TurretJobManager>();
-        
-        // Register motion job
+
         if (_turretJobManager != null) {
             _turretJobManager.Register(this);
         } else {
@@ -48,7 +47,10 @@ public class Turret : MonoBehaviour {
 
     private void Update() {
         
-        if (_target == null || !_target.activeSelf) {
+        if (_target == null 
+            || !_target.activeSelf
+            || Vector3.Distance(_target.transform.position, transform.position) > perceptionRange
+        ) {
             _elapsedTime = 0f;
             _target = null;
             return;
@@ -75,8 +77,6 @@ public class Turret : MonoBehaviour {
     }
     
     private void OnDestroy() {
-        
-        // Unregister motion job
         _turretJobManager.Unregister(this);
     }
     

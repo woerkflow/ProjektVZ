@@ -47,27 +47,18 @@ public class Enemy : MonoBehaviour {
     #region Unity Methods
     
     private void Start() {
-        
-        // Get enemy job manager
         _enemyJobManager = FindObjectOfType<EnemyJobManager>();
         
-        // Register motion job
         if (_enemyJobManager != null) {
             _enemyJobManager.Register(this);
         } else {
             Debug.LogError("EnemyJobManager not found in the scene.");
         }
-        
-        // Initialize player
         _playerManager = PlayerManager.Instance;
-        
-        // Initialize enemy values
         _elapsedAttackTime = attackSpeed;
         _currentHealth = maxHealth;
         _elapsedDeadTime = 0f;
         _capsuleRadius = capsuleCollider.radius;
-        
-        // Initialize main target
         SetTarget(mainTarget);
     }
     
@@ -102,15 +93,17 @@ public class Enemy : MonoBehaviour {
         }
         
         if (_target != mainTarget) {
+            animator.SetFloat(walkParameter, 0f);
+            currentSpeed = 0f;
             AttackTarget();
             return;
         }
+        animator.SetTrigger(dieParameter);
+        DeactivateValues();
         DestroyEnemy();
     }
     
     private void OnDestroy() {
-        
-        // Unregister motion job
         _enemyJobManager.Unregister(this);
     }
     
@@ -124,8 +117,6 @@ public class Enemy : MonoBehaviour {
     }
     
     private void DestroyEnemy() {
-        animator.SetFloat(walkParameter, 0f);
-        currentSpeed = 0f;
         
         if (_pool != null) {
             _swarmManager.Leave(this);
@@ -150,9 +141,8 @@ public class Enemy : MonoBehaviour {
         if (_currentHealth > 0) {
             return;
         }
-        gameObject.tag = "ZombieDead";
-        capsuleCollider.enabled = false;
         animator.SetTrigger(dieParameter);
+        DeactivateValues();
     }
     
     public GameObject GetTarget() {
@@ -173,6 +163,7 @@ public class Enemy : MonoBehaviour {
         SetHealth(maxHealth);
         capsuleCollider.enabled = true;
         gameObject.tag = "Zombie";
+        currentSpeed = speed;
     }
     
     #endregion
@@ -181,8 +172,6 @@ public class Enemy : MonoBehaviour {
     #region Private Enemy Methods
     
     private void AttackTarget() {
-        animator.SetFloat(walkParameter, 0f);
-        currentSpeed = 0f;
         
         if (_elapsedAttackTime < attackSpeed) {
             _elapsedAttackTime += Time.deltaTime;
@@ -198,6 +187,12 @@ public class Enemy : MonoBehaviour {
     
     private static void Damage(Building building, int damage) {
         building.SetHealth(building.GetHealth() - damage);
+    }
+    
+    private void DeactivateValues() {
+        capsuleCollider.enabled = false;
+        gameObject.tag = "ZombieDead";
+        currentSpeed = 0f;
     }
     
     private void OnDrawGizmosSelected() {

@@ -1,38 +1,45 @@
+using System.Collections;
 using UnityEngine;
 
 public class DamageArea : MonoBehaviour {
 
-    [Header("Explosion")]
-    public float duration;
+    [Header("Tick Explosion")]
+    public int duration;
     public float tickTime;
     public int damage;
     public Explosive explosive;
-    
-    private float _elapsedDurationTime;
     
     
     #region Unity methods
     
     private void Start() {
-        
-        // Initialize timer
-        _elapsedDurationTime = 0f;
-        
-        // Start coroutine
-        InvokeRepeating(nameof(UpdateTick), 0, tickTime);
+
+        StartCoroutine(
+            StartTick(
+                duration, 
+                tickTime,
+                explosive, 
+                damage, 
+                gameObject
+            )
+        );
     }
     
     #endregion
     
     
-    #region Private class methods
+    #region Tick Loop
     
-    private void UpdateTick() {
-
-        if (_elapsedDurationTime < duration) {
-            _elapsedDurationTime += tickTime;
+    private static IEnumerator StartTick(
+        int duration, 
+        float tickTime, 
+        Explosive explosive, 
+        int damage, 
+        GameObject gameObject
+    ) {
+        for (var i = 0; i < duration; i++) {
             explosive.Explode(damage);
-            return;
+            yield return new WaitForSeconds(tickTime);
         }
         Destroy(gameObject);
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 public class SpawnJobManager : MonoBehaviour {
@@ -20,26 +21,21 @@ public class SpawnJobManager : MonoBehaviour {
         NativeArray<Vector3> positionResults = new NativeArray<Vector3>(spawnCount, Allocator.TempJob);
         NativeArray<Quaternion> rotationResults = new NativeArray<Quaternion>(spawnCount, Allocator.TempJob);
         
-        // Add turret values into native arrays
         for (int i = 0; i < spawnCount; i++) {
             Spawn spawn = _spawns[i];
             directions[i] = spawn.direction;
             currentPositions[i] = spawn.transform.position;
             speeds[i] = spawn.currentSpeed;
         }
-
-        // Position
-        Moveable.LinearMoveFor(directions, speeds, currentPositions, positionResults);
-        
-        // Rotation
-        Moveable.InstantRotationFor(directions, rotationResults);
+        JobHandle moveJob = Moveable.LinearMoveFor(directions, speeds, currentPositions, positionResults);
+        JobHandle rotationJob = Moveable.InstantRotationFor(directions, rotationResults, moveJob);
+        rotationJob.Complete();
         
         for (int i = 0; i < spawnCount; i++) {
             Spawn spawn = _spawns[i];
             spawn.transform.position = positionResults[i];
             spawn.transform.rotation = rotationResults[i];
         }
-        
         directions.Dispose();
         currentPositions.Dispose();
         speeds.Dispose();

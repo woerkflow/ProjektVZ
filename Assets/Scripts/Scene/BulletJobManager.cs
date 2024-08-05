@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 public class BulletJobManager : MonoBehaviour {
@@ -19,37 +20,29 @@ public class BulletJobManager : MonoBehaviour {
         NativeArray<Vector3> controls = new NativeArray<Vector3>(bulletCount, Allocator.TempJob);
         NativeArray<Vector3> ends = new NativeArray<Vector3>(bulletCount, Allocator.TempJob);
         NativeArray<float> ts = new NativeArray<float>(bulletCount, Allocator.TempJob);
+        NativeArray<float> nextts = new NativeArray<float>(bulletCount, Allocator.TempJob);
         NativeArray<Vector3> positionResults = new NativeArray<Vector3>(bulletCount, Allocator.TempJob);
         NativeArray<Vector3> nextPositionResults = new NativeArray<Vector3>(bulletCount, Allocator.TempJob);
+        NativeArray<Vector3> directions = new NativeArray<Vector3>(bulletCount, Allocator.TempJob);
         NativeArray<Quaternion> rotationResults = new NativeArray<Quaternion>(bulletCount, Allocator.TempJob);
-
-        // Add bullet values into native arrays
+        
         for (int i = 0; i < bulletCount; i++) {
             Bullet bullet = _bullets[i];
             starts[i] = bullet.startPoint;
             controls[i] = bullet.controlPoint;
             ends[i] = bullet.endPoint;
             ts[i] = bullet.t;
+            nextts[i] = bullet.t + 0.001f;
         }
-
-        // Current position
-        Moveable.ParabolicMoveFor(starts, controls, ends, ts, positionResults);
-
-        for (int i = 0; i < bulletCount; i++) {
-            ts[i] = _bullets[i].t + 0.001f;
-        }
-
-        // Next position
-        Moveable.ParabolicMoveFor(starts, controls, ends, ts, nextPositionResults);
-
-        NativeArray<Vector3> directions = new NativeArray<Vector3>(bulletCount, Allocator.TempJob);
+        JobHandle moveJob = Moveable.ParabolicMoveFor(starts, controls, ends, ts, positionResults);
+        JobHandle nextMoveJob = Moveable.ParabolicMoveFor(starts, controls, ends, nextts, nextPositionResults, moveJob);
+        nextMoveJob.Complete();
         
         for (int i = 0; i < bulletCount; i++) {
             directions[i] = Moveable.Direction(nextPositionResults[i], positionResults[i]);
         }
-
-        // Rotation
-        Moveable.InstantRotationFor(directions, rotationResults);
+        JobHandle rotationJob = Moveable.InstantRotationFor(directions, rotationResults);
+        rotationJob.Complete();
 
         for (int i = 0; i < bulletCount; i++) {
             Bullet bullet = _bullets[i];
@@ -58,11 +51,11 @@ public class BulletJobManager : MonoBehaviour {
                 bullet.transform.rotation = rotationResults[i];
             }
         }
-
         starts.Dispose();
         controls.Dispose();
         ends.Dispose();
         ts.Dispose();
+        nextts.Dispose();
         positionResults.Dispose();
         nextPositionResults.Dispose();
         directions.Dispose();

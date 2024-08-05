@@ -62,7 +62,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a5f003d8d89ae449725d7e385d119e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 5
+  enemyTag: Zombie
+  perceptionRange: 0.01
+  explosionTimer: 5
   damage: 1
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
@@ -79,8 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Zombie
-  perceptionRange: 0.01
   type: 2
   turret: {fileID: 0}
   spawn: {fileID: 0}
