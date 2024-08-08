@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class TurretJobManager : MonoBehaviour {
@@ -16,30 +17,28 @@ public class TurretJobManager : MonoBehaviour {
         if (turretCount == 0) {
             return;
         }
-        NativeArray<Vector3> directions = new NativeArray<Vector3>(turretCount, Allocator.TempJob);
-        NativeArray<Quaternion> rotations = new NativeArray<Quaternion>(turretCount, Allocator.TempJob);
+        NativeArray<float3> positions = new NativeArray<float3>(turretCount, Allocator.TempJob);
+        NativeArray<float3> targets = new NativeArray<float3>(turretCount, Allocator.TempJob);
+        NativeArray<quaternion> rotations = new NativeArray<quaternion>(turretCount, Allocator.TempJob);
         NativeArray<float> speeds = new NativeArray<float>(turretCount, Allocator.TempJob);
-        NativeArray<Quaternion> rotationResults = new NativeArray<Quaternion>(turretCount, Allocator.TempJob);
+        NativeArray<quaternion> rotationResults = new NativeArray<quaternion>(turretCount, Allocator.TempJob);
         
         for (int i = 0; i < turretCount; i++) {
             Turret turret = _turrets[i];
-            directions[i] = turret.direction;
+            positions[i] = turret.partToRotate.position;
+            targets[i] = turret.rotateTarget;
             rotations[i] = turret.partToRotate.transform.rotation;
             speeds[i] = turret.speed;
         }
-        JobHandle rotationJob = Moveable.InterpolatedRotationFor(
-            directions, 
-            rotations, 
-            speeds, 
-            rotationResults
-        );
+        JobHandle rotationJob = Moveable.InterpolatedRotationFor(positions, targets, rotations, speeds, rotationResults);
         rotationJob.Complete();
         
         for (int i = 0; i < turretCount; i++) {
             Turret turret = _turrets[i];
             turret.partToRotate.transform.rotation = rotationResults[i];
         }
-        directions.Dispose();
+        positions.Dispose();
+        targets.Dispose();
         rotations.Dispose();
         speeds.Dispose();
         rotationResults.Dispose();

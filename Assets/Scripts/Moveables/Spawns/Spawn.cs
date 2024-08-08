@@ -5,26 +5,24 @@ public class Spawn : MonoBehaviour {
     
     [Header("Spawn")] 
     public Type type;
-    public string enemyTag;
     public float perceptionRange;
     
     public enum Type {
         Chicken,
         Bull
     }
-
-    private GameObject _parentSpawner;
+    
     private GameObject _target;
+    private GameObject _parentSpawner;
     private CapsuleCollider _targetCollider;
+    private Seeker _seeker;
     
     [Header("Movement")] 
     public float speed;
     
-    [HideInInspector]
-    public Vector3 direction;
-    [HideInInspector]
-    public float currentSpeed;
-
+    [HideInInspector] 
+    public Vector3 moveTarget;
+    
     private SpawnJobManager _spawnJobManager;
     
     [Header("Explosion")]
@@ -37,37 +35,27 @@ public class Spawn : MonoBehaviour {
     #region Unity methods
     
     private void Start() {
-        
-        // Get bullet job manager
         _spawnJobManager = FindObjectOfType<SpawnJobManager>();
+        _seeker = FindObjectOfType<Seeker>();
         
-        // Register motion job
         if (_spawnJobManager != null) {
             _spawnJobManager.Register(this);
         } else {
             Debug.LogError("SpawnManager not found in the scene.");
         }
         
-        // Initialize direction
-        direction = Vector3.zero;
-        
-        // Start coroutine
-        InvokeRepeating(nameof(UpdateDirection), 0f, 1f);
-    }
-    
-    private void Update() {
-        
-        if (direction == Vector3.zero) {
-            currentSpeed = 0f;
-            return;
+        if (_seeker != null) {
+            _seeker.RegisterSpawn(this);
+        } else {
+            Debug.LogError("Seeker not found in the scene.");
         }
-        currentSpeed = speed;
+        moveTarget = transform.position;
+        InvokeRepeating(nameof(UpdateDirection), 0f, 1f);
     }
 
     private void OnDestroy() {
-        
-        // Unregister motion job
         _spawnJobManager.Unregister(this);
+        _seeker.UnregisterSpawn(this);
     }
 
     #endregion
@@ -114,18 +102,16 @@ public class Spawn : MonoBehaviour {
             || !_target.activeSelf
             || Vector3.Distance(_target.transform.position, transform.position) > perceptionRange
         ) {
-            direction = 
-                Moveable.Direction(
-                    Vector3.Distance(_parentSpawner.transform.position, transform.position) < perceptionRange 
-                            ? Moveable.GetRandomPosition(transform) 
-                            : _parentSpawner.transform.position, 
-                    transform.position
-                );
+            moveTarget = Vector3.Distance(_parentSpawner.transform.position, transform.position) < perceptionRange
+                ? Moveable.GetRandomPosition(transform)
+                : _parentSpawner.transform.position;
             _target = null;
             return;
         }
-        direction = Moveable.Direction(
-            _target.transform.position, 
+        moveTarget = _target.transform.position;
+        
+        Vector3 direction = Moveable.Direction(
+            _target.transform.position,
             transform.position
         );
     

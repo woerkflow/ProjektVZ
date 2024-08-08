@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.002
+      scalar: 0.003
       minScalar: 0.0005
       maxCurve:
         serializedVersion: 2
@@ -996,7 +996,7 @@ ParticleSystem:
           outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0
+          value: 0.40000153
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -4842,7 +4842,6 @@ GameObject:
   - component: {fileID: 1225672579551020913}
   - component: {fileID: 3422659713731089772}
   - component: {fileID: 5426830648720794665}
-  - component: {fileID: 6192026280317594716}
   m_Layer: 0
   m_Name: ChickenSpawn
   m_TagString: Untagged
@@ -4918,32 +4917,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  enemyTag: Zombie
   perceptionRange: 0.06
   speed: 0.01
-  direction: {x: 0, y: 0, z: 0}
-  currentSpeed: 0
+  moveTarget: {x: 0, y: 0, z: 0}
   capsuleCollider: {fileID: 1225672579551020913}
   damage: 1
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
   explosive: {fileID: 3422659713731089772}
---- !u!114 &6192026280317594716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140861100569360921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  turret: {fileID: 0}
-  spawn: {fileID: 5426830648720794665}
-  mine: {fileID: 0}
 --- !u!1 &7928059078117297669
 GameObject:
   m_ObjectHideFlags: 0
@@ -4972,7 +4953,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8013652, y: 0.8013652, z: 0.8013652}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4935498289256623925}

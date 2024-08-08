@@ -48,11 +48,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  speed: 0.2
-  impactHeight: 0.003
   damage: 1
   impactEffect: {fileID: 5012957251685301660, guid: d21d586ffb557d447b2fbac4fa7f87ef,
     type: 3}
+  speed: 0.2
+  impactHeight: 0.01
+  startPoint: {x: 0, y: 0, z: 0}
+  controlPoint: {x: 0, y: 0, z: 0}
+  endPoint: {x: 0, y: 0, z: 0}
+  t: 0
   explosive: {fileID: 0}
 --- !u!1 &7655653928750999820
 GameObject:

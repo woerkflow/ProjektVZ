@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 8369986078084352637}
   - component: {fileID: 5841855857953019535}
   - component: {fileID: 4540087990837700934}
+  - component: {fileID: 1855411324575133690}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -278,6 +279,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c873c81d63c0a4e8db577163aa2a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1855411324575133690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015013003566505696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turrets: []
+  spawns: []
+  mines: []
 --- !u!1 &2290482326864787365
 GameObject:
   m_ObjectHideFlags: 0

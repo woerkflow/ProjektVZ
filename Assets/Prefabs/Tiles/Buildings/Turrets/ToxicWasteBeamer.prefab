@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 5223511892115107982}
   - component: {fileID: 2326920699968995894}
   - component: {fileID: 4701045630614851866}
-  - component: {fileID: -8211382120267035898}
   m_Layer: 0
   m_Name: ToxicWasteBeamer
   m_TagString: Building
@@ -127,31 +126,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   firePoint: {fileID: 4981475877371994079}
-  enemyTag: Zombie
   perceptionRange: 0.14
   _target: {fileID: 0}
   partToRotate: {fileID: 7186551300870523587}
-  speed: 0.25
+  speed: 2
   direction: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 8428514640838481261, guid: 8c4fc3a109dea4945901bae9100aa980,
     type: 3}
   fireRate: 2
---- !u!114 &-8211382120267035898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6742136073031890223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  turret: {fileID: 4701045630614851866}
-  spawn: {fileID: 0}
-  mine: {fileID: 0}
 --- !u!1 &8069357025394623847
 GameObject:
   m_ObjectHideFlags: 0

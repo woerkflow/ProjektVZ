@@ -3,13 +3,13 @@ using UnityEngine;
 public class Mine : MonoBehaviour {
 
     [Header("Mine")]
-    public string enemyTag;
     public float perceptionRange;
     public float explosionTimer;
     public int damage;
     
     private GameObject _parentSpawner;
     private GameObject _target;
+    private Seeker _seeker;
     
     [Header("Explosion")]
     public GameObject impactEffect;
@@ -20,12 +20,19 @@ public class Mine : MonoBehaviour {
     #region Unity methods
     
     private void Start() {
+        _seeker = FindObjectOfType<Seeker>();
         
-        // Set timer
+        if (_seeker != null) {
+            _seeker.RegisterMine(this);
+        } else {
+            Debug.LogError("Seeker not found in the scene.");
+        }
         _elapsedExplosionTime = 0f;
-        
-        // Start coroutine
         InvokeRepeating(nameof(UpdateTimer), 0f, 1f);
+    }
+    
+    private void OnDestroy() {
+        _seeker.UnregisterMine(this);
     }
     
     #endregion

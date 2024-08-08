@@ -29,7 +29,7 @@ public class Laser : MonoBehaviour {
             return;
         }
         
-        if (_effectArea == null) {
+        if (_target && _effectArea == null) {
             _effectArea = CreateDamageArea(effectArea, _target);
         }
         Destroy(gameObject);
@@ -43,6 +43,7 @@ public class Laser : MonoBehaviour {
     public void Seek(Transform firePoint, GameObject target) {
         _target = target.GetComponent<Enemy>();
         _firePoint = firePoint;
+        SetPositions();
         
         StartCoroutine(
             StartTickDamage(
@@ -61,17 +62,20 @@ public class Laser : MonoBehaviour {
     #region Private class methods
 
     private void SetPositions() {
+        Vector3 targetCenter = _target.GetComponent<CapsuleCollider>().center;
+        
         lineRenderer.SetPosition(
             0, 
             _firePoint.position
         );
         lineRenderer.SetPosition(
             1, 
-            _target.transform.position + _target.GetComponent<CapsuleCollider>().center
+            _target.transform.position + targetCenter
         );
         effectFirePoint.transform.position = _firePoint.position;
         effectFirePoint.transform.rotation = _firePoint.rotation;
-        effectTarget.transform.position = _target.transform.position;
+        effectTarget.transform.position = _target.transform.position + targetCenter;
+        effectTarget.transform.rotation = Quaternion.Inverse(_firePoint.rotation);
     }
 
     private static GameObject CreateDamageArea(GameObject effectArea, Enemy target) {

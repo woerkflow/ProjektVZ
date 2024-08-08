@@ -6,7 +6,6 @@ public class Turret : MonoBehaviour {
     [Header("Turret")]
     public Type type;
     public Transform firePoint;
-    public string enemyTag;
     public float perceptionRange;
     
     public enum Type {
@@ -14,15 +13,16 @@ public class Turret : MonoBehaviour {
         Beamer
     }
     
+    private GameObject _target;
     private float _elapsedTime;
-    public GameObject _target;
+    private Seeker _seeker;
     
     [Header("Rotation")]
     public Transform partToRotate;
     public float speed;
-
+    
     [HideInInspector] 
-    public Vector3 direction;
+    public Vector3 rotateTarget;
 
     private TurretJobManager _turretJobManager;
 
@@ -37,11 +37,18 @@ public class Turret : MonoBehaviour {
     
     private void Start() {
         _turretJobManager = FindObjectOfType<TurretJobManager>();
+        _seeker = FindObjectOfType<Seeker>();
 
         if (_turretJobManager != null) {
             _turretJobManager.Register(this);
         } else {
             Debug.LogError("TurretJobManager not found in the scene.");
+        }
+        
+        if (_seeker != null) {
+            _seeker.RegisterTurret(this);
+        } else {
+            Debug.LogError("Seeker not found in the scene.");
         }
     }
 
@@ -52,17 +59,11 @@ public class Turret : MonoBehaviour {
             || Vector3.Distance(_target.transform.position, transform.position) > perceptionRange
         ) {
             _elapsedTime = 0f;
+            rotateTarget = partToRotate.position;
             _target = null;
             return;
         }
-        direction = Moveable.Direction(
-            _target.transform.position, 
-            partToRotate.position
-        );
-
-        if (direction == Vector3.zero) {
-            return;
-        }
+        rotateTarget = _target.transform.position;
         
         if (_projectile != null) {
             _elapsedTime = 0f;
@@ -78,6 +79,7 @@ public class Turret : MonoBehaviour {
     
     private void OnDestroy() {
         _turretJobManager.Unregister(this);
+        _seeker.UnregisterTurret(this);
     }
     
     #endregion

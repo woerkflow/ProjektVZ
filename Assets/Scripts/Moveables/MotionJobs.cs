@@ -1,67 +1,98 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
 [BurstCompile]
-public struct LinearMoveJobFor : IJobParallelFor {
-    [ReadOnly] public NativeArray<Vector3> Directions;
+public struct LinearMoveJobFor : IJobFor {
+    [ReadOnly] public NativeArray<float3> Positions;
+    [ReadOnly] public NativeArray<float3> Targets;
     [ReadOnly] public NativeArray<float> Speeds;
-    [ReadOnly] public NativeArray<Vector3> CurrentPositions;
     [ReadOnly] public float DeltaTime;
-    public NativeArray<Vector3> Results;
+    public NativeArray<float3> Results;
 
     public void Execute(int index) {
-        Vector3 step = Directions[index].normalized * Speeds[index] * DeltaTime;
-        Results[index] = new Vector3(CurrentPositions[index].x + step.x, CurrentPositions[index].y, CurrentPositions[index].z + step.z);
-    }
-}
-
-[BurstCompile]
-public struct ParabolicMoveJobFor : IJobParallelFor {
-    [ReadOnly] public NativeArray<Vector3> Starts;
-    [ReadOnly] public NativeArray<Vector3> Controls;
-    [ReadOnly] public NativeArray<Vector3> Ends;
-    [ReadOnly] public NativeArray<float> Ts;
-    public NativeArray<Vector3> Results;
-
-    public void Execute(int index) {
-        Vector3 startPoint = Vector3.Lerp(Starts[index], Controls[index], Ts[index]);
-        Vector3 endPoint = Vector3.Lerp(Controls[index], Ends[index], Ts[index]);
-        Results[index] = Vector3.Lerp(startPoint, endPoint, Ts[index]);
-    }
-}
-
-[BurstCompile]
-public struct InstantRotationJobFor : IJobParallelFor {
-    [ReadOnly] public NativeArray<Vector3> Directions;
-    public NativeArray<Quaternion> Results;
-
-    public void Execute(int index) {
+        float3 target = Targets[index];
+        float3 position = Positions[index];
+        float speed = Speeds[index];
         
-        if (Directions[index] == Vector3.zero) {
-            Results[index] = Quaternion.identity;
+        float3 direction = new float3(target.x - position.x, 0, target.z - position.z);
+        float lenSq = math.lengthsq(direction);
+        
+        if (lenSq > 1e-5f) {
+            direction = math.normalize(direction);
+            Results[index] = position + direction * speed * DeltaTime;
         } else {
-            Results[index] = Quaternion.LookRotation(Directions[index]);
+            Results[index] = position;
         }
     }
 }
 
 [BurstCompile]
-public struct InterpolatedRotationJobFor : IJobParallelFor {
-    [ReadOnly] public NativeArray<Vector3> Directions;
-    [ReadOnly] public NativeArray<Quaternion> Rotations;
-    [ReadOnly] public NativeArray<float> Speeds;
-    public NativeArray<Quaternion> Results;
+public struct ParabolicMoveJobFor : IJobFor {
+    [ReadOnly] public NativeArray<float3> Starts;
+    [ReadOnly] public NativeArray<float3> Controls;
+    [ReadOnly] public NativeArray<float3> Ends;
+    [ReadOnly] public NativeArray<float> Ts;
+    public NativeArray<float3> Results;
 
     public void Execute(int index) {
+        float3 start = Starts[index];
+        float3 control = Controls[index];
+        float3 end = Ends[index];
+        float t = Ts[index];
+
+        float3 startPoint = math.lerp(start, control, t);
+        float3 endPoint = math.lerp(control, end, t);
+        Results[index] = math.lerp(startPoint, endPoint, t);
+    }
+}
+
+[BurstCompile]
+public struct InstantRotationJobFor : IJobFor {
+    [ReadOnly] public NativeArray<float3> Positions;
+    [ReadOnly] public NativeArray<float3> Targets;
+    public NativeArray<quaternion> Results;
+
+    public void Execute(int index) {
+        float3 target = Targets[index];
+        float3 position = Positions[index];
         
-        if (Directions[index] == Vector3.zero) {
-            Results[index] = Quaternion.identity;
+        float3 direction = new float3(target.x - position.x, 0, target.z - position.z);
+        float lenSq = math.lengthsq(direction);
+        
+        if (lenSq > 1e-5f) {
+            Results[index] = quaternion.LookRotationSafe(direction, math.up()) ;
         } else {
-            Quaternion lookRotation = Quaternion.LookRotation(Directions[index]);
-            Vector3 rotation = Quaternion.Lerp(Rotations[index], lookRotation, Speeds[index]).eulerAngles;
-            Results[index] = Quaternion.Euler(0f, rotation.y, 0f);
+            Results[index] = quaternion.identity;
+        }
+    }
+}
+
+[BurstCompile]
+public struct InterpolatedRotationJobFor : IJobFor {
+    [ReadOnly] public NativeArray<float3> Positions;
+    [ReadOnly] public NativeArray<float3> Targets;
+    [ReadOnly] public NativeArray<quaternion> Rotations;
+    [ReadOnly] public NativeArray<float> Speeds;
+    [ReadOnly] public float DeltaTime;
+    public NativeArray<quaternion> Results;
+
+    public void Execute(int index) {
+        float3 target = Targets[index];
+        float3 position = Positions[index];
+        float speed = Speeds[index];
+        quaternion rotation = Rotations[index];
+        
+        float3 direction = new float3(target.x - position.x, 0, target.z - position.z);
+        float lenSq = math.lengthsq(direction);
+        
+        if (lenSq > 1e-5f) {
+            quaternion targetRotation = quaternion.LookRotationSafe(direction, math.up());
+            Results[index] = math.slerp(rotation, targetRotation, speed * DeltaTime);
+        } else {
+            Results[index] = rotation;
         }
     }
 }

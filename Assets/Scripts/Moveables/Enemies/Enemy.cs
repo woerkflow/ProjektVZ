@@ -7,17 +7,18 @@ public class Enemy : MonoBehaviour {
     public GameObject mainTarget;
     public float perceptionRange;
     
-    private GameObject _target;
+    [HideInInspector]
+    public GameObject target;
     private Building _targetBuildingComponent;
     private float _targetCapsuleRadius;
     
     [Header("Movement")]
     public float speed;
 
-    [HideInInspector] 
-    public Vector3 direction;
     [HideInInspector]
     public float currentSpeed;
+    [HideInInspector] 
+    public Vector3 moveTarget;
     
     private EnemyJobManager _enemyJobManager;
     
@@ -77,12 +78,12 @@ public class Enemy : MonoBehaviour {
             return;
         }
         
-        if (_target == null) {
-            _target = mainTarget;
-            return;
+        if (target == null) {
+            target = mainTarget;
         }
-        direction = Moveable.Direction(
-            _target.transform.position, 
+        moveTarget = target.transform.position;
+        Vector3 direction = Moveable.Direction(
+            moveTarget,
             transform.position
         );
         
@@ -91,10 +92,10 @@ public class Enemy : MonoBehaviour {
             currentSpeed = speed;
             return;
         }
+        currentSpeed = 0f;
         
-        if (_target != mainTarget) {
+        if (target != mainTarget) {
             animator.SetFloat(walkParameter, 0f);
-            currentSpeed = 0f;
             AttackTarget();
             return;
         }
@@ -145,14 +146,10 @@ public class Enemy : MonoBehaviour {
         DeactivateValues();
     }
     
-    public GameObject GetTarget() {
-        return _target;
-    }
-    
     public void SetTarget(GameObject newTarget) {
-        _target = newTarget;
-        _targetBuildingComponent = _target.GetComponent<Building>();
-        _targetCapsuleRadius = _target.GetComponent<CapsuleCollider>().radius;
+        target = newTarget;
+        _targetBuildingComponent = target.GetComponent<Building>();
+        _targetCapsuleRadius = target.GetComponent<CapsuleCollider>().radius;
     }
 
     public void SetSwarmManager(SwarmManager swarmManager) {
@@ -179,7 +176,7 @@ public class Enemy : MonoBehaviour {
         }
         animator.SetTrigger(attackParameter);
             
-        if (_target != null) {
+        if (target != null) {
             Damage(_targetBuildingComponent, damage);
         }
         _elapsedAttackTime = 0f;

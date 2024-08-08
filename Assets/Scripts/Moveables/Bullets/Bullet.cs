@@ -48,11 +48,6 @@ public class Bullet : MonoBehaviour {
     }
     
     private void Update() {
-
-        if (_target == null || !_target.activeSelf) {
-            Destroy(gameObject);
-            return;
-        }
         _timeElapsed += Time.deltaTime;
         t = _timeElapsed / _travelTime;
         t = Mathf.Clamp01(t);
@@ -91,7 +86,7 @@ public class Bullet : MonoBehaviour {
     }
     
     private void StartImpactEffect() {
-        GameObject effectInst = Instantiate(impactEffect, transform.position, transform.rotation);
+        GameObject effectInst = Instantiate(impactEffect, endPoint, transform.rotation);
         Destroy(effectInst, 1f);
     }
     

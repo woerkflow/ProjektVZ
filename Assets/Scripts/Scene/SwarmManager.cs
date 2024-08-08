@@ -66,7 +66,7 @@ public class SwarmManager : MonoBehaviour {
             return;
         }
         
-        foreach (var zombie in zombies.Where(zombie => zombie.GetTarget() != _target)) {
+        foreach (var zombie in zombies.Where(zombie => zombie.target != _target)) {
             zombie.SetTarget(nearestBuilding);
         }
     }

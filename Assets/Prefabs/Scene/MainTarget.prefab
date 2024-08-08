@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 474069399492552212}
   - component: {fileID: 6289365683213845070}
+  - component: {fileID: 7783714918060008190}
   m_Layer: 0
   m_Name: MainTarget
   m_TagString: Untagged
@@ -55,3 +56,18 @@ CapsuleCollider:
   m_Height: 0.005
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7783714918060008190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117828115786003077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb21b238063264d47b5ace1ebc2202db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turrets: []
+  spawns: []
+  mines: []

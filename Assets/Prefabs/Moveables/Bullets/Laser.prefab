@@ -4987,7 +4987,8 @@ MonoBehaviour:
   effectArea: {fileID: 9135785084644269850, guid: 88657458a1b37574b835fdbb52afab5e,
     type: 3}
   damage: 1
-  damageTick: 2
+  duration: 5
+  tickTime: 1
 --- !u!1 &8896097095524556420
 GameObject:
   m_ObjectHideFlags: 0
