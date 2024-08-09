@@ -6,25 +6,23 @@ public class Enemy : MonoBehaviour {
     [Header("Target")]
     public GameObject mainTarget;
     public float perceptionRange;
-    
-    [HideInInspector]
-    public GameObject target;
     private Building _targetBuildingComponent;
     private float _targetCapsuleRadius;
     
+    public GameObject target { get; private set; }
+    
     [Header("Movement")]
     public float speed;
-
-    [HideInInspector]
-    public float currentSpeed;
-    [HideInInspector] 
-    public Vector3 moveTarget;
+    
+    public float currentSpeed { get; private set; }
+    public Vector3 moveTarget { get; private set; }
     
     private EnemyJobManager _enemyJobManager;
     
     [Header("Attack")]
     public float attackSpeed;
-    public int damage;
+    public int minDamage;
+    public int maxDamage;
     public int maxHealth;
     public CapsuleCollider capsuleCollider;
     public float deadTime;
@@ -45,67 +43,47 @@ public class Enemy : MonoBehaviour {
     private PlayerManager _playerManager;
     
     
-    #region Unity Methods
+    #region Unity Methoden
     
     private void Start() {
-        _enemyJobManager = FindObjectOfType<EnemyJobManager>();
-        
-        if (_enemyJobManager != null) {
-            _enemyJobManager.Register(this);
-        } else {
-            Debug.LogError("EnemyJobManager not found in the scene.");
-        }
-        _playerManager = PlayerManager.Instance;
-        _elapsedAttackTime = attackSpeed;
-        _currentHealth = maxHealth;
-        _elapsedDeadTime = 0f;
-        _capsuleRadius = capsuleCollider.radius;
-        SetTarget(mainTarget);
+        InitializeComponents();
+        ResetValues();
     }
     
     private void Update() {
         
         if (_currentHealth <= 0) {
-            
-            if (_elapsedDeadTime < deadTime) {
-                _elapsedDeadTime += Time.deltaTime;
-                return;
-            }
-            _playerManager.SetResourceWhiskey(
-                _playerManager.GetResourceWhiskey() + 1
-            );
-            DestroyEnemy();
+            HandleDeath();
             return;
         }
-        
-        if (target == null) {
-            target = mainTarget;
+        UpdateTarget();
+        MoveTowardsTarget();
+
+        if (IsWithinAttackRange()) {
+            HandleAttack();
         }
-        moveTarget = target.transform.position;
-        Vector3 direction = Moveable.Direction(
-            moveTarget,
-            transform.position
-        );
-        
-        if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
-            animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
-            currentSpeed = speed;
-            return;
-        }
-        currentSpeed = 0f;
-        
-        if (target != mainTarget) {
-            animator.SetFloat(walkParameter, 0f);
-            AttackTarget();
-            return;
-        }
-        animator.SetTrigger(dieParameter);
-        DeactivateValues();
-        DestroyEnemy();
+    }
+
+    private void OnDestroy() {
+        _enemyJobManager?.Unregister(this);
     }
     
-    private void OnDestroy() {
-        _enemyJobManager.Unregister(this);
+    #endregion
+    
+    
+    #region Initialization
+
+    private void InitializeComponents() {
+        _enemyJobManager = FindObjectOfType<EnemyJobManager>();
+        
+        if (_enemyJobManager == null) {
+            Debug.LogError("EnemyJobManager nicht in der Szene gefunden.");
+        } else {
+            _enemyJobManager.Register(this);
+        }
+        _playerManager = PlayerManager.Instance;
+        _capsuleRadius = capsuleCollider.radius;
+        SetTarget(mainTarget);
     }
     
     #endregion
@@ -118,9 +96,9 @@ public class Enemy : MonoBehaviour {
     }
     
     private void DestroyEnemy() {
+        _swarmManager?.Leave(this);
         
         if (_pool != null) {
-            _swarmManager.Leave(this);
             _pool.Release(this);
         } else {
             Destroy(gameObject);
@@ -130,22 +108,25 @@ public class Enemy : MonoBehaviour {
     #endregion
     
     
-    #region Public Enemy Methods
-    
-    public int GetHealth() {
-        return _currentHealth;
-    }
+    #region Public Methods
 
-    public void SetHealth(int value) {
+    public int GetHealth() 
+        => _currentHealth;
+
+    private void SetHealth(int value) {
         _currentHealth = value;
 
-        if (_currentHealth > 0) {
+        if (_currentHealth > 0) { 
             return;
         }
         animator.SetTrigger(dieParameter);
         DeactivateValues();
     }
-    
+
+    public void TakeDamage(int value) {
+        SetHealth(GetHealth() - value);
+    }
+
     public void SetTarget(GameObject newTarget) {
         target = newTarget;
         _targetBuildingComponent = target.GetComponent<Building>();
@@ -157,7 +138,9 @@ public class Enemy : MonoBehaviour {
     }
 
     public void ResetValues() {
-        SetHealth(maxHealth);
+        _currentHealth = maxHealth;
+        _elapsedAttackTime = attackSpeed;
+        _elapsedDeadTime = 0f;
         capsuleCollider.enabled = true;
         gameObject.tag = "Zombie";
         currentSpeed = speed;
@@ -166,24 +149,57 @@ public class Enemy : MonoBehaviour {
     #endregion
     
     
-    #region Private Enemy Methods
+    #region Private Methods
     
-    private void AttackTarget() {
+    private void HandleDeath() {
         
-        if (_elapsedAttackTime < attackSpeed) {
-            _elapsedAttackTime += Time.deltaTime;
-            return;
+        if (_elapsedDeadTime < deadTime) {
+            _elapsedDeadTime += Time.deltaTime;
+        } else {
+            _playerManager.AddResources( 
+                new Resources {
+                    whiskey = 1    
+                }
+            );
+            DestroyEnemy();
         }
-        animator.SetTrigger(attackParameter);
-            
-        if (target != null) {
-            Damage(_targetBuildingComponent, damage);
-        }
-        _elapsedAttackTime = 0f;
     }
-    
-    private static void Damage(Building building, int damage) {
-        building.SetHealth(building.GetHealth() - damage);
+
+    private void UpdateTarget() {
+        
+        if (target == null) {
+            SetTarget(mainTarget);
+        }
+        moveTarget = target.transform.position;
+    }
+
+    private void MoveTowardsTarget() {
+        Vector3 direction = Moveable.Direction(moveTarget, transform.position);
+
+        if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
+            animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
+            currentSpeed = speed;
+        } else {
+            currentSpeed = 0f;
+        }
+    }
+
+    private bool IsWithinAttackRange() 
+        => currentSpeed == 0f && target != mainTarget;
+
+    private void HandleAttack() {
+        animator.SetFloat(walkParameter, 0f);
+        
+        if (_elapsedAttackTime >= attackSpeed) {
+            animator.SetTrigger(attackParameter);
+            
+            if (target != null) {
+                _targetBuildingComponent?.TakeDamage(Random.Range(minDamage, maxDamage));
+            }
+            _elapsedAttackTime = 0f;
+        } else {
+            _elapsedAttackTime += Time.deltaTime;
+        }
     }
     
     private void DeactivateValues() {

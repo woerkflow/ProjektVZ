@@ -1441,13 +1441,10 @@ MonoBehaviour:
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
   perceptionRange: 0.14
-  target: {fileID: 0}
   speed: 0.01
-  currentSpeed: 0
-  moveTarget: {x: 0, y: 0, z: 0}
   attackSpeed: 3
   damage: 1
-  maxHealth: 4
+  maxHealth: 5
   capsuleCollider: {fileID: 9195502220633551029}
   deadTime: 2
   animator: {fileID: 6877504410572256420}
@@ -1468,7 +1465,7 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.5
+  - screenRelativeHeight: 0.1
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1650400635861958618}

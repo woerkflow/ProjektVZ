@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyJobManager : MonoBehaviour {
     
-    private List<Enemy> _enemies = new List<Enemy>();
+    private List<Enemy> _enemies = new();
     
     #region Unity Methods
 

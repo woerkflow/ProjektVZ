@@ -78,13 +78,8 @@ public class Laser : MonoBehaviour {
         effectTarget.transform.rotation = Quaternion.Inverse(_firePoint.rotation);
     }
 
-    private static GameObject CreateDamageArea(GameObject effectArea, Enemy target) {
-        return Instantiate(effectArea, target.transform.position, target.transform.rotation);
-    }
-    
-    private static void Damage(Enemy enemy, int damage) {
-        enemy.SetHealth(enemy.GetHealth() - damage);
-    }
+    private static GameObject CreateDamageArea(GameObject effectArea, Enemy target)
+        => Instantiate(effectArea, target.transform.position, target.transform.rotation);
 
     private static IEnumerator StartTickDamage(
         int duration,
@@ -94,7 +89,7 @@ public class Laser : MonoBehaviour {
         GameObject gameObject
     ) {
         for (var i = 0; i < duration; i++) {
-            Damage(enemy, damage);
+            enemy.TakeDamage(damage);
             yield return new WaitForSeconds(tickTime);
         }
         Destroy(gameObject);

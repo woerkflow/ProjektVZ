@@ -6,43 +6,56 @@ public class DamageArea : MonoBehaviour {
     [Header("Tick Explosion")]
     public int duration;
     public float tickTime;
-    public int damage;
+    public int minDamage;
+    public int maxDamage;
     public Explosive explosive;
-    
-    
-    #region Unity methods
-    
-    private void Start() {
 
-        StartCoroutine(
+    private Coroutine _tickCoroutine;
+
+    
+    #region Unity Methods
+
+    private void Start() {
+        _tickCoroutine = StartCoroutine(
             StartTick(
                 duration, 
-                tickTime,
+                tickTime, 
                 explosive, 
-                damage, 
-                gameObject
+                minDamage, 
+                maxDamage
             )
         );
     }
     
+    private void OnDestroy() {
+        
+        if (_tickCoroutine != null) {
+            StopCoroutine(_tickCoroutine);
+        }
+    }
+
     #endregion
-    
+
     
     #region Tick Loop
-    
+
     private static IEnumerator StartTick(
-        int duration, 
-        float tickTime, 
-        Explosive explosive, 
-        int damage, 
-        GameObject gameObject
+        int duration,
+        float tickTime,
+        Explosive explosive,
+        int minDamage,
+        int maxDamage
     ) {
-        for (var i = 0; i < duration; i++) {
-            explosive.Explode(damage);
+        for (int i = 0; i < duration; i++) {
+            
+            if (explosive == null) {
+                yield break;
+            }
+            explosive.Explode(minDamage, maxDamage);
             yield return new WaitForSeconds(tickTime);
         }
-        Destroy(gameObject);
+        Destroy(explosive.gameObject);
     }
-    
+
     #endregion
 }

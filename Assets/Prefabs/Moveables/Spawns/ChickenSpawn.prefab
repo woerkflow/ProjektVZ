@@ -4902,8 +4902,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTag: Zombie
-  radius: 0.01
-  maxTargets: 10
+  radius: 0.02
+  maxTargets: 20
 --- !u!114 &5426830648720794665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4919,9 +4919,9 @@ MonoBehaviour:
   type: 0
   perceptionRange: 0.06
   speed: 0.01
-  moveTarget: {x: 0, y: 0, z: 0}
   capsuleCollider: {fileID: 1225672579551020913}
-  damage: 1
+  minDamage: 1
+  maxDamage: 5
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
   explosive: {fileID: 3422659713731089772}

@@ -16,23 +16,20 @@ public class BuildManager : MonoBehaviour {
     [Header("Menu")]
     public UIMenu buildMenu;
     
-    [HideInInspector]
-    public List<GameObject> buildings;
-    
+    private List<GameObject> _buildings = new();
     private Building _selectedBuilding;
     private PlayerManager _playerManager;
     private Tile _selectedTile;
-    
-    
-    #region Unity methods
-    
-    private void Awake() {
 
+    
+    #region Unity Methods
+
+    private void Awake() {
         if (Instance != null) {
-            Debug.Log("More than one BuildManager at once;");
-        } else {
-            Instance = this;
+            Debug.LogWarning("More than one BuildManager instance found!");
+            return;
         }
+        Instance = this;
     }
 
     private void Start() {
@@ -41,10 +38,10 @@ public class BuildManager : MonoBehaviour {
     }
 
     #endregion
+
     
-    
-    #region Public class methods
-    
+    #region Public Methods
+
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
     }
@@ -61,35 +58,21 @@ public class BuildManager : MonoBehaviour {
         _selectedBuilding = building;
     }
 
+    public List<GameObject> GetBuildings() => _buildings;
+
     public void AddBuilding(GameObject building) {
-        buildings.Add(building);
+        _buildings.Add(building);
     }
 
     public void RemoveBuilding(GameObject building) {
-        buildings.Remove(building);
+        _buildings.Remove(building);
     }
 
-    public List<GameObject> GetBuildings() {
-        return buildings;
-    }
-    
     #endregion
     
     
-    #region Private class methods
+    #region Menu Button Methods
 
-    private static bool CanBuild(PlayerManager playerManager, Building selectedBuilding) {
-        return selectedBuilding != null
-               && playerManager.GetResourceWood() >= selectedBuilding.blueprint.resourceWood
-               && playerManager.GetResourceWaste() >= selectedBuilding.blueprint.resourceWaste
-               && playerManager.GetResourceWhiskey() >= selectedBuilding.blueprint.resourceWhiskey;
-    }
-    
-    #endregion
-    
-    
-    #region Menu button methods
-    
     public void SelectFlameLauncher() {
         SelectBuildingToBuild(flameLauncher);
     }
@@ -116,30 +99,24 @@ public class BuildManager : MonoBehaviour {
 
     public void Build() {
         
-        if (!CanBuild(_playerManager, _selectedBuilding)) {
+        if (!CanBuild()) {
             return;
         }
-
-        // Take resources from the player
-        _playerManager.SetResourceWood(
-            _playerManager.GetResourceWood() - _selectedBuilding.blueprint.resourceWood
+        Resources cost = new Resources {
+            wood = _selectedBuilding.blueprint.resourceWood,
+            waste = _selectedBuilding.blueprint.resourceWaste,
+            whiskey = _selectedBuilding.blueprint.resourceWhiskey
+        };
+        DeductResources(cost);
+        
+        _selectedTile.AddResources( 
+            new Resources {
+                wood = cost.wood,
+                waste = cost.waste,
+                whiskey = cost.whiskey
+            }
         );
-        _playerManager.SetResourceWaste(
-            _playerManager.GetResourceWaste() - _selectedBuilding.blueprint.resourceWaste
-        );
-        _playerManager.SetResourceWhiskey(
-            _playerManager.GetResourceWhiskey() - _selectedBuilding.blueprint.resourceWhiskey
-        );
-
-        // Give resources to the tile
-        _selectedTile.resourceWood += _selectedBuilding.blueprint.resourceWood;
-        _selectedTile.resourceWaste += _selectedBuilding.blueprint.resourceWaste;
-        _selectedTile.resourceWhiskey += _selectedBuilding.blueprint.resourceWhiskey;
-            
-        // Build building
         _selectedTile.Build(_selectedBuilding);
-            
-        // Close menu
         CloseMenu();
     }
 
@@ -156,6 +133,29 @@ public class BuildManager : MonoBehaviour {
         _selectedTile = null;
         _selectedBuilding = null;
     }
+
+    #endregion
     
+    
+    #region Private Methods
+
+    private bool CanBuild() {
+        
+        if (_selectedBuilding == null) {
+            return false;
+        }
+        return _playerManager.HasEnoughResources( 
+            new Resources {
+                wood = _selectedBuilding.blueprint.resourceWood,
+                waste = _selectedBuilding.blueprint.resourceWaste,
+                whiskey = _selectedBuilding.blueprint.resourceWhiskey
+            }
+        );
+    }
+
+    private void DeductResources(Resources cost) {
+        _playerManager.SubtractResources(cost);
+    }
+
     #endregion
 }

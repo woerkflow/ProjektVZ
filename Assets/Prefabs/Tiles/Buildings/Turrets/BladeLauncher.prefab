@@ -210,13 +210,11 @@ MonoBehaviour:
   type: 0
   firePoint: {fileID: 1375928718055682521}
   perceptionRange: 0.1
-  _target: {fileID: 0}
   partToRotate: {fileID: 2477221193001325512}
-  speed: 2
-  direction: {x: 0, y: 0, z: 0}
+  rotationSpeed: 2.5
   projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
     type: 3}
-  fireRate: 2
+  fireRate: 1
 --- !u!1 &7567849528967252978
 GameObject:
   m_ObjectHideFlags: 0

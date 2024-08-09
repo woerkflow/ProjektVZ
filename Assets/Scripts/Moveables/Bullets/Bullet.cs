@@ -5,7 +5,8 @@ public class Bullet : MonoBehaviour {
     
     [Header("Bullet")]
     public Type type;
-    public int damage;
+    public int minDamage;
+    public int maxDamage;
     public GameObject impactEffect;
     
     public enum Type {
@@ -17,14 +18,10 @@ public class Bullet : MonoBehaviour {
     public float speed;
     public float impactHeight;
     
-    [HideInInspector]
-    public Vector3 startPoint;
-    [HideInInspector]
-    public Vector3 controlPoint;
-    [HideInInspector]
-    public Vector3 endPoint;
-    [HideInInspector]
-    public float t;
+    public Vector3 startPoint { get; private set; }
+    public Vector3 controlPoint { get; private set; }
+    public Vector3 endPoint { get; private set; }
+    public float t { get; private set; }
     
     private GameObject _target;
     private float _timeElapsed;
@@ -81,10 +78,6 @@ public class Bullet : MonoBehaviour {
     
     #region Impact effect methods
     
-    private static void Damage(Enemy enemy, int damage) {
-        enemy.SetHealth(enemy.GetHealth() - damage);
-    }
-    
     private void StartImpactEffect() {
         GameObject effectInst = Instantiate(impactEffect, endPoint, transform.rotation);
         Destroy(effectInst, 1f);
@@ -94,10 +87,10 @@ public class Bullet : MonoBehaviour {
 
         switch (type) {
             case Type.SingleTarget:
-                Damage(target.GetComponent<Enemy>(), damage);
+                target.GetComponent<Enemy>().TakeDamage(minDamage);
                 break;
             case Type.MultiTarget:
-                explosive.Explode(damage);
+                explosive.Explode(minDamage, maxDamage);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();  

@@ -15,17 +15,16 @@ public class FarmManager : MonoBehaviour {
     private EnemySpawner _enemySpawner;
     private PlayerManager _playerManager;
     private Tile _selectedTile;
+
     
-    
-    #region Unity methods
+    #region Unity Methods
     
     private void Awake() {
-
         if (Instance != null) {
-            Debug.Log("More than one FarmManager at once;");
-        } else {
-            Instance = this;
+            Debug.LogWarning("More than one FarmManager instance found!");
+            return;
         }
+        Instance = this;
     }
 
     private void Start() {
@@ -35,18 +34,19 @@ public class FarmManager : MonoBehaviour {
     }
     
     #endregion
+
     
-    
-    #region Public class methods
+    #region Public Methods
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
     }
 
     public void ActivateMenu() {
-        SetMenuResourceValue(resourceWoodAmount, _selectedTile.resourceWood);
-        SetMenuResourceValue(resourceWasteAmount, _selectedTile.resourceWaste);
-        SetMenuResourceValue(resourceWhiskeyAmount, _selectedTile.resourceWhiskey);
+        Resources tileResources = _selectedTile.GetResources();
+        SetMenuResourceValue(resourceWoodAmount, tileResources.wood);
+        SetMenuResourceValue(resourceWasteAmount, tileResources.waste);
+        SetMenuResourceValue(resourceWhiskeyAmount, tileResources.whiskey);
         SetMenuResourceValue(timeCosts, _selectedTile.GetTileObject().blueprint.timeCosts);
         farmMenu.Activate();
     }
@@ -56,54 +56,43 @@ public class FarmManager : MonoBehaviour {
     }
     
     #endregion
+
     
-    
-    #region Private class methods
+    #region Private Methods
 
     private static bool CanFarm(EnemySpawner enemySpawner, Tile selectedTile) {
-        return enemySpawner.GetTime() >= selectedTile.GetTileObject().blueprint.timeCosts
-               && (selectedTile.resourceWood > 0
-               || selectedTile.resourceWaste > 0
-               || selectedTile.resourceWhiskey > 0);
+        TileObjectBlueprint tileObjectBlueprint = selectedTile.GetTileObject().blueprint;
+        return enemySpawner.GetTime() >= tileObjectBlueprint.timeCosts
+               && selectedTile.HasResources( new Resources {
+                   wood = tileObjectBlueprint.resourceWood,
+                   waste = tileObjectBlueprint.resourceWaste,
+                   whiskey = tileObjectBlueprint.resourceWhiskey
+               });
     }
-    
+
     private static void SetMenuResourceValue(TMP_Text element, int value) {
         element.SetText(value.ToString());
     }
     
+    private void DeductResourcesAndDestroyTileObject() {
+        Resources tileResources = _selectedTile.GetResources();
+
+        _playerManager.AddResources(tileResources);
+        _selectedTile.ClearResources();
+
+        _enemySpawner.SetTimer(_enemySpawner.GetTime() - _selectedTile.GetTileObject().blueprint.timeCosts);
+        _selectedTile.GetTileObject().DestroyObject();
+    }
+
     #endregion
+
     
-    
-    #region Menu button methods
+    #region Menu Button Methods
 
     public void Farm() {
-
+        
         if (CanFarm(_enemySpawner, _selectedTile)) {
-            
-            if (_selectedTile.resourceWood > 0) {
-                _playerManager.SetResourceWood(
-                    _playerManager.GetResourceWood() + _selectedTile.resourceWood
-                );
-                _selectedTile.resourceWood = 0;
-            }
-            
-            if (_selectedTile.resourceWaste > 0) {
-                _playerManager.SetResourceWaste(
-                    _playerManager.GetResourceWaste() + _selectedTile.resourceWaste
-                );
-                _selectedTile.resourceWaste = 0;
-            }
-            
-            if (_selectedTile.resourceWhiskey > 0) {
-                _playerManager.SetResourceWhiskey(
-                    _playerManager.GetResourceWhiskey() + _selectedTile.resourceWhiskey
-                );
-                _selectedTile.resourceWhiskey = 0;
-            }
-            _enemySpawner.SetTimer(
-                _enemySpawner.GetTime() - _selectedTile.GetTileObject().blueprint.timeCosts
-            );
-            _selectedTile.GetTileObject().DestroyObject();
+            DeductResourcesAndDestroyTileObject();
             CloseMenu();
         }
     }

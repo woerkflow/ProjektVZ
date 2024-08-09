@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TurretJobManager : MonoBehaviour {
     
-    private List<Turret> _turrets = new List<Turret>();
+    private List<Turret> _turrets = new();
     
     
     #region Unity methods
@@ -28,7 +28,7 @@ public class TurretJobManager : MonoBehaviour {
             positions[i] = turret.partToRotate.position;
             targets[i] = turret.rotateTarget;
             rotations[i] = turret.partToRotate.transform.rotation;
-            speeds[i] = turret.speed;
+            speeds[i] = turret.rotationSpeed;
         }
         JobHandle rotationJob = Moveable.InterpolatedRotationFor(positions, targets, rotations, speeds, rotationResults);
         rotationJob.Complete();

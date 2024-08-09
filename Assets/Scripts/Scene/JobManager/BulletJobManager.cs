@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BulletJobManager : MonoBehaviour {
     
-    private List<Bullet> _bullets = new List<Bullet>();
+    private List<Bullet> _bullets = new();
     
     
     # region Unity methods

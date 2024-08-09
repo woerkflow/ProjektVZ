@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5348933, y: 0.5348933, z: 0.5348933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2465151309780240792}
@@ -63,7 +63,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perceptionRange: 0.01
   explosionTimer: 2
-  damage: 1
+  minDamage: 1
+  maxDamage: 10
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
   explosive: {fileID: 3422659713731089772}

@@ -50,10 +50,13 @@ public class UpgradeManager : MonoBehaviour {
             _woodCost = (int) Mathf.Floor(_selectedTile.GetTileObject().blueprint.resourceWood * costFactor);
             _wasteCost = (int) Mathf.Floor(_selectedTile.GetTileObject().blueprint.resourceWaste * costFactor);
             _whiskeyCost = (int) Mathf.Floor(_selectedTile.GetTileObject().blueprint.resourceWhiskey * costFactor);
-
-            return _playerManager.GetResourceWood() >= _woodCost
-                   && _playerManager.GetResourceWaste() >= _wasteCost
-                   && _playerManager.GetResourceWhiskey() >= _whiskeyCost;
+            return _playerManager.HasEnoughResources(
+                new Resources {
+                    wood = _woodCost,
+                    waste = _wasteCost,
+                    whiskey = _whiskeyCost
+                }
+            );
         }
         return false;
     }
@@ -96,9 +99,13 @@ public class UpgradeManager : MonoBehaviour {
     public void Repair() {
         
         if (CanRepair()) {
-            _playerManager.SetResourceWood(_playerManager.GetResourceWood() - _woodCost);
-            _playerManager.SetResourceWaste(_playerManager.GetResourceWaste() - _wasteCost);
-            _playerManager.SetResourceWhiskey(_playerManager.GetResourceWhiskey() - _whiskeyCost);
+            _playerManager.SubtractResources(
+                new Resources {
+                    wood = _woodCost,
+                    waste = _wasteCost,
+                    whiskey = _whiskeyCost
+                }
+            );
             _tileBuilding.SetHealth(_tileBuilding.maxHealth);
             CloseMenu();
         }

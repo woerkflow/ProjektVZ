@@ -32,5 +32,9 @@ public class Building : TileObject {
         return _currentHealth;
     }
     
+    public void TakeDamage(int value) {
+        SetHealth(GetHealth() - value);
+    }
+    
     #endregion
 }

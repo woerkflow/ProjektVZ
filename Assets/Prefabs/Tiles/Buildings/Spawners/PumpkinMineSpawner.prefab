@@ -324,8 +324,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.015
-  m_Height: 0.05
+  m_Radius: 0.01
+  m_Height: 0.04
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
 --- !u!114 &5070567566666232820
@@ -345,9 +345,9 @@ MonoBehaviour:
     prefab: {fileID: 5574299052485252495}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 50
-    resourceWaste: 50
-    resourceWhiskey: 50
+    resourceWood: 0
+    resourceWaste: 25
+    resourceWhiskey: 25
   maxHealth: 100
   upgrade: {fileID: 0}
 --- !u!114 &4930080924524937751
@@ -362,7 +362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d376f3d2902bb7b46b21ecf46b3339af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   spawnPrefab: {fileID: 4140861100569360921, guid: 8e96108c72229c64bbbd54ed7853788e,
     type: 3}
   spawnPoints:
@@ -377,7 +376,6 @@ MonoBehaviour:
   spawnTime: 10
   minSize: 0.5
   maxSize: 1
-  spawns: []
 --- !u!1 &6369643693133566875
 GameObject:
   m_ObjectHideFlags: 0

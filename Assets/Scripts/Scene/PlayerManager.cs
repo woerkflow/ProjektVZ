@@ -10,65 +10,63 @@ public class PlayerManager : MonoBehaviour {
     public TMP_Text resourceWasteText;
     public TMP_Text resourceWhiskeyText;
     
-    // Resources
-    private int _resourceWood;
-    private int _resourceWaste;
-    private int _resourceWhiskey;
+    private Resources _resources;
+
     
-    
-    #region Unity methods
+    #region Unity Methods
     
     private void Awake() {
-
         if (Instance != null) {
-            Debug.Log("More than one PlayerManager at once;");
-        } else {
-            Instance = this;
+            Debug.LogWarning("More than one PlayerManager instance found!");
+            return;
         }
+        Instance = this;
     }
 
     private void Start() {
-        
-        // Give start resources to the player
-        SetResourceWood(100);
-        SetResourceWaste(100);
-        SetResourceWhiskey(100);
+        _resources = new Resources {
+            wood = 100,
+            waste = 100, 
+            whiskey = 100
+        };
+        UpdateResourceUI();
     }
 
     #endregion
-    
-    #region Public class methods
 
-    public int GetResourceWood() {
-        return _resourceWood;
-    }
-
-    public void SetResourceWood(int value) {
-        _resourceWood = value;
-        SetMenuResourceValue(resourceWoodText, _resourceWood);
-    }
     
-    public int GetResourceWaste() {
-        return _resourceWaste;
+    #region Public Methods
+
+    public void AddResources(Resources resourcesToAdd) {
+        _resources.wood += resourcesToAdd.wood;
+        _resources.waste += resourcesToAdd.waste;
+        _resources.whiskey += resourcesToAdd.whiskey;
+        UpdateResourceUI();
     }
 
-    public void SetResourceWaste(int value) {
-        _resourceWaste = value;
-        SetMenuResourceValue(resourceWasteText, _resourceWaste);
-    }
-    
-    public int GetResourceWhiskey() {
-        return _resourceWhiskey;
+    public void SubtractResources(Resources resourcesToSubtract) {
+        _resources.wood -= resourcesToSubtract.wood;
+        _resources.waste -= resourcesToSubtract.waste;
+        _resources.whiskey -= resourcesToSubtract.whiskey;
+        UpdateResourceUI();
     }
 
-    public void SetResourceWhiskey(int value) {
-        _resourceWhiskey = value;
-        SetMenuResourceValue(resourceWhiskeyText, _resourceWhiskey);
+    public bool HasEnoughResources(Resources requiredResources) {
+        return _resources.wood >= requiredResources.wood &&
+               _resources.waste >= requiredResources.waste &&
+               _resources.whiskey >= requiredResources.whiskey;
     }
-    
+
     #endregion
+
     
-    #region Private class methods
+    #region Private Methods
+
+    private void UpdateResourceUI() {
+        SetMenuResourceValue(resourceWoodText, _resources.wood);
+        SetMenuResourceValue(resourceWasteText, _resources.waste);
+        SetMenuResourceValue(resourceWhiskeyText, _resources.whiskey);
+    }
 
     private static void SetMenuResourceValue(TMP_Text element, int value) {
         element.SetText(value.ToString());

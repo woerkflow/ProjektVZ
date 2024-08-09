@@ -18,19 +18,10 @@ public class Explosive : MonoBehaviour {
 
     #endregion
     
-
-    #region Private class methods
-
-    private static void Damage(Enemy enemy, int damage) {
-        enemy.SetHealth(enemy.GetHealth() - damage);
-    }
-    
-    #endregion
-    
     
     #region Public class methods
     
-    public void Explode(int damage, GameObject impactEffect = null) {
+    public void Explode(int minDamage, int maxDamage, GameObject impactEffect = null) {
         int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, radius, _hitColliders);
         
         if (impactEffect) {
@@ -42,7 +33,7 @@ public class Explosive : MonoBehaviour {
             Collider coll = _hitColliders[i];
             
             if (coll.CompareTag(enemyTag)) {
-                Damage(coll.GetComponent<Enemy>(), damage);
+                coll.GetComponent<Enemy>().TakeDamage(Random.Range(minDamage, maxDamage));
             }
         }
     }

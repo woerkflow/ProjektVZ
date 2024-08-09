@@ -7777,7 +7777,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startObject
       value: 
-      objectReference: {fileID: 5070567566666232820, guid: 230417c9aca64814f8d7d3628883a443,
+      objectReference: {fileID: 7011444188280615907, guid: 3bfb98c423a9fb549b4b93b60feba27c,
         type: 3}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
@@ -9924,7 +9924,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startObject
       value: 
-      objectReference: {fileID: 2326920699968995894, guid: 155f621011db87b47af17146ff12cfbe,
+      objectReference: {fileID: 7011444188280615907, guid: 3bfb98c423a9fb549b4b93b60feba27c,
         type: 3}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
@@ -18281,7 +18281,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startObject
       value: 
-      objectReference: {fileID: 5070567566666232820, guid: 8e584b1af62168b4783478b8398a4ee8,
+      objectReference: {fileID: 7011444188280615907, guid: 3bfb98c423a9fb549b4b93b60feba27c,
         type: 3}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
@@ -19775,7 +19775,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.49803925, g: 0.3803922, b: 0.20000002, a: 1}
-  m_Intensity: 35
+  m_Intensity: 30
   m_Range: 4
   m_SpotAngle: 51.620525
   m_InnerSpotAngle: 43.422607
@@ -21882,7 +21882,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startObject
       value: 
-      objectReference: {fileID: 7413094481793581927, guid: 7ba093ad82e9f8442ba9ae7c28a393f6,
+      objectReference: {fileID: 7011444188280615907, guid: 3bfb98c423a9fb549b4b93b60feba27c,
         type: 3}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
@@ -44796,7 +44796,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startObject
       value: 
-      objectReference: {fileID: 615848428092340932, guid: bfef0f181fc1459419a54bef2e6b5d5a,
+      objectReference: {fileID: 7011444188280615907, guid: 3bfb98c423a9fb549b4b93b60feba27c,
         type: 3}
     - target: {fileID: 1731536661643962171, guid: 911fc4d06eaa9784893f7c9f65462c39,
         type: 3}
@@ -55714,7 +55714,7 @@ PrefabInstance:
     - target: {fileID: 7628145319059033115, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}
       propertyPath: maxCountDown
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7628145319059033115, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}

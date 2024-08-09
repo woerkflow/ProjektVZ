@@ -127,10 +127,8 @@ MonoBehaviour:
   type: 1
   firePoint: {fileID: 4981475877371994079}
   perceptionRange: 0.14
-  _target: {fileID: 0}
   partToRotate: {fileID: 7186551300870523587}
-  speed: 2
-  direction: {x: 0, y: 0, z: 0}
+  rotationSpeed: 2.5
   projectilePrefab: {fileID: 8428514640838481261, guid: 8c4fc3a109dea4945901bae9100aa980,
     type: 3}
   fireRate: 2

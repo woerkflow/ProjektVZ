@@ -139,7 +139,7 @@ MonoBehaviour:
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
     resourceWood: 25
-    resourceWaste: 25
+    resourceWaste: 0
     resourceWhiskey: 25
   maxHealth: 100
   upgrade: {fileID: 0}
@@ -155,7 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d376f3d2902bb7b46b21ecf46b3339af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
   spawnPrefab: {fileID: 4140861100569360921, guid: f20f2125ddf5992449b3879883491207,
     type: 3}
   spawnPoints:
@@ -163,9 +162,8 @@ MonoBehaviour:
   - {fileID: 2970919839881597402}
   - {fileID: 3857616739259418589}
   spawnTime: 10
-  minSize: 1
-  maxSize: 1
-  spawns: []
+  minSize: 1.2
+  maxSize: 1.5
 --- !u!1 &6369643693133566875
 GameObject:
   m_ObjectHideFlags: 0

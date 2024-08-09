@@ -9833,7 +9833,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.002
+      scalar: 0.005
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10534,7 +10534,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -14433,7 +14433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTag: Zombie
-  radius: 0.005
+  radius: 0.01
   maxTargets: 10
 --- !u!199 &2330162657734004993
 ParticleSystemRenderer:
@@ -14484,7 +14484,7 @@ ParticleSystemRenderer:
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 10
+  m_LengthScale: 8
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
@@ -14494,7 +14494,7 @@ ParticleSystemRenderer:
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
-  m_FreeformStretching: 0
+  m_FreeformStretching: 1
   m_RotateWithStretchDirection: 1
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
@@ -14523,5 +14523,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   tickTime: 1
-  damage: 1
+  minDamage: 1
+  maxDamage: 10
   explosive: {fileID: -7659686065697239092}

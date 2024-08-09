@@ -1,89 +1,91 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Seeker : MonoBehaviour {
     
-    [HideInInspector]
-    public List<Turret> turrets;
-    [HideInInspector]
-    public List<Spawn> spawns;
-    [HideInInspector]
-    public List<Mine> mines;
-    
+    private List<ITargetable> _targetables = new();
     private EnemySpawner _enemySpawner;
+    private Coroutine _updateTargetsCoroutine;
+    private bool _isDestroyed;
+
     
-    
-    #region Unity methods
+    #region Unity Methods
 
     private void Start() {
+        InitializeManagers();
+        
+        if (_enemySpawner != null) {
+            _isDestroyed = false;
+            _updateTargetsCoroutine = StartCoroutine(UpdateTargetsCoroutine());
+        } else {
+            Debug.LogError("EnemySpawner not found in the scene.");
+        }
+    }
+
+    private void OnDestroy() {
+        _isDestroyed = true;
+        
+        if (_updateTargetsCoroutine != null) {
+            StopCoroutine(_updateTargetsCoroutine);
+        }
+    }
+
+    #endregion
+
+    
+    #region Public Methods
+
+    public void Register(ITargetable targetable) {
+        
+        if (!_targetables.Contains(targetable)) {
+            _targetables.Add(targetable);
+        }
+    }
+
+    public void Unregister(ITargetable targetable) {
+        _targetables.Remove(targetable);
+    }
+
+    #endregion
+
+    
+    #region Private Methods
+
+    private void InitializeManagers() {
         _enemySpawner = FindObjectOfType<EnemySpawner>();
-        InvokeRepeating(nameof(UpdateTarget), 0f, 1f);
     }
 
-    #endregion
-    
-    
-    #region Public class methods
+    private IEnumerator UpdateTargetsCoroutine() {
+        
+        while (!_isDestroyed) {
+            GameObject nearestEnemy = FindNearestEnemy();
 
-    public void RegisterTurret(Turret turret) {
-        turrets.Add(turret);
-    }
-    
-    public void RegisterSpawn(Spawn spawn) {
-        spawns.Add(spawn);
-    }
-    
-    public void RegisterMine(Mine mine) {
-        mines.Add(mine);
+            foreach (ITargetable targetable in _targetables.Where(targetable => targetable.GetTarget() != nearestEnemy)) {
+                targetable.SetTarget(nearestEnemy);
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
 
-    public void UnregisterTurret(Turret turret) {
-        turrets.Remove(turret);
-    }
-    
-    public void UnregisterSpawn(Spawn spawn) {
-        spawns.Remove(spawn);
-    }
-    
-    public void UnregisterMine(Mine mine) {
-        mines.Remove(mine);
-    }
-    
-    #endregion
-    
-    
-    #region Private class methods
-    
-    private void UpdateTarget() {
+    private GameObject FindNearestEnemy() {
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
-        
-        foreach (SwarmManager swarmManager in _enemySpawner.swarmManagers) {
-            foreach (Enemy enemy in swarmManager.zombies) {
-                if (!enemy.gameObject.activeSelf) {
-                    continue;
-                }
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
+        foreach (SwarmManager swarmManager in _enemySpawner.swarmManagers) {
+            foreach (Enemy enemy in swarmManager.GetEnemies().Where(enemy => enemy.gameObject.activeSelf)) {
+                
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                
                 if (distanceToEnemy < shortestDistance) {
                     shortestDistance = distanceToEnemy;
                     nearestEnemy = enemy.gameObject;
                 }
             }
         }
-
-        foreach (Turret turret in turrets) {
-            turret.SetTarget(nearestEnemy);
-        }
-        
-        foreach (Spawn spawn in spawns) {
-            spawn.SetTarget(nearestEnemy);
-        }
-        
-        foreach (Mine mine in mines) {
-            mine.SetTarget(nearestEnemy);
-        }
+        return nearestEnemy;
     }
-    
+
     #endregion
 }

@@ -4,7 +4,7 @@ public class SpawnPoint : MonoBehaviour {
     
     public float spawnRange;
     
-    #region Unity Mehtods
+    #region Unity Methods
     
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;

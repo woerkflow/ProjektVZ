@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class TileObjectBlueprint {
     
-    public Tile.Type type;
+    public Tile.TileType type;
     public GameObject prefab;
     public GameObject ruin;
     public int timeCosts;

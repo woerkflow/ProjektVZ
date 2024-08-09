@@ -50,7 +50,6 @@ MonoBehaviour:
   enemyTag: Zombie
   radius: 0.01
   maxTargets: 10
-  damage: 1
 --- !u!114 &794176971902633550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,11 +62,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3975774819fd0b42b7cb3a52998dc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  damage: 1
+  type: 1
+  minDamage: 1
+  maxDamage: 5
   impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
-  type: 1
+  speed: 0.15
+  impactHeight: 0
   explosive: {fileID: 2616350492570003641}
 --- !u!1 &2932873408101990794
 GameObject:

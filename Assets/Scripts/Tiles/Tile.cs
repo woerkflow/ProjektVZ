@@ -9,41 +9,31 @@ public class Tile : MonoBehaviour {
     public TileObject[] randomObjects;
     public bool isBlocked;
     
-    [HideInInspector]
-    public int resourceWood { get; set; }
-    public int resourceWaste { get; set; }
-    public int resourceWhiskey { get; set; }
-    
-    public enum Type {
+    public enum TileType {
         Empty,
         Building,
         Resource
     }
-    
-    // Tile
+
+    private Resources _resources;
     private GameObject _tileObject;
     private Quaternion _objectRotation;
-    private Type _tileType;
-    
-    // Common
+    private TileType _tileType;
     private BuildManager _buildManager;
     private FarmManager _farmManager;
     private UpgradeManager _upgradeManager;
     private EnemySpawner _enemySpawner;
-    
-    
-    #region Unity methods
-    
+
+
+    #region Unity Methods
+
     private void Start() {
-        _buildManager = BuildManager.Instance;
-        _farmManager = FarmManager.Instance;
-        _upgradeManager = UpgradeManager.Instance;
-        _enemySpawner = EnemySpawner.Instance;
+        CacheManagers();
         _objectRotation = spawnPoint.transform.rotation;
 
         if (!isBlocked) {
             startObject = GetRandomObject(randomObjects);
-            _objectRotation = GetRandomRotation();
+            RotateObject(GetRandomRotation());
         }
         ReplaceObject(startObject);
     }
@@ -54,34 +44,23 @@ public class Tile : MonoBehaviour {
     }
 
     public void OnMouseDown() {
-        
+
         if (_enemySpawner.state == EnemySpawner.State.Fight) {
             return;
         }
+        CloseActiveMenus();
 
-        if (_buildManager.MenuIsActive()) {
-            _buildManager.CloseMenu();
-        }
-        
-        if (_farmManager.MenuIsActive()) {
-            _farmManager.CloseMenu();
-        }
-
-        if (_upgradeManager.MenuIsActive()) {
-            _upgradeManager.CloseMenu();
-        }
-        
         switch (_tileType) {
-            case Type.Empty:
-                _buildManager.SelectTile(gameObject.GetComponent<Tile>());
+            case TileType.Empty:
+                _buildManager.SelectTile(this);
                 _buildManager.ActivateMenu();
                 break;
-            case Type.Resource:
-                _farmManager.SelectTile(gameObject.GetComponent<Tile>());
+            case TileType.Resource:
+                _farmManager.SelectTile(this);
                 _farmManager.ActivateMenu();
                 break;
-            case Type.Building:
-                _upgradeManager.SelectTile(gameObject.GetComponent<Tile>());
+            case TileType.Building:
+                _upgradeManager.SelectTile(this);
                 _upgradeManager.ActivateMenu();
                 break;
         }
@@ -93,83 +72,100 @@ public class Tile : MonoBehaviour {
     }
 
     #endregion
+
     
-    
-    #region Public class methods
+    #region Public Methods
 
     public void Build(Building buildingToBuild) {
         ReplaceObject(buildingToBuild);
     }
 
-    public TileObject GetTileObject() {
-        return _tileObject.GetComponent<TileObject>();
-    }
+    public TileObject GetTileObject() 
+        => _tileObject?.GetComponent<TileObject>();
 
     public void RotateObject(float value) {
-        Vector3 objectRotationEuler = Quaternion.Normalize(_objectRotation).eulerAngles;
+        Vector3 objectRotationEuler = _objectRotation.eulerAngles;
         _objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
     }
     
     public void ReplaceObject(TileObject newObject) {
-
+        
         if (_tileObject != null) {
             
-            // Remove building from building list
-            if (GetTileObject().blueprint.type == Type.Building) {
+            if (GetTileObject()?.blueprint.type == TileType.Building) {
                 _buildManager.RemoveBuilding(_tileObject);
             }
-            
-            // Destroy tile object
             Destroy(_tileObject);
         }
-        
-        TransformTile(
-            newObject.blueprint.type,
-            newObject.blueprint.resourceWood,
-            newObject.blueprint.resourceWaste,
-            newObject.blueprint.resourceWhiskey
-        );
+        InitializeTile(newObject.blueprint);
+        _tileObject = Instantiate(newObject.blueprint.prefab, spawnPoint.transform.position, _objectRotation, transform);
 
-        _tileObject = 
-            Instantiate(
-                newObject.blueprint.prefab, 
-                spawnPoint.transform.position, 
-                _objectRotation,
-                gameObject.transform
-            );
-        
-        // Reset rotation
-        _objectRotation = spawnPoint.transform.rotation;
-        
-        // Add building to building list
-        if (newObject.blueprint.type == Type.Building) {
+        if (newObject.blueprint.type == TileType.Building) {
             _buildManager.AddBuilding(_tileObject);
         }
-        
-        // Set this tile as parent tile of tile object
-        GetTileObject().SetParentTile(this);
+        GetTileObject()?.SetParentTile(this);
+        _objectRotation = spawnPoint.transform.rotation;
     }
+
+    public Resources GetResources() 
+        => _resources;
     
+    public void AddResources(Resources resourcesToAdd) {
+        _resources.wood += resourcesToAdd.wood;
+        _resources.waste += resourcesToAdd.waste;
+        _resources.whiskey += resourcesToAdd.whiskey;
+    }
+
+    public bool HasResources(Resources requiredResources)
+        => _resources.wood >= requiredResources.wood &&
+           _resources.waste >= requiredResources.waste &&
+           _resources.whiskey >= requiredResources.whiskey;
+
+    public void ClearResources() {
+        _resources.wood = 0;
+        _resources.waste = 0;
+        _resources.whiskey = 0;
+    }
+
     #endregion
+
     
+    #region Private Methods
     
-    #region Private class Methods
+    private static TileObject GetRandomObject(TileObject[] randomObjects)
+        => randomObjects[Random.Range(0, randomObjects.Length)];
 
-    private void TransformTile(Type type, int wood, int waste, int whiskey) {
-        _tileType = type;
-        resourceWood = wood;
-        resourceWaste = waste;
-        resourceWhiskey = whiskey;
-    }
+    private static float GetRandomRotation() 
+        => Random.Range(0, 4) * 90f;
 
-    private static TileObject GetRandomObject(TileObject[] randomObjects) {
-        return randomObjects[Random.Range(0, randomObjects.Length)];
-    }
-
-    private static Quaternion GetRandomRotation() {
-        float randomDegrees = Random.Range(0, 4) * 90f;
-        return Quaternion.Euler(0f, randomDegrees, 0f);
+    private void CacheManagers() {
+        _buildManager = BuildManager.Instance;
+        _farmManager = FarmManager.Instance;
+        _upgradeManager = UpgradeManager.Instance;
+        _enemySpawner = EnemySpawner.Instance;
     }
     
+    private void InitializeTile(TileObjectBlueprint blueprint) {
+        _tileType = blueprint.type;
+        _resources.wood = blueprint.resourceWood;
+        _resources.waste = blueprint.resourceWaste;
+        _resources.whiskey = blueprint.resourceWhiskey;
+    }
+
+    private void CloseActiveMenus() {
+        
+        if (_buildManager.MenuIsActive()) {
+            _buildManager.CloseMenu();
+        }
+        
+        if (_farmManager.MenuIsActive()) {
+            _farmManager.CloseMenu();
+        }
+        
+        if (_upgradeManager.MenuIsActive()) {
+            _upgradeManager.CloseMenu();
+        }
+    }
+
     #endregion
 }
