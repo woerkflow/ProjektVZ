@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BulletJobManager : MonoBehaviour {
     
-    private List<Bullet> _bullets = new();
+    private readonly List<Bullet> _bullets = new();
     
     
     # region Unity methods
@@ -28,11 +28,11 @@ public class BulletJobManager : MonoBehaviour {
         
         for (int i = 0; i < bulletCount; i++) {
             Bullet bullet = _bullets[i];
-            starts[i] = bullet.startPoint;
-            controls[i] = bullet.controlPoint;
-            ends[i] = bullet.endPoint;
-            ts[i] = bullet.t;
-            nextts[i] = bullet.t + 0.1f;
+            starts[i] = bullet.parabolicCurve.start;
+            controls[i] = bullet.parabolicCurve.control;
+            ends[i] = bullet.parabolicCurve.end;
+            ts[i] = bullet.parabolicCurve.t;
+            nextts[i] = bullet.parabolicCurve.t + 0.1f;
         }
         JobHandle moveJob = Moveable.ParabolicMoveFor(starts, controls, ends, ts, positionResults);
         JobHandle nextMoveJob = Moveable.ParabolicMoveFor(starts, controls, ends, nextts, nextPositionResults, moveJob);

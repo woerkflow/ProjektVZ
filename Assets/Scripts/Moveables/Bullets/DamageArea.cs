@@ -48,7 +48,7 @@ public class DamageArea : MonoBehaviour {
     ) {
         for (int i = 0; i < duration; i++) {
             
-            if (explosive == null) {
+            if (!explosive) {
                 yield break;
             }
             explosive.Explode(minDamage, maxDamage);

@@ -25,7 +25,7 @@ public class UpgradeManager : MonoBehaviour {
     
     private void Awake() {
 
-        if (Instance != null) {
+        if (Instance) {
             Debug.Log("More than one UpgradeManager at once;");
         } else {
             Instance = this;

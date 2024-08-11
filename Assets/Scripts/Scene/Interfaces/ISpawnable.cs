@@ -1,5 +1,4 @@
-using UnityEngine;
-
 public interface ISpawnable {
-    void SetParent(GameObject parent);
+    
+    void SetParent(Spawner spawner);
 }

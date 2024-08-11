@@ -211,10 +211,10 @@ MonoBehaviour:
   firePoint: {fileID: 1375928718055682521}
   perceptionRange: 0.1
   partToRotate: {fileID: 2477221193001325512}
-  rotationSpeed: 2.5
+  rotationSpeed: 3.5
   projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
     type: 3}
-  fireRate: 1
+  fireRate: 1.5
 --- !u!1 &7567849528967252978
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8918736572311949316}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: -0.03667, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -330,4 +330,4 @@ Transform:
   - {fileID: 1375928718055682521}
   - {fileID: 6145859494405828780}
   m_Father: {fileID: 3202521542788254968}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}

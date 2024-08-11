@@ -1,21 +1,20 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : MonoBehaviour, ITargetable {
+public class Turret : MonoBehaviour {
     
     [Header("Turret")]
-    public TurretType type;
     public Transform firePoint;
     public float perceptionRange;
-
-    public enum TurretType {
-        Launcher,
-        Beamer
-    }
-
+    
+    private readonly List<GameObject> _targets = new();
     private GameObject _target;
     private float _elapsedTime;
-    private Seeker _seeker;
+    private SphereCollider _triggerCollider;
+    private Coroutine _updateTargetCoroutine;
+    private bool _isDestroyed;
 
     [Header("Rotation")]
     public Transform partToRotate;
@@ -33,12 +32,20 @@ public class Turret : MonoBehaviour, ITargetable {
     #region Unity Methods
 
     private void Start() {
+        _triggerCollider = gameObject.AddComponent<SphereCollider>();
+        _triggerCollider.isTrigger = true;
+        _triggerCollider.radius = perceptionRange;
+        
+        _isDestroyed = false;
+        _updateTargetCoroutine = StartCoroutine(UpdateTargetRoutine());
+        
         InitializeManagers();
     }
 
     private void Update() {
         
         if (!HasValidTarget()) {
+            ResetTimer();
             ResetTurret();
             return;
         }
@@ -46,26 +53,60 @@ public class Turret : MonoBehaviour, ITargetable {
         RotateTurretTowardsTarget();
 
         if (CanFireProjectile()) {
+            ResetTimer();
             FireProjectile();
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other) {
+        
+        if (other.CompareTag("Zombie")) {
+            _targets.Add(other.gameObject);
+        }
+    }
+    
+    private void OnTriggerExit(Collider other) {
+        
+        if (_targets.Contains(other.gameObject)) {
+            _targets.Remove(other.gameObject);
         }
     }
 
     private void OnDestroy() {
         _turretJobManager?.Unregister(this);
-        _seeker?.Unregister(this);
+        _isDestroyed = true;
+
+        if (_updateTargetCoroutine != null) {
+            StopCoroutine(_updateTargetCoroutine);
+        }
     }
 
     #endregion
-
     
-    #region Public Methods
-
-    public GameObject GetTarget() => _target;
-
-    public void SetTarget(GameObject target) {
-        _target = target;
+    
+    #region Behaviour Methods
+    
+    private void UpdateTarget() {
+        
+        _targets.RemoveAll(enemy 
+            => ! enemy
+               || !enemy.gameObject.activeSelf 
+               || !enemy.CompareTag("Zombie") 
+               || !(Vector3.Distance(enemy.transform.position, transform.position) <= perceptionRange)
+        );
+        _target = _targets.Count > 0 
+            ? _targets[0]
+            : null;
     }
-
+    
+    private IEnumerator UpdateTargetRoutine() {
+        
+        while (!_isDestroyed) {
+            UpdateTarget();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    
     #endregion
 
     
@@ -73,35 +114,32 @@ public class Turret : MonoBehaviour, ITargetable {
 
     private void InitializeManagers() {
         _turretJobManager = FindObjectOfType<TurretJobManager>();
-        _seeker = FindObjectOfType<Seeker>();
 
-        if (_turretJobManager != null) {
+        if (_turretJobManager) {
             _turretJobManager.Register(this);
         } else {
             Debug.LogError("TurretJobManager not found in the scene.");
         }
-
-        if (_seeker != null) {
-            _seeker.Register(this);
-        } else {
-            Debug.LogError("Seeker not found in the scene.");
-        }
     }
 
     private bool HasValidTarget() {
-        return _target != null 
+        return _target
                && _target.activeSelf 
+               && _target.CompareTag("Zombie")
                && Vector3.Distance(_target.transform.position, transform.position) <= perceptionRange;
     }
 
     private void ResetTurret() {
-        _elapsedTime = 0f;
         rotateTarget = partToRotate.position;
         _target = null;
     }
 
     private void IncreaseTimer() {
         _elapsedTime += Time.deltaTime;
+    }
+
+    private void ResetTimer() {
+        _elapsedTime = 0f;
     }
 
     private void RotateTurretTowardsTarget() {
@@ -113,19 +151,8 @@ public class Turret : MonoBehaviour, ITargetable {
     }
 
     private void FireProjectile() {
-        _elapsedTime = 0f;
         GameObject projectile = Instantiate(projectilePrefab);
-
-        switch (type) {
-            case TurretType.Launcher:
-                projectile.GetComponent<Bullet>().Seek(firePoint, _target);
-                break;
-            case TurretType.Beamer:
-                projectile.GetComponent<Laser>().Seek(firePoint, _target);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        projectile.GetComponent<ILaunchable>().Launch(firePoint, _target);
     }
 
     #endregion

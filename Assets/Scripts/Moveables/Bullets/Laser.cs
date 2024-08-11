@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Laser : MonoBehaviour {
+public class Laser : MonoBehaviour, ILaunchable {
     
     [Header("Line Renderer")] 
     public LineRenderer lineRenderer;
@@ -29,7 +29,7 @@ public class Laser : MonoBehaviour {
             return;
         }
         
-        if (_target && _effectArea == null) {
+        if (_target && !_effectArea) {
             _effectArea = CreateDamageArea(effectArea, _target);
         }
         Destroy(gameObject);
@@ -40,7 +40,7 @@ public class Laser : MonoBehaviour {
     
     #region Public class methods
 
-    public void Seek(Transform firePoint, GameObject target) {
+    public void Launch(Transform firePoint, GameObject target) {
         _target = target.GetComponent<Enemy>();
         _firePoint = firePoint;
         SetPositions();
@@ -88,7 +88,7 @@ public class Laser : MonoBehaviour {
         int damage,
         GameObject gameObject
     ) {
-        for (var i = 0; i < duration; i++) {
+        for (int i = 0; i < duration; i++) {
             enemy.TakeDamage(damage);
             yield return new WaitForSeconds(tickTime);
         }

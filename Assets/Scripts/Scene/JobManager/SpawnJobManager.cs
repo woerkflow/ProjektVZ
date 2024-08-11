@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpawnJobManager : MonoBehaviour {
 
-    private List<Spawn> _spawns = new();
+    private readonly List<Spawn> _spawns = new();
     
     #region Unity methods
 

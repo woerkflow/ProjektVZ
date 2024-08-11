@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TurretJobManager : MonoBehaviour {
     
-    private List<Turret> _turrets = new();
+    private readonly List<Turret> _turrets = new();
     
     
     #region Unity methods

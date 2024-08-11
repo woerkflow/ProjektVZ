@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawn : MonoBehaviour, ISpawnable, ITargetable {
+public class Spawn : MonoBehaviour, ISpawnable {
     
     [Header("Spawn")] 
     public SpawnType type;
@@ -13,10 +14,11 @@ public class Spawn : MonoBehaviour, ISpawnable, ITargetable {
         Bull
     }
     
+    private readonly List<GameObject> _targets = new();
+    private SphereCollider _triggerCollider;
     private GameObject _target;
-    private GameObject _parentSpawner;
     private CapsuleCollider _targetCollider;
-    private Seeker _seeker;
+    private Spawner _parentSpawner;
     private bool _isDead;
     
     [Header("Movement")] 
@@ -32,68 +34,58 @@ public class Spawn : MonoBehaviour, ISpawnable, ITargetable {
     public int maxDamage;
     public GameObject impactEffect;
     public Explosive explosive;
-    
-    private Coroutine _movementCoroutine;
 
+    private Coroutine _behaviourCoroutine;
     
     #region Unity Methods
 
     private void Start() {
+        _triggerCollider = gameObject.AddComponent<SphereCollider>();
+        _triggerCollider.isTrigger = true;
+        _triggerCollider.radius = perceptionRange;
+        
         InitializeManagers();
+        
         _isDead = false;
         moveTarget = transform.position;
-        _movementCoroutine = StartCoroutine(UpdateDirection());
+        _behaviourCoroutine = StartCoroutine(BehaviourRoutine());
+    }
+
+    private void Update() {
+        
+        if (!_parentSpawner) {
+            Explode();
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other) {
+        
+        if (other.CompareTag("Zombie")) {
+            _targets.Add(other.gameObject);
+        }
+    }
+    
+    private void OnTriggerExit(Collider other) {
+        
+        if (_targets.Contains(other.gameObject)) {
+            _targets.Remove(other.gameObject);
+        }
     }
 
     private void OnDestroy() {
         _spawnJobManager?.Unregister(this);
-        _seeker?.Unregister(this);
+        _parentSpawner.Unregister(this);
         
-        if (_movementCoroutine != null) {
-            StopCoroutine(_movementCoroutine);
+        if (_behaviourCoroutine != null) {
+            StopCoroutine(_behaviourCoroutine);
         }
     }
 
     #endregion
-
     
-    #region Public Methods
     
-    public GameObject GetTarget() => _target;
-
-    public void SetParent(GameObject parent) {
-        _parentSpawner = parent;
-    }
-
-    public void SetTarget(GameObject target) {
-        _target = target;
-        _targetCollider = target?.GetComponent<CapsuleCollider>();
-    }
-
-    #endregion
-
+    #region Behavior methods
     
-    #region Private Methods
-
-    private void InitializeManagers() {
-        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
-        _seeker = FindObjectOfType<Seeker>();
-        
-        if (_spawnJobManager == null) {
-            Debug.LogError("SpawnManager not found in the scene.");
-            enabled = false;
-            return;
-        }
-        _spawnJobManager.Register(this);
-        
-        if (_seeker == null) {
-            Debug.LogError("Seeker not found in the scene.");
-            enabled = false;
-            return;
-        }
-        _seeker.Register(this);
-    }
-
     private void Explode() {
         _isDead = true;
         
@@ -109,39 +101,72 @@ public class Spawn : MonoBehaviour, ISpawnable, ITargetable {
         }
         Destroy(gameObject);
     }
-
-    private IEnumerator UpdateDirection() {
+    
+    private void UpdateTarget() {
         
-        while (!_isDead) {
-            
-            if (_parentSpawner == null) {
-                Explode();
-                yield break;
-            }
-
-            if (_target == null 
-                || !_target.activeSelf
-                || Vector3.Distance(_target.transform.position, transform.position) > perceptionRange) {
-                moveTarget = Vector3.Distance(_parentSpawner.transform.position, transform.position) < perceptionRange
-                    ? Moveable.GetRandomPosition(transform)
-                    : _parentSpawner.transform.position;
-                _target = null;
-            } else {
-                moveTarget = _target.transform.position;
-                Vector3 direction = Moveable.Direction(
-                    _target.transform.position,
-                    transform.position
-                );
-
-                if (_targetCollider != null 
-                    && direction.magnitude <= capsuleCollider.radius + _targetCollider.radius) {
-                    Explode();
-                    yield break;
-                }
-            }
-            yield return new WaitForSeconds(1f);
-        }
+        _targets.RemoveAll(enemy 
+            => !enemy
+               || !enemy.gameObject.activeSelf 
+               || !enemy.CompareTag("Zombie")
+        );
+        _target = _targets.Count > 0 
+            ? _targets[0] 
+            : null;
+        _targetCollider = _target?.GetComponent<CapsuleCollider>();
     }
 
+    private void UpdateDirection() {
+        
+        if (!_target) {
+            moveTarget = Vector3.Distance(_parentSpawner.transform.position, transform.position) < perceptionRange
+                ? Moveable.GetRandomPosition(transform)
+                : _parentSpawner.transform.position;
+            return;
+        }
+        moveTarget = _target.transform.position;
+        Vector3 direction = Moveable.Direction(_target.transform.position, transform.position);
+
+        if (_targetCollider 
+            && direction.magnitude <= capsuleCollider.radius + _targetCollider.radius
+        ) {
+            Explode();
+        }
+    }
+    
+    private IEnumerator BehaviourRoutine() {
+        
+        while (!_isDead) {
+            yield return new WaitForSeconds(1f);
+            UpdateTarget();
+            UpdateDirection();
+        }
+    }
+    
+    #endregion
+
+    
+    #region Public Methods
+
+    public void SetParent(Spawner parent) {
+        _parentSpawner = parent;
+        _parentSpawner.Register(this);
+    }
+
+    #endregion
+
+    
+    #region Private Methods
+
+    private void InitializeManagers() {
+        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
+        
+        if (!_spawnJobManager) {
+            Debug.LogError("SpawnManager not found in the scene.");
+            enabled = false;
+            return;
+        }
+        _spawnJobManager.Register(this);
+    }
+    
     #endregion
 }

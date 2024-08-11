@@ -90,7 +90,7 @@ public class Tile : MonoBehaviour {
     
     public void ReplaceObject(TileObject newObject) {
         
-        if (_tileObject != null) {
+        if (_tileObject) {
             
             if (GetTileObject()?.blueprint.type == TileType.Building) {
                 _buildManager.RemoveBuilding(_tileObject);

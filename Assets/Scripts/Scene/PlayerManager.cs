@@ -16,7 +16,8 @@ public class PlayerManager : MonoBehaviour {
     #region Unity Methods
     
     private void Awake() {
-        if (Instance != null) {
+        
+        if (Instance) {
             Debug.LogWarning("More than one PlayerManager instance found!");
             return;
         }

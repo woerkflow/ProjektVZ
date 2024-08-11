@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour {
     
     [Header("Target")]
     public GameObject mainTarget;
     public float perceptionRange;
-    private Building _targetBuildingComponent;
-    private float _targetCapsuleRadius;
     
     public GameObject target { get; private set; }
+    
+    private Building _targetBuildingComponent;
+    private float _targetCapsuleRadius;
     
     [Header("Movement")]
     public float speed;
@@ -41,7 +43,6 @@ public class Enemy : MonoBehaviour {
     private ObjectPool<Enemy> _pool;
     private SwarmManager _swarmManager;
     private PlayerManager _playerManager;
-    
     
     #region Unity Methoden
     
@@ -76,10 +77,10 @@ public class Enemy : MonoBehaviour {
     private void InitializeComponents() {
         _enemyJobManager = FindObjectOfType<EnemyJobManager>();
         
-        if (_enemyJobManager == null) {
-            Debug.LogError("EnemyJobManager nicht in der Szene gefunden.");
-        } else {
+        if (_enemyJobManager) {
             _enemyJobManager.Register(this);
+        } else {
+            Debug.LogError("EnemyJobManager not found in the scene.");
         }
         _playerManager = PlayerManager.Instance;
         _capsuleRadius = capsuleCollider.radius;
@@ -96,7 +97,7 @@ public class Enemy : MonoBehaviour {
     }
     
     private void DestroyEnemy() {
-        _swarmManager?.Leave(this);
+        _swarmManager?.Unregister(this);
         
         if (_pool != null) {
             _pool.Release(this);
@@ -167,7 +168,7 @@ public class Enemy : MonoBehaviour {
 
     private void UpdateTarget() {
         
-        if (target == null) {
+        if (!target) {
             SetTarget(mainTarget);
         }
         moveTarget = target.transform.position;
@@ -193,7 +194,7 @@ public class Enemy : MonoBehaviour {
         if (_elapsedAttackTime >= attackSpeed) {
             animator.SetTrigger(attackParameter);
             
-            if (target != null) {
+            if (target) {
                 _targetBuildingComponent?.TakeDamage(Random.Range(minDamage, maxDamage));
             }
             _elapsedAttackTime = 0f;

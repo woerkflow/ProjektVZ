@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour {
     public float minSize;
     public float maxSize;
 
-    private List<ISpawnable> _spawns = new();
+    private readonly List<ISpawnable> _spawns = new();
     private Coroutine _spawnCoroutine;
     private bool _isDestroyed;
 
@@ -30,39 +30,46 @@ public class Spawner : MonoBehaviour {
 
     #endregion
 
-    #region Private Methods
+    #region Behaviour Methods
 
     private IEnumerator SpawnRoutine() {
         
         while (!_isDestroyed) {
-            Spawn();
+            
+            if (_spawns.Count < spawnPoints.Length) {
+                CreateSpawn();
+            }
             yield return new WaitForSeconds(spawnTime);
         }
     }
 
-    private void Spawn() {
-        _spawns.RemoveAll(spawn => spawn == null);
-
-        if (_spawns.Count >= spawnPoints.Length) {
-            return;
-        }
-        CreateSpawn();
-    }
-
     private void CreateSpawn() {
         Transform spawnPoint = spawnPoints[_spawns.Count];
+        
         GameObject newSpawn = Instantiate(spawnPrefab, spawnPoint.position, spawnPoint.rotation, transform);
         float randomSize = Random.Range(minSize, maxSize);
         newSpawn.transform.localScale = Vector3.one * randomSize;
+        
         ISpawnable spawnableComponent = newSpawn.GetComponent<ISpawnable>();
         
         if (spawnableComponent != null) {
-            _spawns.Add(spawnableComponent);
-            spawnableComponent.SetParent(gameObject);
+            spawnableComponent.SetParent(this);
         } else {
             Debug.LogWarning($"Spawned object does not have an ISpawnable component: {newSpawn.name}");
         }
     }
 
+    #endregion
+    
+    #region Public Methods
+
+    public void Register(ISpawnable spawnable) {
+        _spawns.Add(spawnable);
+    }
+
+    public void Unregister(ISpawnable spawnable) {
+        _spawns.Remove(spawnable);
+    }
+    
     #endregion
 }

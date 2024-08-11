@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour {
 
     private void Awake() {
         
-        if (Instance != null && Instance != this) {
+        if (Instance) {
             Debug.LogError("More than one EnemySpawner at once;");
             Destroy(gameObject);
         } else {
@@ -81,23 +81,6 @@ public class EnemySpawner : MonoBehaviour {
     #endregion
 
     
-    #region Initialization
-
-    private void InitializePool() {
-        _pool = new ObjectPool<Enemy>(
-            CreatePooledItem, 
-            OnTakeFromPool, 
-            OnReturnedToPool, 
-            OnDestroyPoolObject,
-            true,
-            10,
-            maxCurrentEnemyAmount
-        );
-    }
-
-    #endregion
-
-    
     #region Timer Methods
 
     public float GetTime() 
@@ -116,14 +99,26 @@ public class EnemySpawner : MonoBehaviour {
 
     
     #region Object Pooling
+    
+    private void InitializePool() {
+        _pool = new ObjectPool<Enemy>(
+            CreatePooledItem, 
+            OnTakeFromPool, 
+            OnReturnedToPool, 
+            OnDestroyPoolObject,
+            true,
+            10,
+            maxCurrentEnemyAmount
+        );
+    }
 
     private Enemy CreatePooledItem()
         => Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]);
 
     private void OnTakeFromPool(Enemy enemy) {
-        enemy.ResetValues();
         enemy.SetPool(_pool);
         enemy.gameObject.SetActive(true);
+        enemy.ResetValues();
     }
 
     private void OnReturnedToPool(Enemy enemy) {
@@ -209,7 +204,7 @@ public class EnemySpawner : MonoBehaviour {
             _currentEnemyAmount += maxWaveAmount;
             _alreadySpawnedEnemyAmount += maxWaveAmount;
         }
-        swarmManagers.RemoveAll(sm => sm == null);
+        swarmManagers.RemoveAll(sm => !sm);
 
         if (swarmManagers.Count == 0) {
             PrepareForNewRound();
@@ -231,7 +226,7 @@ public class EnemySpawner : MonoBehaviour {
             enemy.transform.position = GetRandomPosition(currentSpawnPoint);
             enemy.transform.rotation = currentSpawnPoint.transform.rotation;
             enemy.SetSwarmManager(swarmManager);
-            swarmManager.Join(enemy);
+            swarmManager.Register(enemy);
             yield return new WaitForSeconds(1f);
         }
     }

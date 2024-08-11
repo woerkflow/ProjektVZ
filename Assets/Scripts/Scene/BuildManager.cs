@@ -16,7 +16,7 @@ public class BuildManager : MonoBehaviour {
     [Header("Menu")]
     public UIMenu buildMenu;
     
-    private List<GameObject> _buildings = new();
+    private readonly List<GameObject> _buildings = new();
     private Building _selectedBuilding;
     private PlayerManager _playerManager;
     private Tile _selectedTile;
@@ -25,7 +25,7 @@ public class BuildManager : MonoBehaviour {
     #region Unity Methods
 
     private void Awake() {
-        if (Instance != null) {
+        if (Instance) {
             Debug.LogWarning("More than one BuildManager instance found!");
             return;
         }
@@ -141,7 +141,7 @@ public class BuildManager : MonoBehaviour {
 
     private bool CanBuild() {
         
-        if (_selectedBuilding == null) {
+        if (!_selectedBuilding) {
             return false;
         }
         return _playerManager.HasEnoughResources( 

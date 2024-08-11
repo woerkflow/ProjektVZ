@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1407261910750268883}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00006999908, y: 0.0031199995, z: 0.006040001}
+  m_LocalPosition: {x: -0.00002, y: 0.0031199995, z: 0.00604}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -128,7 +128,7 @@ MonoBehaviour:
   firePoint: {fileID: 4981475877371994079}
   perceptionRange: 0.14
   partToRotate: {fileID: 7186551300870523587}
-  rotationSpeed: 2.5
+  rotationSpeed: 3.5
   projectilePrefab: {fileID: 8428514640838481261, guid: 8c4fc3a109dea4945901bae9100aa980,
     type: 3}
   fireRate: 2
@@ -159,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 8069357025394623847}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000003774895, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0003, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -323,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 8844001352127623084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.00279, y: 0.01104, z: 0}
+  m_LocalPosition: {x: 0.00249, y: 0.01104, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SwarmManager : MonoBehaviour {
     
-    private List<Enemy> _enemies = new();
+    private readonly List<Enemy> _enemies = new();
     private BuildManager _buildManager;
     private SpawnPoint _spawnPoint;
     private GameObject _target;
@@ -18,7 +18,7 @@ public class SwarmManager : MonoBehaviour {
     private void Start() {
         _isDestroyed = false;
         _buildManager = BuildManager.Instance;
-        _updateTargetsCoroutine = StartCoroutine(UpdateTargetRoutine());
+        _updateTargetsCoroutine = StartCoroutine(UpdateTargetsRoutine());
     }
     
     private void OnDestroy() {
@@ -32,17 +32,15 @@ public class SwarmManager : MonoBehaviour {
 
     
     #region Zombie Subscription
-
-    public List<Enemy> GetEnemies() => _enemies;
     
-    public void Join(Enemy enemy) {
+    public void Register(Enemy enemy) {
         
         if (!_enemies.Contains(enemy)) {
             _enemies.Add(enemy);
         }
     }
 
-    public void Leave(Enemy enemy) {
+    public void Unregister(Enemy enemy) {
         _enemies.Remove(enemy);
     }
 
@@ -55,16 +53,15 @@ public class SwarmManager : MonoBehaviour {
     
     #region Zombie Targeting
     
-    private IEnumerator UpdateTargetRoutine() {
+    private IEnumerator UpdateTargetsRoutine() {
         
         while (!_isDestroyed) {
-            UpdateTarget();
             yield return new WaitForSeconds(1f);
+            UpdateTarget();
         }
     }
 
     private void UpdateTarget() {
-        _enemies.RemoveAll(enemy => enemy == null);
 
         if (_enemies.Count <= 0) {
             _isDestroyed = true;
@@ -73,7 +70,7 @@ public class SwarmManager : MonoBehaviour {
         }
         _target = FindNearestBuilding();
 
-        if (_target == null) {
+        if (!_target) {
             return;
         }
         
