@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour {
     
-    public static EnemySpawner Instance { get; private set; }
-
     [Header("Spawning")]
     public Enemy[] enemyPrefabs = new Enemy[2];
     public SpawnPoint[] spawnPoints = new SpawnPoint[8];
@@ -17,15 +15,9 @@ public class EnemySpawner : MonoBehaviour {
     public int maxWaveAmount;
     public int maxCurrentEnemyAmount;
     public float maxCountDown;
-    
-    public enum State {
-        Build,
-        Fight
-    }
-    
     public List<SwarmManager> swarmManagers = new();
     
-    public State state { get; private set; }
+    public RoundState state { get; set; }
 
     private ObjectPool<Enemy> _pool;
     private SpawnPoint[] _currentSpawnPoints;
@@ -42,17 +34,7 @@ public class EnemySpawner : MonoBehaviour {
 
     
     #region Unity Methods
-
-    private void Awake() {
-        
-        if (Instance) {
-            Debug.LogError("More than one EnemySpawner at once;");
-            Destroy(gameObject);
-        } else {
-            Instance = this;
-        }
-    }
-
+    
     private void Start() {
         InitializePool();
         _currentRound = 0;
@@ -67,10 +49,10 @@ public class EnemySpawner : MonoBehaviour {
         }
 
         switch (state) {
-            case State.Build:
+            case RoundState.Build:
                 HandleBuildState();
                 break;
-            case State.Fight:
+            case RoundState.Fight:
                 HandleFightState();
                 break;
             default:
@@ -161,7 +143,7 @@ public class EnemySpawner : MonoBehaviour {
         
         timer.ActivateTimer(_currentSpawnPoints[1].transform, _roundEnemyAmount);
         SetActive(false);
-        state = State.Build;
+        state = RoundState.Build;
     }
 
     #endregion
@@ -177,7 +159,7 @@ public class EnemySpawner : MonoBehaviour {
             timer.RefreshTimer(_buildCountDown);
         } else {
             timer.DeactivateTimer();
-            state = State.Fight;
+            state = RoundState.Fight;
         }
     }
 

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UIMenu : MonoBehaviour {
@@ -32,6 +33,14 @@ public class UIMenu : MonoBehaviour {
 
     public bool IsActive() {
         return gameObject.activeSelf;
+    }
+    
+    public static void SetStringValue(TMP_Text element, string value) {
+        element.SetText(value);
+    }
+    
+    public static void SetIntValue(TMP_Text element, int value) {
+        element.SetText(value.ToString());
     }
     
     #endregion

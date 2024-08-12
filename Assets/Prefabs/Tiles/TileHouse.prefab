@@ -251,12 +251,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startObject: {fileID: 3260899904103524237, guid: 3d29ebaf582ca0e429cb43648162d56b,
-    type: 3}
   spawnPoint: {fileID: 3361898766143029450}
   selectEffect: {fileID: 0}
-  randomObjects: []
   isBlocked: 1
+  type: 1
+  startObject: {fileID: 3187199564091032506, guid: 3d29ebaf582ca0e429cb43648162d56b,
+    type: 3}
+  randomObjects: []
+  buildMenu: {fileID: 1852416850369119430, guid: c6eef31b0c109624eb45d9bdb8823051,
+    type: 3}
+  farmMenu: {fileID: 0}
+  upgradeMenu: {fileID: 0}
 --- !u!1001 &863026246804385040
 PrefabInstance:
   m_ObjectHideFlags: 0

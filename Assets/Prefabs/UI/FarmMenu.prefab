@@ -684,6 +684,7 @@ GameObject:
   - component: {fileID: 6755102342421308981}
   - component: {fileID: 1834248093569037455}
   - component: {fileID: 1550401588202152268}
+  - component: {fileID: 6458848340737691323}
   m_Layer: 0
   m_Name: FarmMenu
   m_TagString: Untagged
@@ -827,6 +828,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userCamera: {fileID: 0}
+--- !u!114 &6458848340737691323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4715845515495255561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2473f60447c12b24eb639f14933f97bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  farmMenu: {fileID: 0}
+  resourceWoodAmount: {fileID: 0}
+  resourceWasteAmount: {fileID: 0}
+  resourceWhiskeyAmount: {fileID: 0}
+  timeCosts: {fileID: 0}
 --- !u!1 &5129805632462089248
 GameObject:
   m_ObjectHideFlags: 0

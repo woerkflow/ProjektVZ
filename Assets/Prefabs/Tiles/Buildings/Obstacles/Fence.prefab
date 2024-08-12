@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5246334161667368809}
   - component: {fileID: 5801665328348796013}
-  - component: {fileID: 1465154283121819266}
+  - component: {fileID: 4745627118231078538}
   m_Layer: 0
   m_Name: Fence
   m_TagString: Building
@@ -57,7 +57,7 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
---- !u!114 &1465154283121819266
+--- !u!114 &4745627118231078538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 265606460715150768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
@@ -74,11 +74,15 @@ MonoBehaviour:
     prefab: {fileID: 265606460715150768}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 25
-    resourceWaste: 25
+    resources:
+      wood: 20
+      waste: 5
+      whiskey: 0
+    resourceWood: 20
+    resourceWaste: 5
     resourceWhiskey: 0
-  maxHealth: 100
-  upgrade: {fileID: 0}
+    buildingMaxHealth: 50
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!1 &535713497216654698
 GameObject:
   m_ObjectHideFlags: 0

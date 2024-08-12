@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4750422704473514676}
-  - component: {fileID: 8956062202926293476}
+  - component: {fileID: 1482938058724447030}
   m_Layer: 0
   m_Name: Wood_small
   m_TagString: Environment
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 8036824232220062554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8956062202926293476
+--- !u!114 &1482938058724447030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4961334718833923359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72f3ad5370611c2408411976873a9084, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
@@ -50,9 +50,15 @@ MonoBehaviour:
     prefab: {fileID: 4961334718833923359}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 5
+    resources:
+      wood: 50
+      waste: 0
+      whiskey: 0
     resourceWood: 50
     resourceWaste: 0
     resourceWhiskey: 0
+    buildingMaxHealth: 0
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!1 &7625010371903154308
 GameObject:
   m_ObjectHideFlags: 0

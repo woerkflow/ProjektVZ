@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3202521542788254968}
   - component: {fileID: 5665478613386403082}
-  - component: {fileID: 615848428092340932}
+  - component: {fileID: 6268160045691897632}
   - component: {fileID: 4961349031111582701}
   m_Layer: 0
   m_Name: BladeLauncher
@@ -173,7 +173,7 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
---- !u!114 &615848428092340932
+--- !u!114 &6268160045691897632
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,19 +182,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 4201152157588848215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
     type: 1
     prefab: {fileID: 4201152157588848215}
-    ruin: {fileID: 4819387511916597030, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
+    ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
+    resources:
+      wood: 100
+      waste: 50
+      whiskey: 0
     resourceWood: 100
     resourceWaste: 50
     resourceWhiskey: 0
-  maxHealth: 500
-  upgrade: {fileID: 0}
+    buildingMaxHealth: 400
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4961349031111582701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18238ed1445c77f4f97b606fe67f6006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   firePoint: {fileID: 1375928718055682521}
   perceptionRange: 0.1
   partToRotate: {fileID: 2477221193001325512}

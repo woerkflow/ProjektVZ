@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3970001866622479577}
-  - component: {fileID: 2647215134885359789}
+  - component: {fileID: 2934032109724957440}
   m_Layer: 0
   m_Name: Gravel
   m_TagString: Environment
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 4420207247595176013}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2647215134885359789
+--- !u!114 &2934032109724957440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,17 +42,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4819387511916597030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b981d4c36ac19b4c8225d9a8d51997a, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
     type: 0
-    prefab: {fileID: 4819387511916597030}
+    prefab: {fileID: 0}
     ruin: {fileID: 0}
     timeCosts: 0
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
+    buildingMaxHealth: 0
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!1 &5418127048055500044
 GameObject:
   m_ObjectHideFlags: 0

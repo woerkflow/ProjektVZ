@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2047161491223151969}
-  - component: {fileID: 2829835014337619014}
+  - component: {fileID: 3682119577708779589}
   m_Layer: 0
   m_Name: Waste_small
   m_TagString: Resource
@@ -116,7 +116,7 @@ Transform:
   - {fileID: 1195396202260794499}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2829835014337619014
+--- !u!114 &3682119577708779589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8772616442239940868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72f3ad5370611c2408411976873a9084, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
@@ -133,6 +133,12 @@ MonoBehaviour:
     prefab: {fileID: 8772616442239940868}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 5
+    resources:
+      wood: 0
+      waste: 50
+      whiskey: 0
     resourceWood: 0
     resourceWaste: 50
     resourceWhiskey: 0
+    buildingMaxHealth: 0
+    buildingUpgradePrefab: {fileID: 0}

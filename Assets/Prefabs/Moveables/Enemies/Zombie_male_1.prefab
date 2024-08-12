@@ -1494,9 +1494,8 @@ MonoBehaviour:
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
   perceptionRange: 0.14
-  separationStrength: 0.05
   speed: 0.01
-  attackSpeed: 3
+  attackSpeed: 4
   minDamage: 1
   maxDamage: 5
   maxHealth: 5

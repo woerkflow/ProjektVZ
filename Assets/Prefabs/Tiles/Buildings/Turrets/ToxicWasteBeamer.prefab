@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4561260633072310148}
   - component: {fileID: 5223511892115107982}
-  - component: {fileID: 2326920699968995894}
+  - component: {fileID: 2764788804539912993}
   - component: {fileID: 4701045630614851866}
   m_Layer: 0
   m_Name: ToxicWasteBeamer
@@ -90,7 +90,7 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
---- !u!114 &2326920699968995894
+--- !u!114 &2764788804539912993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,19 +99,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6742136073031890223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
     type: 1
     prefab: {fileID: 6742136073031890223}
-    ruin: {fileID: 4819387511916597030, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
+    ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 100
-    resourceWaste: 100
-    resourceWhiskey: 100
-  maxHealth: 1000
-  upgrade: {fileID: 0}
+    resourceWood: 0
+    resourceWaste: 0
+    resourceWhiskey: 0
+    buildingMaxHealth: 800
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4701045630614851866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18238ed1445c77f4f97b606fe67f6006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
   firePoint: {fileID: 4981475877371994079}
   perceptionRange: 0.14
   partToRotate: {fileID: 7186551300870523587}

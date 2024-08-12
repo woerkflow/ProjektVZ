@@ -82,9 +82,9 @@ public class Enemy : MonoBehaviour {
         } else {
             Debug.LogError("EnemyJobManager not found in the scene.");
         }
-        _playerManager = PlayerManager.Instance;
+        _playerManager = FindObjectOfType<PlayerManager>();
         _capsuleRadius = capsuleCollider.radius;
-        SetTarget(mainTarget);
+        target = mainTarget;
     }
     
     #endregion
@@ -128,9 +128,9 @@ public class Enemy : MonoBehaviour {
         SetHealth(GetHealth() - value);
     }
 
-    public void SetTarget(GameObject newTarget) {
-        target = newTarget;
-        _targetBuildingComponent = target.GetComponent<Building>();
+    public void SetTarget(Building newTarget) {
+        target = newTarget.gameObject;
+        _targetBuildingComponent = newTarget;
         _targetCapsuleRadius = target.GetComponent<CapsuleCollider>().radius;
     }
 
@@ -169,7 +169,7 @@ public class Enemy : MonoBehaviour {
     private void UpdateTarget() {
         
         if (!target) {
-            SetTarget(mainTarget);
+            target = mainTarget;
         }
         moveTarget = target.transform.position;
     }

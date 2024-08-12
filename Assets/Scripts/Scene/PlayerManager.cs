@@ -1,76 +1,66 @@
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
     
-    public static PlayerManager Instance;
+    public Resources resources { get; private set; }
     
-    [Header("UI")]
-    public TMP_Text resourceWoodText;
-    public TMP_Text resourceWasteText;
-    public TMP_Text resourceWhiskeyText;
+    private readonly List<Building> _buildings = new();
     
-    private Resources _resources;
-
     
     #region Unity Methods
     
-    private void Awake() {
-        
-        if (Instance) {
-            Debug.LogWarning("More than one PlayerManager instance found!");
-            return;
-        }
-        Instance = this;
-    }
-
     private void Start() {
-        _resources = new Resources {
+        resources = new Resources {
             wood = 100,
             waste = 100, 
             whiskey = 100
         };
-        UpdateResourceUI();
     }
-
+    
     #endregion
-
+    
     
     #region Public Methods
-
-    public void AddResources(Resources resourcesToAdd) {
-        _resources.wood += resourcesToAdd.wood;
-        _resources.waste += resourcesToAdd.waste;
-        _resources.whiskey += resourcesToAdd.whiskey;
-        UpdateResourceUI();
-    }
-
-    public void SubtractResources(Resources resourcesToSubtract) {
-        _resources.wood -= resourcesToSubtract.wood;
-        _resources.waste -= resourcesToSubtract.waste;
-        _resources.whiskey -= resourcesToSubtract.whiskey;
-        UpdateResourceUI();
-    }
-
-    public bool HasEnoughResources(Resources requiredResources) {
-        return _resources.wood >= requiredResources.wood &&
-               _resources.waste >= requiredResources.waste &&
-               _resources.whiskey >= requiredResources.whiskey;
-    }
-
-    #endregion
-
     
-    #region Private Methods
-
-    private void UpdateResourceUI() {
-        SetMenuResourceValue(resourceWoodText, _resources.wood);
-        SetMenuResourceValue(resourceWasteText, _resources.waste);
-        SetMenuResourceValue(resourceWhiskeyText, _resources.whiskey);
+    public void AddResources(Resources resourcesToAdd) {
+        resources = new Resources {
+            wood = resources.wood + resourcesToAdd.wood,
+            waste = resources.waste + resourcesToAdd.waste,
+            whiskey = resources.whiskey + resourcesToAdd.whiskey
+        };
+    }
+    
+    public void SubtractResources(Resources resourcesToSubtract) {
+        resources = new Resources {
+            wood = resources.wood - resourcesToSubtract.wood,
+            waste = resources.waste - resourcesToSubtract.waste,
+            whiskey = resources.whiskey - resourcesToSubtract.whiskey
+        };
+    }
+    
+    public bool HasEnoughResources(Resources requiredResources) {
+        return resources.wood >= requiredResources.wood &&
+               resources.waste >= requiredResources.waste &&
+               resources.whiskey >= requiredResources.whiskey;
     }
 
-    private static void SetMenuResourceValue(TMP_Text element, int value) {
-        element.SetText(value.ToString());
+    public void ClearResources() {
+        resources = new Resources {
+            wood = 0,
+            waste = 0,
+            whiskey = 0
+        };
+    }
+    
+    public List<Building> GetBuildings() => _buildings;
+    
+    public void AddBuilding(Building building) {
+        _buildings.Add(building);
+    }
+    
+    public void RemoveBuilding(Building building) {
+        _buildings.Remove(building);
     }
     
     #endregion

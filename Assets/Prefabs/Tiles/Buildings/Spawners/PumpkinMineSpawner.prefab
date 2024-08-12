@@ -279,7 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1810971439879209121}
   - component: {fileID: 7940651100750687806}
-  - component: {fileID: 5070567566666232820}
+  - component: {fileID: 4919283177037549175}
   - component: {fileID: 4930080924524937751}
   m_Layer: 0
   m_Name: PumpkinMineSpawner
@@ -324,11 +324,11 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.01
-  m_Height: 0.04
+  m_Radius: 0.005
+  m_Height: 0.025
   m_Direction: 1
-  m_Center: {x: 0, y: 0.01, z: 0}
---- !u!114 &5070567566666232820
+  m_Center: {x: 0, y: 0.0075, z: 0}
+--- !u!114 &4919283177037549175
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5574299052485252495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
@@ -345,11 +345,15 @@ MonoBehaviour:
     prefab: {fileID: 5574299052485252495}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 0
-    resourceWaste: 25
+    resources:
+      wood: 25
+      waste: 0
+      whiskey: 25
+    resourceWood: 25
+    resourceWaste: 0
     resourceWhiskey: 25
-  maxHealth: 100
-  upgrade: {fileID: 0}
+    buildingMaxHealth: 100
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4930080924524937751
 MonoBehaviour:
   m_ObjectHideFlags: 0

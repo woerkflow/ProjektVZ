@@ -1,41 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Tile : MonoBehaviour {
 
-    [Header("Tile")] 
-    public TileObject startObject;
+    [Header("Common")]
     public GameObject spawnPoint;
     public GameObject selectEffect;
-    public TileObject[] randomObjects;
     public bool isBlocked;
     
-    public enum TileType {
-        Empty,
-        Building,
-        Resource
-    }
-
-    private Resources _resources;
-    private GameObject _tileObject;
-    private Quaternion _objectRotation;
-    private TileType _tileType;
-    private BuildManager _buildManager;
-    private FarmManager _farmManager;
-    private UpgradeManager _upgradeManager;
-    private EnemySpawner _enemySpawner;
-
-
+    public Resources resources { get; set; }
+    public EnemySpawner enemySpawner { get; set; }
+    public PlayerManager playerManager { get; set; }
+    
+    private MenuManager _menuManager;
+    private Dictionary<TileStrategyType, ITileStrategy> _tileStrategies;
+      
+    [Header("Tile Object")]
+    public TileObjectType type;
+    public TileObject startObject;
+    public TileObject[] randomObjects;
+    
+    public TileObject tileObject { get; set; }
+    public TileObject selectedBuilding { get; set; }
+    public Building tileObjectBuilding { get; set; }
+    
+    public Quaternion objectRotation { get; set; }
+    
     #region Unity Methods
 
     private void Start() {
         CacheManagers();
-        _objectRotation = spawnPoint.transform.rotation;
+        objectRotation = spawnPoint.transform.rotation;
 
         if (!isBlocked) {
             startObject = GetRandomObject(randomObjects);
             RotateObject(GetRandomRotation());
         }
         ReplaceObject(startObject);
+
+        InitializeStrategies();
     }
 
     public void OnMouseEnter() {
@@ -44,26 +48,12 @@ public class Tile : MonoBehaviour {
     }
 
     public void OnMouseDown() {
-
-        if (_enemySpawner.state == EnemySpawner.State.Fight) {
+        _menuManager.CloseMenu();
+        
+        if (enemySpawner.state == RoundState.Fight) {
             return;
         }
-        CloseActiveMenus();
-
-        switch (_tileType) {
-            case TileType.Empty:
-                _buildManager.SelectTile(this);
-                _buildManager.ActivateMenu();
-                break;
-            case TileType.Resource:
-                _farmManager.SelectTile(this);
-                _farmManager.ActivateMenu();
-                break;
-            case TileType.Building:
-                _upgradeManager.SelectTile(this);
-                _upgradeManager.ActivateMenu();
-                break;
-        }
+        _menuManager.OpenMenu(type, this);
     }
 
     public void OnMouseExit() {
@@ -72,65 +62,39 @@ public class Tile : MonoBehaviour {
     }
 
     #endregion
-
     
-    #region Public Methods
-
-    public void Build(Building buildingToBuild) {
-        ReplaceObject(buildingToBuild);
-    }
-
-    public TileObject GetTileObject() 
-        => _tileObject?.GetComponent<TileObject>();
-
-    public void RotateObject(float value) {
-        Vector3 objectRotationEuler = _objectRotation.eulerAngles;
-        _objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
+    
+    #region Tile Strategy Methods
+    
+    private void InitializeStrategies() {
+        _tileStrategies = new Dictionary<TileStrategyType, ITileStrategy> {
+            { TileStrategyType.Build, new BuildStrategy() },
+            { TileStrategyType.Repair, new RepairStrategy() },
+            { TileStrategyType.Destroy, new DestroyStrategy() },
+            { TileStrategyType.Farm, new FarmStrategy() },
+            { TileStrategyType.Upgrade, new UpgradeStrategy() }
+        };
     }
     
-    public void ReplaceObject(TileObject newObject) {
+    public void OnSelect(TileObject buildingToBuild) {
+        selectedBuilding = buildingToBuild;
+    }
+    
+    public bool PerformInteraction(TileStrategyType interactionType) {
         
-        if (_tileObject) {
-            
-            if (GetTileObject()?.blueprint.type == TileType.Building) {
-                _buildManager.RemoveBuilding(_tileObject);
-            }
-            Destroy(_tileObject);
+        if (!_tileStrategies.TryGetValue(interactionType, out ITileStrategy strategy)
+            || !strategy.CanInteract(this)
+        ) {
+            return false;
         }
-        InitializeTile(newObject.blueprint);
-        _tileObject = Instantiate(newObject.blueprint.prefab, spawnPoint.transform.position, _objectRotation, transform);
-
-        if (newObject.blueprint.type == TileType.Building) {
-            _buildManager.AddBuilding(_tileObject);
-        }
-        GetTileObject()?.SetParentTile(this);
-        _objectRotation = spawnPoint.transform.rotation;
+        strategy.Interact(this);
+        return true;
     }
-
-    public Resources GetResources() 
-        => _resources;
     
-    public void AddResources(Resources resourcesToAdd) {
-        _resources.wood += resourcesToAdd.wood;
-        _resources.waste += resourcesToAdd.waste;
-        _resources.whiskey += resourcesToAdd.whiskey;
-    }
-
-    public bool HasResources(Resources requiredResources)
-        => _resources.wood >= requiredResources.wood &&
-           _resources.waste >= requiredResources.waste &&
-           _resources.whiskey >= requiredResources.whiskey;
-
-    public void ClearResources() {
-        _resources.wood = 0;
-        _resources.waste = 0;
-        _resources.whiskey = 0;
-    }
-
     #endregion
-
     
-    #region Private Methods
+    
+    #region Common Tile Object Management Methods
     
     private static TileObject GetRandomObject(TileObject[] randomObjects)
         => randomObjects[Random.Range(0, randomObjects.Length)];
@@ -138,34 +102,95 @@ public class Tile : MonoBehaviour {
     private static float GetRandomRotation() 
         => Random.Range(0, 4) * 90f;
 
-    private void CacheManagers() {
-        _buildManager = BuildManager.Instance;
-        _farmManager = FarmManager.Instance;
-        _upgradeManager = UpgradeManager.Instance;
-        _enemySpawner = EnemySpawner.Instance;
+    public void RotateObject(float value) {
+        Vector3 objectRotationEuler = objectRotation.eulerAngles;
+        objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
+    }
+
+    public static Resources GetRepairCosts(TileObject tileObject, Building building) {
+        float costFactor = 1 - building.currentHealth / building.maxHealth;
+        return new Resources {
+            wood = (int) Mathf.Floor(tileObject.blueprint.resources.wood * costFactor),
+            waste = (int) Mathf.Floor(tileObject.blueprint.resources.waste * costFactor),
+            whiskey = (int) Mathf.Floor(tileObject.blueprint.resources.whiskey * costFactor)
+        };
     }
     
-    private void InitializeTile(TileObjectBlueprint blueprint) {
-        _tileType = blueprint.type;
-        _resources.wood = blueprint.resourceWood;
-        _resources.waste = blueprint.resourceWaste;
-        _resources.whiskey = blueprint.resourceWhiskey;
+    public void ReplaceObject(TileObject newObject) {
+        
+        if (tileObject) {
+            
+            if (type == TileObjectType.Building) {
+                playerManager.RemoveBuilding(tileObjectBuilding);
+            }
+            Destroy(tileObject);
+        }
+        GameObject tileGameObject = Instantiate(newObject.blueprint.prefab, spawnPoint.transform.position, objectRotation, transform);
+        InitializeTile(tileGameObject);
+
+        if (type == TileObjectType.Building) {
+            tileObjectBuilding = tileObject.gameObject.AddComponent<Building>();
+            tileObjectBuilding.maxHealth = newObject.blueprint.buildingMaxHealth;
+            tileObjectBuilding.upgrade = newObject.blueprint.buildingUpgradePrefab;
+            playerManager.AddBuilding(tileObjectBuilding);
+        }
+        tileObject.SetParentTile(this);
+    }
+    
+    #endregion
+    
+    
+    #region Resource Management Methods
+
+    public Resources GetPlayerResources() => playerManager.resources;
+    
+    public void AddResources(Resources resourcesToAdd) {
+        resources = new Resources {
+            wood = resourcesToAdd.wood,
+            waste = resourcesToAdd.waste,
+            whiskey = resourcesToAdd.whiskey
+        };
     }
 
-    private void CloseActiveMenus() {
-        
-        if (_buildManager.MenuIsActive()) {
-            _buildManager.CloseMenu();
-        }
-        
-        if (_farmManager.MenuIsActive()) {
-            _farmManager.CloseMenu();
-        }
-        
-        if (_upgradeManager.MenuIsActive()) {
-            _upgradeManager.CloseMenu();
-        }
+    private void SetResources(Resources resourcesToSet) {
+        resources = new Resources {
+            wood = resourcesToSet.wood,
+            waste = resourcesToSet.waste,
+            whiskey = resourcesToSet.whiskey
+        };
     }
 
+    public bool HasResources(Resources requiredResources)
+        => resources.wood >= requiredResources.wood &&
+           resources.waste >= requiredResources.waste &&
+           resources.whiskey >= requiredResources.whiskey;
+
+    public void ClearResources() {
+        resources = new Resources {
+            wood = 0,
+            waste = 0,
+            whiskey = 0
+        };
+    }
+
+    #endregion
+    
+    
+    #region Private Methods
+
+    private void CacheManagers() {
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+        _menuManager = FindObjectOfType<MenuManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
+    }
+    
+    private void InitializeTile(GameObject newObject) {
+        tileObject = newObject.GetComponent<TileObject>();
+        type = tileObject.blueprint.type;
+        
+        SetResources(tileObject.blueprint.resources);
+        objectRotation = spawnPoint.transform.rotation;
+    }
+    
     #endregion
 }

@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1393397298157884673}
   - component: {fileID: 7027322523371733080}
-  - component: {fileID: 7413094481793581927}
+  - component: {fileID: 7704711399967068129}
   - component: {fileID: 189898130358512659}
   m_Layer: 0
   m_Name: Flamethrower
@@ -206,7 +206,7 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
---- !u!114 &7413094481793581927
+--- !u!114 &7704711399967068129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,19 +215,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6151891175055528178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
     type: 1
     prefab: {fileID: 6151891175055528178}
-    ruin: {fileID: 4819387511916597030, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
+    ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
+    resources:
+      wood: 50
+      waste: 50
+      whiskey: 50
     resourceWood: 50
     resourceWaste: 50
     resourceWhiskey: 50
-  maxHealth: 500
-  upgrade: {fileID: 0}
+    buildingMaxHealth: 400
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &189898130358512659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,7 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18238ed1445c77f4f97b606fe67f6006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   firePoint: {fileID: 328129164580279045}
   perceptionRange: 0.08
   partToRotate: {fileID: 8511082067177431578}

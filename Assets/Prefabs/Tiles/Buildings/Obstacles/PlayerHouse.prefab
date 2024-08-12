@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2275186922373881725}
   - component: {fileID: 9113346236855263374}
-  - component: {fileID: 3260899904103524237}
+  - component: {fileID: 3187199564091032506}
   m_Layer: 0
   m_Name: PlayerHouse
   m_TagString: Building
@@ -57,7 +57,7 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
---- !u!114 &3260899904103524237
+--- !u!114 &3187199564091032506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5437123374999027751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
@@ -77,8 +77,8 @@ MonoBehaviour:
     resourceWood: 0
     resourceWaste: 0
     resourceWhiskey: 0
-  maxHealth: 1000
-  upgrade: {fileID: 0}
+    buildingMaxHealth: 1600
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!1 &6169425224972825478
 GameObject:
   m_ObjectHideFlags: 0

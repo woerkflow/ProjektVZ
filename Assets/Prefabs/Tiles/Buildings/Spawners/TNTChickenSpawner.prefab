@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 485423833772674400}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.01507}
+  m_LocalPosition: {x: 0, y: 0, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55,13 +55,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3801013619207335965}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0, z: 0.01507}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: -0.01, y: 0, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8515546561357595922}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!1 &5574299052485252495
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1810971439879209121}
   - component: {fileID: 7940651100750687806}
-  - component: {fileID: 5070567566666232820}
+  - component: {fileID: -4733439308506193159}
   - component: {fileID: 4930080924524937751}
   m_Layer: 0
   m_Name: TNTChickenSpawner
@@ -90,7 +90,7 @@ Transform:
   m_GameObject: {fileID: 5574299052485252495}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00338}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -120,8 +120,8 @@ CapsuleCollider:
   m_Radius: 0.015
   m_Height: 0.05
   m_Direction: 1
-  m_Center: {x: 0, y: 0.01, z: 0.0035}
---- !u!114 &5070567566666232820
+  m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!114 &-4733439308506193159
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5574299052485252495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Script: {fileID: 11500000, guid: 673ab76b2fbf4074da0e14275b3a80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
@@ -138,11 +138,15 @@ MonoBehaviour:
     prefab: {fileID: 5574299052485252495}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 25
+    resources:
+      wood: 50
+      waste: 0
+      whiskey: 50
+    resourceWood: 50
     resourceWaste: 0
-    resourceWhiskey: 25
-  maxHealth: 100
-  upgrade: {fileID: 0}
+    resourceWhiskey: 50
+    buildingMaxHealth: 200
+    buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4930080924524937751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,10 +309,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8867028233953800200}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00994, y: 0, z: 0.01507}
+  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0.01, y: 0, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8515546561357595922}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
