@@ -2,7 +2,7 @@ public class BuildStrategy : ITileStrategy {
     
     public bool CanInteract(Tile tile)
         => tile.selectedBuilding 
-           && tile.enemySpawner.state == RoundState.Build 
+           && tile.enemySpawner.state.GetType().ToString() == "BuildState"
            && tile.playerManager.HasEnoughResources(tile.selectedBuilding.blueprint.resources);
     
     public void Interact(Tile tile) {

@@ -2,7 +2,7 @@ public class UpgradeStrategy : ITileStrategy {
 
     public bool CanInteract(Tile tile)
         => tile.tileObject.blueprint.buildingUpgradePrefab 
-            && tile.enemySpawner.state == RoundState.Build 
+            && tile.enemySpawner.state.GetType().ToString() == "BuildState" 
             && tile.playerManager.HasEnoughResources(tile.tileObject.blueprint.buildingUpgradePrefab.blueprint.resources);
 
     public void Interact(Tile tile) {

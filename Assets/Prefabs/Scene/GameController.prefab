@@ -93,10 +93,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5648253229499632231}
-  - component: {fileID: 5731034150206796542}
-  - component: {fileID: 2706589684859948638}
-  - component: {fileID: 7628145319059033115}
+  - component: {fileID: 4793547434103913179}
   - component: {fileID: -6969964040463647168}
+  - component: {fileID: 7628145319059033115}
+  - component: {fileID: 1064878939059734931}
   - component: {fileID: 6941733642015492018}
   - component: {fileID: 8369986078084352637}
   - component: {fileID: 5841855857953019535}
@@ -125,7 +125,7 @@ Transform:
   - {fileID: 4757506542282922101}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5731034150206796542
+--- !u!114 &4793547434103913179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,50 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c47c39f050e1804ba6de2b894f8d4b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2706589684859948638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1015013003566505696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86229878b027f6d4485f2afee4f9f388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7628145319059033115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1015013003566505696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819e77e1fea3fc340bb3b0e1d9f299ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyPrefabs:
-  - {fileID: 8831236568028899543, guid: b61fd4405872ac345b56faa772225f6c, type: 3}
-  - {fileID: 3070795524686585472, guid: 0d6965e55b113c84a8f9144d4224d26f, type: 3}
-  spawnPoints:
-  - {fileID: 5736936965493214471}
-  - {fileID: 8923386890631960056}
-  - {fileID: 5741392715399425981}
-  - {fileID: 800218566437917490}
-  - {fileID: 1582018424785503916}
-  - {fileID: 6967292260562012206}
-  - {fileID: 5332791225822453607}
-  - {fileID: 5406953595264088418}
-  swarmManagerPrefab: {fileID: 1209438935485532948, guid: e7d3f0825cb92634ea40deb2ae467468,
-    type: 3}
-  maxWaves: 10
-  maxWaveAmount: 32
-  maxCurrentEnemyAmount: 128
-  maxCountDown: 30
-  swarmManagers: []
-  timer: {fileID: 0}
 --- !u!114 &-6969964040463647168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +152,56 @@ MonoBehaviour:
   buildMenu: {fileID: 0}
   farmMenu: {fileID: 0}
   upgradeMenu: {fileID: 0}
+--- !u!114 &7628145319059033115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015013003566505696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e77e1fea3fc340bb3b0e1d9f299ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 5736936965493214471}
+  - {fileID: 8923386890631960056}
+  - {fileID: 5741392715399425981}
+  - {fileID: 800218566437917490}
+  - {fileID: 1582018424785503916}
+  - {fileID: 6967292260562012206}
+  - {fileID: 5332791225822453607}
+  - {fileID: 5406953595264088418}
+  maxWaves: 10
+  maxWaveAmount: 32
+  maxCurrentEnemyAmount: 96
+  maxCountDown: 30
+  swarmManagerPrefab: {fileID: 1209438935485532948, guid: e7d3f0825cb92634ea40deb2ae467468,
+    type: 3}
+  swarmManagers: []
+  timer: {fileID: 0}
+--- !u!114 &1064878939059734931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015013003566505696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bc08a7cfe4db0f46a1f94173a67ac46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefabs:
+  - {fileID: 8831236568028899543, guid: b61fd4405872ac345b56faa772225f6c, type: 3}
+  - {fileID: 3070795524686585472, guid: 0d6965e55b113c84a8f9144d4224d26f, type: 3}
+  bossPrefabs:
+  - {fileID: 8831236568028899543, guid: 73dd3802ae21791468d791aea593a4c1, type: 3}
+  - {fileID: 3070795524686585472, guid: 160f5514fc6bd154bb31b42ca87a8ae5, type: 3}
+  minionPrefabs:
+  - {fileID: 8831236568028899543, guid: b61fd4405872ac345b56faa772225f6c, type: 3}
+  - {fileID: 3070795524686585472, guid: 0d6965e55b113c84a8f9144d4224d26f, type: 3}
 --- !u!114 &6941733642015492018
 MonoBehaviour:
   m_ObjectHideFlags: 0

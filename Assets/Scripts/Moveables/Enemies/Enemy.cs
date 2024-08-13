@@ -29,9 +29,10 @@ public class Enemy : MonoBehaviour {
     public CapsuleCollider capsuleCollider;
     public float deadTime;
     
+    public int currentHealth { get; private set; }
+    
     private float _capsuleRadius;
     private float _elapsedAttackTime;
-    private int _currentHealth;
     private float _elapsedDeadTime;
 
     [Header("Animation")] 
@@ -40,9 +41,9 @@ public class Enemy : MonoBehaviour {
     public string attackParameter;
     public string dieParameter;
     
-    private ObjectPool<Enemy> _pool;
     private SwarmManager _swarmManager;
     private PlayerManager _playerManager;
+    private EnemyPoolManager _enemyPoolManager;
     
     #region Unity Methoden
     
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour {
     
     private void Update() {
         
-        if (_currentHealth <= 0) {
+        if (currentHealth <= 0) {
             HandleDeath();
             return;
         }
@@ -91,16 +92,12 @@ public class Enemy : MonoBehaviour {
     
     
     #region Object Pooling
-
-    public void SetPool(ObjectPool<Enemy> pool) {
-        _pool = pool;
-    }
     
     private void DestroyEnemy() {
         _swarmManager?.Unregister(this);
         
-        if (_pool != null) {
-            _pool.Release(this);
+        if (_enemyPoolManager) {
+            _enemyPoolManager.ReturnEnemyToPool(this);
         } else {
             Destroy(gameObject);
         }
@@ -111,21 +108,14 @@ public class Enemy : MonoBehaviour {
     
     #region Public Methods
 
-    public int GetHealth() 
-        => _currentHealth;
+    public void TakeDamage(int value) {
+        currentHealth -= value;
 
-    private void SetHealth(int value) {
-        _currentHealth = value;
-
-        if (_currentHealth > 0) { 
+        if (currentHealth > 0) { 
             return;
         }
         animator.SetTrigger(dieParameter);
         DeactivateValues();
-    }
-
-    public void TakeDamage(int value) {
-        SetHealth(GetHealth() - value);
     }
 
     public void SetTarget(Building newTarget) {
@@ -138,8 +128,12 @@ public class Enemy : MonoBehaviour {
         _swarmManager = swarmManager;
     }
 
+    public void SetEnemyPoolManager(EnemyPoolManager enemyPoolManager) {
+        _enemyPoolManager = enemyPoolManager;
+    }
+
     public void ResetValues() {
-        _currentHealth = maxHealth;
+        currentHealth = maxHealth;
         _elapsedAttackTime = attackSpeed;
         _elapsedDeadTime = 0f;
         capsuleCollider.enabled = true;

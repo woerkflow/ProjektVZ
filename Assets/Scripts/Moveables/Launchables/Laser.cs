@@ -24,7 +24,7 @@ public class Laser : MonoBehaviour, ILaunchable {
 
     private void Update() {
         
-        if (_target.GetHealth() > 0) {
+        if (_target.currentHealth > 0) {
             SetPositions();
             return;
         }

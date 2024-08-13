@@ -47,12 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprint:
     type: 0
-    prefab: {fileID: 0}
+    prefab: {fileID: 4819387511916597030}
     ruin: {fileID: 0}
     timeCosts: 0
-    resourceWood: 0
-    resourceWaste: 0
-    resourceWhiskey: 0
+    resources:
+      wood: 0
+      waste: 0
+      whiskey: 0
     buildingMaxHealth: 0
     buildingUpgradePrefab: {fileID: 0}
 --- !u!1 &5418127048055500044

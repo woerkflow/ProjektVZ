@@ -62,13 +62,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3975774819fd0b42b7cb3a52998dc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  bulletType: 1
   minDamage: 1
   maxDamage: 5
-  impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
+  impactEffectPrefab: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
   speed: 0.15
   impactHeight: 0
+  parabolicCurve:
+    start: {x: 0, y: 0, z: 0}
+    control: {x: 0, y: 0, z: 0}
+    end: {x: 0, y: 0, z: 0}
+    t: 0
   explosive: {fileID: 2616350492570003641}
 --- !u!1 &2932873408101990794
 GameObject:

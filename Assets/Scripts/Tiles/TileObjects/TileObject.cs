@@ -5,14 +5,10 @@ public class TileObject : MonoBehaviour {
     [Header("Tile Object")]
     public TileObjectBlueprint blueprint;
     
-    private Tile _parentTile;
-    
-    public void SetParentTile(Tile parent) {
-        _parentTile = parent;
-    }
+    public Tile parentTile { get; set; }
     
     public void DestroyObject() {
-        _parentTile.ReplaceObject(
+        parentTile.ReplaceObject(
             blueprint.ruin.GetComponent<TileObject>()
         );
     }

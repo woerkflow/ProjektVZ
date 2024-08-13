@@ -41,31 +41,7 @@ public class MenuManager : MonoBehaviour {
         _currentMenu.Activate();
     }
     
-    public void CloseMenu() {
-
-        if (_currentMenu 
-            && _currentMenu.IsActive()
-        ) {
-            _currentMenu.Deactivate();
-        }
-    }
-    
-    #endregion
-    
-    
-    #region Private Methods
-
-    private UIMenu GetCurrentMenu(TileObjectType type) {
-        
-        return type switch {
-            TileObjectType.Building => upgradeMenu,
-            TileObjectType.Empty => buildMenu,
-            TileObjectType.Resource => farmMenu,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-        };
-    }
-
-    private void CloseMenus() {
+    public void CloseMenus() {
 
         if (buildMenu.IsActive()) {
             buildMenu.Deactivate();
@@ -79,6 +55,19 @@ public class MenuManager : MonoBehaviour {
             upgradeMenu.Deactivate();
         }
     }
+    
+    #endregion
+    
+    
+    #region Private Methods
+
+    private UIMenu GetCurrentMenu(TileObjectType type) 
+        => type switch {
+            TileObjectType.Building => upgradeMenu,
+            TileObjectType.Empty => buildMenu,
+            TileObjectType.Resource => farmMenu,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
     
     #endregion
 }

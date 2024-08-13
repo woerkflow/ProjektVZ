@@ -1,63 +1,50 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour {
     
     [Header("Spawning")]
-    public Enemy[] enemyPrefabs = new Enemy[2];
     public SpawnPoint[] spawnPoints = new SpawnPoint[8];
-    public SwarmManager swarmManagerPrefab;
     public int maxWaves;
     public int maxWaveAmount;
     public int maxCurrentEnemyAmount;
     public float maxCountDown;
-    public List<SwarmManager> swarmManagers = new();
     
     public RoundState state { get; set; }
+    public float buildCountDown { get; set; }
 
+    private EnemyPoolManager _enemyPoolManager;
     private ObjectPool<Enemy> _pool;
     private SpawnPoint[] _currentSpawnPoints;
-    private float _buildCountDown;
-    private int _alreadySpawnedEnemyAmount;
     private int _roundEnemyAmount;
-    private int _currentEnemyAmount;
-    private int _currentRound;
+    private int _currentRoundCount;
+    
+    [Header("Swarm Management")]
+    public SwarmManager swarmManagerPrefab;
+    public List<SwarmManager> swarmManagers = new();
 
     [Header("Timer")]
     public UITimer timer;
 
     private bool _isActive;
-
     
     #region Unity Methods
     
     private void Start() {
-        InitializePool();
-        _currentRound = 0;
+        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
+        _enemyPoolManager.Initialize(maxCurrentEnemyAmount);
         PrepareForNewRound();
     }
 
     private void Update() {
         
         if (!_isActive) {
-            timer.RefreshTimer(_buildCountDown);
+            timer.RefreshTimer(buildCountDown);
             return;
         }
-
-        switch (state) {
-            case RoundState.Build:
-                HandleBuildState();
-                break;
-            case RoundState.Fight:
-                HandleFightState();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        state.UpdateState(this);
     }
 
     #endregion
@@ -65,51 +52,13 @@ public class EnemySpawner : MonoBehaviour {
     
     #region Timer Methods
 
-    public float GetTime() 
-        => _buildCountDown;
-
     public void SetTimer(float newTime) {
-        _buildCountDown = newTime;
-        timer.RefreshTimer(_buildCountDown);
+        buildCountDown = newTime;
+        timer.RefreshTimer(buildCountDown);
     }
 
     public void SetActive(bool value) {
         _isActive = value;
-    }
-
-    #endregion
-
-    
-    #region Object Pooling
-    
-    private void InitializePool() {
-        _pool = new ObjectPool<Enemy>(
-            CreatePooledItem, 
-            OnTakeFromPool, 
-            OnReturnedToPool, 
-            OnDestroyPoolObject,
-            true,
-            10,
-            maxCurrentEnemyAmount
-        );
-    }
-
-    private Enemy CreatePooledItem()
-        => Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]);
-
-    private void OnTakeFromPool(Enemy enemy) {
-        enemy.SetPool(_pool);
-        enemy.gameObject.SetActive(true);
-        enemy.ResetValues();
-    }
-
-    private void OnReturnedToPool(Enemy enemy) {
-        _currentEnemyAmount--;
-        enemy.gameObject.SetActive(false);
-    }
-
-    private static void OnDestroyPoolObject(Enemy enemy) {
-        Destroy(enemy.gameObject);
     }
 
     #endregion
@@ -126,24 +75,23 @@ public class EnemySpawner : MonoBehaviour {
         };
     }
 
-    private static int GetEnemyRoundAmount(int maxWaveAmount, int round, int maxWaves)
+    private static int GetRoundEnemyAmount(int maxWaveAmount, int round, int maxWaves)
         => maxWaveAmount * Mathf.Min(round, maxWaves);
 
     private void PrepareForNewRound() {
-        _alreadySpawnedEnemyAmount = 0;
-        _currentEnemyAmount = 0;
-        _buildCountDown = maxCountDown;
-        _currentRound++;
-
-        if (_currentRound % 5 == 1) {
-            _pool.Clear();
-        }
-        _currentSpawnPoints = GetRandomSpawnPoints(spawnPoints);
-        _roundEnemyAmount = GetEnemyRoundAmount(maxWaveAmount, _currentRound, maxWaves);
+        buildCountDown = maxCountDown;
         
-        timer.ActivateTimer(_currentSpawnPoints[1].transform, _roundEnemyAmount);
-        SetActive(false);
-        state = RoundState.Build;
+        _currentRoundCount++;
+        _currentSpawnPoints = GetRandomSpawnPoints(spawnPoints);
+        _roundEnemyAmount = GetRoundEnemyAmount(maxWaveAmount, _currentRoundCount, maxWaves);
+
+        _enemyPoolManager.ClearPool();
+        _enemyPoolManager.CreateEnemyWave(_currentRoundCount, maxWaveAmount, _roundEnemyAmount);
+        _enemyPoolManager.bossSpawned = false;
+        
+        timer.ActivateTimerMenu(_currentSpawnPoints[1].transform, _currentRoundCount, _roundEnemyAmount);
+        SetActive(true);
+        state = new BuildState();
     }
 
     #endregion
@@ -151,40 +99,40 @@ public class EnemySpawner : MonoBehaviour {
     
     #region Spawn Loop
 
-    private void HandleBuildState() {
+    public void HandleBuildState() {
         
-        if (_buildCountDown > 0f) {
-            _buildCountDown -= Time.deltaTime;
-            _buildCountDown = Mathf.Clamp(_buildCountDown, 0f, Mathf.Infinity);
-            timer.RefreshTimer(_buildCountDown);
+        if (buildCountDown > 0f) {
+            buildCountDown -= Time.deltaTime;
+            buildCountDown = Mathf.Clamp(buildCountDown, 0f, Mathf.Infinity);
+            timer.RefreshTimer(buildCountDown);
         } else {
             timer.DeactivateTimer();
-            state = RoundState.Fight;
+            state = new FightState();
         }
     }
 
-    private void HandleFightState() {
+    public void HandleFightState() {
         
-        if (_currentEnemyAmount >= maxCurrentEnemyAmount) {
+        if (_enemyPoolManager.currentEnemyAmount >= maxCurrentEnemyAmount) {
             return;
         }
 
-        if (_alreadySpawnedEnemyAmount < _roundEnemyAmount 
-            && _alreadySpawnedEnemyAmount - maxWaveAmount <= _currentEnemyAmount) {
+        if (_enemyPoolManager.CanSpawnWave()) {
             SpawnPoint spawnPoint = _currentSpawnPoints[Random.Range(0, _currentSpawnPoints.Length)];
             SwarmManager swarmManager = Instantiate(swarmManagerPrefab);
+            swarmManager.SetSpawnPoint(spawnPoint);
+            swarmManagers.Add(swarmManager);
             
             StartCoroutine(
                 SpawnWave(
-                    maxWaveAmount,
-                    _pool,
-                    swarmManagers,
+                    _enemyPoolManager,
                     swarmManager,
-                    spawnPoint
+                    spawnPoint,
+                    maxWaveAmount
                 )
             );
-            _currentEnemyAmount += maxWaveAmount;
-            _alreadySpawnedEnemyAmount += maxWaveAmount;
+            _enemyPoolManager.currentEnemyAmount += maxWaveAmount;
+            _enemyPoolManager.currentSpawnedEnemyAmount += maxWaveAmount;
         }
         swarmManagers.RemoveAll(sm => !sm);
 
@@ -193,20 +141,30 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    private static IEnumerator SpawnWave(
-        int enemyAmount,
-        ObjectPool<Enemy> pool,
-        List<SwarmManager> swarmManagers, 
+    private IEnumerator SpawnWave(
+        EnemyPoolManager enemyPoolManager, 
         SwarmManager swarmManager, 
-        SpawnPoint currentSpawnPoint
+        SpawnPoint spawnPoint, 
+        int waveAmount
     ) {
-        swarmManager.SetSpawnPoint(currentSpawnPoint);
-        swarmManagers.Add(swarmManager);
+        if (!enemyPoolManager.bossSpawned) {
+            Enemy boss = enemyPoolManager.GetBoss();
+            
+            if (boss) {
+                boss.transform.position = spawnPoint.transform.position;
+                boss.transform.rotation = spawnPoint.transform.rotation;
+                boss.SetSwarmManager(swarmManager);
+                swarmManager.Register(boss);
+                enemyPoolManager.bossSpawned = true;
+                yield return new WaitForSeconds(1f);
+            }
+        }
 
-        for (int i = 0; i < enemyAmount; i++) {
-            Enemy enemy = pool.Get();
-            enemy.transform.position = GetRandomPosition(currentSpawnPoint);
-            enemy.transform.rotation = currentSpawnPoint.transform.rotation;
+        for (int i = 0; i < waveAmount; i++) {
+            _enemyPoolManager.SetWaveIndex(i);
+            Enemy enemy = _enemyPoolManager.GetEnemyFromPool();
+            enemy.transform.position = GetRandomPosition(spawnPoint);
+            enemy.transform.rotation = spawnPoint.transform.rotation;
             enemy.SetSwarmManager(swarmManager);
             swarmManager.Register(enemy);
             yield return new WaitForSeconds(1f);

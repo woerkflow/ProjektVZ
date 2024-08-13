@@ -12,8 +12,8 @@ public class Tile : MonoBehaviour {
     public Resources resources { get; set; }
     public EnemySpawner enemySpawner { get; set; }
     public PlayerManager playerManager { get; set; }
+    public MenuManager menuManager { get; set; }
     
-    private MenuManager _menuManager;
     private Dictionary<TileStrategyType, ITileStrategy> _tileStrategies;
       
     [Header("Tile Object")]
@@ -22,10 +22,10 @@ public class Tile : MonoBehaviour {
     public TileObject[] randomObjects;
     
     public TileObject tileObject { get; set; }
-    public TileObject selectedBuilding { get; set; }
     public Building tileObjectBuilding { get; set; }
-    
     public Quaternion objectRotation { get; set; }
+    public TileObject selectedBuilding { get; set; }
+
     
     #region Unity Methods
 
@@ -48,12 +48,12 @@ public class Tile : MonoBehaviour {
     }
 
     public void OnMouseDown() {
-        _menuManager.CloseMenu();
+        menuManager.CloseMenus();
         
-        if (enemySpawner.state == RoundState.Fight) {
+        if (enemySpawner.state.GetType().ToString() == "FightState") {
             return;
         }
-        _menuManager.OpenMenu(type, this);
+        menuManager.OpenMenu(type, this);
     }
 
     public void OnMouseExit() {
@@ -80,9 +80,9 @@ public class Tile : MonoBehaviour {
         selectedBuilding = buildingToBuild;
     }
     
-    public bool PerformInteraction(TileStrategyType interactionType) {
+    public bool PerformInteraction(TileStrategyType strategyType) {
         
-        if (!_tileStrategies.TryGetValue(interactionType, out ITileStrategy strategy)
+        if (!_tileStrategies.TryGetValue(strategyType, out ITileStrategy strategy)
             || !strategy.CanInteract(this)
         ) {
             return false;
@@ -123,7 +123,7 @@ public class Tile : MonoBehaviour {
             if (type == TileObjectType.Building) {
                 playerManager.RemoveBuilding(tileObjectBuilding);
             }
-            Destroy(tileObject);
+            Destroy(tileObject.gameObject);
         }
         GameObject tileGameObject = Instantiate(newObject.blueprint.prefab, spawnPoint.transform.position, objectRotation, transform);
         InitializeTile(tileGameObject);
@@ -134,7 +134,14 @@ public class Tile : MonoBehaviour {
             tileObjectBuilding.upgrade = newObject.blueprint.buildingUpgradePrefab;
             playerManager.AddBuilding(tileObjectBuilding);
         }
-        tileObject.SetParentTile(this);
+        tileObject.parentTile = this;
+    }
+    
+    private void InitializeTile(GameObject newObject) {
+        tileObject = newObject.GetComponent<TileObject>();
+        type = tileObject.blueprint.type;
+        SetResources(tileObject.blueprint.resources);
+        objectRotation = spawnPoint.transform.rotation;
     }
     
     #endregion
@@ -180,16 +187,8 @@ public class Tile : MonoBehaviour {
 
     private void CacheManagers() {
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        _menuManager = FindObjectOfType<MenuManager>();
+        menuManager = FindObjectOfType<MenuManager>();
         playerManager = FindObjectOfType<PlayerManager>();
-    }
-    
-    private void InitializeTile(GameObject newObject) {
-        tileObject = newObject.GetComponent<TileObject>();
-        type = tileObject.blueprint.type;
-        
-        SetResources(tileObject.blueprint.resources);
-        objectRotation = spawnPoint.transform.rotation;
     }
     
     #endregion

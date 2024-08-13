@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +8,8 @@ public class Turret : MonoBehaviour {
     public Transform firePoint;
     public float perceptionRange;
     
-    private readonly List<GameObject> _targets = new();
-    private GameObject _target;
+    private readonly List<Enemy> _targets = new();
+    private Enemy _target;
     private float _elapsedTime;
     private SphereCollider _triggerCollider;
     private Coroutine _updateTargetCoroutine;
@@ -52,24 +51,21 @@ public class Turret : MonoBehaviour {
         IncreaseTimer();
         RotateTurretTowardsTarget();
 
-        if (CanFireProjectile()) {
-            ResetTimer();
-            FireProjectile();
+        if (!CanFireProjectile()) {
+            return;
         }
+        ResetTimer();
+        FireProjectile();
     }
     
-    private void OnTriggerEnter(Collider other) {
-        
-        if (other.CompareTag("Zombie")) {
-            _targets.Add(other.gameObject);
-        }
+    private void OnTriggerEnter(Collider trigger) {
+        Enemy enemy = trigger?.GetComponent<Enemy>();
+        _targets.Add(enemy);
     }
     
-    private void OnTriggerExit(Collider other) {
-        
-        if (_targets.Contains(other.gameObject)) {
-            _targets.Remove(other.gameObject);
-        }
+    private void OnTriggerExit(Collider trigger) {
+        Enemy enemy = trigger?.GetComponent<Enemy>();
+        _targets.Remove(enemy);
     }
 
     private void OnDestroy() {
@@ -88,22 +84,26 @@ public class Turret : MonoBehaviour {
     
     private void UpdateTarget() {
         
-        _targets.RemoveAll(enemy 
-            => ! enemy
-               || !enemy.gameObject.activeSelf 
-               || !enemy.CompareTag("Zombie") 
-               || !(Vector3.Distance(enemy.transform.position, transform.position) <= perceptionRange)
+        _targets.RemoveAll(target 
+            => !target
+               || !target.gameObject.activeSelf 
+               || !target.CompareTag("Zombie") 
+               || !(Vector3.Distance(target.transform.position, transform.position) <= perceptionRange)
         );
-        _target = _targets.Count > 0 
-            ? _targets[0]
-            : null;
+
+        if (_targets.Count <= 0) {
+            _target = null;
+            return;
+        }
+        List<Enemy> injured = _targets.FindAll(target => target.currentHealth < target.maxHealth);
+        _target = injured.Count <= 0 ? _targets[0] : injured[0];
     }
     
     private IEnumerator UpdateTargetRoutine() {
         
         while (!_isDestroyed) {
-            UpdateTarget();
             yield return new WaitForSeconds(1f);
+            UpdateTarget();
         }
     }
     
@@ -122,12 +122,11 @@ public class Turret : MonoBehaviour {
         }
     }
 
-    private bool HasValidTarget() {
-        return _target
-               && _target.activeSelf 
-               && _target.CompareTag("Zombie")
-               && Vector3.Distance(_target.transform.position, transform.position) <= perceptionRange;
-    }
+    private bool HasValidTarget() 
+        => _target 
+           && _target.gameObject.activeSelf
+           && _target.CompareTag("Zombie") 
+           && Vector3.Distance(_target.transform.position, transform.position) <= perceptionRange;
 
     private void ResetTurret() {
         rotateTarget = partToRotate.position;
@@ -152,7 +151,7 @@ public class Turret : MonoBehaviour {
 
     private void FireProjectile() {
         GameObject projectile = Instantiate(projectilePrefab);
-        projectile.GetComponent<ILaunchable>().Launch(firePoint, _target);
+        projectile.GetComponent<ILaunchable>().Launch(firePoint, _target.gameObject);
     }
 
     #endregion
