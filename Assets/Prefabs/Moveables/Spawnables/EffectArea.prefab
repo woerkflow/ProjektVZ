@@ -14523,6 +14523,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   tickTime: 1
-  minDamage: 1
+  minDamage: 10
   maxDamage: 10
   explosive: {fileID: -7659686065697239092}

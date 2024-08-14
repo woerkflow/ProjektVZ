@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bullet : MonoBehaviour, ILaunchable {
     
@@ -8,24 +9,23 @@ public class Bullet : MonoBehaviour, ILaunchable {
     public int minDamage;
     public int maxDamage;
     public GameObject impactEffectPrefab;
-    
 
-    
     private GameObject _target;
     
     [Header("Motion")]
-    public float speed;
     public float impactHeight;
     
-    [HideInInspector]
-    public BezierCurve parabolicCurve;
+    public Vector3 start { get; set; }
+    public Vector3 end { get; set; }
+    public float timeElapsed { get; set; }
+    public float travelTime { get; set; }
     
-    private float _timeElapsed;
-    private float _travelTime;
     private BulletJobManager _bulletJobManager;
     
     [Header("Explosion")]
     public Explosive explosive;
+
+    private bool _isExploded;
     
     
     #region Unity Methods
@@ -38,18 +38,36 @@ public class Bullet : MonoBehaviour, ILaunchable {
         } else {
             Debug.LogError("BulletJobManager not found in the scene.");
         }
+        _isExploded = false;
     }
     
     private void Update() {
-        _timeElapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(_timeElapsed / _travelTime);
-        UpdatePosition(t);
+        timeElapsed += Time.deltaTime;
 
-        if (t >= 1f) {
-            HitTarget();
+        if (timeElapsed >= travelTime) {
+            Destroy(gameObject);
         }
     }
-    
+
+    private void OnTriggerEnter(Collider collider) {
+        
+        switch (bulletType) {
+            case BulletType.SingleTarget:
+                DamageSingleTarget(collider);
+                break;
+            case BulletType.MultiTarget:
+                
+                if (_isExploded) {
+                    explosive?.Explode(minDamage, maxDamage);
+                    _isExploded = true;
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();  
+        }
+        StartImpactEffect();
+    }
+
     private void OnDestroy() {
         _bulletJobManager?.Unregister(this);
     }
@@ -60,8 +78,14 @@ public class Bullet : MonoBehaviour, ILaunchable {
     #region Public Methods
 
     public void Launch(Transform firePoint, GameObject target) {
-        _target = target;
-        InitializeParabolicCurve(firePoint.position, target.transform.position);
+        start = firePoint.position;
+        end = new Vector3(
+            target.transform.position.x, 
+            target.transform.position.y + impactHeight,
+            target.transform.position.z
+        );
+        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.04f);
+        timeElapsed = 0f;
     }
 
     #endregion
@@ -69,45 +93,16 @@ public class Bullet : MonoBehaviour, ILaunchable {
     
     #region Private Methods
 
-    private void InitializeParabolicCurve(Vector3 start, Vector3 targetPosition) {
-        Vector3 end = new Vector3(
-            targetPosition.x, 
-            targetPosition.y + impactHeight,
-            targetPosition.z
-        );
-        Vector3 control = Moveable.CalculateControlPoint(start, end);
+    private void DamageSingleTarget(Collider coll) {
+        Enemy enemy = coll.GetComponent<Enemy>();
 
-        _timeElapsed = 0f;
-        _travelTime = (Vector3.Distance(start, control) + Vector3.Distance(control, end)) / speed;
-        parabolicCurve = new BezierCurve { start = start, control = control, end = end, t = 0f };
-    }
-
-    private void UpdatePosition(float t) {
-        parabolicCurve.t = t;
-    }
-
-    private void HitTarget() {
-        
-        switch (bulletType) {
-            case BulletType.SingleTarget:
-                _target?.GetComponent<Enemy>()?.TakeDamage(minDamage);
-                break;
-            case BulletType.MultiTarget:
-                explosive?.Explode(minDamage, maxDamage);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();  
+        if (enemy) {
+            enemy.TakeDamage(Random.Range(minDamage, maxDamage));
         }
-        StartImpactEffect();
-        Destroy(gameObject);
     }
 
     private void StartImpactEffect() {
-        
-        if (!impactEffectPrefab) {
-            return;
-        }
-        GameObject effectInstance = Instantiate(impactEffectPrefab, parabolicCurve.end, Quaternion.identity);
+        GameObject effectInstance = Instantiate(impactEffectPrefab, transform.position, transform.rotation);
         Destroy(effectInstance, 1f);
     }
 

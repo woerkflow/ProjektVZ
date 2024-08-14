@@ -18,40 +18,41 @@ public class BulletJobManager : MonoBehaviour {
             return;
         }
         NativeArray<float3> starts = new NativeArray<float3>(bulletCount, Allocator.TempJob);
-        NativeArray<float3> controls = new NativeArray<float3>(bulletCount, Allocator.TempJob);
         NativeArray<float3> ends = new NativeArray<float3>(bulletCount, Allocator.TempJob);
-        NativeArray<float> ts = new NativeArray<float>(bulletCount, Allocator.TempJob);
-        NativeArray<float> nextts = new NativeArray<float>(bulletCount, Allocator.TempJob);
-        NativeArray<float3> positionResults = new NativeArray<float3>(bulletCount, Allocator.TempJob);
-        NativeArray<float3> nextPositionResults = new NativeArray<float3>(bulletCount, Allocator.TempJob);
-        NativeArray<quaternion> rotationResults = new NativeArray<quaternion>(bulletCount, Allocator.TempJob);
+        NativeArray<float> travelTime = new NativeArray<float>(bulletCount, Allocator.TempJob);
+        NativeArray<float> timesElapsed = new NativeArray<float>(bulletCount, Allocator.TempJob);
+        NativeArray<float3> positions = new NativeArray<float3>(bulletCount, Allocator.TempJob);
+        NativeArray<quaternion> rotations = new NativeArray<quaternion>(bulletCount, Allocator.TempJob);
         
         for (int i = 0; i < bulletCount; i++) {
             Bullet bullet = _bullets[i];
-            starts[i] = bullet.parabolicCurve.start;
-            controls[i] = bullet.parabolicCurve.control;
-            ends[i] = bullet.parabolicCurve.end;
-            ts[i] = bullet.parabolicCurve.t;
-            nextts[i] = bullet.parabolicCurve.t + 0.1f;
+            starts[i] = bullet.start;
+            ends[i] = bullet.end;
+            travelTime[i] = bullet.travelTime;
+            timesElapsed[i] = bullet.timeElapsed;
         }
-        JobHandle moveJob = Moveable.ParabolicMoveFor(starts, controls, ends, ts, positionResults);
-        JobHandle nextMoveJob = Moveable.ParabolicMoveFor(starts, controls, ends, nextts, nextPositionResults, moveJob);
-        JobHandle rotationJob = Moveable.InstantRotationFor(positionResults, nextPositionResults, rotationResults, nextMoveJob);
-        rotationJob.Complete();
+
+        JobHandle moveRotationJob =
+            Moveable.ParabolicMoveAndRotationFor(
+                starts, 
+                ends,
+                travelTime,
+                timesElapsed, 
+                positions, 
+                rotations
+            );
+        moveRotationJob.Complete();
 
         for (int i = 0; i < bulletCount; i++) {
             Bullet bullet = _bullets[i];
-            bullet.transform.position = positionResults[i];
-            bullet.transform.rotation = rotationResults[i];
+            bullet.transform.position = positions[i];
+            bullet.transform.rotation = rotations[i];
         }
         starts.Dispose();
-        controls.Dispose();
         ends.Dispose();
-        ts.Dispose();
-        nextts.Dispose();
-        positionResults.Dispose();
-        nextPositionResults.Dispose();
-        rotationResults.Dispose();
+        timesElapsed.Dispose();
+        positions.Dispose();
+        rotations.Dispose();
     }
     
     #endregion

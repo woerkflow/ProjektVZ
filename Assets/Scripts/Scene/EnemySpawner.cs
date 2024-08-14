@@ -90,7 +90,7 @@ public class EnemySpawner : MonoBehaviour {
         _enemyPoolManager.bossSpawned = false;
         
         timer.ActivateTimerMenu(_currentSpawnPoints[1].transform, _currentRoundCount, _roundEnemyAmount);
-        SetActive(true);
+        SetActive(false);
         state = new BuildState();
     }
 
@@ -161,7 +161,7 @@ public class EnemySpawner : MonoBehaviour {
         }
 
         for (int i = 0; i < waveAmount; i++) {
-            _enemyPoolManager.SetWaveIndex(i);
+            _enemyPoolManager.currentWaveIndex = i;
             Enemy enemy = _enemyPoolManager.GetEnemyFromPool();
             enemy.transform.position = GetRandomPosition(spawnPoint);
             enemy.transform.rotation = spawnPoint.transform.rotation;

@@ -46,9 +46,6 @@ public class UpgradeMenu : MonoBehaviour {
     
     private void Interact(TileStrategyType type) {
         
-        Debug.Log("Upgrade Menu Strategy: " + type);
-        Debug.Log("Upgrade Menu _selectedTile: " + _selectedTile);
-        
         if (!_selectedTile.PerformInteraction(type)) {
             return;
         }

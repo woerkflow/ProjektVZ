@@ -84,6 +84,7 @@ public class Enemy : MonoBehaviour {
             Debug.LogError("EnemyJobManager not found in the scene.");
         }
         _playerManager = FindObjectOfType<PlayerManager>();
+        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
         _capsuleRadius = capsuleCollider.radius;
         target = mainTarget;
     }
@@ -126,10 +127,6 @@ public class Enemy : MonoBehaviour {
 
     public void SetSwarmManager(SwarmManager swarmManager) {
         _swarmManager = swarmManager;
-    }
-
-    public void SetEnemyPoolManager(EnemyPoolManager enemyPoolManager) {
-        _enemyPoolManager = enemyPoolManager;
     }
 
     public void ResetValues() {

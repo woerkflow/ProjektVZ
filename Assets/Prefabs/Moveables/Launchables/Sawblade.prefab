@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6985170837479736046}
   - component: {fileID: -6645961632474540551}
+  - component: {fileID: 8343878110494608736}
   m_Layer: 0
   m_Name: Sawblade
   m_TagString: Untagged
@@ -48,18 +49,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 0
-  minDamage: 1
-  maxDamage: 5
+  minDamage: 5
+  maxDamage: 10
   impactEffectPrefab: {fileID: 5012957251685301660, guid: d21d586ffb557d447b2fbac4fa7f87ef,
     type: 3}
-  speed: 0.2
   impactHeight: 0.01
-  parabolicCurve:
-    start: {x: 0, y: 0, z: 0}
-    control: {x: 0, y: 0, z: 0}
-    end: {x: 0, y: 0, z: 0}
-    t: 0
   explosive: {fileID: 0}
+--- !u!136 &8343878110494608736
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2495717381403217344}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.002
+  m_Height: 0.001
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7655653928750999820
 GameObject:
   m_ObjectHideFlags: 0

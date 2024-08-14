@@ -11,25 +11,15 @@ public class EnemyPoolManager : MonoBehaviour {
     public bool bossSpawned { get; set; }
     public int currentEnemyAmount { get; set; }
     public int currentSpawnedEnemyAmount { get; set; }
+    public int currentWaveIndex { get; set; }
     
     private ObjectPool<Enemy> _enemyPool;
     private IEnemyWaveFactory _factory;
     private List<Enemy> _currentEnemyWave = new();
-    private int _maxWaveAmount; // 32
-    private int _maxCurrentEnemyAmount; // 96
-    private int _roundEnemyAmount; // 32 - 320
-    private int _currentRoundCount; // 1 - ...
-    private int _currentWaveIndex; // 0 - (_maxWaveAmount - 1)
-    
-    
-    #region Unity Methods
-
-    private void Start() {
-        currentSpawnedEnemyAmount = 0;
-        currentEnemyAmount = 0;
-    }
-    
-    #endregion
+    private int _maxWaveAmount;
+    private int _maxCurrentEnemyAmount;
+    private int _roundEnemyAmount;
+    private int _currentRoundCount;
     
     
     #region Object Pooling Methods
@@ -51,7 +41,8 @@ public class EnemyPoolManager : MonoBehaviour {
         _currentRoundCount = currentRoundCount;
         _maxWaveAmount = maxWaveAmount;
         _roundEnemyAmount = roundEnemyAmount;
-        _currentWaveIndex = 0;
+        currentSpawnedEnemyAmount = 0;
+        currentEnemyAmount = 0;
 
         if (_currentRoundCount % 5 != 0) {
             _factory = new EnemyWaveFactory(
@@ -68,13 +59,10 @@ public class EnemyPoolManager : MonoBehaviour {
         _currentEnemyWave = _factory.CreateWave();
     }
     
-    private Enemy CreatePooledItem() {
-        Enemy enemy = _currentEnemyWave[_currentWaveIndex];
-        enemy.SetEnemyPoolManager(this);
-        return Instantiate(enemy);
-    }
+    private Enemy CreatePooledItem() 
+        => Instantiate(_currentEnemyWave[currentWaveIndex]);
     
-    private void OnTakeFromPool(Enemy enemy) {
+    private static void OnTakeFromPool(Enemy enemy) {
         enemy.gameObject.SetActive(true);
         enemy.ResetValues();
     }
@@ -88,6 +76,10 @@ public class EnemyPoolManager : MonoBehaviour {
         Destroy(enemy.gameObject);
     }
     
+    public void ClearPool() {
+        _enemyPool.Clear();
+    }
+    
     #endregion
     
     
@@ -96,10 +88,6 @@ public class EnemyPoolManager : MonoBehaviour {
     public bool CanSpawnWave()
         => currentSpawnedEnemyAmount < _roundEnemyAmount
            && currentSpawnedEnemyAmount - _maxWaveAmount <= currentEnemyAmount;
-
-    public void SetWaveIndex(int index) {
-        _currentWaveIndex = index;
-    }
     
     #endregion
     
@@ -119,10 +107,6 @@ public class EnemyPoolManager : MonoBehaviour {
     
     public void ReturnEnemyToPool(Enemy enemy) {
         _enemyPool.Release(enemy);
-    }
-
-    public void ClearPool() {
-        _enemyPool.Clear();
     }
     
     #endregion

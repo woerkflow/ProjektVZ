@@ -2,7 +2,6 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
-using UnityEngine;
 
 [BurstCompile]
 public struct LinearMoveJobFor : IJobFor {
@@ -46,6 +45,42 @@ public struct ParabolicMoveJobFor : IJobFor {
         float3 startPoint = math.lerp(start, control, t);
         float3 endPoint = math.lerp(control, end, t);
         Results[index] = math.lerp(startPoint, endPoint, t);
+    }
+}
+
+[BurstCompile]
+public struct ParabolicMoveAndRotationJobFor : IJobFor {
+    [ReadOnly] public NativeArray<float3> Starts;
+    [ReadOnly] public NativeArray<float3> Ends;
+    [ReadOnly] public NativeArray<float> TravelTime;
+    [ReadOnly] public NativeArray<float> TimesElapsed;
+    public NativeArray<float3> Positions;
+    public NativeArray<quaternion> Rotations;
+
+    public void Execute(int index) {
+        float3 start = Starts[index];
+        float3 end = Ends[index];
+        float travelTime = TravelTime[index];
+        float timeElapsed = TimesElapsed[index];
+        float gravity = 0.04f;
+
+        // Berechnung der initialen Geschwindigkeit
+        float3 displacement = end - start;
+        float3 initialVelocity = new float3(
+            displacement.x / travelTime, 
+            (displacement.y / travelTime) + 0.5f * gravity * travelTime, 
+            displacement.z / travelTime
+        );
+
+        // Berechnung der aktuellen Position
+        float t = timeElapsed / travelTime;
+        Positions[index] = start + initialVelocity * t + 0.5f * new float3(0, -gravity, 0) * (t * t);
+        
+        // Berechnung der Geschwindigkeit für die Rotation
+        float3 velocity = initialVelocity + new float3(0, -gravity * t, 0);
+
+        // Setzen der Rotation des Projektils basierend auf der Geschwindigkeit
+        Rotations[index] = quaternion.LookRotation(math.normalize(velocity), math.up());
     }
 }
 

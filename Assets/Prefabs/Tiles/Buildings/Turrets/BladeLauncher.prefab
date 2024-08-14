@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 56090807085585958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0537, z: 0.0048}
+  m_LocalPosition: {x: 0, y: 0.017, z: 0.0048}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 3582705841146172044}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000029802322, y: 0.872103, z: 0.48932254, w: 0.00000008940697}
-  m_LocalPosition: {x: 0, y: 0.036669992, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0069577782, y: 0.006957784, z: 0.006957783}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -194,9 +194,6 @@ MonoBehaviour:
       wood: 100
       waste: 50
       whiskey: 0
-    resourceWood: 100
-    resourceWaste: 50
-    resourceWhiskey: 0
     buildingMaxHealth: 400
     buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4961349031111582701
@@ -212,9 +209,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1375928718055682521}
-  perceptionRange: 0.1
+  perceptionRange: 0.12
   partToRotate: {fileID: 2477221193001325512}
-  rotationSpeed: 3.5
+  rotationSpeed: 2.5
   projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
     type: 3}
   fireRate: 1.5
@@ -326,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 8918736572311949316}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: -0.03667, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

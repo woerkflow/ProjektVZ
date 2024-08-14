@@ -45,34 +45,31 @@ public static class Moveable {
             DeltaTime = time,
             Results = results
         };
-        return moveJob.ScheduleParallel(targets.Length, 64, dependency);
+        return moveJob.ScheduleParallel(targets.Length, 128, dependency);
     }
     
     #endregion
     
     #region Curvilinear Motion
     
-    public static Vector3 CalculateControlPoint(Vector3 start, Vector3 end) {
-        Vector3 mid = (start + end) * 0.5f;
-        return new Vector3(mid.x, start.y, mid.z);
-    }
-    
-    public static JobHandle ParabolicMoveFor(
+    public static JobHandle ParabolicMoveAndRotationFor(
         NativeArray<float3> starts, 
-        NativeArray<float3> controls, 
         NativeArray<float3> ends,
-        NativeArray<float> ts, 
-        NativeArray<float3> results,
+        NativeArray<float> travelTime,
+        NativeArray<float> timesElapsed,
+        NativeArray<float3> positions,
+        NativeArray<quaternion> rotations,
         JobHandle dependency = default
     ) {
-        ParabolicMoveJobFor moveJob = new ParabolicMoveJobFor {
+        ParabolicMoveAndRotationJobFor moveJob = new ParabolicMoveAndRotationJobFor {
             Starts = starts,
-            Controls = controls,
             Ends = ends,
-            Ts = ts,
-            Results = results
+            TravelTime = travelTime,
+            TimesElapsed = timesElapsed,
+            Positions = positions,
+            Rotations = rotations
         };
-        return moveJob.ScheduleParallel(starts.Length, 64, dependency);
+        return moveJob.ScheduleParallel(starts.Length, 128, dependency);
     }
     
     #endregion
@@ -90,7 +87,7 @@ public static class Moveable {
             Targets = targets,
             Results = results
         };
-        return rotateJob.ScheduleParallel(targets.Length, 64, dependency);
+        return rotateJob.ScheduleParallel(targets.Length, 128, dependency);
     }
     
     public static JobHandle InterpolatedRotationFor(
@@ -109,7 +106,7 @@ public static class Moveable {
             DeltaTime = Time.deltaTime,
             Results = results
         };
-        return rotateJob.ScheduleParallel(targets.Length, 64, dependency);
+        return rotateJob.ScheduleParallel(targets.Length, 128, dependency);
     }
 
     #endregion

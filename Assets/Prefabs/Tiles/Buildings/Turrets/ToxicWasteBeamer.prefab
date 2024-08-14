@@ -107,9 +107,10 @@ MonoBehaviour:
     prefab: {fileID: 6742136073031890223}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
-    resourceWood: 0
-    resourceWaste: 0
-    resourceWhiskey: 0
+    resources:
+      wood: 0
+      waste: 0
+      whiskey: 0
     buildingMaxHealth: 800
     buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4701045630614851866
@@ -127,7 +128,7 @@ MonoBehaviour:
   firePoint: {fileID: 4981475877371994079}
   perceptionRange: 0.14
   partToRotate: {fileID: 7186551300870523587}
-  rotationSpeed: 3.5
+  rotationSpeed: 2.5
   projectilePrefab: {fileID: 8428514640838481261, guid: 8c4fc3a109dea4945901bae9100aa980,
     type: 3}
   fireRate: 2
