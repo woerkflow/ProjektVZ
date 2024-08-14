@@ -50,6 +50,7 @@ public class BulletJobManager : MonoBehaviour {
         }
         starts.Dispose();
         ends.Dispose();
+        travelTime.Dispose();
         timesElapsed.Dispose();
         positions.Dispose();
         rotations.Dispose();
