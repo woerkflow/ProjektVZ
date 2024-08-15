@@ -44,23 +44,19 @@ public class Bullet : MonoBehaviour, ILaunchable {
     private void Update() {
         timeElapsed += Time.deltaTime;
 
-        if (timeElapsed >= travelTime) {
+        if (transform.position.y <= 0.26f) {
             Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter(Collider collider) {
+    private void OnTriggerEnter(Collider coll) {
         
         switch (bulletType) {
             case BulletType.SingleTarget:
-                DamageSingleTarget(collider);
+                DamageSingleTarget(coll);
                 break;
             case BulletType.MultiTarget:
-                
-                if (_isExploded) {
-                    explosive?.Explode(minDamage, maxDamage);
-                    _isExploded = true;
-                }
+                DamageMultiTarget();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();  
@@ -96,9 +92,19 @@ public class Bullet : MonoBehaviour, ILaunchable {
     private void DamageSingleTarget(Collider coll) {
         Enemy enemy = coll.GetComponent<Enemy>();
 
-        if (enemy) {
-            enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+        if (!enemy) {
+            return;
         }
+        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+    }
+
+    private void DamageMultiTarget() {
+        
+        if (!_isExploded) {
+            return;
+        }
+        explosive?.Explode(minDamage, maxDamage);
+        _isExploded = true;
     }
 
     private void StartImpactEffect() {

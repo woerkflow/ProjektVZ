@@ -4,56 +4,133 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class SpawnJobManager : MonoBehaviour {
+public class SpawnJobManager : MonoBehaviour, IJobSystem {
 
     private readonly List<Spawn> _spawns = new();
-    
-    #region Unity methods
+    private readonly List<Enemy> _enemies = new();
 
-    private void Update() {
-        int spawnCount = _spawns.Count;
+    private NativeArray<float3> _positions;
+    private NativeArray<float3> _targets;
+    private NativeArray<float> _speeds;
+    private NativeArray<float3> _positionResults;
+    private NativeArray<quaternion> _rotationResults;
     
-        if (spawnCount == 0) {
-            return;
-        }
-        NativeArray<float3> positions = new NativeArray<float3>(spawnCount, Allocator.TempJob);
-        NativeArray<float3> targets = new NativeArray<float3>(spawnCount, Allocator.TempJob);
-        NativeArray<float> speeds = new NativeArray<float>(spawnCount, Allocator.TempJob);
-        NativeArray<float3> positionResults = new NativeArray<float3>(spawnCount, Allocator.TempJob);
-        NativeArray<quaternion> rotationResults = new NativeArray<quaternion>(spawnCount, Allocator.TempJob);
+    private int _spawnsCount;
+    private int _enemiesCount;
+    private int _jobCount;
+    private JobHandle _moveJob;
     
-        for (int i = 0; i < spawnCount; i++) {
+    
+    # region Unity methods
+    
+    private void OnDestroy() {
+        DisposeArrays();
+    }
+    
+    #endregion
+    
+    
+    #region Public Class Methods
+
+    public void CalculateJobCount() {
+        _enemiesCount = _enemies.Count;
+        _spawnsCount = _spawns.Count;
+        _jobCount = _spawns.Count + _enemies.Count;
+    }
+
+    public int GetJobCount() {
+        return _jobCount;
+    }
+
+    public JobHandle ScheduleJobs() {
+        EnsureArrayCapacity();
+        
+        for (int i = 0; i < _spawns.Count; i++) {
             Spawn spawn = _spawns[i];
-            positions[i] = spawn.transform.position;
-            targets[i] = spawn.moveTarget;
-            speeds[i] = spawn.speed;
+            _positions[i] = spawn.transform.position;
+            _targets[i] = spawn.moveTarget;
+            _speeds[i] = spawn.speed;
         }
-        JobHandle moveJob = Moveable.LinearMoveFor(positions, targets, speeds, Time.deltaTime, positionResults);
-        JobHandle rotationJob = Moveable.InstantRotationFor(positions, targets, rotationResults, moveJob);
-        rotationJob.Complete();
+        
+        for (int i = 0; i < _enemies.Count; i++) {
+            Enemy enemy = _enemies[i];
+            int index = i + _spawnsCount;
+            _positions[index] = enemy.transform.position;
+            _targets[index] = enemy.moveTarget;
+            _speeds[index] = enemy.currentSpeed;
+        }
+        return Moveable.CurvedMoveFor(
+            _positions, 
+            _targets, 
+            _speeds, 
+            _positionResults, 
+            _rotationResults
+        );
+    }
     
-        for (int i = 0; i < spawnCount; i++) {
+    public void ApplyJobResults() {
+        
+        for (int i = 0; i < _spawnsCount; i++) {
             Spawn spawn = _spawns[i];
-            spawn.transform.position = positionResults[i];
-            spawn.transform.rotation = rotationResults[i];
+            spawn.transform.position = _positionResults[i];
+            spawn.transform.rotation = _rotationResults[i];
         }
-        positions.Dispose();
-        targets.Dispose();
-        speeds.Dispose();
-        positionResults.Dispose();
-        rotationResults.Dispose();
+        
+        for (int i = 0; i < _enemiesCount; i++) {
+            Enemy enemy = _enemies[i];
+            int index = i + _spawnsCount;
+            enemy.transform.position = _positionResults[index];
+            enemy.transform.rotation = _rotationResults[index];
+        }
+    }
+    
+    public void RegisterSpawn(Spawn spawn) {
+        _spawns.Add(spawn);
+    }
+
+    public void UnregisterSpawn(Spawn spawn) {
+        _spawns.Remove(spawn);
+    }
+    
+    public void RegisterEnemy(Enemy enemy) {
+        _enemies.Add(enemy);
+    }
+
+    public void UnregisterEnemy(Enemy enemy) {
+        _enemies.Remove(enemy);
     }
 
     #endregion
     
-    #region Public class methods
     
-    public void Register(Spawn spawn) {
-        _spawns.Add(spawn);
-    }
+    #region Private Class Methods
+    
+    private void EnsureArrayCapacity() {
 
-    public void Unregister(Spawn spawn) {
-        _spawns.Remove(spawn);
+        if (_positions.IsCreated) {
+            
+            if (_positions.Length > _jobCount) {
+                return;
+            }
+            DisposeArrays();
+        }
+        CreateArrays();
+    }
+    
+    private void CreateArrays() {
+        _positions = new NativeArray<float3>(_jobCount, Allocator.Persistent);
+        _targets = new NativeArray<float3>(_jobCount, Allocator.Persistent);
+        _speeds = new NativeArray<float>(_jobCount, Allocator.Persistent);
+        _positionResults = new NativeArray<float3>(_jobCount, Allocator.Persistent);
+        _rotationResults = new NativeArray<quaternion>(_jobCount, Allocator.Persistent);
+    }
+    
+    private void DisposeArrays() {
+        _positions.Dispose();
+        _targets.Dispose();
+        _speeds.Dispose();
+        _positionResults.Dispose();
+        _rotationResults.Dispose();
     }
     
     #endregion

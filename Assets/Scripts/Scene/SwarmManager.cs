@@ -74,9 +74,13 @@ public class SwarmManager : MonoBehaviour {
         if (!_target) {
             return;
         }
-        
-        foreach (Enemy enemy in _enemies.Where(enemy => enemy.target != _target.gameObject)) {
-            enemy.SetTarget(_target);
+
+        for (int i = 0; i < _enemies.Count; i++) {
+            Enemy enemy = _enemies[i];
+
+            if (enemy.target != _target.gameObject) {
+                enemy.SetTarget(_target);
+            }
         }
     }
 
@@ -85,14 +89,14 @@ public class SwarmManager : MonoBehaviour {
         float shortestDistance = Mathf.Infinity;
         Building nearestBuilding = null;
 
-        foreach (Building building in buildings) {
+        for (int i = 0; i < buildings.Count; i++) {
+            Building building = buildings[i];
             float distanceToBuilding = Vector3.Distance(_spawnPoint.transform.position, building.transform.position);
-
-            if (!(distanceToBuilding < shortestDistance)) {
-                continue;
+            
+            if (distanceToBuilding < shortestDistance) {
+                shortestDistance = distanceToBuilding;
+                nearestBuilding = building;
             }
-            shortestDistance = distanceToBuilding;
-            nearestBuilding = building;
         }
         return nearestBuilding;
     }

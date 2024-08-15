@@ -510,7 +510,7 @@ MonoBehaviour:
   attackSpeed: 4
   minDamage: 1
   maxDamage: 10
-  maxHealth: 25
+  maxHealth: 50
   capsuleCollider: {fileID: 216100027078578647}
   deadTime: 2
   animator: {fileID: 433749918070623898}

@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour {
     public float currentSpeed { get; private set; }
     public Vector3 moveTarget { get; private set; }
     
-    private EnemyJobManager _enemyJobManager;
+    private SpawnJobManager _spawnJobManager;
     
     [Header("Attack")]
     public float attackSpeed;
@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        _enemyJobManager?.Unregister(this);
+        _spawnJobManager?.UnregisterEnemy(this);
     }
     
     #endregion
@@ -76,15 +76,23 @@ public class Enemy : MonoBehaviour {
     #region Initialization
 
     private void InitializeComponents() {
-        _enemyJobManager = FindObjectOfType<EnemyJobManager>();
+        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
         
-        if (_enemyJobManager) {
-            _enemyJobManager.Register(this);
+        if (_spawnJobManager) {
+            _spawnJobManager.RegisterEnemy(this);
         } else {
             Debug.LogError("EnemyJobManager not found in the scene.");
         }
         _playerManager = FindObjectOfType<PlayerManager>();
+        
+        if (!_playerManager) {
+            Debug.LogError("PlayerManager not found in the scene.");
+        }
         _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
+        
+        if (!_enemyPoolManager) {
+            Debug.LogError("EnemyPoolManager not found in the scene.");
+        }
         _capsuleRadius = capsuleCollider.radius;
         target = mainTarget;
     }

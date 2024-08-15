@@ -55824,6 +55824,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
+    - target: {fileID: 4303194619345497674, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: jobSystems.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303194619345497674, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: jobSystems.Array.data[3]
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5648253229499632231, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -55879,6 +55889,11 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 533483974160080424}
+    - target: {fileID: 7628145319059033115, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: maxCountDown
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

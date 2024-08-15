@@ -68,7 +68,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
     }
 
     private void OnDestroy() {
-        _spawnJobManager?.Unregister(this);
+        _spawnJobManager?.UnregisterSpawn(this);
         _parentSpawner.Unregister(this);
         
         if (_behaviourCoroutine != null) {
@@ -160,7 +160,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
             enabled = false;
             return;
         }
-        _spawnJobManager.Register(this);
+        _spawnJobManager.RegisterSpawn(this);
     }
     
     #endregion

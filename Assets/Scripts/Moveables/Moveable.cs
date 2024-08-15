@@ -6,17 +6,18 @@ using Random = UnityEngine.Random;
 
 public static class Moveable {
     
-    private static readonly Vector3[] Points = new [] {
-        new Vector3(-1,0,-1), 
+    private static readonly Vector3[] Points = {
+        new (-1,0,-1), 
         Vector3.left,
-        new Vector3(-1,0,1), 
+        new (-1,0,1), 
         Vector3.back,
         Vector3.zero, 
         Vector3.forward,
-        new Vector3(1,0,-1), 
+        new (1,0,-1), 
         Vector3.right,
-        new Vector3(1,0,1),
+        new (1,0,1)
     };
+    
     
     #region Helper
     
@@ -28,29 +29,26 @@ public static class Moveable {
     
     #endregion
     
-    #region Rectlinear Motion
     
-    public static JobHandle LinearMoveFor(
+    #region Curvilinear Motion
+
+    public static JobHandle CurvedMoveFor(
         NativeArray<float3> positions,
         NativeArray<float3> targets,
         NativeArray<float> speeds,
-        float time,
-        NativeArray<float3> results,
+        NativeArray<float3> positionResults,
+        NativeArray<quaternion> rotationResults,
         JobHandle dependency = default
     ) {
-        LinearMoveJobFor moveJob = new LinearMoveJobFor {
+        return new CurvedMoveJobFor {
             Positions = positions,
             Targets = targets,
             Speeds = speeds,
-            DeltaTime = time,
-            Results = results
-        };
-        return moveJob.ScheduleParallel(targets.Length, 128, dependency);
+            DeltaTime = Time.deltaTime,
+            PositionResults = positionResults,
+            RotationResults = rotationResults
+        }.ScheduleParallel(positions.Length, 128, dependency);
     }
-    
-    #endregion
-    
-    #region Curvilinear Motion
     
     public static JobHandle ParabolicMoveAndRotationFor(
         NativeArray<float3> starts, 
@@ -61,34 +59,20 @@ public static class Moveable {
         NativeArray<quaternion> rotations,
         JobHandle dependency = default
     ) {
-        ParabolicMoveAndRotationJobFor moveJob = new ParabolicMoveAndRotationJobFor {
+        return new ParabolicMoveAndRotationJobFor {
             Starts = starts,
             Ends = ends,
             TravelTime = travelTime,
             TimesElapsed = timesElapsed,
             Positions = positions,
             Rotations = rotations
-        };
-        return moveJob.ScheduleParallel(starts.Length, 128, dependency);
+        }.ScheduleParallel(starts.Length, 128, dependency);
     }
     
     #endregion
+    
 
     #region Rotational Motion
-    
-    public static JobHandle InstantRotationFor(
-        NativeArray<float3> positions,
-        NativeArray<float3> targets, 
-        NativeArray<quaternion> results,
-        JobHandle dependency = default
-    ) {
-        InstantRotationJobFor rotateJob = new InstantRotationJobFor {
-            Positions = positions,
-            Targets = targets,
-            Results = results
-        };
-        return rotateJob.ScheduleParallel(targets.Length, 128, dependency);
-    }
     
     public static JobHandle InterpolatedRotationFor(
         NativeArray<float3> positions,
@@ -98,15 +82,14 @@ public static class Moveable {
         NativeArray<quaternion> results,
         JobHandle dependency = default
     ) {
-        InterpolatedRotationJobFor rotateJob = new InterpolatedRotationJobFor() {
+        return new InterpolatedRotationJobFor() {
             Positions = positions,
             Targets = targets,
             Rotations = rotations,
             Speeds = speeds,
             DeltaTime = Time.deltaTime,
             Results = results
-        };
-        return rotateJob.ScheduleParallel(targets.Length, 128, dependency);
+        }.ScheduleParallel(targets.Length, 128, dependency);
     }
 
     #endregion

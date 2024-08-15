@@ -4,50 +4,65 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class TurretJobManager : MonoBehaviour {
+public class TurretJobManager : MonoBehaviour, IJobSystem {
     
     private readonly List<Turret> _turrets = new();
     
-    
-    #region Unity methods
+    private NativeArray<float3> _positions;
+    private NativeArray<float3> _targets;
+    private NativeArray<quaternion> _rotations;
+    private NativeArray<float> _speeds;
+    private NativeArray<quaternion> _rotationResults;
 
-    private void Update() {
-        int turretCount = _turrets.Count;
-        
-        if (turretCount == 0) {
-            return;
-        }
-        NativeArray<float3> positions = new NativeArray<float3>(turretCount, Allocator.TempJob);
-        NativeArray<float3> targets = new NativeArray<float3>(turretCount, Allocator.TempJob);
-        NativeArray<quaternion> rotations = new NativeArray<quaternion>(turretCount, Allocator.TempJob);
-        NativeArray<float> speeds = new NativeArray<float>(turretCount, Allocator.TempJob);
-        NativeArray<quaternion> rotationResults = new NativeArray<quaternion>(turretCount, Allocator.TempJob);
-        
-        for (int i = 0; i < turretCount; i++) {
-            Turret turret = _turrets[i];
-            positions[i] = turret.partToRotate.position;
-            targets[i] = turret.rotateTarget;
-            rotations[i] = turret.partToRotate.transform.rotation;
-            speeds[i] = turret.rotationSpeed;
-        }
-        JobHandle rotationJob = Moveable.InterpolatedRotationFor(positions, targets, rotations, speeds, rotationResults);
-        rotationJob.Complete();
-        
-        for (int i = 0; i < turretCount; i++) {
-            Turret turret = _turrets[i];
-            turret.partToRotate.transform.rotation = rotationResults[i];
-        }
-        positions.Dispose();
-        targets.Dispose();
-        rotations.Dispose();
-        speeds.Dispose();
-        rotationResults.Dispose();
+    private int _jobCount;
+    private JobHandle _rotationJob;
+    
+    
+    # region Unity methods
+    
+    private void OnDestroy() {
+        DisposeArrays();
     }
     
     #endregion
     
     
-    #region Public class methods
+    #region Public Class Methods
+
+    public void CalculateJobCount() {
+        _jobCount = _turrets.Count;
+    }
+
+    public int GetJobCount() {
+        return _jobCount;
+    }
+
+    public JobHandle ScheduleJobs() {
+        EnsureArrayCapacity();
+        
+        for (int i = 0; i < _jobCount; i++) {
+            Turret turret = _turrets[i];
+            _positions[i] = turret.partToRotate.position;
+            _targets[i] = turret.rotateTarget;
+            _rotations[i] = turret.partToRotate.transform.rotation;
+            _speeds[i] = turret.rotationSpeed;
+        }
+        return Moveable.InterpolatedRotationFor(
+            _positions, 
+            _targets, 
+            _rotations, 
+            _speeds, 
+            _rotationResults
+        );
+    }
+
+    public void ApplyJobResults() {
+        
+        for (int i = 0; i < _jobCount; i++) {
+            Turret turret = _turrets[i];
+            turret.partToRotate.transform.rotation = _rotationResults[i];
+        }
+    }
     
     public void Register(Turret turret) {
         _turrets.Add(turret);
@@ -55,6 +70,39 @@ public class TurretJobManager : MonoBehaviour {
 
     public void Unregister(Turret turret) {
         _turrets.Remove(turret);
+    }
+    
+    #endregion
+    
+    
+    #region Private Class Methods
+    
+    private void EnsureArrayCapacity() {
+
+        if (_positions.IsCreated) {
+            
+            if (_positions.Length > _jobCount) {
+                return;
+            }
+            DisposeArrays();
+        }
+        CreateArrays();
+    }
+    
+    private void CreateArrays() {
+        _positions = new NativeArray<float3>(_jobCount, Allocator.Persistent);
+        _targets = new NativeArray<float3>(_jobCount, Allocator.Persistent);
+        _rotations = new NativeArray<quaternion>(_jobCount, Allocator.Persistent);
+        _speeds = new NativeArray<float>(_jobCount, Allocator.Persistent);
+        _rotationResults = new NativeArray<quaternion>(_jobCount, Allocator.Persistent);
+    }
+    
+    private void DisposeArrays() {
+        _positions.Dispose();
+        _targets.Dispose();
+        _speeds.Dispose();
+        _rotations.Dispose();
+        _rotationResults.Dispose();
     }
     
     #endregion
