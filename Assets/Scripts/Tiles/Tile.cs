@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour {
     [Header("Common")]
     public GameObject spawnPoint;
     public GameObject selectEffect;
+    public GameObject replaceEffect;
     public bool isBlocked;
     
     public Resources resources { get; set; }
@@ -125,6 +126,8 @@ public class Tile : MonoBehaviour {
             }
             Destroy(tileObject.gameObject);
         }
+        StartEffect();
+        
         GameObject tileGameObject = Instantiate(newObject.blueprint.prefab, spawnPoint.transform.position, objectRotation, transform);
         InitializeTile(tileGameObject);
 
@@ -142,6 +145,11 @@ public class Tile : MonoBehaviour {
         type = tileObject.blueprint.type;
         SetResources(tileObject.blueprint.resources);
         objectRotation = spawnPoint.transform.rotation;
+    }
+
+    private void StartEffect() {
+        GameObject effectInstance = Instantiate(replaceEffect, transform.position, transform.rotation);
+        Destroy(effectInstance, 1f);
     }
     
     #endregion

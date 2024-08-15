@@ -32,8 +32,9 @@ public class Spawn : MonoBehaviour, ISpawnable {
 
     private Coroutine _behaviourCoroutine;
     
+    
     #region Unity Methods
-
+    
     private void Start() {
         _triggerCollider = gameObject.AddComponent<SphereCollider>();
         _triggerCollider.isTrigger = true;
@@ -45,37 +46,42 @@ public class Spawn : MonoBehaviour, ISpawnable {
         moveTarget = transform.position;
         _behaviourCoroutine = StartCoroutine(BehaviourRoutine());
     }
-
+    
     private void Update() {
         
-        if (!_parentSpawner) {
-            Explode();
+        if (_parentSpawner) {
+            return;
         }
+        Explode();
+        Destroy(gameObject);
     }
     
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider coll) {
         
-        if (other.CompareTag("Zombie")) {
-            _targets.Add(other.gameObject);
+        if (!coll.CompareTag("Zombie")) {
+            return;
         }
+        _targets.Add(coll.gameObject);
     }
     
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider coll) {
         
-        if (_targets.Contains(other.gameObject)) {
-            _targets.Remove(other.gameObject);
+        if (!_targets.Contains(coll.gameObject)) {
+            return;
         }
+        _targets.Remove(coll.gameObject);
     }
-
+    
     private void OnDestroy() {
         _spawnJobManager?.UnregisterSpawn(this);
         _parentSpawner.Unregister(this);
         
-        if (_behaviourCoroutine != null) {
-            StopCoroutine(_behaviourCoroutine);
+        if (_behaviourCoroutine == null) {
+            return;
         }
+        StopCoroutine(_behaviourCoroutine);
     }
-
+    
     #endregion
     
     
@@ -86,7 +92,8 @@ public class Spawn : MonoBehaviour, ISpawnable {
         
         switch (type) {
             case SpawnType.Chicken:
-                explosive.Explode(minDamage, maxDamage, impactEffect);
+                explosive.Explode(minDamage, maxDamage);
+                StartImpactEffect(transform.position, transform.rotation);
                 break;
             case SpawnType.Bull:
                 // Handle Bull specific explosion logic
@@ -94,7 +101,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        Destroy(gameObject);
+    }
+    
+    private void StartImpactEffect(Vector3 position, Quaternion rotation) {
+        GameObject effectInstance = Instantiate(impactEffect, position, rotation);
+        Destroy(effectInstance, 1f);
     }
     
     private void UpdateTarget() {
@@ -109,7 +120,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
             : null;
         _targetCollider = _target?.GetComponent<CapsuleCollider>();
     }
-
+    
     private void UpdateDirection() {
         
         if (!_target) {
@@ -138,25 +149,25 @@ public class Spawn : MonoBehaviour, ISpawnable {
     }
     
     #endregion
-
+    
     
     #region Public Methods
-
+    
     public void SetParent(Spawner parent) {
         _parentSpawner = parent;
         _parentSpawner.Register(this);
     }
 
     #endregion
-
+    
     
     #region Private Methods
-
+    
     private void InitializeManagers() {
         _spawnJobManager = FindObjectOfType<SpawnJobManager>();
         
         if (!_spawnJobManager) {
-            Debug.LogError("SpawnManager not found in the scene.");
+            Debug.LogError("SpawnJobManager not found in the scene.");
             enabled = false;
             return;
         }

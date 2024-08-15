@@ -41,31 +41,36 @@ public class Mine : MonoBehaviour, ISpawnable {
 
     private void Update() {
         
-        if (!_parentSpawner) {
-            Explode();
+        if (_parentSpawner) {
+            return;
         }
+        Explode();
+        Destroy(gameObject);
     }
     
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider coll) {
         
-        if (other.CompareTag("Zombie")) {
-            _targets.Add(other.gameObject);
+        if (!coll.CompareTag("Zombie")) {
+            return;
         }
+        _targets.Add(coll.gameObject);
     }
     
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider coll) {
         
-        if (_targets.Contains(other.gameObject)) {
-            _targets.Remove(other.gameObject);
+        if (!_targets.Contains(coll.gameObject)) {
+            return;
         }
+        _targets.Remove(coll.gameObject);
     }
 
     private void OnDestroy() {
         _parentSpawner.Unregister(this);
         
-        if (_behaviourCoroutine != null) {
-            StopCoroutine(_behaviourCoroutine);
+        if (_behaviourCoroutine == null) {
+            return;
         }
+        StopCoroutine(_behaviourCoroutine);
     }
 
     #endregion
@@ -85,8 +90,13 @@ public class Mine : MonoBehaviour, ISpawnable {
 
     private void Explode() {
         _isDead = true;
-        explosive.Explode(minDamage, maxDamage, impactEffect);
-        Destroy(gameObject);
+        explosive.Explode(minDamage, maxDamage);
+        StartImpactEffect(transform.position, transform.rotation);
+    }
+    
+    private void StartImpactEffect(Vector3 position, Quaternion rotation) {
+        GameObject effectInstance = Instantiate(impactEffect, position, rotation);
+        Destroy(effectInstance, 1f);
     }
     
     private void UpdateTarget() {
@@ -105,14 +115,14 @@ public class Mine : MonoBehaviour, ISpawnable {
         
         if (!_target) {
             _elapsedExplosionTime = 0f;
-        } else {
-            
-            if (_elapsedExplosionTime >= explosionTimer) {
-                Explode();
-                return;
-            }
-            _elapsedExplosionTime++;
+            return;
         }
+            
+        if (_elapsedExplosionTime >= explosionTimer) {
+            Explode();
+            return;
+        }
+        _elapsedExplosionTime++;
     }
 
     private IEnumerator BehaviourCoroutine() {

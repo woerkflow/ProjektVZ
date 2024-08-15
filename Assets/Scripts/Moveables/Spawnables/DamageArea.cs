@@ -29,9 +29,10 @@ public class DamageArea : MonoBehaviour {
     
     private void OnDestroy() {
         
-        if (_tickCoroutine != null) {
-            StopCoroutine(_tickCoroutine);
+        if (_tickCoroutine == null) {
+            return;
         }
+        StopCoroutine(_tickCoroutine);
     }
 
     #endregion

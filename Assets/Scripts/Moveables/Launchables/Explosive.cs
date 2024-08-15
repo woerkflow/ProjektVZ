@@ -21,20 +21,16 @@ public class Explosive : MonoBehaviour {
     
     #region Public class methods
     
-    public void Explode(int minDamage, int maxDamage, GameObject impactEffect = null) {
+    public void Explode(int minDamage, int maxDamage) {
         int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, radius, _hitColliders);
-        
-        if (impactEffect) {
-            GameObject effectInst = Instantiate(impactEffect, transform.position, transform.rotation);
-            Destroy(effectInst, 1f);
-        }
         
         for (int i = 0; i < enemyCount; i++) {
             Collider coll = _hitColliders[i];
             
-            if (coll.CompareTag(enemyTag)) {
-                coll.GetComponent<Enemy>().TakeDamage(Random.Range(minDamage, maxDamage));
+            if (!coll.CompareTag(enemyTag)) {
+                return;
             }
+            coll.GetComponent<Enemy>().TakeDamage(Random.Range(minDamage, maxDamage));
         }
     }
 

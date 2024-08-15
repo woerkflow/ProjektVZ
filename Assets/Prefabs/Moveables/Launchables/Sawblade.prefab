@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 0
-  minDamage: 5
-  maxDamage: 10
+  minDamage: 1
+  maxDamage: 5
   impactEffectPrefab: {fileID: 5012957251685301660, guid: d21d586ffb557d447b2fbac4fa7f87ef,
     type: 3}
   impactHeight: 0.01

@@ -251,10 +251,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  startObject: {fileID: 0}
   spawnPoint: {fileID: 3361898766143029450}
   selectEffect: {fileID: 0}
+  replaceEffect: {fileID: 8421688709917714650, guid: 85355b5be8821b848a5051d11189a323,
+    type: 3}
+  isBlocked: 0
+  type: 2
+  startObject: {fileID: 0}
   randomObjects:
   - {fileID: 3682119577708779589, guid: c305260b6b63733489cb7a0a48827113, type: 3}
   - {fileID: 6932898813621344442, guid: c0f784e13f2901d419ea47223c8b349e, type: 3}
@@ -268,7 +271,6 @@ MonoBehaviour:
   - {fileID: 232391392965666681, guid: 6eb0d5bf66a369e47baec02a7e97e3a7, type: 3}
   - {fileID: 8228221159843304339, guid: 7323a92a626f59a479b1998a85264f1f, type: 3}
   - {fileID: 1482938058724447030, guid: ab1f2860d9c15184a829d6601e00901d, type: 3}
-  isBlocked: 0
 --- !u!1001 &7136648570455266512
 PrefabInstance:
   m_ObjectHideFlags: 0

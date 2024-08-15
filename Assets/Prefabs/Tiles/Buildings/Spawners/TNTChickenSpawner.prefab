@@ -142,10 +142,7 @@ MonoBehaviour:
       wood: 50
       waste: 0
       whiskey: 50
-    resourceWood: 50
-    resourceWaste: 0
-    resourceWhiskey: 50
-    buildingMaxHealth: 200
+    buildingMaxHealth: 300
     buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4930080924524937751
 MonoBehaviour:

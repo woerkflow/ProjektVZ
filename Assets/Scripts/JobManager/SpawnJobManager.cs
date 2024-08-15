@@ -126,11 +126,11 @@ public class SpawnJobManager : MonoBehaviour, IJobSystem {
     }
     
     private void DisposeArrays() {
-        _positions.Dispose();
-        _targets.Dispose();
-        _speeds.Dispose();
-        _positionResults.Dispose();
-        _rotationResults.Dispose();
+        if (_positions.IsCreated) _positions.Dispose();
+        if (_targets.IsCreated) _targets.Dispose();
+        if (_speeds.IsCreated) _speeds.Dispose();
+        if (_positionResults.IsCreated) _positionResults.Dispose();
+        if (_rotationResults.IsCreated) _rotationResults.Dispose();
     }
     
     #endregion

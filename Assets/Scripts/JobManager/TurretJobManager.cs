@@ -98,11 +98,11 @@ public class TurretJobManager : MonoBehaviour, IJobSystem {
     }
     
     private void DisposeArrays() {
-        _positions.Dispose();
-        _targets.Dispose();
-        _speeds.Dispose();
-        _rotations.Dispose();
-        _rotationResults.Dispose();
+        if (_positions.IsCreated) _positions.Dispose();
+        if (_targets.IsCreated) _targets.Dispose();
+        if (_speeds.IsCreated) _speeds.Dispose();
+        if (_rotations.IsCreated) _rotations.Dispose();
+        if (_rotationResults.IsCreated) _rotationResults.Dispose();
     }
     
     #endregion

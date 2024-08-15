@@ -39,14 +39,16 @@ public class Bullet : MonoBehaviour, ILaunchable {
             Debug.LogError("BulletJobManager not found in the scene.");
         }
         _isExploded = false;
+        timeElapsed = 0f;
     }
     
     private void Update() {
         timeElapsed += Time.deltaTime;
 
-        if (transform.position.y <= 0.26f) {
-            Destroy(gameObject);
+        if (transform.position.y > 0.9925f) {
+            return;
         }
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider coll) {
@@ -56,12 +58,11 @@ public class Bullet : MonoBehaviour, ILaunchable {
                 DamageSingleTarget(coll);
                 break;
             case BulletType.MultiTarget:
-                DamageMultiTarget();
+                DamageMultiTarget(coll);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();  
         }
-        StartImpactEffect();
     }
 
     private void OnDestroy() {
@@ -80,8 +81,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
             target.transform.position.y + impactHeight,
             target.transform.position.z
         );
-        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.04f);
-        timeElapsed = 0f;
+        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.03f);
     }
 
     #endregion
@@ -96,19 +96,23 @@ public class Bullet : MonoBehaviour, ILaunchable {
             return;
         }
         enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+        StartImpactEffect(transform.position, transform.rotation);
     }
 
-    private void DamageMultiTarget() {
+    private void DamageMultiTarget(Collider coll) {
+        Enemy enemy = coll.GetComponent<Enemy>();
         
-        if (!_isExploded) {
+        if (!enemy || _isExploded) {
             return;
         }
+        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+        StartImpactEffect(transform.position, Quaternion.identity);
         explosive?.Explode(minDamage, maxDamage);
         _isExploded = true;
     }
 
-    private void StartImpactEffect() {
-        GameObject effectInstance = Instantiate(impactEffectPrefab, transform.position, transform.rotation);
+    private void StartImpactEffect(Vector3 position, Quaternion rotation) {
+        GameObject effectInstance = Instantiate(impactEffectPrefab, position, rotation);
         Destroy(effectInstance, 1f);
     }
 

@@ -102,12 +102,12 @@ public class BulletJobManager : MonoBehaviour, IJobSystem {
     }
     
     private void DisposeArrays() {
-        _positions.Dispose();
-        _ends.Dispose();
-        _travelTime.Dispose();
-        _timesElapsed.Dispose();
-        _positions.Dispose();
-        _rotations.Dispose();
+        if (_starts.IsCreated) _starts.Dispose();
+        if (_ends.IsCreated) _ends.Dispose();
+        if (_travelTime.IsCreated) _travelTime.Dispose();
+        if (_timesElapsed.IsCreated) _timesElapsed.Dispose();
+        if (_positions.IsCreated) _positions.Dispose();
+        if (_rotations.IsCreated) _rotations.Dispose();
     }
     
     #endregion

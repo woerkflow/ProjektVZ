@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour {
 
     private bool _isActive;
     
+    
     #region Unity Methods
     
     private void Start() {
