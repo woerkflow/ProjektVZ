@@ -6,9 +6,9 @@ public class BuildStrategy : ITileStrategy {
            && tile.playerManager.HasEnoughResources(tile.selectedBuilding.blueprint.resources);
     
     public void Interact(Tile tile) {
-        Resources costs = tile.selectedBuilding.blueprint.resources;
-        tile.playerManager.SubtractResources(costs);
-        tile.AddResources(costs);
+        Resources buildCosts = tile.selectedBuilding.blueprint.resources;
+        tile.playerManager.SubtractResources(buildCosts);
+        tile.AddResources(buildCosts);
         tile.ReplaceObject(tile.selectedBuilding);
     }
 }

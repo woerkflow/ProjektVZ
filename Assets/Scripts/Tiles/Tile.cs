@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Tile : MonoBehaviour {
-
+    
     [Header("Common")]
     public GameObject spawnPoint;
     public GameObject selectEffect;
@@ -16,38 +16,39 @@ public class Tile : MonoBehaviour {
     public MenuManager menuManager { get; set; }
     
     private Dictionary<TileStrategyType, ITileStrategy> _tileStrategies;
-      
+    
     [Header("Tile Object")]
     public TileObjectType type;
     public TileObject startObject;
-    public TileObject[] randomObjects;
+    public TileObject[] randomWood;
+    public TileObject[] randomWaste;
     
     public TileObject tileObject { get; set; }
     public Building tileObjectBuilding { get; set; }
     public Quaternion objectRotation { get; set; }
     public TileObject selectedBuilding { get; set; }
-
+    
     
     #region Unity Methods
-
+    
     private void Start() {
         CacheManagers();
         objectRotation = spawnPoint.transform.rotation;
 
         if (!isBlocked) {
-            startObject = GetRandomObject(randomObjects);
+            startObject = GetRandomResource(randomWood, randomWaste);
             RotateObject(GetRandomRotation());
         }
-        ReplaceObject(startObject);
+        ReplaceObject(startObject, false);
 
         InitializeStrategies();
     }
-
+    
     public void OnMouseEnter() {
         selectEffect.SetActive(true);
         selectEffect.transform.position = spawnPoint.transform.position;
     }
-
+    
     public void OnMouseDown() {
         menuManager.CloseMenus();
         
@@ -56,12 +57,12 @@ public class Tile : MonoBehaviour {
         }
         menuManager.OpenMenu(type, this);
     }
-
+    
     public void OnMouseExit() {
         selectEffect.SetActive(false);
         selectEffect.transform.position = Vector3.zero;
     }
-
+    
     #endregion
     
     
@@ -97,17 +98,27 @@ public class Tile : MonoBehaviour {
     
     #region Common Tile Object Management Methods
     
-    private static TileObject GetRandomObject(TileObject[] randomObjects)
-        => randomObjects[Random.Range(0, randomObjects.Length)];
-
+    private static TileObject GetRandomResource(TileObject[] randomWood, TileObject[] randomWaste)
+        => Random.Range(0, 10) == 0
+            ? Random.Range(0, 6) switch {
+                0 => randomWaste[0],
+                > 0 and < 3 => randomWaste[1],
+                _ => randomWaste[2]
+            }
+            : Random.Range(0, 6) switch {
+                0 => randomWood[Random.Range(0, 2)],
+                > 0 and < 3 => randomWood[Random.Range(2, 4)],
+                _ => randomWood[4]
+            };
+    
     private static float GetRandomRotation() 
         => Random.Range(0, 4) * 90f;
-
+    
     public void RotateObject(float value) {
         Vector3 objectRotationEuler = objectRotation.eulerAngles;
         objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
     }
-
+    
     public static Resources GetRepairCosts(TileObject tileObject, Building building) {
         float costFactor = 1 - building.currentHealth / building.maxHealth;
         return new Resources {
@@ -117,7 +128,7 @@ public class Tile : MonoBehaviour {
         };
     }
     
-    public void ReplaceObject(TileObject newObject) {
+    public void ReplaceObject(TileObject newObject, bool showAnimation = true) {
         
         if (tileObject) {
             
@@ -126,8 +137,10 @@ public class Tile : MonoBehaviour {
             }
             Destroy(tileObject.gameObject);
         }
-        StartEffect();
-        
+
+        if (showAnimation) {
+            StartEffect();
+        }
         GameObject tileGameObject = Instantiate(newObject.blueprint.prefab, spawnPoint.transform.position, objectRotation, transform);
         InitializeTile(tileGameObject);
 
@@ -146,7 +159,7 @@ public class Tile : MonoBehaviour {
         SetResources(tileObject.blueprint.resources);
         objectRotation = spawnPoint.transform.rotation;
     }
-
+    
     private void StartEffect() {
         GameObject effectInstance = Instantiate(replaceEffect, transform.position, transform.rotation);
         Destroy(effectInstance, 1f);
@@ -156,7 +169,7 @@ public class Tile : MonoBehaviour {
     
     
     #region Resource Management Methods
-
+    
     public Resources GetPlayerResources() => playerManager.resources;
     
     public void AddResources(Resources resourcesToAdd) {
@@ -166,7 +179,7 @@ public class Tile : MonoBehaviour {
             whiskey = resourcesToAdd.whiskey
         };
     }
-
+    
     private void SetResources(Resources resourcesToSet) {
         resources = new Resources {
             wood = resourcesToSet.wood,
@@ -174,12 +187,12 @@ public class Tile : MonoBehaviour {
             whiskey = resourcesToSet.whiskey
         };
     }
-
+    
     public bool HasResources(Resources requiredResources)
         => resources.wood >= requiredResources.wood &&
            resources.waste >= requiredResources.waste &&
            resources.whiskey >= requiredResources.whiskey;
-
+    
     public void ClearResources() {
         resources = new Resources {
             wood = 0,
@@ -187,12 +200,12 @@ public class Tile : MonoBehaviour {
             whiskey = 0
         };
     }
-
+    
     #endregion
     
     
     #region Private Methods
-
+    
     private void CacheManagers() {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         menuManager = FindObjectOfType<MenuManager>();

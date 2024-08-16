@@ -5,7 +5,8 @@ public class RepairStrategy : ITileStrategy {
             && tile.playerManager.HasEnoughResources(Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding));
 
     public void Interact(Tile tile) {
-        tile.playerManager.SubtractResources(Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding));
+        Resources repairCosts = Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding);
+        tile.playerManager.SubtractResources(repairCosts);
         tile.tileObjectBuilding.SetHealth(tile.tileObjectBuilding.maxHealth);
     }
 }
