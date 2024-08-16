@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour {
     public PlayerManager playerManager { get; set; }
     public MenuManager menuManager { get; set; }
     
-    private Dictionary<TileStrategyType, ITileInteractionStrategy> _tileInteractionStrategies;
+    private Dictionary<TileInteractionType, ITileInteractionStrategy> _tileInteractionStrategies;
     private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
     
     [Header("Tile Object")]
@@ -68,7 +68,7 @@ public class Tile : MonoBehaviour {
         selectedBuilding = buildingToBuild;
     }
     
-    public bool PerformInteraction(TileStrategyType strategyType) {
+    public bool PerformInteraction(TileInteractionType strategyType) {
         
         if (!_tileInteractionStrategies.TryGetValue(strategyType, out ITileInteractionStrategy strategy)
             || !strategy.CanInteract(this)
@@ -189,17 +189,18 @@ public class Tile : MonoBehaviour {
     }
     
     private void InitializeStrategies() {
-        _tileInteractionStrategies = new Dictionary<TileStrategyType, ITileInteractionStrategy> {
-            { TileStrategyType.Build, new BuildStrategy() },
-            { TileStrategyType.Repair, new RepairStrategy() },
-            { TileStrategyType.Destroy, new DestroyStrategy() },
-            { TileStrategyType.Farm, new FarmStrategy() },
-            { TileStrategyType.Upgrade, new UpgradeStrategy() }
+        _tileInteractionStrategies = new Dictionary<TileInteractionType, ITileInteractionStrategy> {
+            { TileInteractionType.Build, new BuildStrategy() },
+            { TileInteractionType.Repair, new RepairStrategy() },
+            { TileInteractionType.Destroy, new DestroyStrategy() },
+            { TileInteractionType.Farm, new FarmStrategy() },
+            { TileInteractionType.Upgrade, new UpgradeStrategy() }
         };
         _tileReplacementStrategies = new Dictionary<TileObjectType, ITileReplacementStrategy> {
             { TileObjectType.Building, new BuildingStrategy() },
             { TileObjectType.Empty, new EmptyStrategy() },
-            { TileObjectType.Resource, new ResourceStrategy() }
+            { TileObjectType.Resource, new ResourceStrategy() },
+            { TileObjectType.Ruin, new RuinStrategy() }
         };
     }
     

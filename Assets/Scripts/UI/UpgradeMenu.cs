@@ -23,15 +23,15 @@ public class UpgradeMenu : MonoBehaviour {
     #region Button Menu Methods
     
     public void Upgrade() {
-        Interact(TileStrategyType.Upgrade);
+        Interact(TileInteractionType.Upgrade);
     }
     
     public void Repair() {
-        Interact(TileStrategyType.Repair);
+        Interact(TileInteractionType.Repair);
     }
     
     public void Destroy() {
-        Interact(TileStrategyType.Destroy);
+        Interact(TileInteractionType.Destroy);
     }
     
     public void Close() {
@@ -44,7 +44,7 @@ public class UpgradeMenu : MonoBehaviour {
     
     #region Private Methods
     
-    private void Interact(TileStrategyType type) {
+    private void Interact(TileInteractionType type) {
         
         if (!_selectedTile.PerformInteraction(type)) {
             return;

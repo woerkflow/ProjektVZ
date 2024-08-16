@@ -33,7 +33,7 @@ public class BuildMenu : MonoBehaviour {
     
     public void Build() {
         
-        if (!_selectedTile.PerformInteraction(TileStrategyType.Build)) {
+        if (!_selectedTile.PerformInteraction(TileInteractionType.Build)) {
             return;
         }
         Select(null);

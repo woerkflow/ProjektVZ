@@ -255,8 +255,8 @@ MonoBehaviour:
   selectEffect: {fileID: 0}
   replaceEffect: {fileID: 8421688709917714650, guid: 85355b5be8821b848a5051d11189a323,
     type: 3}
-  isBlocked: 0
-  type: 2
+  isPlayerHouse: 0
+  type: 3
   startObject: {fileID: 0}
   randomWood:
   - {fileID: 1993203892068724891, guid: 33528e100d52d884a831c3c984d65f11, type: 3}

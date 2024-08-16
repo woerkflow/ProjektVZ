@@ -31,7 +31,7 @@ public class FarmMenu : MonoBehaviour {
 
     public void Farm() {
         
-        if (!_selectedTile.PerformInteraction(TileStrategyType.Farm)) {
+        if (!_selectedTile.PerformInteraction(TileInteractionType.Farm)) {
             return;
         }
         Close();

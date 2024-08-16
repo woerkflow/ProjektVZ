@@ -1,4 +1,4 @@
-public enum TileStrategyType {
+public enum TileInteractionType {
     Build,
     Repair,
     Destroy,

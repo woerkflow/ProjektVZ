@@ -256,7 +256,7 @@ MonoBehaviour:
   replaceEffect: {fileID: 8421688709917714650, guid: 85355b5be8821b848a5051d11189a323,
     type: 3}
   isPlayerHouse: 1
-  type: 1
+  type: 2
   startObject: {fileID: 3187199564091032506, guid: 3d29ebaf582ca0e429cb43648162d56b,
     type: 3}
   randomWood: []

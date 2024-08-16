@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint:
-    type: 2
+    type: 3
     prefab: {fileID: 4879016084386931318}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 10
@@ -54,10 +54,6 @@ MonoBehaviour:
       wood: 0
       waste: 100
       whiskey: 0
-    resourceWood: 0
-    resourceWaste: 100
-    resourceWhiskey: 0
-    buildingMaxHealth: 0
     buildingUpgradePrefab: {fileID: 0}
 --- !u!1 &5398394595747295540
 GameObject:

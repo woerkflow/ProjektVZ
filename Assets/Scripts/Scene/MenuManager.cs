@@ -26,6 +26,7 @@ public class MenuManager : MonoBehaviour {
         _currentMenu = GetCurrentMenu(type);
         
         switch (type) {
+            case TileObjectType.Ruin:
             case TileObjectType.Empty:
                 _currentMenu.GetComponent<BuildMenu>().SelectTile(tile);
                 break;
