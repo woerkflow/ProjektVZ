@@ -51,7 +51,7 @@ public class Tile : MonoBehaviour {
         if (isPlayerHouse || enemySpawner.state.GetType().ToString() == "FightState") {
             return;
         }
-        menuManager.OpenMenu(type, this);
+        menuManager.OpenMenu(this);
     }
     
     public void OnMouseExit() {

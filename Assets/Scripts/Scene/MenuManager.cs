@@ -22,10 +22,10 @@ public class MenuManager : MonoBehaviour {
     
     #region Public Methods
 
-    public void OpenMenu(TileObjectType type, Tile tile) {
-        _currentMenu = GetCurrentMenu(type);
+    public void OpenMenu(Tile tile) {
+        _currentMenu = GetCurrentMenu(tile.type);
         
-        switch (type) {
+        switch (tile.type) {
             case TileObjectType.Ruin:
             case TileObjectType.Empty:
                 _currentMenu.GetComponent<BuildMenu>().SelectTile(tile);
