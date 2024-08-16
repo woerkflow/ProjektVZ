@@ -6,10 +6,4 @@ public class TileObject : MonoBehaviour {
     public TileObjectBlueprint blueprint;
     
     public Tile parentTile { get; set; }
-    
-    public void DestroyObject() {
-        parentTile.ReplaceObject(
-            blueprint.ruin.GetComponent<TileObject>()
-        );
-    }
 }

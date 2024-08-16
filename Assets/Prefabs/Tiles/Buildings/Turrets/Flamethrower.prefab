@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 7027322523371733080}
   - component: {fileID: 7704711399967068129}
   - component: {fileID: 189898130358512659}
+  - component: {fileID: 977584462965461348}
   m_Layer: 0
   m_Name: Flamethrower
   m_TagString: Building
@@ -228,7 +229,6 @@ MonoBehaviour:
       wood: 50
       waste: 50
       whiskey: 50
-    buildingMaxHealth: 500
     buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &189898130358512659
 MonoBehaviour:
@@ -249,6 +249,19 @@ MonoBehaviour:
   projectilePrefab: {fileID: 105228381973529086, guid: a1ffafe186887214fb24dcaf4f402dc7,
     type: 3}
   fireRate: 3
+--- !u!114 &977584462965461348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151891175055528178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 500
 --- !u!1 &8382993969381577464
 GameObject:
   m_ObjectHideFlags: 0

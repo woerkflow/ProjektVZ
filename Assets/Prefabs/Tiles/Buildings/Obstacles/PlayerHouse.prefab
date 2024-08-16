@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2275186922373881725}
   - component: {fileID: 9113346236855263374}
   - component: {fileID: 3187199564091032506}
+  - component: {fileID: 1991169537782503341}
   m_Layer: 0
   m_Name: PlayerHouse
   m_TagString: Building
@@ -73,14 +74,26 @@ MonoBehaviour:
   blueprint:
     type: 1
     prefab: {fileID: 5437123374999027751}
-    ruin: {fileID: 4819387511916597030, guid: d609da79c2ac1e842b3e72ebffa86571, type: 3}
+    ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
     timeCosts: 0
     resources:
       wood: 0
       waste: 0
       whiskey: 0
-    buildingMaxHealth: 1600
     buildingUpgradePrefab: {fileID: 0}
+--- !u!114 &1991169537782503341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5437123374999027751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1300
 --- !u!1 &6169425224972825478
 GameObject:
   m_ObjectHideFlags: 0

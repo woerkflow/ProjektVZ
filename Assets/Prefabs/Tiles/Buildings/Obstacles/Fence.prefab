@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5246334161667368809}
   - component: {fileID: 5801665328348796013}
   - component: {fileID: 4745627118231078538}
+  - component: {fileID: 6415673497940101871}
   m_Layer: 0
   m_Name: Fence
   m_TagString: Building
@@ -78,8 +79,20 @@ MonoBehaviour:
       wood: 20
       waste: 5
       whiskey: 0
-    buildingMaxHealth: 100
     buildingUpgradePrefab: {fileID: 0}
+--- !u!114 &6415673497940101871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265606460715150768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &535713497216654698
 GameObject:
   m_ObjectHideFlags: 0

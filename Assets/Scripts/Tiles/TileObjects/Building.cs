@@ -1,9 +1,8 @@
 using UnityEngine;
 
 public class Building : MonoBehaviour {
-    
-    public int maxHealth { get; set; }
-    public TileObject upgrade { get; set; }
+
+    public int maxHealth;
     public int currentHealth { get; private set; }
 
     
@@ -16,14 +15,15 @@ public class Building : MonoBehaviour {
     #endregion
     
     
-    #region Public class methods
+    #region Public Class Methods
 
     public void SetHealth(int value) {
         currentHealth = value;
 
-        if (currentHealth <= 0) {
-            DestroyBuilding();
+        if (currentHealth > 0) {
+            return;
         }
+        Break();
     }
 
     public int GetHealth() {
@@ -34,12 +34,18 @@ public class Building : MonoBehaviour {
         SetHealth(GetHealth() - value);
     }
     
-    private void DestroyBuilding() {
+    #endregion
+    
+    
+    #region Private Class Methods
+    
+    private void Break() {
         TileObject tileObject = GetComponent<TileObject>();
-        
-        if (tileObject) {
-            tileObject.DestroyObject();
+
+        if (!tileObject) {
+            return;
         }
+        tileObject.parentTile.DestroyObject();
     }
     
     #endregion

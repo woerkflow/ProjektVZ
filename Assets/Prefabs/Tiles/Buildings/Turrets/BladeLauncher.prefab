@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 5665478613386403082}
   - component: {fileID: 6268160045691897632}
   - component: {fileID: 4961349031111582701}
+  - component: {fileID: 8509412329934215831}
   m_Layer: 0
   m_Name: BladeLauncher
   m_TagString: Building
@@ -194,7 +195,6 @@ MonoBehaviour:
       wood: 100
       waste: 50
       whiskey: 0
-    buildingMaxHealth: 500
     buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4961349031111582701
 MonoBehaviour:
@@ -215,6 +215,19 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,
     type: 3}
   fireRate: 1.5
+--- !u!114 &8509412329934215831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201152157588848215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 500
 --- !u!1 &7567849528967252978
 GameObject:
   m_ObjectHideFlags: 0

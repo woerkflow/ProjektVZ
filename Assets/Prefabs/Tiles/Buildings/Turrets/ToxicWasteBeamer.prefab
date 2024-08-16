@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5223511892115107982}
   - component: {fileID: 2764788804539912993}
   - component: {fileID: 4701045630614851866}
+  - component: {fileID: 8731928901165993954}
   m_Layer: 0
   m_Name: ToxicWasteBeamer
   m_TagString: Building
@@ -113,7 +114,6 @@ MonoBehaviour:
       wood: 0
       waste: 0
       whiskey: 0
-    buildingMaxHealth: 800
     buildingUpgradePrefab: {fileID: 0}
 --- !u!114 &4701045630614851866
 MonoBehaviour:
@@ -134,6 +134,19 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8428514640838481261, guid: 8c4fc3a109dea4945901bae9100aa980,
     type: 3}
   fireRate: 2
+--- !u!114 &8731928901165993954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742136073031890223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 800
 --- !u!1 &8069357025394623847
 GameObject:
   m_ObjectHideFlags: 0

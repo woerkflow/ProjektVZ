@@ -7,6 +7,5 @@ public struct TileObjectBlueprint {
     public GameObject ruin;
     public int timeCosts;
     public Resources resources;
-    public int buildingMaxHealth;
     public TileObject buildingUpgradePrefab;
 }
