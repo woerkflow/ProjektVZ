@@ -66,9 +66,11 @@ MonoBehaviour:
   bulletType: 1
   minDamage: 1
   maxDamage: 10
+  impactHeight: 0
   impactEffectPrefab: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
     type: 3}
-  impactHeight: 0
+  bladeImpactClip: {fileID: 0}
+  flameImpactClip: {fileID: 8300000, guid: 9387e03c7fc76054493fb1a5c96be410, type: 3}
   explosive: {fileID: 2616350492570003641}
 --- !u!136 &2135969020357735856
 CapsuleCollider:

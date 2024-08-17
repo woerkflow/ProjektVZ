@@ -1,4 +1,4 @@
 public enum BulletType {
-    SingleTarget,
-    MultiTarget
+    SawBlade,
+    Flame
 }

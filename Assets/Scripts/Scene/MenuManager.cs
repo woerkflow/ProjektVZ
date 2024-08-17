@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour {
         
         switch (tile.type) {
             case TileObjectType.Ruin:
+                _currentMenu.GetComponent<BuildMenu>().SelectTile(tile);
+                break;
             case TileObjectType.Empty:
                 _currentMenu.GetComponent<BuildMenu>().SelectTile(tile);
                 break;
@@ -64,7 +66,8 @@ public class MenuManager : MonoBehaviour {
 
     private UIMenu GetCurrentMenu(TileObjectType type) 
         => type switch {
-            TileObjectType.Building => upgradeMenu,
+            TileObjectType.Ruin => buildMenu,
+            TileObjectType.Building  => upgradeMenu,
             TileObjectType.Empty => buildMenu,
             TileObjectType.Resource => farmMenu,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)

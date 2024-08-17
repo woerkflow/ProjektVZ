@@ -15,8 +15,11 @@ public class FarmStrategy : ITileInteractionStrategy {
         tile.enemySpawner.SetTimer(tile.enemySpawner.buildCountDown - tile.tileObject.blueprint.timeCosts);
         tile.objectRotation = tile.tileObject.transform.rotation;
         
+        // Manage Effects & Sounds
+        tile.PlayEffect(tile.replaceEffect);
+        tile.PlaySound(tile.farmAudioClip);
+        
         // Manage Tile Object
-        tile.StartEffect();
         tile.DestroyObject();
     }
 }

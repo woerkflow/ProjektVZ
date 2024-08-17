@@ -15,7 +15,12 @@ public class DestroyStrategy : ITileInteractionStrategy {
         });
         tile.ClearResources();
         
+        // Manage Effects & Sounds
+        tile.PlayEffect(tile.replaceEffect);
+        tile.PlaySound(tile.destroyAudioClip);
+        
         // Manage Tile Object
+        tile.PlaySound(tile.destroyAudioClip);
         tile.DestroyObject();
     }
 }

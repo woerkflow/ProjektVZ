@@ -8,8 +8,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
     public BulletType bulletType;
     public int minDamage;
     public int maxDamage;
-    public GameObject impactEffectPrefab;
-
+    
     private GameObject _target;
     
     [Header("Motion")]
@@ -22,23 +21,24 @@ public class Bullet : MonoBehaviour, ILaunchable {
     
     private BulletJobManager _bulletJobManager;
     
+    [Header("Impact")]
+    public GameObject impactEffectPrefab;
+    public AudioClip bladeImpactClip;
+    public AudioClip flameImpactClip;
+    
+    public SoundFXManager soundFXManager { get; set; }
+
+    private bool _isPlayed;
+    
     [Header("Explosion")]
     public Explosive explosive;
-
-    private bool _isExploded;
     
     
     #region Unity Methods
 
     private void Start() {
-        _bulletJobManager = FindObjectOfType<BulletJobManager>();
-        
-        if (_bulletJobManager) {
-            _bulletJobManager.Register(this);
-        } else {
-            Debug.LogError("BulletJobManager not found in the scene.");
-        }
-        _isExploded = false;
+        InitializeManagers();
+        _isPlayed = false;
         timeElapsed = 0f;
     }
     
@@ -48,20 +48,19 @@ public class Bullet : MonoBehaviour, ILaunchable {
         if (transform.position.y > 0.9925f) {
             return;
         }
+        
+        if (bulletType == BulletType.Flame) {
+            PlaySound(flameImpactClip);
+            StartImpactEffect(transform.position, Quaternion.identity);
+            explosive?.Explode(minDamage, maxDamage);
+        }
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider coll) {
-        
-        switch (bulletType) {
-            case BulletType.SingleTarget:
-                DamageSingleTarget(coll);
-                break;
-            case BulletType.MultiTarget:
-                DamageMultiTarget(coll);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();  
+
+        if (bulletType == BulletType.SawBlade) {
+            DamageSingleTarget(coll);
         }
     }
 
@@ -89,26 +88,35 @@ public class Bullet : MonoBehaviour, ILaunchable {
     
     #region Private Methods
 
+    private void InitializeManagers() {
+        _bulletJobManager = FindObjectOfType<BulletJobManager>();
+        
+        if (_bulletJobManager) {
+            _bulletJobManager.Register(this);
+        } else {
+            Debug.LogError("BulletJobManager not found in the scene.");
+        }
+        soundFXManager = FindObjectOfType<SoundFXManager>();
+    }
+
     private void DamageSingleTarget(Collider coll) {
         Enemy enemy = coll.GetComponent<Enemy>();
 
         if (!enemy) {
             return;
         }
-        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+        PlaySound(bladeImpactClip);
         StartImpactEffect(transform.position, transform.rotation);
+        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
     }
 
-    private void DamageMultiTarget(Collider coll) {
-        Enemy enemy = coll.GetComponent<Enemy>();
-        
-        if (!enemy || _isExploded) {
+    private void PlaySound(AudioClip audioClip) {
+
+        if (_isPlayed) {
             return;
         }
-        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
-        StartImpactEffect(transform.position, Quaternion.identity);
-        explosive?.Explode(minDamage, maxDamage);
-        _isExploded = true;
+        soundFXManager.PlaySoundFXClip(audioClip, transform.position, 0.5f);
+        _isPlayed = true;
     }
 
     private void StartImpactEffect(Vector3 position, Quaternion rotation) {

@@ -12,8 +12,12 @@ public class BuildStrategy : ITileInteractionStrategy {
         tile.playerManager.SubtractResources(buildCosts);
         tile.AddResources(buildCosts);
         
+        // Manage Effects & Sounds
+        tile.PlayEffect(tile.replaceEffect);
+        tile.PlaySound(tile.buildAudioClip);
+        
         // Manage Tile Object
-        tile.StartEffect();
+        Tile.DestroyTileObject(tile.tileObject);
         tile.ReplaceObject(tile.selectedBuilding);
     }
 }

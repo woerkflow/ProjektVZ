@@ -7,7 +7,6 @@ public class Tile : MonoBehaviour {
     [Header("Common")]
     public GameObject spawnPoint;
     public GameObject selectEffect;
-    public GameObject replaceEffect;
     public bool isPlayerHouse;
     
     public Resources resources { get; set; }
@@ -15,8 +14,17 @@ public class Tile : MonoBehaviour {
     public PlayerManager playerManager { get; set; }
     public MenuManager menuManager { get; set; }
     
+    [Header("Interactions")]
+    public GameObject replaceEffect;
+    public AudioClip buildAudioClip;
+    public AudioClip destroyAudioClip;
+    public AudioClip farmAudioClip;
+    public AudioClip repairAudioClip;
+    public AudioClip upgradeAudioClip;
+    
+    public SoundFXManager soundFXManager { get; set; }
+    
     private Dictionary<TileInteractionType, ITileInteractionStrategy> _tileInteractionStrategies;
-    private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
     
     [Header("Tile Object")]
     public TileObjectType type;
@@ -28,6 +36,8 @@ public class Tile : MonoBehaviour {
     public Building tileObjectBuilding { get; set; }
     public Quaternion objectRotation { get; set; }
     public TileObject selectedBuilding { get; set; }
+    
+    private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
     
     
     #region Unity Methods
@@ -78,6 +88,15 @@ public class Tile : MonoBehaviour {
         strategy.Interact(this);
         return true;
     }
+
+    public void PlaySound(AudioClip audioClip) {
+        soundFXManager.PlaySoundFXClip(audioClip, transform.position, 0.5f);
+    }
+    
+    public void PlayEffect(GameObject effect) {
+        GameObject effectInstance = Instantiate(effect.gameObject, transform.position, effect.transform.rotation);
+        Destroy(effectInstance, effect.GetComponent<ParticleSystem>().main.duration);
+    }
     
     #endregion
     
@@ -92,6 +111,10 @@ public class Tile : MonoBehaviour {
         objectRotation = Quaternion.Euler(0f, objectRotationEuler.y + value, 0f);
     }
 
+    public static void DestroyTileObject(TileObject tileObject) {
+        Destroy(tileObject.gameObject);
+    }
+
     public void DestroyObject() {
         TileObject ruin = tileObject.blueprint.ruin?.GetComponent<TileObject>();
         objectRotation = tileObject.transform.rotation;
@@ -100,7 +123,7 @@ public class Tile : MonoBehaviour {
             playerManager.RemoveBuilding(tileObjectBuilding);
             tileObjectBuilding = null;
         }
-        Destroy(tileObject.gameObject);
+        DestroyTileObject(tileObject);
         
         if (!ruin) {
             return;
@@ -118,11 +141,6 @@ public class Tile : MonoBehaviour {
         
         tileObject.parentTile = this;
         objectRotation = spawnPoint.transform.rotation;
-    }
-    
-    public void StartEffect() {
-        GameObject effectInstance = Instantiate(replaceEffect, transform.position, transform.rotation);
-        Destroy(effectInstance, 1f);
     }
     
     #endregion
@@ -208,6 +226,7 @@ public class Tile : MonoBehaviour {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         menuManager = FindObjectOfType<MenuManager>();
         playerManager = FindObjectOfType<PlayerManager>();
+        soundFXManager = FindObjectOfType<SoundFXManager>();
     }
     
     #endregion

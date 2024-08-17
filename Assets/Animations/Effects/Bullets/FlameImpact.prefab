@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6446291307124187523}
   - component: {fileID: 6882130030567422046}
   m_Layer: 0
-  m_Name: Fire
+  m_Name: Fire_bright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9788,7 +9788,7 @@ GameObject:
   - component: {fileID: 2497931276181802848}
   - component: {fileID: 2013100805179080826}
   m_Layer: 0
-  m_Name: Fire (2)
+  m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9832,7 +9832,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.5
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -11143,7 +11143,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.08235294, g: 0.078431375, b: 0.098039225, a: 1}
-        key1: {r: 0.5921569, g: 0.5921569, b: 0.6901961, a: 1}
+        key1: {r: 0.5921569, g: 0.5921569, b: 0.6901961, a: 0.54901963}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 1, g: 0.1948229, b: 0, a: 0}
         key4: {r: 1, g: 0.1948229, b: 0, a: 0}
@@ -14676,7 +14676,7 @@ GameObject:
   - component: {fileID: 873518030875926871}
   - component: {fileID: 6648229312682556324}
   m_Layer: 0
-  m_Name: Fire (1)
+  m_Name: Fire_dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16031,7 +16031,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.8352942, g: 0.40000004, b: 0.054901965, a: 1}
-        key1: {r: 0.08235294, g: 0.078431375, b: 0.098039225, a: 1}
+        key1: {r: 0.08235294, g: 0.078431375, b: 0.098039225, a: 0.54901963}
         key2: {r: 0.08235294, g: 0.078431375, b: 0.098039225, a: 0}
         key3: {r: 1, g: 0.1948229, b: 0, a: 0}
         key4: {r: 1, g: 0.1948229, b: 0, a: 0}
@@ -16039,7 +16039,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 45104
+        ctime1: 65535
         ctime2: 65535
         ctime3: 65535
         ctime4: 65535
@@ -16056,7 +16056,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_ColorSpace: 0
-        m_NumColorKeys: 3
+        m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -19581,9 +19581,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8092521582030502299}
   - {fileID: 3633096855916760158}
-  - {fileID: 8378709924059198201}
   - {fileID: 5227984386896846016}
+  - {fileID: 8092521582030502299}
+  - {fileID: 8378709924059198201}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

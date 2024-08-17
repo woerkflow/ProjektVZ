@@ -17,8 +17,11 @@ public class UpgradeStrategy : ITileInteractionStrategy {
             whiskey = buildCosts.whiskey - repairCosts.whiskey
         });
         
+        // Manage Effects & Sounds
+        tile.PlayEffect(tile.replaceEffect);
+        tile.PlaySound(tile.buildAudioClip);
+        
         // Manage Tile Object
-        tile.StartEffect();
         tile.objectRotation = tile.tileObject.transform.rotation;
         tile.DestroyObject();
         TileObject upgradeBuilding = tile.tileObject.blueprint.buildingUpgradePrefab.GetComponent<TileObject>();

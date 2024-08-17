@@ -131,7 +131,7 @@ MonoBehaviour:
   blueprint:
     type: 3
     prefab: {fileID: 8772616442239940868}
-    ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
+    ruin: {fileID: 1897936333670252998, guid: 1029983d1bdde844a9c421794e3575d7, type: 3}
     timeCosts: 5
     resources:
       wood: 0
