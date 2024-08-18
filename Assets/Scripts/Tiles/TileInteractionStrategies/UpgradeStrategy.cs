@@ -19,7 +19,7 @@ public class UpgradeStrategy : ITileInteractionStrategy {
         
         // Manage Effects & Sounds
         tile.PlayEffect(tile.replaceEffect);
-        tile.PlaySound(tile.buildAudioClip);
+        tile.PlaySound(tile.upgradeAudioClip);
         
         // Manage Tile Object
         tile.objectRotation = tile.tileObject.transform.rotation;

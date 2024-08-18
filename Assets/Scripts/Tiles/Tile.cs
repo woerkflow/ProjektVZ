@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour {
     public AudioClip repairAudioClip;
     public AudioClip upgradeAudioClip;
     
-    public SoundFXManager soundFXManager { get; set; }
+    public FXManager fxManager { get; set; }
     
     private Dictionary<TileInteractionType, ITileInteractionStrategy> _tileInteractionStrategies;
     
@@ -43,7 +43,7 @@ public class Tile : MonoBehaviour {
     #region Unity Methods
     
     private void Start() {
-        CacheManagers();
+        InitializeManagers();
         InitializeStrategies();
         objectRotation = spawnPoint.transform.rotation;
         ClearResources();
@@ -90,12 +90,19 @@ public class Tile : MonoBehaviour {
     }
 
     public void PlaySound(AudioClip audioClip) {
-        soundFXManager.PlaySoundFXClip(audioClip, transform.position, 0.5f);
+        fxManager.PlaySound(
+            audioClip, 
+            transform.position, 
+            0.5f
+        );
     }
     
     public void PlayEffect(GameObject effect) {
-        GameObject effectInstance = Instantiate(effect.gameObject, transform.position, effect.transform.rotation);
-        Destroy(effectInstance, effect.GetComponent<ParticleSystem>().main.duration);
+        fxManager.PlayEffect(
+            effect, 
+            transform.position,
+            effect.transform.rotation
+        );
     }
     
     #endregion
@@ -222,11 +229,11 @@ public class Tile : MonoBehaviour {
         };
     }
     
-    private void CacheManagers() {
+    private void InitializeManagers() {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         menuManager = FindObjectOfType<MenuManager>();
         playerManager = FindObjectOfType<PlayerManager>();
-        soundFXManager = FindObjectOfType<SoundFXManager>();
+        fxManager = FindObjectOfType<FXManager>();
     }
     
     #endregion

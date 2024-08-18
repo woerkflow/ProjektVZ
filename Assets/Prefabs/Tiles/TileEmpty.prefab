@@ -255,13 +255,13 @@ MonoBehaviour:
   selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
     type: 3}
   isPlayerHouse: 0
-  replaceEffect: {fileID: 2288778746605032389, guid: 44960a24342258941ac82d010a5479d3,
+  replaceEffect: {fileID: 7207182184078915116, guid: 44960a24342258941ac82d010a5479d3,
     type: 3}
   buildAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
   destroyAudioClip: {fileID: 8300000, guid: 3401d720ede5d014abc7b53f3363bfd0, type: 3}
   farmAudioClip: {fileID: 8300000, guid: fc70b121b3eaa0e4dbf43acb6a4c701f, type: 3}
-  repairAudioClip: {fileID: 0}
-  upgradeAudioClip: {fileID: 0}
+  repairAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
+  upgradeAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
   type: 0
   startObject: {fileID: 858852749531859134, guid: 3bfb98c423a9fb549b4b93b60feba27c,
     type: 3}

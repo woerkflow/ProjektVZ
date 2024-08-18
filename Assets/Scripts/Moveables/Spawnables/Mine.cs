@@ -1,31 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Mine : MonoBehaviour, ISpawnable {
 
     [Header("Common")]
-    public float explosionTimer;
     public int minDamage;
     public int maxDamage;
 
     private Spawner _parentSpawner;
-    private bool _isDead;
     
     [Header("Target")]
     public float perceptionRange;
-    
-    private readonly List<GameObject> _targets = new();
-    private GameObject _target;
     private SphereCollider _triggerCollider;
 
     [Header("Explosion")]
-    public GameObject impactEffect;
+    public GameObject impactEffectPrefab;
+    public AudioClip impactEffectClip;
     public Explosive explosive;
-
-    private float _elapsedExplosionTime;
-    private Coroutine _behaviourCoroutine;
-
+    
+    public FXManager fxManager { get; set; }
     
     #region Unity Methods
 
@@ -33,10 +25,7 @@ public class Mine : MonoBehaviour, ISpawnable {
         _triggerCollider = gameObject.AddComponent<SphereCollider>();
         _triggerCollider.isTrigger = true;
         _triggerCollider.radius = perceptionRange;
-        
-        _isDead = false;
-        _elapsedExplosionTime = 0f;
-        _behaviourCoroutine = StartCoroutine(BehaviourCoroutine());
+        InitializeManagers();
     }
 
     private void Update() {
@@ -45,7 +34,7 @@ public class Mine : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject);
+        Destroy(gameObject, 0.1f);
     }
     
     private void OnTriggerEnter(Collider coll) {
@@ -53,24 +42,12 @@ public class Mine : MonoBehaviour, ISpawnable {
         if (!coll.CompareTag("Zombie")) {
             return;
         }
-        _targets.Add(coll.gameObject);
-    }
-    
-    private void OnTriggerExit(Collider coll) {
-        
-        if (!_targets.Contains(coll.gameObject)) {
-            return;
-        }
-        _targets.Remove(coll.gameObject);
+        Explode();
+        Destroy(gameObject);
     }
 
     private void OnDestroy() {
         _parentSpawner.Unregister(this);
-        
-        if (_behaviourCoroutine == null) {
-            return;
-        }
-        StopCoroutine(_behaviourCoroutine);
     }
 
     #endregion
@@ -88,50 +65,26 @@ public class Mine : MonoBehaviour, ISpawnable {
     
     #region Behaviour Methods
 
+    private void InitializeManagers() {
+        fxManager = FindObjectOfType<FXManager>();
+    }
+
     private void Explode() {
-        _isDead = true;
         explosive.Explode(minDamage, maxDamage);
-        StartImpactEffect(transform.position, transform.rotation);
+        PlaySound();
+        PlayEffect();
     }
     
-    private void StartImpactEffect(Vector3 position, Quaternion rotation) {
-        GameObject effectInstance = Instantiate(impactEffect, position, rotation);
-        Destroy(effectInstance, 1f);
+    private void PlaySound() {
+        fxManager.PlaySound(impactEffectClip, transform.position, 0.5f);
     }
     
-    private void UpdateTarget() {
-        
-        _targets.RemoveAll(enemy 
-            => !enemy
-               || !enemy.gameObject.activeSelf 
-               || !enemy.CompareTag("Zombie")
+    private void PlayEffect() {
+        fxManager.PlayEffect(
+            impactEffectPrefab, 
+            transform.position, 
+            impactEffectPrefab.transform.rotation
         );
-        _target = _targets.Count > 0 
-            ? _targets[0]
-            : null;
-    }
-
-    private void UpdateTimer() {
-        
-        if (!_target) {
-            _elapsedExplosionTime = 0f;
-            return;
-        }
-            
-        if (_elapsedExplosionTime >= explosionTimer) {
-            Explode();
-            return;
-        }
-        _elapsedExplosionTime++;
-    }
-
-    private IEnumerator BehaviourCoroutine() {
-        
-        while (!_isDead) {
-            yield return new WaitForSeconds(1f);
-            UpdateTarget();
-            UpdateTimer();
-        }
     }
 
     #endregion

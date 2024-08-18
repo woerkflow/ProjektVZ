@@ -101,13 +101,13 @@ GameObject:
   - component: {fileID: 3059328666732392839}
   - component: {fileID: 7457931244348950491}
   - component: {fileID: 9193166117709821276}
-  - component: {fileID: 9151346582793127711}
+  - component: {fileID: 2244862597360753361}
   - component: {fileID: 8173969737087448975}
   - component: {fileID: 7527161554908499427}
   - component: {fileID: 4043559288047295676}
   - component: {fileID: 8517787429166594809}
   - component: {fileID: 8599497444412784823}
-  - component: {fileID: 285728820437662702}
+  - component: {fileID: 9151346582793127711}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -159,7 +159,7 @@ MonoBehaviour:
   buildMenu: {fileID: 0}
   farmMenu: {fileID: 0}
   upgradeMenu: {fileID: 0}
---- !u!114 &9151346582793127711
+--- !u!114 &2244862597360753361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,26 +168,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1553083597564924198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819e77e1fea3fc340bb3b0e1d9f299ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 811b5571dcec77b4698ec5ad76c978a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 7121825584472683462}
-  - {fileID: 8622552658639170875}
-  - {fileID: 8524990600627706302}
-  - {fileID: 1432223930870269368}
-  - {fileID: 1418908400155828895}
-  - {fileID: 2867663999601474822}
-  - {fileID: 8451828963903941536}
-  - {fileID: 7193080950079499766}
-  maxWaves: 10
-  maxWaveAmount: 32
-  maxCurrentEnemyAmount: 96
-  maxCountDown: 60
-  swarmManagerPrefab: {fileID: 1209438935485532948, guid: e7d3f0825cb92634ea40deb2ae467468,
+  soundFXObject: {fileID: 2147816447305887540, guid: 630c9951f47b3974d91249263df4b15e,
     type: 3}
-  swarmManagers: []
-  timer: {fileID: 0}
 --- !u!114 &8173969737087448975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845b06670011ad6428d34baaa713fcfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &285728820437662702
+--- !u!114 &9151346582793127711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,11 +251,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1553083597564924198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cee5b90d81835314e9c29e555766d6af, type: 3}
+  m_Script: {fileID: 11500000, guid: 819e77e1fea3fc340bb3b0e1d9f299ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundFXObject: {fileID: 2147816447305887540, guid: 630c9951f47b3974d91249263df4b15e,
+  spawnPoints:
+  - {fileID: 7121825584472683462}
+  - {fileID: 8622552658639170875}
+  - {fileID: 8524990600627706302}
+  - {fileID: 1432223930870269368}
+  - {fileID: 1418908400155828895}
+  - {fileID: 2867663999601474822}
+  - {fileID: 8451828963903941536}
+  - {fileID: 7193080950079499766}
+  maxWaves: 10
+  maxWaveAmount: 32
+  maxCurrentEnemyAmount: 96
+  maxCountDown: 60
+  swarmManagerPrefab: {fileID: 1209438935485532948, guid: e7d3f0825cb92634ea40deb2ae467468,
     type: 3}
+  swarmManagers: []
+  timer: {fileID: 0}
 --- !u!1 &2061869966326221827
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,8 +34,7 @@ public class EnemySpawner : MonoBehaviour {
     #region Unity Methods
     
     private void Start() {
-        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
-        _enemyPoolManager.Initialize(maxCurrentEnemyAmount);
+        InitializeManagers();
         PrepareForNewRound();
     }
 
@@ -182,5 +181,20 @@ public class EnemySpawner : MonoBehaviour {
         );
     }
 
+    #endregion
+    
+    
+    #region Private Class Methods
+
+    private void InitializeManagers() {
+        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
+
+        if (!_enemyPoolManager) {
+            Debug.LogError("EnemyPoolManager not found in the scene.");
+            return;
+        }
+        _enemyPoolManager.Initialize(maxCurrentEnemyAmount);
+    }
+    
     #endregion
 }

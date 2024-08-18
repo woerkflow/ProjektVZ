@@ -5,11 +5,14 @@ public class Building : MonoBehaviour {
     public int maxHealth;
     public int currentHealth { get; private set; }
 
+    private bool _isBroken;
+
     
     #region Unity Methods
 
     private void Start() {
         currentHealth = maxHealth;
+        _isBroken = false;
     }
     
     #endregion
@@ -20,9 +23,10 @@ public class Building : MonoBehaviour {
     public void SetHealth(int value) {
         currentHealth = value;
 
-        if (currentHealth > 0) {
+        if (currentHealth > 0 || _isBroken) {
             return;
         }
+        _isBroken = true;
         Break();
     }
 

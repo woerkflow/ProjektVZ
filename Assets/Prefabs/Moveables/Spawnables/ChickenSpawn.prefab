@@ -92,8 +92,9 @@ MonoBehaviour:
   capsuleCollider: {fileID: 1225672579551020913}
   minDamage: 1
   maxDamage: 5
-  impactEffect: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
+  impactEffectPrefab: {fileID: 2310196081175101062, guid: 77545ca4f6364d64c8a1b2fed76e43da,
     type: 3}
+  impactEffectClip: {fileID: 8300000, guid: 0200d001725a2294f9d0a49da2648e24, type: 3}
   explosive: {fileID: 3422659713731089772}
 --- !u!1 &7928059078117297669
 GameObject:

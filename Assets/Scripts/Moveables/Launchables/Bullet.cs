@@ -1,11 +1,8 @@
-using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Bullet : MonoBehaviour, ILaunchable {
     
     [Header("Common")]
-    public BulletType bulletType;
     public int minDamage;
     public int maxDamage;
     
@@ -23,15 +20,11 @@ public class Bullet : MonoBehaviour, ILaunchable {
     
     [Header("Impact")]
     public GameObject impactEffectPrefab;
-    public AudioClip bladeImpactClip;
-    public AudioClip flameImpactClip;
+    public AudioClip impactEffectClip;
     
-    public SoundFXManager soundFXManager { get; set; }
+    public FXManager fxManager { get; set; }
 
     private bool _isPlayed;
-    
-    [Header("Explosion")]
-    public Explosive explosive;
     
     
     #region Unity Methods
@@ -48,20 +41,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
         if (transform.position.y > 0.9925f) {
             return;
         }
-        
-        if (bulletType == BulletType.Flame) {
-            PlaySound(flameImpactClip);
-            StartImpactEffect(transform.position, Quaternion.identity);
-            explosive?.Explode(minDamage, maxDamage);
-        }
         Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter(Collider coll) {
-
-        if (bulletType == BulletType.SawBlade) {
-            DamageSingleTarget(coll);
-        }
     }
 
     private void OnDestroy() {
@@ -89,39 +69,35 @@ public class Bullet : MonoBehaviour, ILaunchable {
     #region Private Methods
 
     private void InitializeManagers() {
+        fxManager = FindObjectOfType<FXManager>();
         _bulletJobManager = FindObjectOfType<BulletJobManager>();
         
-        if (_bulletJobManager) {
-            _bulletJobManager.Register(this);
-        } else {
+        if (!_bulletJobManager) {
             Debug.LogError("BulletJobManager not found in the scene.");
-        }
-        soundFXManager = FindObjectOfType<SoundFXManager>();
-    }
-
-    private void DamageSingleTarget(Collider coll) {
-        Enemy enemy = coll.GetComponent<Enemy>();
-
-        if (!enemy) {
             return;
         }
-        PlaySound(bladeImpactClip);
-        StartImpactEffect(transform.position, transform.rotation);
-        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+        _bulletJobManager.Register(this);
     }
 
-    private void PlaySound(AudioClip audioClip) {
+    protected void PlaySound() {
 
         if (_isPlayed) {
             return;
         }
-        soundFXManager.PlaySoundFXClip(audioClip, transform.position, 0.5f);
+        fxManager.PlaySound(
+            impactEffectClip, 
+            transform.position, 
+            0.25f
+        );
         _isPlayed = true;
     }
-
-    private void StartImpactEffect(Vector3 position, Quaternion rotation) {
-        GameObject effectInstance = Instantiate(impactEffectPrefab, position, rotation);
-        Destroy(effectInstance, 1f);
+    
+    protected void PlayEffect(Quaternion rotation) {
+        fxManager.PlayEffect(
+            impactEffectPrefab, 
+            transform.position, 
+            rotation
+        );
     }
 
     #endregion

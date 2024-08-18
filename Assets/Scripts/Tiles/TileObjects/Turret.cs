@@ -58,13 +58,17 @@ public class Turret : MonoBehaviour {
         FireProjectile();
     }
     
-    private void OnTriggerEnter(Collider trigger) {
-        Enemy enemy = trigger?.GetComponent<Enemy>();
+    private void OnTriggerEnter(Collider coll) {
+        
+        if (!coll.CompareTag("Zombie")) {
+            return;
+        }
+        Enemy enemy = coll.GetComponent<Enemy>();
         _targets.Add(enemy);
     }
     
-    private void OnTriggerExit(Collider trigger) {
-        Enemy enemy = trigger?.GetComponent<Enemy>();
+    private void OnTriggerExit(Collider coll) {
+        Enemy enemy = coll?.GetComponent<Enemy>();
         _targets.Remove(enemy);
     }
 
@@ -86,11 +90,10 @@ public class Turret : MonoBehaviour {
         
         _targets.RemoveAll(target 
             => !target
-               || !target.gameObject.activeSelf 
-               || !target.CompareTag("Zombie") 
+               || !target.gameObject.activeSelf
                || !(Vector3.Distance(target.transform.position, transform.position) <= perceptionRange)
         );
-
+        
         if (_targets.Count <= 0) {
             _target = null;
             return;
@@ -115,17 +118,16 @@ public class Turret : MonoBehaviour {
     private void InitializeManagers() {
         _turretJobManager = FindObjectOfType<TurretJobManager>();
 
-        if (_turretJobManager) {
-            _turretJobManager.Register(this);
-        } else {
+        if (!_turretJobManager) {
             Debug.LogError("TurretJobManager not found in the scene.");
+            return;
         }
+        _turretJobManager.Register(this);
     }
 
     private bool HasValidTarget() 
         => _target 
            && _target.gameObject.activeSelf
-           && _target.CompareTag("Zombie") 
            && Vector3.Distance(_target.transform.position, transform.position) <= perceptionRange;
 
     private void ResetTurret() {

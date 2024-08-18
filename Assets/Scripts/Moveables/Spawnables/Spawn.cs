@@ -27,8 +27,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
     public CapsuleCollider capsuleCollider;
     public int minDamage;
     public int maxDamage;
-    public GameObject impactEffect;
+    public GameObject impactEffectPrefab;
+    public AudioClip impactEffectClip;
     public Explosive explosive;
+
+    public FXManager fxManager { get; set; }
 
     private Coroutine _behaviourCoroutine;
     
@@ -53,7 +56,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject);
+        Destroy(gameObject, 0.5f);
     }
     
     private void OnTriggerEnter(Collider coll) {
@@ -65,10 +68,6 @@ public class Spawn : MonoBehaviour, ISpawnable {
     }
     
     private void OnTriggerExit(Collider coll) {
-        
-        if (!_targets.Contains(coll.gameObject)) {
-            return;
-        }
         _targets.Remove(coll.gameObject);
     }
     
@@ -93,7 +92,8 @@ public class Spawn : MonoBehaviour, ISpawnable {
         switch (type) {
             case SpawnType.Chicken:
                 explosive.Explode(minDamage, maxDamage);
-                StartImpactEffect(transform.position, transform.rotation);
+                PlaySound();
+                PlayEffect();
                 break;
             case SpawnType.Bull:
                 // Handle Bull specific explosion logic
@@ -103,17 +103,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
         }
     }
     
-    private void StartImpactEffect(Vector3 position, Quaternion rotation) {
-        GameObject effectInstance = Instantiate(impactEffect, position, rotation);
-        Destroy(effectInstance, 1f);
-    }
-    
     private void UpdateTarget() {
         
         _targets.RemoveAll(enemy 
             => !enemy
-               || !enemy.gameObject.activeSelf 
-               || !enemy.CompareTag("Zombie")
+               || !enemy.gameObject.activeSelf
         );
         _target = _targets.Count > 0 
             ? _targets[0] 
@@ -136,6 +130,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
             && direction.magnitude <= capsuleCollider.radius + _targetCollider.radius
         ) {
             Explode();
+            Destroy(gameObject, 0.5f);
         }
     }
     
@@ -164,14 +159,26 @@ public class Spawn : MonoBehaviour, ISpawnable {
     #region Private Methods
     
     private void InitializeManagers() {
+        fxManager = FindObjectOfType<FXManager>();
         _spawnJobManager = FindObjectOfType<SpawnJobManager>();
         
         if (!_spawnJobManager) {
             Debug.LogError("SpawnJobManager not found in the scene.");
-            enabled = false;
             return;
         }
         _spawnJobManager.RegisterSpawn(this);
+    }
+    
+    private void PlaySound() {
+        fxManager.PlaySound(impactEffectClip, transform.position, 0.5f);
+    }
+    
+    private void PlayEffect() {
+        fxManager.PlayEffect(
+            impactEffectPrefab, 
+            transform.position, 
+            impactEffectPrefab.transform.rotation
+        );
     }
     
     #endregion

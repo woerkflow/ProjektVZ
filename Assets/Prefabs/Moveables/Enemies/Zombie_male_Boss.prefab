@@ -1425,10 +1425,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.006
-  m_Height: 0.032
+  m_Radius: 0.004
+  m_Height: 0.026
   m_Direction: 1
-  m_Center: {x: 0, y: 0.01, z: 0}
+  m_Center: {x: 0, y: 0.009, z: 0}
 --- !u!54 &-5500053883974877137
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1497,9 +1497,9 @@ MonoBehaviour:
     type: 3}
   perceptionRange: 0.14
   speed: 0.006
-  attackSpeed: 6
-  minDamage: 10
-  maxDamage: 50
+  attackSpeed: 4
+  minDamage: 50
+  maxDamage: 100
   maxHealth: 1000
   capsuleCollider: {fileID: 9195502220633551029}
   deadTime: 2

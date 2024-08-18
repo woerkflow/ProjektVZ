@@ -48,7 +48,9 @@ public class Enemy : MonoBehaviour {
     #region Unity Methoden
     
     private void Start() {
-        InitializeComponents();
+        InitializeManagers();
+        _capsuleRadius = capsuleCollider.radius;
+        target = mainTarget;
         ResetValues();
     }
     
@@ -75,26 +77,16 @@ public class Enemy : MonoBehaviour {
     
     #region Initialization
 
-    private void InitializeComponents() {
+    private void InitializeManagers() {
+        _playerManager = FindObjectOfType<PlayerManager>();
+        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
         _spawnJobManager = FindObjectOfType<SpawnJobManager>();
         
-        if (_spawnJobManager) {
-            _spawnJobManager.RegisterEnemy(this);
-        } else {
-            Debug.LogError("EnemyJobManager not found in the scene.");
+        if (!_spawnJobManager) {
+            Debug.LogError("SpawnJobManager not found in the scene.");
+            return;
         }
-        _playerManager = FindObjectOfType<PlayerManager>();
-        
-        if (!_playerManager) {
-            Debug.LogError("PlayerManager not found in the scene.");
-        }
-        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
-        
-        if (!_enemyPoolManager) {
-            Debug.LogError("EnemyPoolManager not found in the scene.");
-        }
-        _capsuleRadius = capsuleCollider.radius;
-        target = mainTarget;
+        _spawnJobManager.RegisterEnemy(this);
     }
     
     #endregion

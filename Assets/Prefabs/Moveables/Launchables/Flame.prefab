@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5782665300833794161}
   - component: {fileID: 2616350492570003641}
-  - component: {fileID: 794176971902633550}
-  - component: {fileID: 2135969020357735856}
+  - component: {fileID: 6195041846579349434}
   m_Layer: 0
   m_Name: Flame
   m_TagString: Untagged
@@ -51,7 +50,7 @@ MonoBehaviour:
   enemyTag: Zombie
   radius: 0.01
   maxTargets: 10
---- !u!114 &794176971902633550
+--- !u!114 &6195041846579349434
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,41 +59,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 105228381973529086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3975774819fd0b42b7cb3a52998dc69, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e2a1721344b24449bdadbd93bad32f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletType: 1
   minDamage: 1
   maxDamage: 10
   impactHeight: 0
-  impactEffectPrefab: {fileID: 9219228706155565329, guid: 23ecf34faa2abaf4194dbf70163816ee,
+  impactEffectPrefab: {fileID: 1702452483387676863, guid: a6f73f98ddba8cc4cb633d561eb02573,
     type: 3}
-  bladeImpactClip: {fileID: 0}
-  flameImpactClip: {fileID: 8300000, guid: 9387e03c7fc76054493fb1a5c96be410, type: 3}
+  impactEffectClip: {fileID: 8300000, guid: 9387e03c7fc76054493fb1a5c96be410, type: 3}
   explosive: {fileID: 2616350492570003641}
---- !u!136 &2135969020357735856
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105228381973529086}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.003
-  m_Height: 0.003
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2932873408101990794
 GameObject:
   m_ObjectHideFlags: 0

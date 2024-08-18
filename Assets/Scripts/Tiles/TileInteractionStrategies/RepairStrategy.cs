@@ -12,7 +12,7 @@ public class RepairStrategy : ITileInteractionStrategy {
         
         // Manage Effects & Sounds
         tile.PlayEffect(tile.replaceEffect);
-        tile.PlaySound(tile.buildAudioClip);
+        tile.PlaySound(tile.repairAudioClip);
         
         // Manage Tile Object
         tile.tileObjectBuilding.SetHealth(tile.tileObjectBuilding.maxHealth);

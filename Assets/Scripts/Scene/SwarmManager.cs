@@ -18,7 +18,7 @@ public class SwarmManager : MonoBehaviour {
     
     private void Start() {
         _isDestroyed = false;
-        _playerManager = FindObjectOfType<PlayerManager>();
+        InitializeManagers();
         _updateTargetsCoroutine = StartCoroutine(UpdateTargetsRoutine());
     }
     
@@ -101,5 +101,14 @@ public class SwarmManager : MonoBehaviour {
         return nearestBuilding;
     }
 
+    #endregion
+
+
+    #region MyRegion
+
+    private void InitializeManagers() {
+        _playerManager = FindObjectOfType<PlayerManager>();
+    }
+    
     #endregion
 }

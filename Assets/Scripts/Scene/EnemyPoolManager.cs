@@ -51,7 +51,7 @@ public class EnemyPoolManager : MonoBehaviour {
             );
         } else {
             _factory = new BossWaveFactory(
-                bossPrefabs[(int)(_currentRoundCount * 0.2) - 1],
+                bossPrefabs[_currentRoundCount % 2],
                 minionPrefabs,
                 _maxWaveAmount
             );
