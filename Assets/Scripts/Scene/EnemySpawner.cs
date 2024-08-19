@@ -29,6 +29,11 @@ public class EnemySpawner : MonoBehaviour {
     public UITimer timer;
 
     private bool _isActive;
+
+    [Header("Round")] 
+    public AudioClip fightStartClip;
+
+    public FXManager fxManager { get; set; }
     
     
     #region Unity Methods
@@ -107,6 +112,7 @@ public class EnemySpawner : MonoBehaviour {
             timer.RefreshTimer(buildCountDown);
         } else {
             timer.DeactivateTimer();
+            PlayFightStartSound();
             state = new FightState();
         }
     }
@@ -186,6 +192,10 @@ public class EnemySpawner : MonoBehaviour {
     
     #region Private Class Methods
 
+    private void PlayFightStartSound() {
+        fxManager.PlaySound(fightStartClip, transform.position, 0.5f);
+    }
+
     private void InitializeManagers() {
         _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
 
@@ -194,6 +204,7 @@ public class EnemySpawner : MonoBehaviour {
             return;
         }
         _enemyPoolManager.Initialize(maxCurrentEnemyAmount);
+        fxManager = FindObjectOfType<FXManager>();
     }
     
     #endregion

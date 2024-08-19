@@ -57283,6 +57283,11 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 533483974160080424}
+    - target: {fileID: 9151346582793127711, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: fightStartClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e6b883fc93910444fa9cd67f4428273e, type: 3}
     - target: {fileID: 9193166117709821276, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}
       propertyPath: farmMenu

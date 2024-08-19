@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cea79307f1ee8354789ddd41a58cf9bb
+guid: 60068100d85ff164b93b91441084e6a9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +16,7 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
-      does not match:\n\tTransform 'metarig' not found in HumanDescription.\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -25,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -34,23 +33,23 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: metarig|Walk
-      takeName: metarig|Walk
-      internalID: 2933577835342229695
+      name: ZombieFem|die
+      takeName: ZombieFem|die
+      internalID: -7892320583729753572
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -66,7 +65,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 1
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
@@ -297,18 +296,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: zombie_female_idle(Clone)
+    - name: zombie_female(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: ZombieFemale1
-      parentName: zombie_female_idle(Clone)
+    - name: ZombieFem
+      parentName: zombie_female(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: IK Root
-      parentName: ZombieFemale1
+      parentName: ZombieFem
       position: {x: -2.3213786e-10, y: 0.01941609, z: -0.07691638}
       rotation: {x: 0.7071068, y: 0.0000007277349, z: 0.0000007277348, w: 0.7071067}
       scale: {x: 1, y: 1, z: 1}
@@ -592,8 +591,8 @@ ModelImporter:
       position: {x: -0, y: 0.13019818, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: ZombieFemale2
-      parentName: zombie_female_idle(Clone)
+    - name: Mesh
+      parentName: zombie_female(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -609,7 +608,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 0feafeec8427080459d86702698ba29a,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: a62c11e49fb27b94ebc686f5296ebf88,
     type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3

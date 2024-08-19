@@ -169,7 +169,7 @@ public class Enemy : MonoBehaviour {
         Vector3 direction = Moveable.Direction(moveTarget, transform.position);
 
         if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
-            animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
+            animator.SetFloat(walkParameter, 1f, 0.1f, Time.deltaTime);
             currentSpeed = speed;
         } else {
             currentSpeed = 0f;
