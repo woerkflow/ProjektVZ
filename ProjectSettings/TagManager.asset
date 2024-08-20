@@ -8,6 +8,7 @@ TagManager:
   - Building
   - Zombie
   - ZombieDead
+  - Resource
   layers:
   - Default
   - TransparentFX

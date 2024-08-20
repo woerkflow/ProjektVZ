@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 71316299303624800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.046196803, y: 0.3567208, z: 0.26525575}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,6 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23fb34ce394e3254ebd0f5b842070e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombies: []
-  mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
-    type: 3}

@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
@@ -7,101 +6,99 @@ public class Enemy : MonoBehaviour {
     
     [Header("Target")]
     public GameObject mainTarget;
-    public string enemyTag;
-    public float maxSpeed;
-    
-    [Header("Perception")]
     public float perceptionRange;
-    public float turnSpeed;
+    
+    public GameObject target { get; private set; }
+    
+    private Building _targetBuildingComponent;
+    private float _targetCapsuleRadius;
+    
+    [Header("Movement")]
+    public float speed;
+    
+    public float currentSpeed { get; private set; }
+    public Vector3 moveTarget { get; private set; }
+    
+    private SpawnJobManager _spawnJobManager;
     
     [Header("Attack")]
     public float attackSpeed;
-    public int damage;
+    public int minDamage;
+    public int maxDamage;
     public int maxHealth;
+    public CapsuleCollider capsuleCollider;
+    public float deadTime;
+    
+    public int currentHealth { get; private set; }
+    
+    private float _capsuleRadius;
+    private float _elapsedAttackTime;
+    private float _elapsedDeadTime;
 
     [Header("Animation")] 
+    public Animator animator;
     public string walkParameter;
     public string attackParameter;
     public string dieParameter;
     
-    // GameObject
-    private float _speed;
-    private int _currentHealth;
-    private Animator _animator;
-    private float _attackCountDown;
-    private float _capsuleRadius;
-    private ObjectPool<Enemy> _pool;
-    private float _deadCounter;
+    private SwarmManager _swarmManager;
+    private PlayerManager _playerManager;
+    private EnemyPoolManager _enemyPoolManager;
     
-    // Target
-    public GameObject target { get; set; }
-    public SwarmManager swarmManager { private get; set; }
-    private Building _targetBuildingComponent;
-    private float _targetCapsuleRadius;
-    private Vector3 _targetPosition;
+    #region Unity Methoden
     
-    #region Unity Methods
-    
-    void Start() {
-        
-        // Initialize enemy values
-        _attackCountDown = 0f;
-        _currentHealth = maxHealth;
-        _speed = Random.Range(0.004f, maxSpeed);
-        _animator = GetComponentInChildren<Animator>();
-        _capsuleRadius = GetComponent<CapsuleCollider>().radius;
-        
-        // Initialize main target
-        SetTarget(mainTarget);
+    private void Start() {
+        InitializeManagers();
+        _capsuleRadius = capsuleCollider.radius;
+        target = mainTarget;
+        ResetValues();
     }
     
-    void Update() {
+    private void Update() {
         
-        if (_currentHealth <= 0) {
-            
-            if (_deadCounter > 0) {
-                _deadCounter -= Time.deltaTime;
-                return;
-            }
-            DestroyEnemy();
+        if (currentHealth <= 0) {
+            HandleDeath();
             return;
         }
+        UpdateTarget();
+        MoveTowardsTarget();
 
-        if (target == null) {
-            _animator.SetFloat(walkParameter, 0f);
-            return;
+        if (IsWithinAttackRange()) {
+            HandleAttack();
         }
-        Vector3 direction = _targetPosition - new Vector3(transform.position.x, 0f, transform.position.z);
-        RotateToTarget(direction);
-        
-        if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
-            
-            // Start walking animation
-            _animator.SetFloat(walkParameter, 1f, 0.3f, Time.deltaTime);
-            MoveToTarget(direction);
-        } else if (target != mainTarget) {
-            
-            // Stop walking animation
-            _animator.SetFloat(walkParameter, 0f);
-            AttackTarget();
-        } else {
-            _animator.SetFloat(walkParameter, 0f);
-        }
+    }
+
+    private void OnDestroy() {
+        _spawnJobManager?.UnregisterEnemy(this);
     }
     
     #endregion
     
-    #region Object Pooling
+    
+    #region Initialization
 
-    public void SetPool(ObjectPool<Enemy> pool) {
-        _pool = pool;
+    private void InitializeManagers() {
+        _playerManager = FindObjectOfType<PlayerManager>();
+        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
+        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
+        
+        if (!_spawnJobManager) {
+            Debug.LogError("SpawnJobManager not found in the scene.");
+            return;
+        }
+        _spawnJobManager.RegisterEnemy(this);
     }
     
+    #endregion
+    
+    
+    #region Object Pooling
+    
     private void DestroyEnemy() {
-        if (_pool != null) {
-            _animator.SetFloat(walkParameter, 0f);
-            swarmManager.Unsubscribe(this);
-            _pool.Release(this);
+        _swarmManager?.Unregister(this);
+        
+        if (_enemyPoolManager) {
+            _enemyPoolManager.ReturnEnemyToPool(this);
         } else {
             Destroy(gameObject);
         }
@@ -109,75 +106,98 @@ public class Enemy : MonoBehaviour {
     
     #endregion
     
-    #region Public Enemy Methods
     
-    public int GetHealth() {
-        return _currentHealth;
+    #region Public Methods
+
+    public void TakeDamage(int value) {
+        currentHealth -= value;
+
+        if (currentHealth > 0) { 
+            return;
+        }
+        animator.SetTrigger(dieParameter);
+        DeactivateValues();
     }
 
-    public void SetHealth(int value) {
-        _currentHealth = value;
-        
-        if (_currentHealth <= 0) {
-            gameObject.tag = "ZombieDead";
-            _animator.SetTrigger(dieParameter);
-            _deadCounter = 2f;
-        }
+    public void SetTarget(Building newTarget) {
+        target = newTarget.gameObject;
+        _targetBuildingComponent = newTarget;
+        _targetCapsuleRadius = target.GetComponent<CapsuleCollider>().radius;
     }
-    
-    public void SetTarget(GameObject newTarget) {
-        target = newTarget
-            ? newTarget
-            : mainTarget;
-        
-        _targetBuildingComponent = target?.GetComponent<Building>();
-        
-        CapsuleCollider targetCapsuleCollider = target?.GetComponentInChildren<CapsuleCollider>();
-        _targetCapsuleRadius = targetCapsuleCollider
-            ? targetCapsuleCollider.radius 
-            : 0.01f;
-        
-        _targetPosition = target
-            ? new Vector3(target.transform.position.x, 0, target.transform.position.z) 
-            : new Vector3(mainTarget.transform.position.x, 0, mainTarget.transform.position.z);
+
+    public void SetSwarmManager(SwarmManager swarmManager) {
+        _swarmManager = swarmManager;
     }
 
     public void ResetValues() {
-        SetHealth(maxHealth);
+        currentHealth = maxHealth;
+        _elapsedAttackTime = attackSpeed;
+        _elapsedDeadTime = 0f;
+        capsuleCollider.enabled = true;
         gameObject.tag = "Zombie";
+        currentSpeed = speed;
     }
     
     #endregion
     
-    #region Enemy Private Methods
     
-    private float DeltaSpeed(float value) => value * Time.deltaTime;
+    #region Private Methods
     
-    private void MoveToTarget(Vector3 direction) {
-        transform.Translate(direction.normalized * DeltaSpeed(_speed), Space.World);
+    private void HandleDeath() {
+        
+        if (_elapsedDeadTime < deadTime) {
+            _elapsedDeadTime += Time.deltaTime;
+        } else {
+            _playerManager.AddResources( 
+                new Resources {
+                    whiskey = 1    
+                }
+            );
+            DestroyEnemy();
+        }
     }
 
-    private void RotateToTarget(Vector3 direction) {
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, DeltaSpeed(turnSpeed)).eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+    private void UpdateTarget() {
+        
+        if (!target) {
+            target = mainTarget;
+        }
+        moveTarget = target.transform.position;
     }
-    
-    private void AttackTarget() {
-        if (_attackCountDown <= 0) {
-            _animator.SetTrigger(attackParameter);
-            
-            if (target != null) {
-                Damage(_targetBuildingComponent);
-            }
-            _attackCountDown = 1f / attackSpeed;
+
+    private void MoveTowardsTarget() {
+        Vector3 direction = Moveable.Direction(moveTarget, transform.position);
+
+        if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
+            animator.SetFloat(walkParameter, 1f, 0.1f, Time.deltaTime);
+            currentSpeed = speed;
         } else {
-            _attackCountDown -= Time.deltaTime;
+            currentSpeed = 0f;
+        }
+    }
+
+    private bool IsWithinAttackRange() 
+        => currentSpeed == 0f && target != mainTarget;
+
+    private void HandleAttack() {
+        animator.SetFloat(walkParameter, 0f);
+        
+        if (_elapsedAttackTime >= attackSpeed) {
+            animator.SetTrigger(attackParameter);
+            
+            if (target) {
+                _targetBuildingComponent?.TakeDamage(Random.Range(minDamage, maxDamage));
+            }
+            _elapsedAttackTime = 0f;
+        } else {
+            _elapsedAttackTime += Time.deltaTime;
         }
     }
     
-    private void Damage(Building building) {
-        building.SetHealth(building.GetHealth() - damage);
+    private void DeactivateValues() {
+        capsuleCollider.enabled = false;
+        gameObject.tag = "ZombieDead";
+        currentSpeed = 0f;
     }
     
     private void OnDrawGizmosSelected() {
