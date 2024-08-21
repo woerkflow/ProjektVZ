@@ -2,6 +2,23 @@ using UnityEngine;
 
 public class SawBlade : Bullet {
     
+    
+    #region Unity Methods
+    
+    private void Update() {
+        timeElapsed += Time.deltaTime;
+
+        if (transform.position.y > 0.9925f) {
+            return;
+        }
+        Destroy(gameObject);
+    }
+    
+    #endregion
+    
+    
+    #region Private Class Methods
+    
     private void OnTriggerEnter(Collider coll) {
         HitCollider(coll);
     }
@@ -16,4 +33,6 @@ public class SawBlade : Bullet {
         PlayEffect(transform.rotation);
         enemy.TakeDamage(Random.Range(minDamage, maxDamage));
     }
+    
+    #endregion
 }

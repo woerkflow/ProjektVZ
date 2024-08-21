@@ -4,6 +4,9 @@ public class Flame : Bullet {
     
     [Header("Explosion")]
     public Explosive explosive;
+    
+    
+    #region Unity Methods
 
     private void Update() {
         timeElapsed += Time.deltaTime;
@@ -11,13 +14,20 @@ public class Flame : Bullet {
         if (transform.position.y > 0.9925f) {
             return;
         }
-        ExplodeAndDestroy();
+        Explode();
+        Destroy(gameObject, 0.5f);
     }
+    
+    #endregion
+    
+    
+    #region Private Class Methods
 
-    private void ExplodeAndDestroy() {
+    private void Explode() {
         PlaySound();
         PlayEffect(impactEffectPrefab.transform.rotation);
         explosive?.Explode(minDamage, maxDamage);
-        Destroy(gameObject);
     }
+    
+    #endregion
 }

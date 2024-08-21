@@ -109,8 +109,8 @@ public class Spawn : MonoBehaviour, ISpawnable {
             => !enemy
                || !enemy.gameObject.activeSelf
         );
-        _target = _targets.Count > 0 
-            ? _targets[0] 
+        _target = _targets.Count > 0
+            ? _targets[0]
             : null;
         _targetCollider = _target?.GetComponent<CapsuleCollider>();
     }
@@ -170,7 +170,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
     }
     
     private void PlaySound() {
-        fxManager.PlaySound(impactEffectClip, transform.position, 0.5f);
+        fxManager.PlaySound(
+            impactEffectClip, 
+            transform.position, 
+            0.5f
+        );
     }
     
     private void PlayEffect() {

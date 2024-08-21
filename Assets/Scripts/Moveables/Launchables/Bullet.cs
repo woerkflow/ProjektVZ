@@ -34,15 +34,6 @@ public class Bullet : MonoBehaviour, ILaunchable {
         _isPlayed = false;
         timeElapsed = 0f;
     }
-    
-    private void Update() {
-        timeElapsed += Time.deltaTime;
-
-        if (transform.position.y > 0.9925f) {
-            return;
-        }
-        Destroy(gameObject);
-    }
 
     private void OnDestroy() {
         _bulletJobManager?.Unregister(this);

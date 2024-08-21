@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: 0, y: 0, z: 0}
-  _size: {x: 200, y: 150, z: 0.01}
+  _size: {x: 150, y: 150, z: 0.01}
 --- !u!114 &6741075440362424243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6056945413333062869}
   - component: {fileID: 2125369478857210076}
   m_Layer: 0
-  m_Name: EnemyAmount
+  m_Name: EnemyAmountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,8 +129,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -42.9}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 0, y: -45}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6056945413333062869
 CanvasRenderer:
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 'Enemies: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -187,8 +187,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 48.076817, z: 0, w: -0.0008812016}
+  m_margin: {x: 0, y: 0.08421898, z: 0, w: 0.00030039952}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 9067103579215836295}
   - component: {fileID: 1494805912880016451}
   m_Layer: 0
-  m_Name: Timer
+  m_Name: RoundCountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,8 +263,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -52.199993}
-  m_SizeDelta: {x: 0, y: 25}
+  m_AnchoredPosition: {x: 0, y: -15}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9067103579215836295
 CanvasRenderer:
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00
+  m_text: 'Round: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Start Attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -455,8 +455,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -646,7 +646,7 @@ GameObject:
   - component: {fileID: 8792809728826524488}
   - component: {fileID: 5353381568131196701}
   m_Layer: 0
-  m_Name: TimerUI
+  m_Name: TimerMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -673,8 +673,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 200, y: 150}
+  m_AnchoredPosition: {x: 0, y: 0.925}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1738222677449363080
 Canvas:
@@ -789,9 +789,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userCamera: {fileID: 0}
-  roundCountText: {fileID: 0}
-  timerValueText: {fileID: 0}
-  enemyAmountText: {fileID: 0}
+  roundCountText: {fileID: 1494805912880016451}
+  timerValueText: {fileID: 2768220373240152301}
+  enemyAmountText: {fileID: 2125369478857210076}
 --- !u!1 &8319693354279151523
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +804,7 @@ GameObject:
   - component: {fileID: 8582788343011819641}
   - component: {fileID: 2768220373240152301}
   m_Layer: 0
-  m_Name: Timer
+  m_Name: TimerValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,8 +826,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -42.8}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 0, y: -75}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8582788343011819641
 CanvasRenderer:
@@ -884,15 +884,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -920,7 +920,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 52.41557}
+  m_margin: {x: 0, y: -0.11966802, z: 0, w: -0.04721929}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -40,29 +40,26 @@ public class Tile : MonoBehaviour {
     
     private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
 
-    [Header("Hover Menus")] 
-    public HoverBuildingMenu buildingMenu;
-    public HoverResourceMenu resourceMenu;
     
     #region Unity Methods
     
     private void Start() {
         InitializeManagers();
         InitializeStrategies();
-        InitializeMenus();
-        ClearResources();
         InitializeTileObject();
+        ClearResources();
         objectRotation = spawnPoint.transform.rotation;
     }
     
     public void OnMouseEnter() {
-        OpenHoverMenu();
+        menuManager.OpenHoverMenu(this);
         selectEffect.SetActive(true);
         selectEffect.transform.position = spawnPoint.transform.position;
     }
     
     public void OnMouseDown() {
         menuManager.CloseMenus();
+        menuManager.CloseHoverMenus();
         
         if (isPlayerHouse || enemySpawner.state.GetType().ToString() == "FightState") {
             return;
@@ -70,13 +67,13 @@ public class Tile : MonoBehaviour {
 
         if (type == TileObjectType.Resource) {
             PerformInteraction(TileInteractionType.Farm);
-        } else {
-            menuManager.OpenMenu(this);
+            return;
         }
+        menuManager.OpenMenu(this);
     }
     
     public void OnMouseExit() {
-        CloseHoverMenu();
+        menuManager.CloseHoverMenus();
         selectEffect.SetActive(false);
         selectEffect.transform.position = Vector3.zero;
     }
@@ -206,53 +203,16 @@ public class Tile : MonoBehaviour {
     
     private static TileObject GetRandomResource(TileObject[] randomWood, TileObject[] randomWaste)
         => Random.Range(0, 10) == 0
-            ? Random.Range(0, 6) switch {
+            ? Random.Range(0, 10) switch {
                 0 => randomWaste[0],
-                > 0 and < 3 => randomWaste[1],
+                >= 1 and <= 3 => randomWaste[1],
                 _ => randomWaste[2]
             }
-            : Random.Range(0, 6) switch {
+            : Random.Range(0, 10) switch {
                 0 => randomWood[Random.Range(0, 2)],
-                > 0 and < 3 => randomWood[Random.Range(2, 4)],
+                >= 1 and <= 3 => randomWood[Random.Range(2, 4)],
                 _ => randomWood[Random.Range(4, 6)]
             };
-
-    private void CloseHoverMenu() {
-        buildingMenu.GetComponent<UIMenu>().Deactivate();
-        buildingMenu.gameObject.transform.position = Vector3.zero;
-        resourceMenu.GetComponent<UIMenu>().Deactivate();
-        buildingMenu.gameObject.transform.position = Vector3.zero;
-    }
-
-    private void OpenHoverMenu() {
-        switch (type) {
-            case TileObjectType.Building:
-                buildingMenu.gameObject.transform.position =
-                    new Vector3(
-                        spawnPoint.transform.position.x,
-                        spawnPoint.transform.position.y + 0.05f,
-                        spawnPoint.transform.position.z
-                    );
-                buildingMenu.SetValue(this);
-                buildingMenu.GetComponent<UIMenu>().Activate();
-                break;
-            case TileObjectType.Resource:
-                resourceMenu.gameObject.transform.position = 
-                    new Vector3(
-                        spawnPoint.transform.position.x,
-                        spawnPoint.transform.position.y + 0.05f,
-                        spawnPoint.transform.position.z
-                    );
-                resourceMenu.SetValues(this);
-                resourceMenu.GetComponent<UIMenu>().Activate();
-                break;
-            case TileObjectType.Empty:
-            case TileObjectType.Ruin:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
 
     private void InitializeTileObject() {
         
@@ -260,11 +220,6 @@ public class Tile : MonoBehaviour {
             startObject = GetRandomResource(randomWood, randomWaste);
         }
         ReplaceObject(startObject);
-    }
-
-    private void InitializeMenus() {
-        buildingMenu.GetComponent<UIMenu>().Deactivate();
-        resourceMenu.GetComponent<UIMenu>().Deactivate();
     }
     
     private void InitializeStrategies() {

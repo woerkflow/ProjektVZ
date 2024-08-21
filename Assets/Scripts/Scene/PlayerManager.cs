@@ -12,9 +12,9 @@ public class PlayerManager : MonoBehaviour {
     
     private void Start() {
         resources = new Resources {
-            wood = 100,
-            waste = 100, 
-            whiskey = 100
+            wood = 0,
+            waste = 0, 
+            whiskey = 0
         };
     }
     

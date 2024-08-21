@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UITimer : UIMenu {
+public class TimerMenu : UIMenu {
     
     public TMP_Text roundCountText;
     public TMP_Text timerValueText;

@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 
 public class HoverResourceMenu : UIMenu {
 
@@ -28,4 +29,13 @@ public class HoverResourceMenu : UIMenu {
             : resources.waste > 0 
                 ? "+" + resources.waste 
                 : "+" + resources.whiskey;
+    
+    public void SetPosition(Tile tile) {
+        transform.position =
+            new Vector3(
+                tile.spawnPoint.transform.position.x,
+                tile.spawnPoint.transform.position.y + 0.05f,
+                tile.spawnPoint.transform.position.z
+            );
+    }
 }

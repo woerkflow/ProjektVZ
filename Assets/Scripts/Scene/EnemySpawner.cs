@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour {
     public List<SwarmManager> swarmManagers = new();
 
     [Header("Timer")]
-    public UITimer timer;
+    public TimerMenu timer;
 
     private bool _isActive;
 

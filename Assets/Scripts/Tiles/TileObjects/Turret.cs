@@ -93,13 +93,9 @@ public class Turret : MonoBehaviour {
                || !target.gameObject.activeSelf
                || !(Vector3.Distance(target.transform.position, transform.position) <= perceptionRange)
         );
-        
-        if (_targets.Count <= 0) {
-            _target = null;
-            return;
-        }
-        List<Enemy> injured = _targets.FindAll(target => target.currentHealth < target.maxHealth);
-        _target = injured.Count <= 0 ? _targets[0] : injured[0];
+        _target = _targets.Count > 0 
+            ? _targets[0]
+            : null;
     }
     
     private IEnumerator UpdateTargetRoutine() {
@@ -125,8 +121,8 @@ public class Turret : MonoBehaviour {
         _turretJobManager.Register(this);
     }
 
-    private bool HasValidTarget() 
-        => _target 
+    private bool HasValidTarget()
+        => _target
            && _target.gameObject.activeSelf
            && Vector3.Distance(_target.transform.position, transform.position) <= perceptionRange;
 

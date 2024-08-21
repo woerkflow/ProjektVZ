@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 
 public class HoverBuildingMenu : UIMenu {
 
@@ -11,5 +12,14 @@ public class HoverBuildingMenu : UIMenu {
         Building building = tile.tileObjectBuilding;
         label.SetText("Health:");
         value.SetText(building.currentHealth + "/" + building.maxHealth);
+    }
+
+    public void SetPosition(Tile tile) {
+        transform.position =
+            new Vector3(
+                tile.spawnPoint.transform.position.x,
+                tile.spawnPoint.transform.position.y + 0.05f,
+                tile.spawnPoint.transform.position.z
+            );
     }
 }
