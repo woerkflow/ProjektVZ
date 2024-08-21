@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -38,19 +39,24 @@ public class Tile : MonoBehaviour {
     public TileObject selectedBuilding { get; set; }
     
     private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
-    
+
+    [Header("Hover Menus")] 
+    public HoverBuildingMenu buildingMenu;
+    public HoverResourceMenu resourceMenu;
     
     #region Unity Methods
     
     private void Start() {
         InitializeManagers();
         InitializeStrategies();
-        objectRotation = spawnPoint.transform.rotation;
+        InitializeMenus();
         ClearResources();
         InitializeTileObject();
+        objectRotation = spawnPoint.transform.rotation;
     }
     
     public void OnMouseEnter() {
+        OpenHoverMenu();
         selectEffect.SetActive(true);
         selectEffect.transform.position = spawnPoint.transform.position;
     }
@@ -61,10 +67,16 @@ public class Tile : MonoBehaviour {
         if (isPlayerHouse || enemySpawner.state.GetType().ToString() == "FightState") {
             return;
         }
-        menuManager.OpenMenu(this);
+
+        if (type == TileObjectType.Resource) {
+            PerformInteraction(TileInteractionType.Farm);
+        } else {
+            menuManager.OpenMenu(this);
+        }
     }
     
     public void OnMouseExit() {
+        CloseHoverMenu();
         selectEffect.SetActive(false);
         selectEffect.transform.position = Vector3.zero;
     }
@@ -205,12 +217,54 @@ public class Tile : MonoBehaviour {
                 _ => randomWood[Random.Range(4, 6)]
             };
 
+    private void CloseHoverMenu() {
+        buildingMenu.GetComponent<UIMenu>().Deactivate();
+        buildingMenu.gameObject.transform.position = Vector3.zero;
+        resourceMenu.GetComponent<UIMenu>().Deactivate();
+        buildingMenu.gameObject.transform.position = Vector3.zero;
+    }
+
+    private void OpenHoverMenu() {
+        switch (type) {
+            case TileObjectType.Building:
+                buildingMenu.gameObject.transform.position =
+                    new Vector3(
+                        spawnPoint.transform.position.x,
+                        spawnPoint.transform.position.y + 0.05f,
+                        spawnPoint.transform.position.z
+                    );
+                buildingMenu.SetValue(this);
+                buildingMenu.GetComponent<UIMenu>().Activate();
+                break;
+            case TileObjectType.Resource:
+                resourceMenu.gameObject.transform.position = 
+                    new Vector3(
+                        spawnPoint.transform.position.x,
+                        spawnPoint.transform.position.y + 0.05f,
+                        spawnPoint.transform.position.z
+                    );
+                resourceMenu.SetValues(this);
+                resourceMenu.GetComponent<UIMenu>().Activate();
+                break;
+            case TileObjectType.Empty:
+            case TileObjectType.Ruin:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
     private void InitializeTileObject() {
         
         if (type == TileObjectType.Resource) {
             startObject = GetRandomResource(randomWood, randomWaste);
         }
         ReplaceObject(startObject);
+    }
+
+    private void InitializeMenus() {
+        buildingMenu.GetComponent<UIMenu>().Deactivate();
+        resourceMenu.GetComponent<UIMenu>().Deactivate();
     }
     
     private void InitializeStrategies() {

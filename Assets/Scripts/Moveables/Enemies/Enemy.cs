@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour {
@@ -25,15 +24,10 @@ public class Enemy : MonoBehaviour {
     public float attackSpeed;
     public int minDamage;
     public int maxDamage;
-    public int maxHealth;
     public CapsuleCollider capsuleCollider;
-    public float deadTime;
-    
-    public int currentHealth { get; private set; }
     
     private float _capsuleRadius;
     private float _elapsedAttackTime;
-    private float _elapsedDeadTime;
 
     [Header("Animation")] 
     public Animator animator;
@@ -42,10 +36,20 @@ public class Enemy : MonoBehaviour {
     public string dieParameter;
     
     private SwarmManager _swarmManager;
-    private PlayerManager _playerManager;
     private EnemyPoolManager _enemyPoolManager;
+
+    [Header("Death")]
+    public int maxHealth;
+    public float deadTime;
+    public int lootAmount;
+    public Loot[] loots = new Loot[3];
     
-    #region Unity Methoden
+    public int currentHealth { get; private set; }
+    
+    private float _elapsedDeadTime;
+    
+    
+    #region Unity Methods
     
     private void Start() {
         InitializeManagers();
@@ -78,7 +82,6 @@ public class Enemy : MonoBehaviour {
     #region Initialization
 
     private void InitializeManagers() {
-        _playerManager = FindObjectOfType<PlayerManager>();
         _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
         _spawnJobManager = FindObjectOfType<SpawnJobManager>();
         
@@ -99,9 +102,9 @@ public class Enemy : MonoBehaviour {
         
         if (_enemyPoolManager) {
             _enemyPoolManager.ReturnEnemyToPool(this);
-        } else {
-            Destroy(gameObject);
+            return;
         }
+        Destroy(gameObject);
     }
     
     #endregion
@@ -147,13 +150,16 @@ public class Enemy : MonoBehaviour {
         
         if (_elapsedDeadTime < deadTime) {
             _elapsedDeadTime += Time.deltaTime;
-        } else {
-            _playerManager.AddResources( 
-                new Resources {
-                    whiskey = 1    
-                }
-            );
-            DestroyEnemy();
+            return;
+        }
+        DropLoot();
+        DestroyEnemy();
+    }
+
+    private void DropLoot() {
+
+        for (int i = 0; i < lootAmount; i++) {
+            Instantiate(loots[Random.Range(0, loots.Length)], transform.position, transform.rotation);
         }
     }
 
@@ -171,9 +177,9 @@ public class Enemy : MonoBehaviour {
         if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
             animator.SetFloat(walkParameter, 1f, 0.1f, Time.deltaTime);
             currentSpeed = speed;
-        } else {
-            currentSpeed = 0f;
+            return;
         }
+        currentSpeed = 0f;
     }
 
     private bool IsWithinAttackRange() 
@@ -189,9 +195,9 @@ public class Enemy : MonoBehaviour {
                 _targetBuildingComponent?.TakeDamage(Random.Range(minDamage, maxDamage));
             }
             _elapsedAttackTime = 0f;
-        } else {
-            _elapsedAttackTime += Time.deltaTime;
+            return;
         }
+        _elapsedAttackTime += Time.deltaTime;
     }
     
     private void DeactivateValues() {
