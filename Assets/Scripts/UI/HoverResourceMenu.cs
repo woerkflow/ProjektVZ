@@ -10,10 +10,10 @@ public class HoverResourceMenu : UIMenu {
 
     public void SetValues(Tile tile) {
         Resources tileObjectResources = tile.tileObject.blueprint.resources;
-        labels[0].SetText(GetLabelText(tileObjectResources));
-        labels[1].SetText("Time:");
-        values[0].SetText(GetValueText(tileObjectResources));
-        values[1].SetText("-" + tile.tileObject.blueprint.timeCosts + "s");
+        SetStringValue(labels[0], GetLabelText(tileObjectResources));
+        SetStringValue(labels[1], "Time:");
+        SetStringValue(values[0], GetValueText(tileObjectResources));
+        SetStringValue(values[1], "-" + tile.tileObject.blueprint.timeCosts + "s");
     }
 
     private static string GetLabelText(Resources resources) 

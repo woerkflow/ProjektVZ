@@ -15,7 +15,7 @@ public class BuildMenu : UIMenu {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
-        Resources playerResources = _selectedTile.GetPlayerResources();
+        Resources playerResources = _selectedTile.playerManager.GetResources();
         SetIntValue(resourceWoodText, playerResources.wood);
         SetIntValue(resourceWasteText, playerResources.waste);
         SetIntValue(resourceWhiskeyText, playerResources.whiskey);
@@ -26,16 +26,12 @@ public class BuildMenu : UIMenu {
     
     #region Button Methods
     
-    public void Select(TileObject buildingToBuild) {
+    public void Build(TileObject buildingToBuild) {
         _selectedTile.OnSelect(buildingToBuild);
-    }
-    
-    public void Build() {
         
         if (!_selectedTile.PerformInteraction(TileInteractionType.Build)) {
             return;
         }
-        Select(null);
         Close();
     }
 

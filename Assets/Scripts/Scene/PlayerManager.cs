@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour {
     private void Start() {
         resources = new Resources {
             wood = 0,
-            waste = 0, 
+            waste = 0,
             whiskey = 0
         };
     }
@@ -21,7 +21,9 @@ public class PlayerManager : MonoBehaviour {
     #endregion
     
     
-    #region Public Methods
+    #region Resources Management Methods
+
+    public Resources GetResources() => resources;
     
     public void AddResources(Resources resourcesToAdd) {
         resources = new Resources {
@@ -44,14 +46,11 @@ public class PlayerManager : MonoBehaviour {
                resources.waste >= requiredResources.waste &&
                resources.whiskey >= requiredResources.whiskey;
     }
-
-    public void ClearResources() {
-        resources = new Resources {
-            wood = 0,
-            waste = 0,
-            whiskey = 0
-        };
-    }
+    
+    #endregion
+    
+    
+    #region Buildings Management Methods
     
     public List<Building> GetBuildings() => _buildings;
     

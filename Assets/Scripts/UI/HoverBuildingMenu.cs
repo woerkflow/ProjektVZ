@@ -10,8 +10,8 @@ public class HoverBuildingMenu : UIMenu {
 
     public void SetValue(Tile tile) {
         Building building = tile.tileObjectBuilding;
-        label.SetText("Health:");
-        value.SetText(building.currentHealth + "/" + building.maxHealth);
+        SetStringValue(label, "Health:");
+        SetStringValue(value,building.currentHealth + "/" + building.maxHealth);
     }
 
     public void SetPosition(Tile tile) {

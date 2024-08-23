@@ -10,37 +10,23 @@ public class TimerMenu : UIMenu {
     
     #region Public class methods
     
-    public void ActivateTimerMenu(Transform currentSpawnPoint, int currentRoundCount, int currentEnemyAmount) {
-        SetTimerPosition(
-            new Vector3(
-                currentSpawnPoint.position.x, 
-                transform.position.y, 
-                currentSpawnPoint.position.z
-            )
-        );
+    public void SetValues(int currentRoundCount, int currentEnemyAmount, float timerValue) {
         SetStringValue(roundCountText, "Round: " + currentRoundCount);
         SetStringValue(enemyAmountText, "Enemies: " + currentEnemyAmount);
-        gameObject.SetActive(true);
-    }
-
-    public void RefreshTimer(float timerValue) {
         SetStringValue(timerValueText, System.TimeSpan.FromSeconds(timerValue).ToString("mm':'ss"));
     }
-    
-    public void DeactivateTimer() {
-        SetTimerPosition(
-            new Vector3(0f, transform.position.y, 0f)
-        );
-        gameObject.SetActive(false);
-    }
-    
-    #endregion
-    
-    
-    #region Private Methods
 
-    private void SetTimerPosition(Vector3 newPosition) {
-        transform.position = newPosition;
+    public void Refresh(float timerValue) {
+        SetStringValue(timerValueText, System.TimeSpan.FromSeconds(timerValue).ToString("mm':'ss"));
+    }
+
+    public void SetPosition(Transform currentSpawnPoint) {
+        transform.position =
+            new Vector3(
+                currentSpawnPoint.position.x,
+                transform.position.y,
+                currentSpawnPoint.position.z
+            );
     }
     
     #endregion

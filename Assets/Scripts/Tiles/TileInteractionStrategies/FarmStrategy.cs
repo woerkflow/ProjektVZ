@@ -1,15 +1,13 @@
 public class FarmStrategy : ITileInteractionStrategy {
-    
-    public bool CanInteract(Tile tile)   
+
+    public bool CanInteract(Tile tile)
         => tile.enemySpawner.state.GetType().ToString() == "BuildState"
-           && tile.enemySpawner.buildCountDown >= tile.tileObject.blueprint.timeCosts 
-           && tile.HasResources(tile.tileObject.blueprint.resources);
+           && tile.enemySpawner.buildCountDown >= tile.tileObject.blueprint.timeCosts;
     
     public void Interact(Tile tile) {
         
         // Manage Resources
-        tile.playerManager.AddResources(tile.resources);
-        tile.ClearResources();
+        tile.playerManager.AddResources(tile.tileObject.blueprint.resources);
         
         // Manage Timer
         tile.enemySpawner.SetTimer(tile.enemySpawner.buildCountDown - tile.tileObject.blueprint.timeCosts);
