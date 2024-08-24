@@ -1,10 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-public class UpgradeMenu : MonoBehaviour {
+public class UpgradeMenu : UIMenu {
     
     [Header("Menu")]
-    public UIMenu upgradeMenu;
     public TMP_Text buildingHealth;
 
     private Tile _selectedTile;
@@ -14,7 +13,7 @@ public class UpgradeMenu : MonoBehaviour {
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
         Building tileObjectBuilding = _selectedTile.tileObjectBuilding;
-        UIMenu.SetStringValue(buildingHealth, tileObjectBuilding.GetHealth() + "/" + tileObjectBuilding.maxHealth);
+        SetStringValue(buildingHealth, tileObjectBuilding.GetHealth() + "/" + tileObjectBuilding.maxHealth);
     }
     
     #endregion
@@ -35,7 +34,7 @@ public class UpgradeMenu : MonoBehaviour {
     }
     
     public void Close() {
-        upgradeMenu.Deactivate();
+        Deactivate();
         _selectedTile = null;
     }
     

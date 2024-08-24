@@ -4,17 +4,17 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour {
 
     [Header("Menus")] 
-    public UIMenu buildMenu;
-    public UIMenu farmMenu;
-    public UIMenu upgradeMenu;
-
-    private UIMenu _currentMenu;
+    public BuildMenu buildMenu;
+    public UpgradeMenu upgradeMenu;
+    public HoverBuildingMenu buildingMenu;
+    public HoverResourceMenu resourceMenu;
     
     
     #region Unity Methods
 
     private void Start() {
         CloseMenus();
+        CloseHoverMenus();
     }
     
     #endregion
@@ -22,26 +22,44 @@ public class MenuManager : MonoBehaviour {
     
     #region Public Methods
 
-    public void OpenMenu(Tile tile) {
-        _currentMenu = GetCurrentMenu(tile.type);
+    public void OpenHoverMenu(Tile tile) {
         
         switch (tile.type) {
-            case TileObjectType.Ruin:
-                _currentMenu.GetComponent<BuildMenu>().SelectTile(tile);
-                break;
-            case TileObjectType.Empty:
-                _currentMenu.GetComponent<BuildMenu>().SelectTile(tile);
+            case TileObjectType.Building:
+                buildingMenu.SetPosition(tile);
+                buildingMenu.SetValue(tile);
+                buildingMenu.Activate();
                 break;
             case TileObjectType.Resource:
-                _currentMenu.GetComponent<FarmMenu>().SelectTile(tile);
+                resourceMenu.SetPosition(tile);
+                resourceMenu.SetValues(tile);
+                resourceMenu.Activate();
                 break;
-            case TileObjectType.Building:
-                _currentMenu.GetComponent<UpgradeMenu>().SelectTile(tile);
+            case TileObjectType.Empty:
+            case TileObjectType.Ruin:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        _currentMenu.Activate();
+    }
+
+    public void OpenMenu(Tile tile) {
+        
+        switch (tile.type) {
+            case TileObjectType.Ruin:
+            case TileObjectType.Empty:
+                buildMenu.SelectTile(tile);
+                buildMenu.Activate();
+                break;
+            case TileObjectType.Building:
+                upgradeMenu.SelectTile(tile);
+                upgradeMenu.Activate();
+                break;
+            case TileObjectType.Resource:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
     
     public void CloseMenus() {
@@ -50,28 +68,21 @@ public class MenuManager : MonoBehaviour {
             buildMenu.Deactivate();
         }
         
-        if (farmMenu.IsActive()) {
-            farmMenu.Deactivate();
-        }
-        
         if (upgradeMenu.IsActive()) {
             upgradeMenu.Deactivate();
         }
     }
-    
-    #endregion
-    
-    
-    #region Private Methods
 
-    private UIMenu GetCurrentMenu(TileObjectType type) 
-        => type switch {
-            TileObjectType.Ruin => buildMenu,
-            TileObjectType.Building  => upgradeMenu,
-            TileObjectType.Empty => buildMenu,
-            TileObjectType.Resource => farmMenu,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-        };
+    public void CloseHoverMenus() {
+        
+        if (buildingMenu.IsActive()) {
+            buildingMenu.Deactivate();
+        }
+
+        if (resourceMenu.IsActive()) {
+            resourceMenu.Deactivate();
+        }
+    }
     
     #endregion
 }

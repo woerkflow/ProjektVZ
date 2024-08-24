@@ -816,7 +816,6 @@ GameObject:
   - component: {fileID: 7886986299798824360}
   - component: {fileID: 6755102342421308981}
   - component: {fileID: 1834248093569037455}
-  - component: {fileID: 1550401588202152268}
   - component: {fileID: 3846245964896902194}
   m_Layer: 0
   m_Name: UpgradeMenu
@@ -950,19 +949,6 @@ MonoBehaviour:
   _selectSurface: {fileID: 0}
   _movementProvider: {fileID: 0}
   _tiebreakerScore: 0
---- !u!114 &1550401588202152268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4715845515495255561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8500a03476431b8459757094ec796996, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  userCamera: {fileID: 0}
 --- !u!114 &3846245964896902194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,7 +961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcdca70ce6b6d9a40b563b54c74df8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeMenu: {fileID: 0}
+  userCamera: {fileID: 0}
   buildingHealth: {fileID: 0}
 --- !u!1 &5129805632462089248
 GameObject:

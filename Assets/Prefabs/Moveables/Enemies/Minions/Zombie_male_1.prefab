@@ -130,13 +130,16 @@ MonoBehaviour:
   attackSpeed: 3
   minDamage: 1
   maxDamage: 10
-  maxHealth: 50
   capsuleCollider: {fileID: 9195502220633551029}
-  deadTime: 2
   animator: {fileID: 655512576011483835}
   walkParameter: walk
   attackParameter: attack
   dieParameter: die
+  maxHealth: 50
+  deadTime: 2
+  lootAmount: 1
+  loots:
+  - {fileID: 3890099266257450164, guid: 528521f4cc36ab7429369cabf0a155ed, type: 3}
 --- !u!1001 &8484691464882957173
 PrefabInstance:
   m_ObjectHideFlags: 0

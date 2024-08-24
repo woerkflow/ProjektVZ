@@ -10,7 +10,6 @@ public class BuildStrategy : ITileInteractionStrategy {
         // Manage Resources
         Resources buildCosts = tile.selectedBuilding.blueprint.resources;
         tile.playerManager.SubtractResources(buildCosts);
-        tile.AddResources(buildCosts);
         
         // Manage Effects & Sounds
         tile.PlayEffect(tile.replaceEffect);

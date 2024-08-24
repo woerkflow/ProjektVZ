@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour {
     public List<SwarmManager> swarmManagers = new();
 
     [Header("Timer")]
-    public UITimer timer;
+    public TimerMenu timer;
 
     private bool _isActive;
 
@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour {
     private void Update() {
         
         if (!_isActive) {
-            timer.RefreshTimer(buildCountDown);
+            timer.Refresh(buildCountDown);
             return;
         }
         state.UpdateState(this);
@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour {
 
     public void SetTimer(float newTime) {
         buildCountDown = newTime;
-        timer.RefreshTimer(buildCountDown);
+        timer.Refresh(buildCountDown);
     }
 
     public void SetActive(bool value) {
@@ -94,7 +94,10 @@ public class EnemySpawner : MonoBehaviour {
         _enemyPoolManager.CreateEnemyWave(_currentRoundCount, maxWaveAmount, _roundEnemyAmount);
         _enemyPoolManager.bossSpawned = false;
         
-        timer.ActivateTimerMenu(_currentSpawnPoints[1].transform, _currentRoundCount, _roundEnemyAmount);
+        timer.SetPosition(_currentSpawnPoints[1].transform);
+        timer.SetValues(_currentRoundCount, _roundEnemyAmount, buildCountDown);
+        timer.Activate();
+        
         SetActive(false);
         state = new BuildState();
     }
@@ -109,9 +112,9 @@ public class EnemySpawner : MonoBehaviour {
         if (buildCountDown > 0f) {
             buildCountDown -= Time.deltaTime;
             buildCountDown = Mathf.Clamp(buildCountDown, 0f, Mathf.Infinity);
-            timer.RefreshTimer(buildCountDown);
+            timer.Refresh(buildCountDown);
         } else {
-            timer.DeactivateTimer();
+            timer.Deactivate();
             PlayFightStartSound();
             state = new FightState();
         }

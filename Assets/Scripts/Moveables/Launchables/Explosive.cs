@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Explosive : MonoBehaviour {
 
-    [Header("Explosion")] 
-    public string enemyTag;
+    [Header("Explosion")]
     public float radius;
     public int maxTargets;
 
@@ -22,15 +21,11 @@ public class Explosive : MonoBehaviour {
     #region Public class methods
     
     public void Explode(int minDamage, int maxDamage) {
-        int enemyCount = Physics.OverlapSphereNonAlloc(transform.position, radius, _hitColliders);
+        int collAmount = Physics.OverlapSphereNonAlloc(transform.position, radius, _hitColliders);
         
-        for (int i = 0; i < enemyCount; i++) {
-            Collider coll = _hitColliders[i];
-            
-            if (!coll.CompareTag(enemyTag)) {
-                return;
-            }
-            coll.GetComponent<Enemy>().TakeDamage(Random.Range(minDamage, maxDamage));
+        for (int i = 0; i < collAmount; i++) {
+            Enemy enemy = _hitColliders[i]?.GetComponent<Enemy>();
+            enemy?.TakeDamage(Random.Range(minDamage, maxDamage));
         }
     }
 

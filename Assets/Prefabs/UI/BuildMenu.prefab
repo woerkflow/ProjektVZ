@@ -1274,7 +1274,6 @@ GameObject:
   - component: {fileID: 2248454914774135452}
   - component: {fileID: 4287690206966203818}
   - component: {fileID: 1351431105495252152}
-  - component: {fileID: 1852416850369119430}
   - component: {fileID: 2053488907424668405}
   m_Layer: 0
   m_Name: BuildMenu
@@ -1409,19 +1408,6 @@ MonoBehaviour:
   _selectSurface: {fileID: 0}
   _movementProvider: {fileID: 0}
   _tiebreakerScore: 0
---- !u!114 &1852416850369119430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702431183386065355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8500a03476431b8459757094ec796996, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  userCamera: {fileID: 0}
 --- !u!114 &2053488907424668405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,7 +1420,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041a0ab40c2b8854cb99acafa565d6e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userCamera: {fileID: 0}
   buildMenu: {fileID: 0}
+  resourceWoodText: {fileID: 0}
+  resourceWasteText: {fileID: 0}
+  resourceWhiskeyText: {fileID: 0}
 --- !u!1 &2889726557916005104
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,6 @@ public class Tile : MonoBehaviour {
     public GameObject selectEffect;
     public bool isPlayerHouse;
     
-    public Resources resources { get; set; }
     public EnemySpawner enemySpawner { get; set; }
     public PlayerManager playerManager { get; set; }
     public MenuManager menuManager { get; set; }
@@ -31,40 +30,47 @@ public class Tile : MonoBehaviour {
     public TileObject startObject;
     public TileObject[] randomWood;
     public TileObject[] randomWaste;
+    public TileObject tileObject;
+    public Building tileObjectBuilding;
     
-    public TileObject tileObject { get; set; }
-    public Building tileObjectBuilding { get; set; }
     public Quaternion objectRotation { get; set; }
     public TileObject selectedBuilding { get; set; }
     
     private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
-    
+
     
     #region Unity Methods
     
     private void Start() {
         InitializeManagers();
         InitializeStrategies();
-        objectRotation = spawnPoint.transform.rotation;
-        ClearResources();
         InitializeTileObject();
+        objectRotation = spawnPoint.transform.rotation;
     }
     
     public void OnMouseEnter() {
+        menuManager.OpenHoverMenu(this);
         selectEffect.SetActive(true);
         selectEffect.transform.position = spawnPoint.transform.position;
     }
     
     public void OnMouseDown() {
         menuManager.CloseMenus();
+        menuManager.CloseHoverMenus();
         
         if (isPlayerHouse || enemySpawner.state.GetType().ToString() == "FightState") {
+            return;
+        }
+
+        if (type == TileObjectType.Resource) {
+            PerformInteraction(TileInteractionType.Farm);
             return;
         }
         menuManager.OpenMenu(this);
     }
     
     public void OnMouseExit() {
+        menuManager.CloseHoverMenus();
         selectEffect.SetActive(false);
         selectEffect.transform.position = Vector3.zero;
     }
@@ -119,10 +125,14 @@ public class Tile : MonoBehaviour {
     }
 
     public static void DestroyTileObject(TileObject tileObject) {
-        Destroy(tileObject.gameObject);
+        Destroy(tileObject.gameObject, 0.1f);
     }
 
     public void DestroyObject() {
+        
+        if (isPlayerHouse) {
+            PlayerManager.LoadMainMenu();
+        }
         TileObject ruin = tileObject.blueprint.ruin?.GetComponent<TileObject>();
         objectRotation = tileObject.transform.rotation;
         
@@ -155,35 +165,12 @@ public class Tile : MonoBehaviour {
     
     #region Resource Management Methods
     
-    public Resources GetPlayerResources() => playerManager.resources;
-    
     public static Resources GetRepairCosts(TileObject tileObject, Building building) {
         float costFactor = 1 - building.currentHealth / building.maxHealth;
         return new Resources {
             wood = (int) Mathf.Floor(tileObject.blueprint.resources.wood * costFactor),
             waste = (int) Mathf.Floor(tileObject.blueprint.resources.waste * costFactor),
             whiskey = (int) Mathf.Floor(tileObject.blueprint.resources.whiskey * costFactor)
-        };
-    }
-    
-    public void AddResources(Resources resourcesToAdd) {
-        resources = new Resources {
-            wood = resources.wood + resourcesToAdd.wood,
-            waste = resources. waste + resourcesToAdd.waste,
-            whiskey = resources.whiskey + resourcesToAdd.whiskey
-        };
-    }
-    
-    public bool HasResources(Resources requiredResources)
-        => resources.wood >= requiredResources.wood &&
-           resources.waste >= requiredResources.waste &&
-           resources.whiskey >= requiredResources.whiskey;
-    
-    public void ClearResources() {
-        resources = new Resources {
-            wood = 0,
-            waste = 0,
-            whiskey = 0
         };
     }
     
@@ -194,18 +181,22 @@ public class Tile : MonoBehaviour {
     
     private static TileObject GetRandomResource(TileObject[] randomWood, TileObject[] randomWaste)
         => Random.Range(0, 10) == 0
-            ? Random.Range(0, 6) switch {
+            ? Random.Range(0, 10) switch {
                 0 => randomWaste[0],
-                > 0 and < 3 => randomWaste[1],
+                >= 1 and <= 3 => randomWaste[1],
                 _ => randomWaste[2]
             }
-            : Random.Range(0, 6) switch {
+            : Random.Range(0, 10) switch {
                 0 => randomWood[Random.Range(0, 2)],
-                > 0 and < 3 => randomWood[Random.Range(2, 4)],
+                >= 1 and <= 3 => randomWood[Random.Range(2, 4)],
                 _ => randomWood[Random.Range(4, 6)]
             };
 
     private void InitializeTileObject() {
+
+        if (isPlayerHouse) {
+            return;
+        }
         
         if (type == TileObjectType.Resource) {
             startObject = GetRandomResource(randomWood, randomWaste);

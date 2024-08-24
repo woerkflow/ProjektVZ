@@ -76,7 +76,11 @@ public class Mine : MonoBehaviour, ISpawnable {
     }
     
     private void PlaySound() {
-        fxManager.PlaySound(impactEffectClip, transform.position, 0.5f);
+        fxManager.PlaySound(
+            impactEffectClip, 
+            transform.position, 
+            0.5f
+        );
     }
     
     private void PlayEffect() {

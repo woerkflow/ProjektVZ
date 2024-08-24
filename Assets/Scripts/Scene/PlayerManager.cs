@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour {
     
@@ -12,16 +13,18 @@ public class PlayerManager : MonoBehaviour {
     
     private void Start() {
         resources = new Resources {
-            wood = 100,
-            waste = 100, 
-            whiskey = 100
+            wood = 0,
+            waste = 0,
+            whiskey = 0
         };
     }
     
     #endregion
     
     
-    #region Public Methods
+    #region Resources Management Methods
+
+    public Resources GetResources() => resources;
     
     public void AddResources(Resources resourcesToAdd) {
         resources = new Resources {
@@ -44,14 +47,11 @@ public class PlayerManager : MonoBehaviour {
                resources.waste >= requiredResources.waste &&
                resources.whiskey >= requiredResources.whiskey;
     }
-
-    public void ClearResources() {
-        resources = new Resources {
-            wood = 0,
-            waste = 0,
-            whiskey = 0
-        };
-    }
+    
+    #endregion
+    
+    
+    #region Buildings Management Methods
     
     public List<Building> GetBuildings() => _buildings;
     
@@ -61,6 +61,15 @@ public class PlayerManager : MonoBehaviour {
     
     public void RemoveBuilding(Building building) {
         _buildings.Remove(building);
+    }
+    
+    #endregion
+    
+    
+    #region Scene Management
+
+    public static void LoadMainMenu() {
+        SceneManager.LoadScene(0);
     }
     
     #endregion

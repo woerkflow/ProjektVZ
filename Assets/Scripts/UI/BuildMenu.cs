@@ -1,10 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-public class BuildMenu : MonoBehaviour {
+public class BuildMenu : UIMenu {
     
     [Header("Menu")]
-    public UIMenu buildMenu;
     public TMP_Text resourceWoodText;
     public TMP_Text resourceWasteText;
     public TMP_Text resourceWhiskeyText;
@@ -16,10 +15,10 @@ public class BuildMenu : MonoBehaviour {
     
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
-        Resources playerResources = _selectedTile.GetPlayerResources();
-        UIMenu.SetIntValue(resourceWoodText, playerResources.wood);
-        UIMenu.SetIntValue(resourceWasteText, playerResources.waste);
-        UIMenu.SetIntValue(resourceWhiskeyText, playerResources.whiskey);
+        Resources playerResources = _selectedTile.playerManager.GetResources();
+        SetIntValue(resourceWoodText, playerResources.wood);
+        SetIntValue(resourceWasteText, playerResources.waste);
+        SetIntValue(resourceWhiskeyText, playerResources.whiskey);
     }
     
     #endregion
@@ -27,16 +26,12 @@ public class BuildMenu : MonoBehaviour {
     
     #region Button Methods
     
-    public void Select(TileObject buildingToBuild) {
+    public void Build(TileObject buildingToBuild) {
         _selectedTile.OnSelect(buildingToBuild);
-    }
-    
-    public void Build() {
         
         if (!_selectedTile.PerformInteraction(TileInteractionType.Build)) {
             return;
         }
-        Select(null);
         Close();
     }
 
@@ -45,7 +40,7 @@ public class BuildMenu : MonoBehaviour {
     }
 
     public void Close() {
-        buildMenu.Deactivate();
+        Deactivate();
         _selectedTile = null;
     }
     
