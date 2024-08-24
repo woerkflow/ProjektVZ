@@ -129,6 +129,10 @@ public class Tile : MonoBehaviour {
     }
 
     public void DestroyObject() {
+        
+        if (isPlayerHouse) {
+            PlayerManager.LoadMainMenu();
+        }
         TileObject ruin = tileObject.blueprint.ruin?.GetComponent<TileObject>();
         objectRotation = tileObject.transform.rotation;
         
@@ -189,6 +193,10 @@ public class Tile : MonoBehaviour {
             };
 
     private void InitializeTileObject() {
+
+        if (isPlayerHouse) {
+            return;
+        }
         
         if (type == TileObjectType.Resource) {
             startObject = GetRandomResource(randomWood, randomWaste);

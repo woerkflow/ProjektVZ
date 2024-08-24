@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour {
     
@@ -60,6 +61,15 @@ public class PlayerManager : MonoBehaviour {
     
     public void RemoveBuilding(Building building) {
         _buildings.Remove(building);
+    }
+    
+    #endregion
+    
+    
+    #region Scene Management
+
+    public static void LoadMainMenu() {
+        SceneManager.LoadScene(0);
     }
     
     #endregion
