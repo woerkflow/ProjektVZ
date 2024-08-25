@@ -11,7 +11,7 @@ public class Flame : Bullet {
     private void Update() {
         timeElapsed += Time.deltaTime;
 
-        if (transform.position.y > 0.7989f) {
+        if (transform.position.y > 0.79883f) {
             return;
         }
         Explode();

@@ -6363,6 +6363,12 @@ PrefabInstance:
       objectReference: {fileID: 1848722109}
     - target: {fileID: 6692760683272639923, guid: 4f189875e5332f04bbcd19b8b343a3c1,
         type: 3}
+      propertyPath: startObject
+      value: 
+      objectReference: {fileID: 6268160045691897632, guid: bfef0f181fc1459419a54bef2e6b5d5a,
+        type: 3}
+    - target: {fileID: 6692760683272639923, guid: 4f189875e5332f04bbcd19b8b343a3c1,
+        type: 3}
       propertyPath: selectEffect
       value: 
       objectReference: {fileID: 1848722109}
