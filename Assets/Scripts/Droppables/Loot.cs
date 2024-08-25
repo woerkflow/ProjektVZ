@@ -13,7 +13,7 @@ public class Loot : MonoBehaviour {
         playerManager = FindObjectOfType<PlayerManager>();
     }
     
-    public void OnMouseEnter() {
+    public void OnRayEnter() {
         playerManager.AddResources(resources);
         Destroy(gameObject);
     }

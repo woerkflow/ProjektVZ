@@ -183,8 +183,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731536661643962171}
-        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
-        m_MethodName: OnMouseEnter
+        m_TargetAssemblyTypeName: Tile, Scripts
+        m_MethodName: OnRayEnter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -198,8 +198,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731536661643962171}
-        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
-        m_MethodName: OnMouseExit
+        m_TargetAssemblyTypeName: Tile, Scripts
+        m_MethodName: OnRayExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -213,8 +213,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731536661643962171}
-        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
-        m_MethodName: OnMouseDown
+        m_TargetAssemblyTypeName: Tile, Scripts
+        m_MethodName: OnRayDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -275,6 +275,8 @@ MonoBehaviour:
   - {fileID: 6932898813621344442, guid: ab9e919db06ae8345bb461071edb5b1e, type: 3}
   - {fileID: 6932898813621344442, guid: c0f784e13f2901d419ea47223c8b349e, type: 3}
   - {fileID: 3682119577708779589, guid: c305260b6b63733489cb7a0a48827113, type: 3}
+  tileObject: {fileID: 0}
+  tileObjectBuilding: {fileID: 0}
 --- !u!1001 &7136648570455266512
 PrefabInstance:
   m_ObjectHideFlags: 0

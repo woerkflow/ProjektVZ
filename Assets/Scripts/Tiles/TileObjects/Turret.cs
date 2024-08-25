@@ -32,7 +32,6 @@ public class Turret : MonoBehaviour {
 
     private void Start() {
         _triggerCollider = gameObject.AddComponent<SphereCollider>();
-        _triggerCollider.isTrigger = true;
         _triggerCollider.radius = perceptionRange;
         
         _isDestroyed = false;
@@ -91,7 +90,6 @@ public class Turret : MonoBehaviour {
         _targets.RemoveAll(target 
             => !target
                || !target.gameObject.activeSelf
-               || !(Vector3.Distance(target.transform.position, transform.position) <= perceptionRange)
         );
         _target = _targets.Count > 0 
             ? _targets[0]

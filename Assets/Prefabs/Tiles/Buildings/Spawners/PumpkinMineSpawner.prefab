@@ -321,7 +321,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -351,6 +351,7 @@ MonoBehaviour:
       waste: 0
       whiskey: 25
     buildingUpgradePrefab: {fileID: 0}
+  parentTile: {fileID: 0}
 --- !u!114 &4930080924524937751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,8 +376,8 @@ MonoBehaviour:
   - {fileID: 4373978704068919787}
   - {fileID: 4105512738532954488}
   spawnTime: 10
-  minSize: 0.5
-  maxSize: 1
+  minSize: 0.7
+  maxSize: 1.2
 --- !u!114 &6437918804375826412
 MonoBehaviour:
   m_ObjectHideFlags: 0

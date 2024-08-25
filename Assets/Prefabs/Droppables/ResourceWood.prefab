@@ -76,7 +76,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3890099266257450164}
         m_TargetAssemblyTypeName: Loot, Scripts
-        m_MethodName: OnMouseEnter
+        m_MethodName: OnRayEnter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

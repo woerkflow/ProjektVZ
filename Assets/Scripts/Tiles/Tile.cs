@@ -48,13 +48,18 @@ public class Tile : MonoBehaviour {
         objectRotation = spawnPoint.transform.rotation;
     }
     
-    public void OnMouseEnter() {
+    #endregion
+
+
+    #region Tile Interaction Methods
+    
+    public void OnRayEnter() {
         menuManager.OpenHoverMenu(this);
         selectEffect.SetActive(true);
         selectEffect.transform.position = spawnPoint.transform.position;
     }
     
-    public void OnMouseDown() {
+    public void OnRayDown() {
         menuManager.CloseMenus();
         menuManager.CloseHoverMenus();
         
@@ -69,7 +74,7 @@ public class Tile : MonoBehaviour {
         menuManager.OpenMenu(this);
     }
     
-    public void OnMouseExit() {
+    public void OnRayExit() {
         menuManager.CloseHoverMenus();
         selectEffect.SetActive(false);
         selectEffect.transform.position = Vector3.zero;
