@@ -46,7 +46,7 @@ public struct ParabolicMoveAndRotationJobFor : IJobFor {
         float3 end = Ends[index];
         float travelTime = TravelTime[index];
         float timeElapsed = TimesElapsed[index];
-        float gravity = 0.0764f;
+        float gravity = 0.08f;
         
         float3 displacement = end - start;
         float3 initialVelocity = new float3(

@@ -67,9 +67,10 @@ public class Enemy : MonoBehaviour {
         UpdateTarget();
         MoveTowardsTarget();
 
-        if (IsWithinAttackRange()) {
-            HandleAttack();
+        if (!IsWithinAttackRange()) {
+            return;
         }
+        HandleAttack();
     }
 
     private void OnDestroy() {

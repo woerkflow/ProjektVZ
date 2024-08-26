@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
             target.transform.position.y + impactHeight,
             target.transform.position.z
         );
-        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.03f);
+        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.08f);
     }
 
     #endregion
