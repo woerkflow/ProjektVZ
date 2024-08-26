@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class AmbientSoundPlayer : MonoBehaviour {
     
-    public AudioClip[] ambientClips;
-    public float minDelay = 10f;
-    public float maxDelay = 60f;
-    public AudioSource audioSource;
+    [SerializeField] private AudioClip[] ambientClips;
+    [SerializeField] private float minDelay = 10f;
+    [SerializeField] private float maxDelay = 60f;
+    [SerializeField] private AudioSource audioSource;
     
     private float _nextPlayTime;
 

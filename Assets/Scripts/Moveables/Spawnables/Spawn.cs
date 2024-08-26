@@ -6,8 +6,8 @@ using UnityEngine;
 public class Spawn : MonoBehaviour, ISpawnable {
     
     [Header("Spawn")] 
-    public SpawnType type;
-    public float perceptionRange;
+    [SerializeField] private SpawnType type;
+    [SerializeField] private float perceptionRange;
     
     private readonly List<GameObject> _targets = new();
     private SphereCollider _triggerCollider;
@@ -17,22 +17,21 @@ public class Spawn : MonoBehaviour, ISpawnable {
     private bool _isDead;
     
     [Header("Movement")] 
-    public float speed;
+    [SerializeField] private float speed;
     
     public Vector3 moveTarget { get; private set; }
     
     private SpawnJobManager _spawnJobManager;
     
     [Header("Explosion")]
-    public CapsuleCollider capsuleCollider;
-    public int minDamage;
-    public int maxDamage;
-    public GameObject impactEffectPrefab;
-    public AudioClip impactEffectClip;
-    public Explosive explosive;
+    [SerializeField] private CapsuleCollider capsuleCollider;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
+    [SerializeField] private GameObject impactEffectPrefab;
+    [SerializeField] private AudioClip impactEffectClip;
+    [SerializeField] private Explosive explosive;
 
-    public FXManager fxManager { get; set; }
-
+    private FXManager _fxManager;
     private Coroutine _behaviourCoroutine;
     
     
@@ -109,9 +108,27 @@ public class Spawn : MonoBehaviour, ISpawnable {
             => !enemy
                || !enemy.gameObject.activeSelf
         );
-        _target = _targets.Count > 0
-            ? _targets[0]
-            : null;
+        
+        if (_targets.Count <= 0) {
+            return;
+        }
+        GameObject nearestTarget = null;
+        float lowestDistance = perceptionRange;
+        
+        for (int i = 0; i < _targets.Count; i++) {
+            GameObject target = _targets[i];
+            float distance = Moveable.GetDistance(
+                target.transform.position,
+                transform.position
+            );
+
+            if (distance > lowestDistance) {
+                continue;
+            }
+            lowestDistance = distance;
+            nearestTarget = target;
+        }
+        _target = nearestTarget;
         _targetCollider = _target?.GetComponent<CapsuleCollider>();
     }
     
@@ -153,13 +170,15 @@ public class Spawn : MonoBehaviour, ISpawnable {
         _parentSpawner.Register(this);
     }
 
+    public float GetSpeed() => speed;
+
     #endregion
     
     
     #region Private Methods
     
     private void InitializeManagers() {
-        fxManager = FindObjectOfType<FXManager>();
+        _fxManager = FindObjectOfType<FXManager>();
         _spawnJobManager = FindObjectOfType<SpawnJobManager>();
         
         if (!_spawnJobManager) {
@@ -170,7 +189,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
     }
     
     private void PlaySound() {
-        fxManager.PlaySound(
+        _fxManager.PlaySound(
             impactEffectClip, 
             transform.position, 
             0.5f
@@ -178,7 +197,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
     }
     
     private void PlayEffect() {
-        fxManager.PlayEffect(
+        _fxManager.PlayEffect(
             impactEffectPrefab, 
             transform.position, 
             impactEffectPrefab.transform.rotation

@@ -4,15 +4,15 @@ using UnityEngine;
 public class Laser : MonoBehaviour, ILaunchable {
     
     [Header("Line Renderer")] 
-    public LineRenderer lineRenderer;
-    public GameObject effectFirePoint;
-    public GameObject effectTarget;
-    public GameObject effectArea;
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private GameObject effectFirePoint;
+    [SerializeField] private GameObject effectTarget;
+    [SerializeField] private GameObject effectArea;
     
     [Header("Laser")]
-    public int damage;
-    public int duration;
-    public int tickTime;
+    [SerializeField] private int damage;
+    [SerializeField] private int duration;
+    [SerializeField] private int tickTime;
     
     private GameObject _effectArea;
     private Enemy _target;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UIMenu : MonoBehaviour {
     
-    public Camera userCamera;
+    [SerializeField] private Camera userCamera;
     
     
     #region Unity Methods
@@ -15,38 +15,50 @@ public class UIMenu : MonoBehaviour {
     #endregion
     
     
-    #region Public class methods
+    #region Public Class Methods
 
     public void Activate() {
 
-        if (!IsActive()) {
-            gameObject.SetActive(true);
+        if (IsActive()) {
+            return;
         }
+        gameObject.SetActive(true);
     }
 
     public void Deactivate() {
 
-        if (IsActive()) {
-            gameObject.SetActive(false);
+        if (!IsActive()) {
+            return;
         }
+        gameObject.SetActive(false);
     }
 
     public bool IsActive() {
         return gameObject.activeSelf;
     }
     
-    public static void SetStringValue(TMP_Text element, string value) {
+    protected static void SetStringValue(TMP_Text element, string value) {
         element.SetText(value);
     }
     
-    public static void SetIntValue(TMP_Text element, int value) {
+    protected static void SetIntValue(TMP_Text element, int value) {
         element.SetText(value.ToString());
+    }
+    
+    public void SetPosition(Tile tile, float height) {
+        Vector3 tileSpawnPointPosition = tile.GetSpawnPoint().position;
+        transform.position =
+            new Vector3(
+                tileSpawnPointPosition.x,
+                tileSpawnPointPosition.y + height,
+                tileSpawnPointPosition.z
+            );
     }
     
     #endregion
     
     
-    #region Private class methods
+    #region Private Class Methods
     
     private static Quaternion RotateMenuToCamera(Transform transform, Camera userCamera) {
         Vector3 direction = transform.position - userCamera.transform.position;

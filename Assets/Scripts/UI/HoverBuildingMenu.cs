@@ -3,23 +3,19 @@ using UnityEngine;
 
 public class HoverBuildingMenu : UIMenu {
 
-    public TMP_Text label;
-    public TMP_Text value;
+    [SerializeField] private TMP_Text label;
+    [SerializeField] private TMP_Text value;
 
     private TileObjectType _tileType;
 
+    
+    #region Public Class Methods
+    
     public void SetValue(Tile tile) {
         Building building = tile.tileObjectBuilding;
         SetStringValue(label, "Health:");
-        SetStringValue(value,building.currentHealth + "/" + building.maxHealth);
+        SetStringValue(value,building.currentHealth + "/" + building.GetMaxHealth());
     }
-
-    public void SetPosition(Tile tile) {
-        transform.position =
-            new Vector3(
-                tile.spawnPoint.transform.position.x,
-                tile.spawnPoint.transform.position.y + 0.05f,
-                tile.spawnPoint.transform.position.z
-            );
-    }
+    
+    #endregion
 }

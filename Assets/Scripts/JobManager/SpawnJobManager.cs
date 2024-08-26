@@ -8,13 +8,11 @@ public class SpawnJobManager : MonoBehaviour, IJobSystem {
 
     private readonly List<Spawn> _spawns = new();
     private readonly List<Enemy> _enemies = new();
-
     private NativeArray<float3> _positions;
     private NativeArray<float3> _targets;
     private NativeArray<float> _speeds;
     private NativeArray<float3> _positionResults;
     private NativeArray<quaternion> _rotationResults;
-    
     private int _spawnsCount;
     private int _enemiesCount;
     private int _jobCount;
@@ -49,7 +47,7 @@ public class SpawnJobManager : MonoBehaviour, IJobSystem {
             Spawn spawn = _spawns[i];
             _positions[i] = spawn.transform.position;
             _targets[i] = spawn.moveTarget;
-            _speeds[i] = spawn.speed;
+            _speeds[i] = spawn.GetSpeed();
         }
         
         for (int i = 0; i < _enemies.Count; i++) {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BossWaveFactory : IEnemyWaveFactory {
+    
     private readonly Enemy _bossPrefab;
     private readonly Enemy[] _minionPrefabs;
     private readonly int _minionAmount;

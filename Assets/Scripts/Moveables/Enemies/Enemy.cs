@@ -4,8 +4,8 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour {
     
     [Header("Target")]
-    public GameObject mainTarget;
-    public float perceptionRange;
+    [SerializeField] private GameObject mainTarget;
+    [SerializeField] private float perceptionRange;
     
     public GameObject target { get; private set; }
     
@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour {
     private float _targetCapsuleRadius;
     
     [Header("Movement")]
-    public float speed;
+    [SerializeField] private float speed;
     
     public float currentSpeed { get; private set; }
     public Vector3 moveTarget { get; private set; }
@@ -21,28 +21,28 @@ public class Enemy : MonoBehaviour {
     private SpawnJobManager _spawnJobManager;
     
     [Header("Attack")]
-    public float attackSpeed;
-    public int minDamage;
-    public int maxDamage;
-    public CapsuleCollider capsuleCollider;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
+    [SerializeField] private CapsuleCollider capsuleCollider;
     
     private float _capsuleRadius;
     private float _elapsedAttackTime;
 
     [Header("Animation")] 
-    public Animator animator;
-    public string walkParameter;
-    public string attackParameter;
-    public string dieParameter;
+    [SerializeField] private Animator animator;
+    [SerializeField] private string walkParameter;
+    [SerializeField] private string attackParameter;
+    [SerializeField] private string dieParameter;
     
     private SwarmManager _swarmManager;
     private EnemyPoolManager _enemyPoolManager;
 
     [Header("Death")]
-    public int maxHealth;
-    public float deadTime;
-    public int lootAmount;
-    public Loot[] loots = new Loot[3];
+    [SerializeField] private int maxHealth;
+    [SerializeField] private float deadTime;
+    [SerializeField] private int lootAmount;
+    [SerializeField] private Loot[] loots = new Loot[3];
     
     public int currentHealth { get; private set; }
     

@@ -7,13 +7,11 @@ using UnityEngine;
 public class TurretJobManager : MonoBehaviour, IJobSystem {
     
     private readonly List<Turret> _turrets = new();
-    
     private NativeArray<float3> _positions;
     private NativeArray<float3> _targets;
     private NativeArray<quaternion> _rotations;
     private NativeArray<float> _speeds;
     private NativeArray<quaternion> _rotationResults;
-
     private int _jobCount;
     private JobHandle _rotationJob;
     
@@ -42,10 +40,11 @@ public class TurretJobManager : MonoBehaviour, IJobSystem {
         
         for (int i = 0; i < _jobCount; i++) {
             Turret turret = _turrets[i];
-            _positions[i] = turret.partToRotate.position;
+            Transform partToRotate = turret.GetPartToRotate();
+            _positions[i] = partToRotate.position;
             _targets[i] = turret.rotateTarget;
-            _rotations[i] = turret.partToRotate.transform.rotation;
-            _speeds[i] = turret.rotationSpeed;
+            _rotations[i] = partToRotate.rotation;
+            _speeds[i] = turret.GetRotationSpeed();
         }
         return Moveable.InterpolatedRotationFor(
             _positions, 
@@ -60,7 +59,7 @@ public class TurretJobManager : MonoBehaviour, IJobSystem {
         
         for (int i = 0; i < _jobCount; i++) {
             Turret turret = _turrets[i];
-            turret.partToRotate.transform.rotation = _rotationResults[i];
+            turret.GetPartToRotate().rotation = _rotationResults[i];
         }
     }
     

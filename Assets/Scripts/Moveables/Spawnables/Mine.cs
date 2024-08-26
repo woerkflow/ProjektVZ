@@ -3,21 +3,23 @@ using UnityEngine;
 public class Mine : MonoBehaviour, ISpawnable {
 
     [Header("Common")]
-    public int minDamage;
-    public int maxDamage;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
 
     private Spawner _parentSpawner;
     
     [Header("Target")]
-    public float perceptionRange;
+    [SerializeField] private float perceptionRange;
+    
     private SphereCollider _triggerCollider;
 
     [Header("Explosion")]
-    public GameObject impactEffectPrefab;
-    public AudioClip impactEffectClip;
-    public Explosive explosive;
+    [SerializeField] private GameObject impactEffectPrefab;
+    [SerializeField] private AudioClip impactEffectClip;
+    [SerializeField] private Explosive explosive;
+
+    private FXManager _fxManager;
     
-    public FXManager fxManager { get; set; }
     
     #region Unity Methods
 
@@ -66,7 +68,7 @@ public class Mine : MonoBehaviour, ISpawnable {
     #region Behaviour Methods
 
     private void InitializeManagers() {
-        fxManager = FindObjectOfType<FXManager>();
+        _fxManager = FindObjectOfType<FXManager>();
     }
 
     private void Explode() {
@@ -76,7 +78,7 @@ public class Mine : MonoBehaviour, ISpawnable {
     }
     
     private void PlaySound() {
-        fxManager.PlaySound(
+        _fxManager.PlaySound(
             impactEffectClip, 
             transform.position, 
             0.5f
@@ -84,7 +86,7 @@ public class Mine : MonoBehaviour, ISpawnable {
     }
     
     private void PlayEffect() {
-        fxManager.PlayEffect(
+        _fxManager.PlayEffect(
             impactEffectPrefab, 
             transform.position, 
             impactEffectPrefab.transform.rotation

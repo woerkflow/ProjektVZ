@@ -6,14 +6,14 @@ using UnityEngine.Pool;
 public class EnemySpawner : MonoBehaviour {
     
     [Header("Spawning")]
-    public SpawnPoint[] spawnPoints = new SpawnPoint[8];
-    public int maxWaves;
-    public int maxWaveAmount;
-    public int maxCurrentEnemyAmount;
-    public float maxCountDown;
+    [SerializeField] private SpawnPoint[] spawnPoints = new SpawnPoint[8];
+    [SerializeField] private int maxWaves;
+    [SerializeField] private int maxWaveAmount;
+    [SerializeField] private int maxCurrentEnemyAmount;
+    [SerializeField] private float maxCountDown;
     
-    public RoundState state { get; set; }
-    public float buildCountDown { get; set; }
+    public RoundState state { get; private set; }
+    public float buildCountDown { get; private set; }
 
     private EnemyPoolManager _enemyPoolManager;
     private ObjectPool<Enemy> _pool;
@@ -22,18 +22,19 @@ public class EnemySpawner : MonoBehaviour {
     private int _currentRoundCount;
     
     [Header("Swarm Management")]
-    public SwarmManager swarmManagerPrefab;
-    public List<SwarmManager> swarmManagers = new();
+    [SerializeField] private SwarmManager swarmManagerPrefab;
+    
+    private readonly List<SwarmManager> _swarmManagers = new();
 
     [Header("Timer")]
-    public TimerMenu timer;
+    [SerializeField] private TimerMenu timer;
 
     private bool _isActive;
 
     [Header("Round")] 
-    public AudioClip fightStartClip;
+    [SerializeField] private AudioClip fightStartClip;
 
-    public FXManager fxManager { get; set; }
+    private FXManager _fxManager;
     
     
     #region Unity Methods
@@ -130,7 +131,7 @@ public class EnemySpawner : MonoBehaviour {
             SpawnPoint spawnPoint = _currentSpawnPoints[Random.Range(0, _currentSpawnPoints.Length)];
             SwarmManager swarmManager = Instantiate(swarmManagerPrefab);
             swarmManager.SetSpawnPoint(spawnPoint);
-            swarmManagers.Add(swarmManager);
+            _swarmManagers.Add(swarmManager);
             
             StartCoroutine(
                 SpawnWave(
@@ -143,9 +144,9 @@ public class EnemySpawner : MonoBehaviour {
             _enemyPoolManager.currentEnemyAmount += maxWaveAmount;
             _enemyPoolManager.currentSpawnedEnemyAmount += maxWaveAmount;
         }
-        swarmManagers.RemoveAll(sm => !sm);
+        _swarmManagers.RemoveAll(sm => !sm);
 
-        if (swarmManagers.Count == 0) {
+        if (_swarmManagers.Count == 0) {
             PrepareForNewRound();
         }
     }
@@ -182,7 +183,7 @@ public class EnemySpawner : MonoBehaviour {
 
     private static Vector3 GetRandomPosition(SpawnPoint currentSpawnPoint) {
         Vector3 position = currentSpawnPoint.transform.position;
-        float range = currentSpawnPoint.spawnRange;
+        float range = currentSpawnPoint.GetSpawnRange();
         return new Vector3(
             position.x + Random.Range(-range, range),
             position.y,
@@ -196,7 +197,7 @@ public class EnemySpawner : MonoBehaviour {
     #region Private Class Methods
 
     private void PlayFightStartSound() {
-        fxManager.PlaySound(fightStartClip, transform.position, 0.5f);
+        _fxManager.PlaySound(fightStartClip, transform.position, 0.5f);
     }
 
     private void InitializeManagers() {
@@ -207,7 +208,7 @@ public class EnemySpawner : MonoBehaviour {
             return;
         }
         _enemyPoolManager.Initialize(maxCurrentEnemyAmount);
-        fxManager = FindObjectOfType<FXManager>();
+        _fxManager = FindObjectOfType<FXManager>();
     }
     
     #endregion

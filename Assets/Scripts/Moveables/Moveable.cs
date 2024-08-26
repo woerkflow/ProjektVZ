@@ -27,6 +27,12 @@ public static class Moveable {
     public static Vector3 GetRandomPosition(Transform transform) 
         => transform.position + Points[Random.Range(0, Points.Length)];
     
+    public static float GetDistance(Vector3 target, Vector3 gameObject)
+        => Vector3.Distance(
+            new Vector3(target.x, 0f, target.z),
+            new Vector3(gameObject.x, 0f, gameObject.z)
+        );
+    
     #endregion
     
     

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
-    public GameObject spawnPrefab;
-    public Transform[] spawnPoints;
-    public float spawnTime;
-    public float minSize;
-    public float maxSize;
+    
+    [SerializeField] private GameObject spawnPrefab;
+    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private float spawnTime;
+    [SerializeField] private float minSize;
+    [SerializeField] private float maxSize;
 
     private readonly List<ISpawnable> _spawns = new();
     private Coroutine _spawnCoroutine;

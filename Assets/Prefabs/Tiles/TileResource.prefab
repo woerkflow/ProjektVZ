@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 3361898766143029450}
+  spawnPoint: {fileID: 1370234355770273773}
   selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
     type: 3}
   isPlayerHouse: 0
@@ -275,8 +275,6 @@ MonoBehaviour:
   - {fileID: 6932898813621344442, guid: ab9e919db06ae8345bb461071edb5b1e, type: 3}
   - {fileID: 6932898813621344442, guid: c0f784e13f2901d419ea47223c8b349e, type: 3}
   - {fileID: 3682119577708779589, guid: c305260b6b63733489cb7a0a48827113, type: 3}
-  tileObject: {fileID: 0}
-  tileObjectBuilding: {fileID: 0}
 --- !u!1001 &7136648570455266512
 PrefabInstance:
   m_ObjectHideFlags: 0

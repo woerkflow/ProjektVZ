@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SwarmManager : MonoBehaviour {
@@ -8,7 +7,6 @@ public class SwarmManager : MonoBehaviour {
     private readonly List<Enemy> _enemies = new();
     private SpawnPoint _spawnPoint;
     private bool _isDestroyed;
-    
     private Coroutine _updateTargetsCoroutine;
     private PlayerManager _playerManager;
     private Building _target;
@@ -78,25 +76,30 @@ public class SwarmManager : MonoBehaviour {
         for (int i = 0; i < _enemies.Count; i++) {
             Enemy enemy = _enemies[i];
 
-            if (enemy.target != _target.gameObject) {
-                enemy.SetTarget(_target);
+            if (enemy.target == _target.gameObject) {
+                continue;
             }
+            enemy.SetTarget(_target);
         }
     }
 
     private Building FindNearestBuilding() {
-        List<Building> buildings = _playerManager.GetBuildings();
+        List<Building> buildings = _playerManager.buildings;
         float shortestDistance = Mathf.Infinity;
         Building nearestBuilding = null;
 
         for (int i = 0; i < buildings.Count; i++) {
             Building building = buildings[i];
-            float distanceToBuilding = Vector3.Distance(_spawnPoint.transform.position, building.transform.position);
+            float distance = Moveable.GetDistance(
+                _spawnPoint.transform.position, 
+                building.transform.position
+            );
             
-            if (distanceToBuilding < shortestDistance) {
-                shortestDistance = distanceToBuilding;
-                nearestBuilding = building;
+            if (distance > shortestDistance) {
+                continue;
             }
+            shortestDistance = distance;
+            nearestBuilding = building;
         }
         return nearestBuilding;
     }
@@ -104,7 +107,7 @@ public class SwarmManager : MonoBehaviour {
     #endregion
 
 
-    #region MyRegion
+    #region Private Class Methods
 
     private void InitializeManagers() {
         _playerManager = FindObjectOfType<PlayerManager>();

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Building : MonoBehaviour {
 
-    public int maxHealth;
+    [SerializeField] private int maxHealth;
+    
     public int currentHealth { get; private set; }
 
     private bool _isBroken;
@@ -19,6 +20,8 @@ public class Building : MonoBehaviour {
     
     
     #region Public Class Methods
+
+    public int GetMaxHealth() => maxHealth;
 
     public void SetHealth(int value) {
         currentHealth = value;
@@ -49,7 +52,7 @@ public class Building : MonoBehaviour {
         if (!tileObject) {
             return;
         }
-        tileObject.parentTile.DestroyObject();
+        tileObject.GetParentTile().DestroyObject();
     }
     
     #endregion

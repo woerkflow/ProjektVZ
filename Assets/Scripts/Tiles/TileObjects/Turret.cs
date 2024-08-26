@@ -5,8 +5,8 @@ using UnityEngine;
 public class Turret : MonoBehaviour {
     
     [Header("Turret")]
-    public Transform firePoint;
-    public float perceptionRange;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float perceptionRange;
     
     private readonly List<Enemy> _targets = new();
     private Enemy _target;
@@ -16,16 +16,16 @@ public class Turret : MonoBehaviour {
     private bool _isDestroyed;
 
     [Header("Rotation")]
-    public Transform partToRotate;
-    public float rotationSpeed;
+    [SerializeField] private Transform partToRotate;
+    [SerializeField] private float rotationSpeed;
     
     public Vector3 rotateTarget { get; private set; }
 
     private TurretJobManager _turretJobManager;
 
     [Header("Projectile")]
-    public GameObject projectilePrefab;
-    public float fireRate;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float fireRate;
 
     
     #region Unity Methods
@@ -91,9 +91,27 @@ public class Turret : MonoBehaviour {
             => !target
                || !target.gameObject.activeSelf
         );
-        _target = _targets.Count > 0 
-            ? _targets[0]
-            : null;
+        
+        if (_targets.Count <= 0) {
+            return;
+        }
+        Enemy nearestEnemy = null;
+        float shortestDistance = perceptionRange;
+        
+        for (int i = 0; i < _targets.Count; i++) {
+            Enemy enemy = _targets[i];
+            float distance = Moveable.GetDistance(
+                enemy.transform.position,
+                transform.position
+            );
+
+            if (distance > shortestDistance) {
+                continue;
+            }
+            shortestDistance = distance;
+            nearestEnemy = enemy;
+        }
+        _target = nearestEnemy;
     }
     
     private IEnumerator UpdateTargetRoutine() {
@@ -103,6 +121,14 @@ public class Turret : MonoBehaviour {
             UpdateTarget();
         }
     }
+    
+    #endregion
+    
+    #region Public Methods
+
+    public Transform GetPartToRotate() => partToRotate;
+
+    public float GetRotationSpeed() => rotationSpeed;
     
     #endregion
 

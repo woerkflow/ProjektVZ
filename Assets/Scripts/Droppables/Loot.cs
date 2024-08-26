@@ -2,19 +2,24 @@ using UnityEngine;
 
 public class Loot : MonoBehaviour {
     
-    public Resources resources;
-    
-    public PlayerManager playerManager { get; set; }
+    [SerializeField] private Resources resources;
+
+    private PlayerManager _playerManager;
     
     
     #region Unity Methods
     
     private void Start() {
-        playerManager = FindObjectOfType<PlayerManager>();
+        _playerManager = FindObjectOfType<PlayerManager>();
     }
     
+    #endregion
+    
+    
+    #region Ray Interaction Methods
+    
     public void OnRayEnter() {
-        playerManager.AddResources(resources);
+        _playerManager.AddResources(resources);
         Destroy(gameObject);
     }
     

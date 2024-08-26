@@ -3,7 +3,20 @@ using UnityEngine;
 public class TileObject : MonoBehaviour {
     
     [Header("Tile Object")]
-    public TileObjectBlueprint blueprint;
+    [SerializeField] private TileObjectBlueprint blueprint;
+    
+    private Tile _parentTile;
+    
+    
+    #region Public Methods
 
-    public Tile parentTile;
+    public TileObjectBlueprint GetBluePrint() => blueprint;
+
+    public Tile GetParentTile() => _parentTile;
+
+    public void SetParentTile(Tile tile) {
+        _parentTile = tile;
+    }
+
+    #endregion
 }
