@@ -11,14 +11,15 @@ public class Bullet : MonoBehaviour, ILaunchable {
     [Header("Motion")]
     [SerializeField] private float impactHeight;
     
-    public float timeElapsed { get; protected set; }
+    public float timeElapsed { get; private set; }
     public Vector3 start { get; private set; }
     public Vector3 end { get; private set; }
     public float travelTime { get; private set; }
     
     private BulletJobManager _bulletJobManager;
-    
-    [Header("Impact")]
+
+    [Header("Impact")] 
+    [SerializeField] protected Transform impactAnchor;
     [SerializeField] protected GameObject impactEffectPrefab;
     [SerializeField] private AudioClip impactEffectClip;
 

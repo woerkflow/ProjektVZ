@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a59ebd1527297479866700daedeb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Zombie
   radius: 0.01
   maxTargets: 10
 --- !u!114 &6195041846579349434
@@ -65,6 +64,8 @@ MonoBehaviour:
   minDamage: 1
   maxDamage: 10
   impactHeight: 0
+  impactAnchor: {fileID: 5051887314268213525, guid: 1d43ed2a3a3165f4aace20758d5025f5,
+    type: 3}
   impactEffectPrefab: {fileID: 1702452483387676863, guid: a6f73f98ddba8cc4cb633d561eb02573,
     type: 3}
   impactEffectClip: {fileID: 8300000, guid: 9387e03c7fc76054493fb1a5c96be410, type: 3}

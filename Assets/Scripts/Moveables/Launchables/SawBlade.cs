@@ -8,7 +8,7 @@ public class SawBlade : Bullet {
     private void Update() {
         IncreaseTimer();
         
-        if (transform.position.y > 0.912f) { //ToDo: Need a better solution here
+        if (transform.position.y > impactAnchor.position.y) {
             return;
         }
         Destroy(gameObject);

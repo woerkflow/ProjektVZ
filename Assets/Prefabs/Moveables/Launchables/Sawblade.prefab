@@ -74,6 +74,8 @@ MonoBehaviour:
   minDamage: 1
   maxDamage: 5
   impactHeight: 0.01
+  impactAnchor: {fileID: 5051887314268213525, guid: 1d43ed2a3a3165f4aace20758d5025f5,
+    type: 3}
   impactEffectPrefab: {fileID: 1038379741935105766, guid: d21d586ffb557d447b2fbac4fa7f87ef,
     type: 3}
   impactEffectClip: {fileID: 8300000, guid: 7c604f3e4e8daf24e8b8e4857c46d233, type: 3}
