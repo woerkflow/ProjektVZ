@@ -196,7 +196,6 @@ MonoBehaviour:
       waste: 50
       whiskey: 0
     buildingUpgradePrefab: {fileID: 0}
-  parentTile: {fileID: 0}
 --- !u!114 &4961349031111582701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1375928718055682521}
-  perceptionRange: 0.12
+  perceptionRange: 0.1
   partToRotate: {fileID: 2477221193001325512}
   rotationSpeed: 2.5
   projectilePrefab: {fileID: 2495717381403217344, guid: 7c0e4d4a7bdfca4418c2b414b65ed42f,

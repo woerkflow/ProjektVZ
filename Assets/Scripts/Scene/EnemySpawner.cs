@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour {
     
     public RoundState state { get; private set; }
     public float buildCountDown { get; private set; }
-
+    
     private EnemyPoolManager _enemyPoolManager;
     private ObjectPool<Enemy> _pool;
     private SpawnPoint[] _currentSpawnPoints;
@@ -25,15 +25,15 @@ public class EnemySpawner : MonoBehaviour {
     [SerializeField] private SwarmManager swarmManagerPrefab;
     
     private readonly List<SwarmManager> _swarmManagers = new();
-
+    
     [Header("Timer")]
     [SerializeField] private TimerMenu timer;
-
+    
     private bool _isActive;
-
+    
     [Header("Round")] 
     [SerializeField] private AudioClip fightStartClip;
-
+    
     private FXManager _fxManager;
     
     
@@ -45,6 +45,10 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     private void Update() {
+
+        if (_currentRoundCount > 10) {
+            PlayerManager.LoadMainMenu();
+        }
         
         if (!_isActive) {
             timer.Refresh(buildCountDown);
@@ -85,9 +89,9 @@ public class EnemySpawner : MonoBehaviour {
         => maxWaveAmount * Mathf.Min(round, maxWaves);
 
     private void PrepareForNewRound() {
-        buildCountDown = maxCountDown;
-        
         _currentRoundCount++;
+        
+        buildCountDown = maxCountDown;
         _currentSpawnPoints = GetRandomSpawnPoints(spawnPoints);
         _roundEnemyAmount = GetRoundEnemyAmount(maxWaveAmount, _currentRoundCount, maxWaves);
 
@@ -146,9 +150,10 @@ public class EnemySpawner : MonoBehaviour {
         }
         _swarmManagers.RemoveAll(sm => !sm);
 
-        if (_swarmManagers.Count == 0) {
-            PrepareForNewRound();
+        if (_swarmManagers.Count > 0) {
+            return;
         }
+        PrepareForNewRound();
     }
 
     private IEnumerator SpawnWave(
@@ -201,14 +206,14 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     private void InitializeManagers() {
-        _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
+        _enemyPoolManager = gameObject.GetComponent<EnemyPoolManager>();
 
         if (!_enemyPoolManager) {
             Debug.LogError("EnemyPoolManager not found in the scene.");
             return;
         }
         _enemyPoolManager.Initialize(maxCurrentEnemyAmount);
-        _fxManager = FindObjectOfType<FXManager>();
+        _fxManager = gameObject.GetComponent<FXManager>();
     }
     
     #endregion

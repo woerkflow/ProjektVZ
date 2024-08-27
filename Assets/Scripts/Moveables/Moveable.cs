@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public static class Moveable {
     
+    private const float Gravity = 0.1f;
+
     private static readonly Vector3[] Points = {
         new (-1,0,-1), 
         Vector3.left,
@@ -32,6 +34,9 @@ public static class Moveable {
             new Vector3(target.x, 0f, target.z),
             new Vector3(gameObject.x, 0f, gameObject.z)
         );
+    
+    public static float GetTravelTime(Vector3 start, Vector3 end)
+        => Mathf.Sqrt((2 * (start.y - end.y)) / Gravity);
     
     #endregion
     
@@ -70,6 +75,7 @@ public static class Moveable {
             Ends = ends,
             TravelTime = travelTime,
             TimesElapsed = timesElapsed,
+            Gravity = Gravity,
             Positions = positions,
             Rotations = rotations
         }.ScheduleParallel(starts.Length, 128, dependency);

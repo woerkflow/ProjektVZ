@@ -38,6 +38,7 @@ public struct ParabolicMoveAndRotationJobFor : IJobFor {
     [ReadOnly] public NativeArray<float3> Ends;
     [ReadOnly] public NativeArray<float> TravelTime;
     [ReadOnly] public NativeArray<float> TimesElapsed;
+    [ReadOnly] public float Gravity;
     public NativeArray<float3> Positions;
     public NativeArray<quaternion> Rotations;
 
@@ -46,17 +47,16 @@ public struct ParabolicMoveAndRotationJobFor : IJobFor {
         float3 end = Ends[index];
         float travelTime = TravelTime[index];
         float timeElapsed = TimesElapsed[index];
-        float gravity = 0.08f;
         
         float3 displacement = end - start;
         float3 initialVelocity = new float3(
             displacement.x / travelTime, 
-            (displacement.y / travelTime) + 0.5f * gravity * travelTime, 
+            (displacement.y / travelTime) + 0.5f * Gravity * travelTime, 
             displacement.z / travelTime
         );
         float t = timeElapsed / travelTime;
-        float3 velocity = initialVelocity + new float3(0, -gravity * t, 0);
-        Positions[index] = start + initialVelocity * t + 0.5f * new float3(0, -gravity, 0) * (t * t);
+        float3 velocity = initialVelocity + new float3(0, -Gravity * t, 0);
+        Positions[index] = start + initialVelocity * t + 0.5f * new float3(0, -Gravity, 0) * (t * t);
         Rotations[index] = quaternion.LookRotation(math.normalize(velocity), math.up());
     }
 }

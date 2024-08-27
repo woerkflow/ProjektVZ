@@ -6,9 +6,9 @@ public class SawBlade : Bullet {
     #region Unity Methods
     
     private void Update() {
-        timeElapsed += Time.deltaTime;
+        IncreaseTimer();
         
-        if (transform.position.y > 0.79883f) { //ToDo: Need a better solution here
+        if (transform.position.y > 0.912f) { //ToDo: Need a better solution here
             return;
         }
         Destroy(gameObject);

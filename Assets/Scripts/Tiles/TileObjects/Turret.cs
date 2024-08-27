@@ -124,6 +124,7 @@ public class Turret : MonoBehaviour {
     
     #endregion
     
+    
     #region Public Methods
 
     public Transform GetPartToRotate() => partToRotate;

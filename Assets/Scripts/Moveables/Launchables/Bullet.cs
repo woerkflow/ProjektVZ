@@ -51,13 +51,17 @@ public class Bullet : MonoBehaviour, ILaunchable {
             target.transform.position.y + impactHeight,
             target.transform.position.z
         );
-        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.08f);
+        travelTime = Moveable.GetTravelTime(start, end);
     }
 
     #endregion
     
     
     #region Private Methods
+
+    protected void IncreaseTimer() {
+        timeElapsed += Time.deltaTime;
+    }
 
     private void InitializeManagers() {
         _fxManager = FindObjectOfType<FXManager>();

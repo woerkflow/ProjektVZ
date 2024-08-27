@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour {
     private readonly List<ISpawnable> _spawns = new();
     private Coroutine _spawnCoroutine;
     private bool _isDestroyed;
+    
 
     #region Unity Methods
 
@@ -30,6 +31,7 @@ public class Spawner : MonoBehaviour {
     }
 
     #endregion
+    
 
     #region Behaviour Methods
 
@@ -61,6 +63,7 @@ public class Spawner : MonoBehaviour {
     }
 
     #endregion
+    
     
     #region Public Methods
 
