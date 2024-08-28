@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour {
     
-    public float spawnRange;
+    [SerializeField] private float spawnRange;
     
     #region Unity Methods
     
@@ -11,5 +11,12 @@ public class SpawnPoint : MonoBehaviour {
         Gizmos.DrawWireSphere(transform.position, spawnRange);
     }
     
+    #endregion
+    
+    
+    #region Public Methods
+
+    public float GetSpawnRange() => spawnRange;
+
     #endregion
 }

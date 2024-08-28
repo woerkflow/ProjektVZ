@@ -7,14 +7,12 @@ using UnityEngine;
 public class BulletJobManager : MonoBehaviour, IJobSystem {
     
     private readonly List<Bullet> _bullets = new();
-    
     private NativeArray<float3> _starts;
     private NativeArray<float3> _ends;
     private NativeArray<float> _travelTime;
     private NativeArray<float> _timesElapsed;
     private NativeArray<float3> _positions;
     private NativeArray<quaternion> _rotations;
-
     private int _jobCount;
     private JobHandle _moveRotationJob;
     

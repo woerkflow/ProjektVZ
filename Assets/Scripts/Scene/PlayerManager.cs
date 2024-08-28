@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour {
     
     public Resources resources { get; private set; }
-    
-    private readonly List<Building> _buildings = new();
+    public List<Building> buildings { get; } = new();
     
     
     #region Unity Methods
@@ -23,8 +22,6 @@ public class PlayerManager : MonoBehaviour {
     
     
     #region Resources Management Methods
-
-    public Resources GetResources() => resources;
     
     public void AddResources(Resources resourcesToAdd) {
         resources = new Resources {
@@ -53,14 +50,12 @@ public class PlayerManager : MonoBehaviour {
     
     #region Buildings Management Methods
     
-    public List<Building> GetBuildings() => _buildings;
-    
     public void AddBuilding(Building building) {
-        _buildings.Add(building);
+        buildings.Add(building);
     }
     
     public void RemoveBuilding(Building building) {
-        _buildings.Remove(building);
+        buildings.Remove(building);
     }
     
     #endregion

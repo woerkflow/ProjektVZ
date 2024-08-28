@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class FXManager : MonoBehaviour {
     
-    [SerializeField]
-    private AudioSource soundFXObject;
+    [Header("Audio Source")]
+    [SerializeField] private AudioSource soundFXObject;
 
+    
+    #region Audio Management
+    
     public void PlaySound(AudioClip audioClip, Vector3 position, float volume) {
         AudioSource audioSource = Instantiate(soundFXObject, position, Quaternion.identity);
         audioSource.clip = audioClip;
@@ -28,6 +31,11 @@ public class FXManager : MonoBehaviour {
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);
     }
+    
+    #endregion
+    
+    
+    #region Effect Management
     
     public void PlayEffect(GameObject effect, Vector3 position, Quaternion rotation) {
         ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
@@ -60,4 +68,6 @@ public class FXManager : MonoBehaviour {
         }
         return maxDuration;
     }
+    
+    #endregion
 }

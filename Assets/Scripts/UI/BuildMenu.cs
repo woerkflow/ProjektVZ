@@ -4,27 +4,14 @@ using UnityEngine;
 public class BuildMenu : UIMenu {
     
     [Header("Menu")]
-    public TMP_Text resourceWoodText;
-    public TMP_Text resourceWasteText;
-    public TMP_Text resourceWhiskeyText;
+    [SerializeField] private TMP_Text resourceWoodText;
+    [SerializeField] private TMP_Text resourceWasteText;
+    [SerializeField] private TMP_Text resourceWhiskeyText;
     
     private Tile _selectedTile;
     
     
-    #region Public Methods
-    
-    public void SelectTile(Tile tile) {
-        _selectedTile = tile;
-        Resources playerResources = _selectedTile.playerManager.GetResources();
-        SetIntValue(resourceWoodText, playerResources.wood);
-        SetIntValue(resourceWasteText, playerResources.waste);
-        SetIntValue(resourceWhiskeyText, playerResources.whiskey);
-    }
-    
-    #endregion
-    
-    
-    #region Button Methods
+    #region Button Menu Methods
     
     public void Build(TileObject buildingToBuild) {
         _selectedTile.OnSelect(buildingToBuild);
@@ -42,6 +29,19 @@ public class BuildMenu : UIMenu {
     public void Close() {
         Deactivate();
         _selectedTile = null;
+    }
+    
+    #endregion
+    
+    
+    #region Public Methods
+    
+    public void SelectTile(Tile tile) {
+        _selectedTile = tile;
+        Resources playerResources = _selectedTile.playerManager.resources;
+        SetIntValue(resourceWoodText, playerResources.wood);
+        SetIntValue(resourceWasteText, playerResources.waste);
+        SetIntValue(resourceWhiskeyText, playerResources.whiskey);
     }
     
     #endregion

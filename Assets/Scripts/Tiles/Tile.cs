@@ -5,36 +5,36 @@ using Random = UnityEngine.Random;
 public class Tile : MonoBehaviour {
     
     [Header("Common")]
-    public GameObject spawnPoint;
-    public GameObject selectEffect;
-    public bool isPlayerHouse;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private GameObject selectEffect;
+    [SerializeField] private bool isPlayerHouse;
     
-    public EnemySpawner enemySpawner { get; set; }
-    public PlayerManager playerManager { get; set; }
-    public MenuManager menuManager { get; set; }
+    public EnemySpawner enemySpawner { get; private set; }
+    public PlayerManager playerManager { get; private set; }
+
+    private MenuManager _menuManager;
     
     [Header("Interactions")]
-    public GameObject replaceEffect;
-    public AudioClip buildAudioClip;
-    public AudioClip destroyAudioClip;
-    public AudioClip farmAudioClip;
-    public AudioClip repairAudioClip;
-    public AudioClip upgradeAudioClip;
-    
-    public FXManager fxManager { get; set; }
-    
+    [SerializeField] private GameObject replaceEffect;
+    [SerializeField] private AudioClip buildAudioClip;
+    [SerializeField] private AudioClip destroyAudioClip;
+    [SerializeField] private AudioClip farmAudioClip;
+    [SerializeField] private AudioClip repairAudioClip;
+    [SerializeField] private AudioClip upgradeAudioClip;
+
+    private FXManager _fxManager;
     private Dictionary<TileInteractionType, ITileInteractionStrategy> _tileInteractionStrategies;
     
     [Header("Tile Object")]
-    public TileObjectType type;
-    public TileObject startObject;
-    public TileObject[] randomWood;
-    public TileObject[] randomWaste;
-    public TileObject tileObject;
-    public Building tileObjectBuilding;
+    [SerializeField] private TileObjectType type;
+    [SerializeField] private TileObject startObject;
+    [SerializeField] private Quaternion objectRotation;
+    [SerializeField] private TileObject[] randomWood;
+    [SerializeField] private TileObject[] randomWaste;
     
-    public Quaternion objectRotation { get; set; }
-    public TileObject selectedBuilding { get; set; }
+    public TileObject tileObject { get; set; }
+    public Building tileObjectBuilding { get; set; }
+    public TileObject selectedBuilding { get; private set; }
     
     private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
 
@@ -44,19 +44,23 @@ public class Tile : MonoBehaviour {
     private void Start() {
         InitializeManagers();
         InitializeStrategies();
-        InitializeTileObject();
-        objectRotation = spawnPoint.transform.rotation;
+        ReplaceObject(startObject);
     }
     
-    public void OnMouseEnter() {
-        menuManager.OpenHoverMenu(this);
+    #endregion
+
+
+    #region Tile Interaction Methods
+    
+    public void OnRayEnter() {
+        _menuManager.OpenHoverMenu(this);
         selectEffect.SetActive(true);
         selectEffect.transform.position = spawnPoint.transform.position;
     }
     
-    public void OnMouseDown() {
-        menuManager.CloseMenus();
-        menuManager.CloseHoverMenus();
+    public void OnRayDown() {
+        _menuManager.CloseMenus();
+        _menuManager.CloseHoverMenus();
         
         if (isPlayerHouse || enemySpawner.state.GetType().ToString() == "FightState") {
             return;
@@ -66,11 +70,11 @@ public class Tile : MonoBehaviour {
             PerformInteraction(TileInteractionType.Farm);
             return;
         }
-        menuManager.OpenMenu(this);
+        _menuManager.OpenMenu(this);
     }
     
-    public void OnMouseExit() {
-        menuManager.CloseHoverMenus();
+    public void OnRayExit() {
+        _menuManager.CloseHoverMenus();
         selectEffect.SetActive(false);
         selectEffect.transform.position = Vector3.zero;
     }
@@ -96,7 +100,7 @@ public class Tile : MonoBehaviour {
     }
 
     public void PlaySound(AudioClip audioClip) {
-        fxManager.PlaySound(
+        _fxManager.PlaySound(
             audioClip, 
             transform.position, 
             0.5f
@@ -104,7 +108,7 @@ public class Tile : MonoBehaviour {
     }
     
     public void PlayEffect(GameObject effect) {
-        fxManager.PlayEffect(
+        _fxManager.PlayEffect(
             effect, 
             transform.position,
             effect.transform.rotation
@@ -115,6 +119,9 @@ public class Tile : MonoBehaviour {
     
     
     #region Tile Object Management Methods
+    
+    public Quaternion GetRotation() 
+        => objectRotation;
     
     public static float GetRandomRotation()
         => Random.Range(0, 4) * 90f;
@@ -133,7 +140,7 @@ public class Tile : MonoBehaviour {
         if (isPlayerHouse) {
             PlayerManager.LoadMainMenu();
         }
-        TileObject ruin = tileObject.blueprint.ruin?.GetComponent<TileObject>();
+        TileObject ruin = tileObject.GetBluePrint().ruin?.GetComponent<TileObject>();
         objectRotation = tileObject.transform.rotation;
         
         if (type == TileObjectType.Building) {
@@ -149,14 +156,14 @@ public class Tile : MonoBehaviour {
     }
     
     public void ReplaceObject(TileObject newObject) {
-        type = newObject.blueprint.type;
+        type = newObject.GetBluePrint().type;
         
         if (!_tileReplacementStrategies.TryGetValue(type, out ITileReplacementStrategy strategy)) {
             return;
         }
-        strategy.ReplaceTileObject(this, newObject.blueprint.prefab);
+        strategy.ReplaceTileObject(this, newObject.GetBluePrint().prefab);
         
-        tileObject.parentTile = this;
+        tileObject.SetParentTile(this);
         objectRotation = spawnPoint.transform.rotation;
     }
     
@@ -166,20 +173,41 @@ public class Tile : MonoBehaviour {
     #region Resource Management Methods
     
     public static Resources GetRepairCosts(TileObject tileObject, Building building) {
-        float costFactor = 1 - building.currentHealth / building.maxHealth;
+        float costFactor = 1 - (float) building.currentHealth / building.GetMaxHealth();
         return new Resources {
-            wood = (int) Mathf.Floor(tileObject.blueprint.resources.wood * costFactor),
-            waste = (int) Mathf.Floor(tileObject.blueprint.resources.waste * costFactor),
-            whiskey = (int) Mathf.Floor(tileObject.blueprint.resources.whiskey * costFactor)
+            wood = (int) Mathf.Floor(tileObject.GetBluePrint().resources.wood * costFactor),
+            waste = (int) Mathf.Floor(tileObject.GetBluePrint().resources.waste * costFactor),
+            whiskey = (int) Mathf.Floor(tileObject.GetBluePrint().resources.whiskey * costFactor)
         };
     }
     
     #endregion
     
     
+    #region Public Methods
+
+    public Transform GetSpawnPoint() => spawnPoint;
+
+    public GameObject GetReplaceEffect() => replaceEffect;
+    
+    public AudioClip GetBuildAudioClip() => buildAudioClip;
+
+    public AudioClip GetDestroyAudioClip() => destroyAudioClip;
+
+    public AudioClip GetFarmAudioClip() => farmAudioClip;
+
+    public AudioClip GetRepairAudioClip() => repairAudioClip;
+
+    public AudioClip GetUpgradeAudioClip() => upgradeAudioClip;
+    
+    public TileObjectType GetTileObjectType() => type;
+    
+    #endregion
+    
+    
     #region Private Methods
     
-    private static TileObject GetRandomResource(TileObject[] randomWood, TileObject[] randomWaste)
+    public TileObject GetRandomResource()
         => Random.Range(0, 10) == 0
             ? Random.Range(0, 10) switch {
                 0 => randomWaste[0],
@@ -191,18 +219,6 @@ public class Tile : MonoBehaviour {
                 >= 1 and <= 3 => randomWood[Random.Range(2, 4)],
                 _ => randomWood[Random.Range(4, 6)]
             };
-
-    private void InitializeTileObject() {
-
-        if (isPlayerHouse) {
-            return;
-        }
-        
-        if (type == TileObjectType.Resource) {
-            startObject = GetRandomResource(randomWood, randomWaste);
-        }
-        ReplaceObject(startObject);
-    }
     
     private void InitializeStrategies() {
         _tileInteractionStrategies = new Dictionary<TileInteractionType, ITileInteractionStrategy> {
@@ -222,9 +238,9 @@ public class Tile : MonoBehaviour {
     
     private void InitializeManagers() {
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        menuManager = FindObjectOfType<MenuManager>();
+        _menuManager = FindObjectOfType<MenuManager>();
         playerManager = FindObjectOfType<PlayerManager>();
-        fxManager = FindObjectOfType<FXManager>();
+        _fxManager = FindObjectOfType<FXManager>();
     }
     
     #endregion

@@ -4,9 +4,9 @@ using UnityEngine.Pool;
 
 public class EnemyPoolManager : MonoBehaviour {
     
-    public Enemy[] enemyPrefabs = new Enemy[2];
-    public Enemy[] bossPrefabs = new Enemy[2];
-    public Enemy[] minionPrefabs = new Enemy[2];
+    [SerializeField] private Enemy[] enemyPrefabs = new Enemy[2];
+    [SerializeField] private Enemy[] bossPrefabs = new Enemy[2];
+    [SerializeField] private Enemy[] minionPrefabs = new Enemy[2];
     
     public bool bossSpawned { get; set; }
     public int currentEnemyAmount { get; set; }

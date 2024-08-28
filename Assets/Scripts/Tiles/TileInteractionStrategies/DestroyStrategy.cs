@@ -6,7 +6,7 @@ public class DestroyStrategy : ITileInteractionStrategy {
     public void Interact(Tile tile) {
         
         // Manage Resources
-        Resources gain = tile.tileObject.blueprint.resources;
+        Resources gain = tile.tileObject.GetBluePrint().resources;
         Resources costs = Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding);
         tile.playerManager.AddResources(new Resources {
             wood = gain.wood - costs.wood,
@@ -15,8 +15,8 @@ public class DestroyStrategy : ITileInteractionStrategy {
         });
         
         // Manage Effects & Sounds
-        tile.PlayEffect(tile.replaceEffect);
-        tile.PlaySound(tile.destroyAudioClip);
+        tile.PlayEffect(tile.GetReplaceEffect());
+        tile.PlaySound(tile.GetDestroyAudioClip());
         
         // Manage Tile Object
         tile.DestroyObject();

@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour {
 
-    [Header("Menus")] 
-    public BuildMenu buildMenu;
-    public UpgradeMenu upgradeMenu;
-    public HoverBuildingMenu buildingMenu;
-    public HoverResourceMenu resourceMenu;
+    [Header("Static Menus")] 
+    [SerializeField] private BuildMenu buildMenu;
+    [SerializeField] private UpgradeMenu upgradeMenu;
+    
+    [Header("Hover Menus")]
+    [SerializeField] private HoverBuildingMenu buildingMenu;
+    [SerializeField] private HoverResourceMenu resourceMenu;
+    [SerializeField] private float menuHeight;
     
     
     #region Unity Methods
@@ -24,14 +27,14 @@ public class MenuManager : MonoBehaviour {
 
     public void OpenHoverMenu(Tile tile) {
         
-        switch (tile.type) {
+        switch (tile.GetTileObjectType()) {
             case TileObjectType.Building:
-                buildingMenu.SetPosition(tile);
+                buildingMenu.SetPosition(tile, menuHeight);
                 buildingMenu.SetValue(tile);
                 buildingMenu.Activate();
                 break;
             case TileObjectType.Resource:
-                resourceMenu.SetPosition(tile);
+                resourceMenu.SetPosition(tile, menuHeight);
                 resourceMenu.SetValues(tile);
                 resourceMenu.Activate();
                 break;
@@ -45,7 +48,7 @@ public class MenuManager : MonoBehaviour {
 
     public void OpenMenu(Tile tile) {
         
-        switch (tile.type) {
+        switch (tile.GetTileObjectType()) {
             case TileObjectType.Ruin:
             case TileObjectType.Empty:
                 buildMenu.SelectTile(tile);

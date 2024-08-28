@@ -4,11 +4,11 @@ using UnityEngine;
 public class DamageArea : MonoBehaviour {
 
     [Header("Tick Explosion")]
-    public int duration;
-    public float tickTime;
-    public int minDamage;
-    public int maxDamage;
-    public Explosive explosive;
+    [SerializeField] private int duration;
+    [SerializeField] private float tickTime;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
+    [SerializeField] private Explosive explosive;
 
     private Coroutine _tickCoroutine;
 

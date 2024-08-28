@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class JobSystemManager : MonoBehaviour {
     
-    private NativeArray<JobHandle> _jobs;
     private readonly List<IJobSystem> _jobSystems = new();
+    private NativeArray<JobHandle> _jobs;
+    
+    
+    #region Unity Methods
     
     private void Start() {
         IJobSystem bulletJobManager = FindObjectOfType<BulletJobManager>();
@@ -32,21 +35,25 @@ public class JobSystemManager : MonoBehaviour {
         for (int i = 0; i < _jobSystems.Count; i++) {
             _jobSystems[i].CalculateJobCount();
             
-            if (_jobSystems[i].GetJobCount() > 0) {
-                _jobs[i] = _jobSystems[i].ScheduleJobs();
+            if (_jobSystems[i].GetJobCount() <= 0) {
+                continue;
             }
+            _jobs[i] = _jobSystems[i].ScheduleJobs();
         }
         JobHandle.CompleteAll(_jobs);
         
         for (int i = 0; i < _jobSystems.Count; i++) {
 
-            if (_jobSystems[i].GetJobCount() > 0) {
-                _jobSystems[i].ApplyJobResults();
+            if (_jobSystems[i].GetJobCount() <= 0) {
+                continue;
             }
+            _jobSystems[i].ApplyJobResults();
         }
     }
 
     private void OnDestroy() {
         _jobs.Dispose();
     }
+    
+    #endregion
 }

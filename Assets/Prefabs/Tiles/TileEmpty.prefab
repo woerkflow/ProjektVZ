@@ -183,8 +183,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731536661643962171}
-        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
-        m_MethodName: OnMouseEnter
+        m_TargetAssemblyTypeName: Tile, Scripts
+        m_MethodName: OnRayEnter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -198,8 +198,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731536661643962171}
-        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
-        m_MethodName: OnMouseExit
+        m_TargetAssemblyTypeName: Tile, Scripts
+        m_MethodName: OnRayExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -213,8 +213,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731536661643962171}
-        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
-        m_MethodName: OnMouseDown
+        m_TargetAssemblyTypeName: Tile, Scripts
+        m_MethodName: OnRayDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 3361898766143029450}
+  spawnPoint: {fileID: 1370234355770273773}
   selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
     type: 3}
   isPlayerHouse: 0

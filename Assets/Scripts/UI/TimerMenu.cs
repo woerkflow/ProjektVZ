@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class TimerMenu : UIMenu {
     
-    public TMP_Text roundCountText;
-    public TMP_Text timerValueText;
-    public TMP_Text enemyAmountText;
+    [SerializeField] private TMP_Text roundCountText;
+    [SerializeField] private TMP_Text timerValueText;
+    [SerializeField] private TMP_Text enemyAmountText;
     
     
-    #region Public class methods
+    #region Public Class Methods
     
     public void SetValues(int currentRoundCount, int currentEnemyAmount, float timerValue) {
         SetStringValue(roundCountText, "Round: " + currentRoundCount);

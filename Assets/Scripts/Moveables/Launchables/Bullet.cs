@@ -3,26 +3,27 @@ using UnityEngine;
 public class Bullet : MonoBehaviour, ILaunchable {
     
     [Header("Common")]
-    public int minDamage;
-    public int maxDamage;
+    [SerializeField] protected int minDamage;
+    [SerializeField] protected int maxDamage;
     
     private GameObject _target;
     
     [Header("Motion")]
-    public float impactHeight;
+    [SerializeField] private float impactHeight;
     
-    public Vector3 start { get; set; }
-    public Vector3 end { get; set; }
-    public float timeElapsed { get; set; }
-    public float travelTime { get; set; }
+    public float timeElapsed { get; private set; }
+    public Vector3 start { get; private set; }
+    public Vector3 end { get; private set; }
+    public float travelTime { get; private set; }
     
     private BulletJobManager _bulletJobManager;
-    
-    [Header("Impact")]
-    public GameObject impactEffectPrefab;
-    public AudioClip impactEffectClip;
-    
-    public FXManager fxManager { get; set; }
+
+    [Header("Impact")] 
+    [SerializeField] protected Transform impactAnchor;
+    [SerializeField] protected GameObject impactEffectPrefab;
+    [SerializeField] private AudioClip impactEffectClip;
+
+    private FXManager _fxManager;
 
     private bool _isPlayed;
     
@@ -51,7 +52,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
             target.transform.position.y + impactHeight,
             target.transform.position.z
         );
-        travelTime = Mathf.Sqrt((2 * (start.y - end.y)) / 0.03f);
+        travelTime = Moveable.GetTravelTime(start, end);
     }
 
     #endregion
@@ -59,8 +60,12 @@ public class Bullet : MonoBehaviour, ILaunchable {
     
     #region Private Methods
 
+    protected void IncreaseTimer() {
+        timeElapsed += Time.deltaTime;
+    }
+
     private void InitializeManagers() {
-        fxManager = FindObjectOfType<FXManager>();
+        _fxManager = FindObjectOfType<FXManager>();
         _bulletJobManager = FindObjectOfType<BulletJobManager>();
         
         if (!_bulletJobManager) {
@@ -75,7 +80,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
         if (_isPlayed) {
             return;
         }
-        fxManager.PlaySound(
+        _fxManager.PlaySound(
             impactEffectClip, 
             transform.position, 
             0.25f
@@ -84,7 +89,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
     }
     
     protected void PlayEffect(Quaternion rotation) {
-        fxManager.PlayEffect(
+        _fxManager.PlayEffect(
             impactEffectPrefab, 
             transform.position, 
             rotation

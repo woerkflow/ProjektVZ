@@ -2,20 +2,28 @@ using TMPro;
 using UnityEngine;
 
 public class HoverResourceMenu : UIMenu {
-
-    public TMP_Text[] labels;
-    public TMP_Text[] values;
-
+    
+    [SerializeField] private TMP_Text[] labels;
+    [SerializeField] private TMP_Text[] values;
+    
     private TileObjectType _tileType;
-
+    
+    
+    #region Public Class Methods
+    
     public void SetValues(Tile tile) {
-        Resources tileObjectResources = tile.tileObject.blueprint.resources;
+        Resources tileObjectResources = tile.tileObject.GetBluePrint().resources;
         SetStringValue(labels[0], GetLabelText(tileObjectResources));
         SetStringValue(labels[1], "Time:");
         SetStringValue(values[0], GetValueText(tileObjectResources));
-        SetStringValue(values[1], "-" + tile.tileObject.blueprint.timeCosts + "s");
+        SetStringValue(values[1], "-" + tile.tileObject.GetBluePrint().timeCosts + "s");
     }
-
+    
+    #endregion
+    
+    
+    #region Private Class Methods
+    
     private static string GetLabelText(Resources resources) 
         => resources.wood > 0 
             ? "Wood:" 
@@ -30,12 +38,5 @@ public class HoverResourceMenu : UIMenu {
                 ? "+" + resources.waste 
                 : "+" + resources.whiskey;
     
-    public void SetPosition(Tile tile) {
-        transform.position =
-            new Vector3(
-                tile.spawnPoint.transform.position.x,
-                tile.spawnPoint.transform.position.y + 0.05f,
-                tile.spawnPoint.transform.position.z
-            );
-    }
+    #endregion
 }

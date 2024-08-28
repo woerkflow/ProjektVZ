@@ -4,10 +4,10 @@ public class UpgradeStrategy : ITileInteractionStrategy {
     private Resources _repairCosts;
 
     public bool CanInteract(Tile tile) {
-        _buildCosts = tile.tileObject.blueprint.buildingUpgradePrefab.blueprint.resources;
+        _buildCosts = tile.tileObject.GetBluePrint().buildingUpgradePrefab.GetBluePrint().resources;
         _repairCosts = Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding);
         
-        return tile.tileObject.blueprint.buildingUpgradePrefab 
+        return tile.tileObject.GetBluePrint().buildingUpgradePrefab 
                && tile.enemySpawner.state.GetType().ToString() == "BuildState" 
                && tile.playerManager.HasEnoughResources( 
                    new Resources {
@@ -30,13 +30,12 @@ public class UpgradeStrategy : ITileInteractionStrategy {
         );
         
         // Manage Effects & Sounds
-        tile.PlayEffect(tile.replaceEffect);
-        tile.PlaySound(tile.upgradeAudioClip);
+        tile.PlayEffect(tile.GetReplaceEffect());
+        tile.PlaySound(tile.GetUpgradeAudioClip());
         
         // Manage Tile Object
-        TileObject upgradeBuilding = tile.tileObject.blueprint.buildingUpgradePrefab.GetComponent<TileObject>();
-        tile.objectRotation = tile.tileObject.transform.rotation;
         tile.DestroyObject();
+        TileObject upgradeBuilding = tile.tileObject.GetBluePrint().buildingUpgradePrefab.GetComponent<TileObject>();
         tile.ReplaceObject(upgradeBuilding);
     }
 }

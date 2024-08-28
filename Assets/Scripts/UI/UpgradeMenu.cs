@@ -4,20 +4,10 @@ using UnityEngine;
 public class UpgradeMenu : UIMenu {
     
     [Header("Menu")]
-    public TMP_Text buildingHealth;
+    [SerializeField] private TMP_Text buildingHealth;
 
     private Tile _selectedTile;
     
-    #region Public Methods
-    
-    public void SelectTile(Tile tile) {
-        _selectedTile = tile;
-        Building tileObjectBuilding = _selectedTile.tileObjectBuilding;
-        SetStringValue(buildingHealth, tileObjectBuilding.GetHealth() + "/" + tileObjectBuilding.maxHealth);
-    }
-    
-    #endregion
-
     
     #region Button Menu Methods
     
@@ -36,6 +26,17 @@ public class UpgradeMenu : UIMenu {
     public void Close() {
         Deactivate();
         _selectedTile = null;
+    }
+    
+    #endregion
+    
+    
+    #region Public Methods
+    
+    public void SelectTile(Tile tile) {
+        _selectedTile = tile;
+        Building tileObjectBuilding = _selectedTile.tileObjectBuilding;
+        SetStringValue(buildingHealth, tileObjectBuilding.GetHealth() + "/" + tileObjectBuilding.GetMaxHealth());
     }
     
     #endregion

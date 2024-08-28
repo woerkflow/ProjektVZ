@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWaveFactory : IEnemyWaveFactory {
+    
     private readonly Enemy[] _enemyPrefabs;
     private readonly int _enemyAmount;
 
