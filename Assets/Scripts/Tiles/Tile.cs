@@ -111,7 +111,8 @@ public class Tile : MonoBehaviour {
         _fxManager.PlayEffect(
             effect, 
             transform.position,
-            effect.transform.rotation
+            effect.transform.rotation,
+            gameObject.transform
         );
     }
     

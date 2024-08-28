@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
     [SerializeField] protected int maxDamage;
     
     private GameObject _target;
+    private Transform _firePoint;
     
     [Header("Motion")]
     [SerializeField] private float impactHeight;
@@ -46,6 +47,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
     #region Public Methods
 
     public void Launch(Transform firePoint, GameObject target) {
+        _firePoint = firePoint;
         start = firePoint.position;
         end = new Vector3(
             target.transform.position.x, 
@@ -92,7 +94,8 @@ public class Bullet : MonoBehaviour, ILaunchable {
         _fxManager.PlayEffect(
             impactEffectPrefab, 
             transform.position, 
-            rotation
+            rotation,
+            _firePoint
         );
     }
 

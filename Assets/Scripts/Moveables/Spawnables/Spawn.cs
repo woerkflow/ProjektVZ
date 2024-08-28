@@ -200,7 +200,8 @@ public class Spawn : MonoBehaviour, ISpawnable {
         _fxManager.PlayEffect(
             impactEffectPrefab, 
             transform.position, 
-            impactEffectPrefab.transform.rotation
+            impactEffectPrefab.transform.rotation,
+            _parentSpawner.transform
         );
     }
     
