@@ -4841,6 +4841,7 @@ GameObject:
   - component: {fileID: 7073013031397643512}
   - component: {fileID: 2180915785089963818}
   - component: {fileID: -8165072237450216475}
+  - component: {fileID: 2947592280837685868}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -4906,10 +4907,10 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -4918,7 +4919,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.36059237
+        value: 0.28086472
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -4962,7 +4963,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 1
-    textureScale: {x: 1, y: 1}
+    textureScale: {x: 20, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
@@ -4989,6 +4990,22 @@ MonoBehaviour:
   damage: 5
   duration: 5
   tickTime: 1
+--- !u!114 &2947592280837685868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428514640838481261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474f4e614a43fc448a5439019d43205a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 2180915785089963818}
+  materials:
+  - {fileID: 2100000, guid: e66295689151d6a4f9195514889c1eba, type: 2}
+  - {fileID: 2100000, guid: c76cae4504cb11d429261fe372fe4183, type: 2}
 --- !u!1 &8896097095524556420
 GameObject:
   m_ObjectHideFlags: 0

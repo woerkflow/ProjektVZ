@@ -56,9 +56,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.004
-  m_Height: 0.025
+  m_Height: 0.02
   m_Direction: 1
-  m_Center: {x: 0, y: 0.0085, z: 0}
+  m_Center: {x: 0, y: 0.006, z: 0}
 --- !u!54 &-7941308205502456114
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
   mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
     type: 3}
   perceptionRange: 0.14
-  speed: 0.01
+  speed: 0.014
   attackSpeed: 3
   minDamage: 1
   maxDamage: 10
@@ -151,17 +151,17 @@ PrefabInstance:
     - target: {fileID: 2428753953912518836, guid: 42fb4dbe43c5fac418cb149668d141f2,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.01
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 2428753953912518836, guid: 42fb4dbe43c5fac418cb149668d141f2,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.01
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 2428753953912518836, guid: 42fb4dbe43c5fac418cb149668d141f2,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.01
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 2428753953912518836, guid: 42fb4dbe43c5fac418cb149668d141f2,
         type: 3}

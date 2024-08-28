@@ -37,11 +37,11 @@ public class FXManager : MonoBehaviour {
     
     #region Effect Management
     
-    public void PlayEffect(GameObject effect, Vector3 position, Quaternion rotation) {
+    public void PlayEffect(GameObject effect, Vector3 position, Quaternion rotation, Transform parent = default) {
         ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
         float duration = CalculateMaxDuration(particleSystems);
         
-        GameObject effectObject = Instantiate(effect, position, rotation);
+        GameObject effectObject = Instantiate(effect, position, rotation, parent);
         Destroy(effectObject, duration);
     }
     

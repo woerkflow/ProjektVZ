@@ -58,9 +58,12 @@ public class EnemyPoolManager : MonoBehaviour {
         }
         _currentEnemyWave = _factory.CreateWave();
     }
-    
-    private Enemy CreatePooledItem() 
-        => Instantiate(_currentEnemyWave[currentWaveIndex]);
+
+    private Enemy CreatePooledItem() {
+        Enemy enemy = _currentEnemyWave[currentWaveIndex];
+        return Instantiate(enemy, enemy.transform.position, enemy.transform.rotation, gameObject.transform);
+    }
+        
     
     private static void OnTakeFromPool(Enemy enemy) {
         enemy.gameObject.SetActive(true);
