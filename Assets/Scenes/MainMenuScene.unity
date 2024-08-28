@@ -9,7 +9,7 @@ OcclusionCullingSettings:
     smallestHole: 0.25
     backfaceThreshold: 100
   m_SceneGUID: 186f2ba46a1dc1c4681f093c0450324d
-  m_OcclusionCullingData: {fileID: 36300000, guid: fa9a3053a5ded57449dd0dad1b3124f4,
+  m_OcclusionCullingData: {fileID: 36300000, guid: b4ad914abd9378a47ad624e3130a2e2e,
     type: 2}
 --- !u!104 &2
 RenderSettings:
@@ -145,7 +145,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &198172045
 Transform:
@@ -364,6 +364,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AmbientSoundPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 4802741152020060781, guid: d952dec1cd2e94b43a677f39bcbdaae9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5062865396736417494, guid: d952dec1cd2e94b43a677f39bcbdaae9,
         type: 3}
       propertyPath: audioSource
@@ -464,7 +469,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &589343352
 Transform:
@@ -626,7 +631,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &966518833
 Transform:
@@ -902,7 +907,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1195589827
 Transform:
@@ -970,7 +975,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1293470007
 Transform:
@@ -1251,6 +1256,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameboardLevitation
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640141255298385131, guid: 9eeac7e36b96dda42adb87261eea5ee4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7696551061604015397, guid: 9eeac7e36b96dda42adb87261eea5ee4,
         type: 3}
@@ -2150,6 +2160,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameBoard
       objectReference: {fileID: 0}
+    - target: {fileID: 2099872427892883675, guid: bfddbd64afcf91442af4c11a6b995a6f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4007827750015452156, guid: bfddbd64afcf91442af4c11a6b995a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2342,6 +2357,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4583270048712015787, guid: d5b22c69108c2c34496a4742092a7db6,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2409,6 +2429,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ambient
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343138885215731462, guid: f0852d638645a6345ac732939f26abdd,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2495,6 +2520,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CampFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547455659676239677, guid: 1c5445cfa67ca424d9e3eb49c2dc39f9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
