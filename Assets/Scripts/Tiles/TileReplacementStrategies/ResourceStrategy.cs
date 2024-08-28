@@ -3,8 +3,14 @@ using UnityEngine;
 public class ResourceStrategy : ITileReplacementStrategy {
     
     public void ReplaceTileObject(Tile tile, GameObject newTileObject) {
-        tile.RotateObject(Tile.GetRandomRotation());
-        GameObject tileObject = Object.Instantiate(newTileObject, tile.GetSpawnPoint().position, tile.objectRotation, tile.transform);
-        tile.tileObject = tileObject.GetComponent<TileObject>();
+        TileObject newResource;
+        
+        if (newTileObject.name.Contains("RandomResource")) {
+            tile.RotateObject(Tile.GetRandomRotation());
+            newResource = tile.GetRandomResource();
+        } else {
+            newResource = newTileObject.GetComponent<TileObject>();
+        }
+        tile.tileObject = Object.Instantiate(newResource, tile.GetSpawnPoint().position, tile.GetRotation(), tile.transform);
     }
 }

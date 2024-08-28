@@ -28,12 +28,12 @@ public class Tile : MonoBehaviour {
     [Header("Tile Object")]
     [SerializeField] private TileObjectType type;
     [SerializeField] private TileObject startObject;
+    [SerializeField] private Quaternion objectRotation;
     [SerializeField] private TileObject[] randomWood;
     [SerializeField] private TileObject[] randomWaste;
     
     public TileObject tileObject { get; set; }
     public Building tileObjectBuilding { get; set; }
-    public Quaternion objectRotation { get; set; }
     public TileObject selectedBuilding { get; private set; }
     
     private Dictionary<TileObjectType, ITileReplacementStrategy> _tileReplacementStrategies;
@@ -44,8 +44,7 @@ public class Tile : MonoBehaviour {
     private void Start() {
         InitializeManagers();
         InitializeStrategies();
-        InitializeTileObject();
-        objectRotation = spawnPoint.transform.rotation;
+        ReplaceObject(startObject);
     }
     
     #endregion
@@ -120,6 +119,9 @@ public class Tile : MonoBehaviour {
     
     
     #region Tile Object Management Methods
+    
+    public Quaternion GetRotation() 
+        => objectRotation;
     
     public static float GetRandomRotation()
         => Random.Range(0, 4) * 90f;
@@ -205,7 +207,7 @@ public class Tile : MonoBehaviour {
     
     #region Private Methods
     
-    private static TileObject GetRandomResource(TileObject[] randomWood, TileObject[] randomWaste)
+    public TileObject GetRandomResource()
         => Random.Range(0, 10) == 0
             ? Random.Range(0, 10) switch {
                 0 => randomWaste[0],
@@ -217,14 +219,6 @@ public class Tile : MonoBehaviour {
                 >= 1 and <= 3 => randomWood[Random.Range(2, 4)],
                 _ => randomWood[Random.Range(4, 6)]
             };
-
-    private void InitializeTileObject() {
-        
-        if (type == TileObjectType.Resource) {
-            startObject = GetRandomResource(randomWood, randomWaste);
-        }
-        ReplaceObject(startObject);
-    }
     
     private void InitializeStrategies() {
         _tileInteractionStrategies = new Dictionary<TileInteractionType, ITileInteractionStrategy> {

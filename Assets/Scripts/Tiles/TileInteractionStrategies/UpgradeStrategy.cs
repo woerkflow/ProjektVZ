@@ -34,9 +34,8 @@ public class UpgradeStrategy : ITileInteractionStrategy {
         tile.PlaySound(tile.GetUpgradeAudioClip());
         
         // Manage Tile Object
-        TileObject upgradeBuilding = tile.tileObject.GetBluePrint().buildingUpgradePrefab.GetComponent<TileObject>();
-        tile.objectRotation = tile.tileObject.transform.rotation;
         tile.DestroyObject();
+        TileObject upgradeBuilding = tile.tileObject.GetBluePrint().buildingUpgradePrefab.GetComponent<TileObject>();
         tile.ReplaceObject(upgradeBuilding);
     }
 }

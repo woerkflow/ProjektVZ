@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 4898626488019879223}
   - component: {fileID: 1731536661643962171}
   m_Layer: 0
-  m_Name: TileHouse
+  m_Name: TileBuilding
   m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 1370234355770273773}
   selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
     type: 3}
-  isPlayerHouse: 1
+  isPlayerHouse: 0
   replaceEffect: {fileID: 7207182184078915116, guid: 44960a24342258941ac82d010a5479d3,
     type: 3}
   buildAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
@@ -263,8 +263,8 @@ MonoBehaviour:
   repairAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
   upgradeAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
   type: 2
-  startObject: {fileID: 3187199564091032506, guid: 3d29ebaf582ca0e429cb43648162d56b,
-    type: 3}
+  startObject: {fileID: 0}
+  objectRotation: {x: 0, y: 0, z: 0, w: 0}
   randomWood: []
   randomWaste: []
 --- !u!1001 &863026246804385040
