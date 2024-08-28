@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7937661325582607998}
   - component: {fileID: 884669972110668013}
   - component: {fileID: 4987377201311112420}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7556436282456521261}
   - component: {fileID: 5367456127178841332}
   - component: {fileID: 7277910793406026310}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HoverResourceMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,8 +174,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: 0, y: 0.934}
+  m_SizeDelta: {x: 80, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4636180066112350896
 Canvas:
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 8385728322667453546}
   - component: {fileID: 4268696767086753388}
   - component: {fileID: 3931652327343972499}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TimeCostsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 4871927523619528965}
   - component: {fileID: 6267895328474252332}
   - component: {fileID: 1341806705047293979}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TimeCostsAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 6602996687323471003}
   - component: {fileID: 7146478614089592487}
   - component: {fileID: 5046949653709049204}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

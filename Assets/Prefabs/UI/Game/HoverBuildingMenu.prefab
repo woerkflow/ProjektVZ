@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7937661325582607998}
   - component: {fileID: 884669972110668013}
   - component: {fileID: 4987377201311112420}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7556436282456521261}
   - component: {fileID: 5367456127178841332}
   - component: {fileID: 2769058107983511248}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HoverBuildingMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.9340001}
   m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4636180066112350896
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 6602996687323471003}
   - component: {fileID: 7146478614089592487}
   - component: {fileID: 5046949653709049204}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

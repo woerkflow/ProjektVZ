@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7382944434530922964}
   - component: {fileID: 5334879329429127565}
   - component: {fileID: 6587829674255483271}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fence
+  m_text: TNT Chicken Coop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 2994621118531837579}
   - component: {fileID: 6621650063584308031}
   - component: {fileID: 863625915458874755}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 7632934018661668830}
   - component: {fileID: 479936112508552456}
   - component: {fileID: 8652961192243341984}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 2332533316040231131}
   - component: {fileID: 6998882414930189770}
   - component: {fileID: 5780894542568195961}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 6622760919671479277}
   - component: {fileID: 3630916346448455916}
   - component: {fileID: 7089384348885710547}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceWasteText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 3204033501693374231}
   - component: {fileID: 7215079711640771040}
   - component: {fileID: 5945119443975936306}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 7576749557271976717}
   - component: {fileID: 7313822181364962823}
   - component: {fileID: 6337190169850057250}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceWhiskeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -870,7 +870,7 @@ GameObject:
   - component: {fileID: 4766609762191979068}
   - component: {fileID: 3508109111029779062}
   - component: {fileID: 2690938526803605904}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1004,7 +1004,7 @@ GameObject:
   - component: {fileID: 4729592714365935085}
   - component: {fileID: 6394517398612764429}
   - component: {fileID: 1168185743421156512}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1139,7 +1139,7 @@ GameObject:
   - component: {fileID: 442528631303114832}
   - component: {fileID: 40780027633965526}
   - component: {fileID: 3631424914163220020}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RotateBtnRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1188,7 +1188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.6666667, g: 1, b: 0.9019608, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1248,15 +1248,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: RotateClockwise
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Rotate
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 90
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 4287690206966203818}
   - component: {fileID: 1351431105495252152}
   - component: {fileID: 2053488907424668405}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BuildMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1296,7 +1296,6 @@ RectTransform:
   m_Children:
   - {fileID: 3481303171795203378}
   - {fileID: 3351803797670333458}
-  - {fileID: 93776999325965629}
   - {fileID: 4736041595026833564}
   - {fileID: 3377938936277611493}
   - {fileID: 2678742236011024753}
@@ -1421,10 +1420,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userCamera: {fileID: 0}
-  buildMenu: {fileID: 0}
-  resourceWoodText: {fileID: 0}
-  resourceWasteText: {fileID: 0}
-  resourceWhiskeyText: {fileID: 0}
+  resourceWoodText: {fileID: 239529275688104244}
+  resourceWasteText: {fileID: 2424633673934690696}
+  resourceWhiskeyText: {fileID: 451468930912778137}
 --- !u!1 &2889726557916005104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,7 +1436,7 @@ GameObject:
   - component: {fileID: 8461817019563565114}
   - component: {fileID: 3881290032534317338}
   - component: {fileID: 9069497976007559914}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1532,7 +1530,7 @@ GameObject:
   - component: {fileID: 4770082965538513733}
   - component: {fileID: 1683358809466237326}
   - component: {fileID: 5534479861468886091}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CloseBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1581,7 +1579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.5896226, b: 0.5896226, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1641,8 +1639,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
         m_MethodName: Close
         m_Mode: 1
         m_Arguments:
@@ -1665,7 +1663,7 @@ GameObject:
   - component: {fileID: 6697970299916740715}
   - component: {fileID: 4778830439075358948}
   - component: {fileID: 5268620859602906041}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BladeLauncherBtnBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1754,7 +1752,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.74509805, g: 0.9411765, b: 0.9411765, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1774,13 +1772,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectBladeLauncher
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Build
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 6268160045691897632, guid: bfef0f181fc1459419a54bef2e6b5d5a,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: TileObject, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1797,7 +1796,7 @@ GameObject:
   - component: {fileID: 7697715952093285157}
   - component: {fileID: 9207990978714001213}
   - component: {fileID: 2424633673934690696}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceWasteAmountPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1931,7 +1930,7 @@ GameObject:
   - component: {fileID: 9014000934755987410}
   - component: {fileID: 7008173705711183448}
   - component: {fileID: 94904867249099134}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1985,7 +1984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fence
+  m_text: Toxic Waste Beamer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2065,7 +2064,7 @@ GameObject:
   - component: {fileID: 2152989371459784999}
   - component: {fileID: 4947892831955612943}
   - component: {fileID: 5851217787392771323}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceWoodText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2200,7 +2199,7 @@ GameObject:
   - component: {fileID: 2774548881071454851}
   - component: {fileID: 1600648016089701784}
   - component: {fileID: 8518292692408094453}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FlameThrowerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2289,7 +2288,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.74509805, g: 0.9411765, b: 0.9411765, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2309,13 +2308,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectFlameLauncher
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Build
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 7704711399967068129, guid: 7ba093ad82e9f8442ba9ae7c28a393f6,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: TileObject, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2332,7 +2332,7 @@ GameObject:
   - component: {fileID: 6406986448595544438}
   - component: {fileID: 420441984986104355}
   - component: {fileID: 8224512460797873514}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2467,7 +2467,7 @@ GameObject:
   - component: {fileID: 3064807228162744129}
   - component: {fileID: 5852873011664159685}
   - component: {fileID: 7951120285926542808}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2575,8 +2575,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1593755199353836860}
   m_HandleRect: {fileID: 2098668801950314225}
   m_Direction: 2
-  m_Value: 0.9960017
-  m_Size: 0.56666666
+  m_Value: 0.99999577
+  m_Size: 0.42499998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2592,7 +2592,7 @@ GameObject:
   - component: {fileID: 9016132405682497559}
   - component: {fileID: 5446703670074419889}
   - component: {fileID: 5467473169596072922}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2726,7 +2726,7 @@ GameObject:
   - component: {fileID: 8304741766905933127}
   - component: {fileID: 7598248167196137527}
   - component: {fileID: 1853775248694592929}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2849,139 +2849,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &5863683888099989631
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 93776999325965629}
-  - component: {fileID: 3672473670070102809}
-  - component: {fileID: 1146366317139871266}
-  - component: {fileID: 8115130244075507423}
-  m_Layer: 0
-  m_Name: BuildBtn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &93776999325965629
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5863683888099989631}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7413127748913353436}
-  m_Father: {fileID: 5561779962375932182}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -57.5, y: 18.800018}
-  m_SizeDelta: {x: -115, y: 40}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3672473670070102809
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5863683888099989631}
-  m_CullTransparentMesh: 1
---- !u!114 &1146366317139871266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5863683888099989631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.6745283, g: 1, b: 0.70710075, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &8115130244075507423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5863683888099989631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1146366317139871266}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6070391011510583606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2994,7 +2861,7 @@ GameObject:
   - component: {fileID: 6414294910772266139}
   - component: {fileID: 4826629403822345481}
   - component: {fileID: 4399083743537933821}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3084,7 +2951,7 @@ GameObject:
   - component: {fileID: 9152038429958672671}
   - component: {fileID: 7567441671840288942}
   - component: {fileID: 3458178931590493795}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PumpkinSpawnerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3173,7 +3040,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.74509805, g: 0.9411765, b: 0.9411765, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3193,13 +3060,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectPumpkinSpawner
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Build
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 4919283177037549175, guid: 8e584b1af62168b4783478b8398a4ee8,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: TileObject, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3217,8 +3085,8 @@ GameObject:
   - component: {fileID: 4395471001421229911}
   - component: {fileID: 2051232384220943386}
   - component: {fileID: 1131818908956542331}
-  m_Layer: 0
-  m_Name: TNT Chickencoop (1)
+  m_Layer: 5
+  m_Name: ToxicWasteBeamerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3241,7 +3109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -265}
+  m_AnchoredPosition: {x: 0, y: -325}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4395471001421229911
@@ -3306,7 +3174,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.74509805, g: 0.9411765, b: 0.9411765, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3326,13 +3194,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectTntChickenSpawner
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Build
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2764788804539912993, guid: 155f621011db87b47af17146ff12cfbe,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: TileObject, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3349,7 +3218,7 @@ GameObject:
   - component: {fileID: 7103918930564627170}
   - component: {fileID: 8474220205168640432}
   - component: {fileID: 451468930912778137}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceWhiskeyAmountPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3484,8 +3353,8 @@ GameObject:
   - component: {fileID: 4163160867250029913}
   - component: {fileID: 4935166819199946708}
   - component: {fileID: 24886512309072761}
-  m_Layer: 0
-  m_Name: FenceBtn (1)
+  m_Layer: 5
+  m_Name: TNTChickenCoopBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3508,7 +3377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -205}
+  m_AnchoredPosition: {x: 0, y: -265}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4163160867250029913
@@ -3573,7 +3442,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.74509805, g: 0.9411765, b: 0.9411765, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3593,152 +3462,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectFenceObstacle
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Build
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: -4733439308506193159, guid: 230417c9aca64814f8d7d3628883a443,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: TileObject, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &6499849586539294448
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7413127748913353436}
-  - component: {fileID: 4506610667781724361}
-  - component: {fileID: 1827691875659673942}
-  m_Layer: 0
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7413127748913353436
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6499849586539294448}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 93776999325965629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4506610667781724361
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6499849586539294448}
-  m_CullTransparentMesh: 1
---- !u!114 &1827691875659673942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6499849586539294448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Build
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6971955156741300143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,7 +3486,7 @@ GameObject:
   - component: {fileID: 3628341633952337427}
   - component: {fileID: 7868916471362130488}
   - component: {fileID: 239529275688104244}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResourceWoodAmountPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3882,7 +3618,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3939720036755359890}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3911,8 +3647,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.5275574}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: -0.017807007}
+  m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7822235111710341020
 GameObject:
@@ -3923,7 +3659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8146237250681786218}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3962,7 +3698,7 @@ GameObject:
   - component: {fileID: 7035523220440072453}
   - component: {fileID: 8346207666225900706}
   - component: {fileID: 561476467766097354}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RotateBtnLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4011,7 +3747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.6666667, g: 1, b: 0.9019608, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4071,15 +3807,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: RotateCounterClockwise
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Rotate
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: -90
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -4094,7 +3830,7 @@ GameObject:
   - component: {fileID: 2098668801950314225}
   - component: {fileID: 5175174455321835403}
   - component: {fileID: 1593755199353836860}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4170,7 +3906,7 @@ GameObject:
   - component: {fileID: 3732993087995589737}
   - component: {fileID: 233093182853863088}
   - component: {fileID: 762572426366556883}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FenceBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4259,7 +3995,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.74509805, g: 0.9411765, b: 0.9411765, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4279,13 +4015,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectFenceObstacle
-        m_Mode: 1
+      - m_Target: {fileID: 2053488907424668405}
+        m_TargetAssemblyTypeName: BuildMenu, Scripts
+        m_MethodName: Build
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 4745627118231078538, guid: bec9330b6182e4f438e712f0c8e62310,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: TileObject, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
