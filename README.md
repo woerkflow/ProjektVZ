@@ -1,4 +1,4 @@
-<h1>Villagers vs. Zombies (v0.2.0-alpha)</h1>
+<h1>Villagers vs. Zombies v0.2.0-alpha</h1>
 
 In the deepest backwoods, surrounded by dense forests and wild animals, stands a lonely cabin. It belongs to a quirky bunch of hillbillies who spend their simple lives brewing moonshine and telling stories about the undead. One evening, when they make a particularly mysterious find in the woods - an old, dusty gaming table - things take an unexpected turn.
 
