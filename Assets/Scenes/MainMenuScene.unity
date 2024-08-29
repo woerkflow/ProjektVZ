@@ -7,7 +7,7 @@ OcclusionCullingSettings:
   m_OcclusionBakeSettings:
     smallestOccluder: 5
     smallestHole: 0.25
-    backfaceThreshold: 100
+    backfaceThreshold: 60
   m_SceneGUID: 186f2ba46a1dc1c4681f093c0450324d
   m_OcclusionCullingData: {fileID: 36300000, guid: b4ad914abd9378a47ad624e3130a2e2e,
     type: 2}
@@ -1409,7 +1409,7 @@ PrefabInstance:
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f,
         type: 3}
       propertyPath: minDynamicResolutionScale
-      value: 0.9
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f,
         type: 3}
