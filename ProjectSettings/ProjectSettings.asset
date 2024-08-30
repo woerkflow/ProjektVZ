@@ -49,7 +49,7 @@ PlayerSettings:
   m_StereoRenderingPath: 2
   m_ActiveColorSpace: 1
   unsupportedMSAAFallback: 0
-  m_SpriteBatchVertexThreshold: 300
+  m_SpriteBatchVertexThreshold: 5000
   m_MTRendering: 1
   mipStripping: 1
   numberOfMipsStripped: 0
@@ -68,7 +68,7 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
-  androidUseSwappy: 0
+  androidUseSwappy: 1
   androidBlitType: 0
   androidResizableWindow: 0
   androidDefaultWindowWidth: 1920
@@ -142,8 +142,6 @@ PlayerSettings:
   bundleVersion: 0.2.0
   preloadedAssets:
   - {fileID: 11400000, guid: eda9ed7b65c6d3c4685bb396e4b0ef6f, type: 2}
-  - {fileID: 5792788506452727227, guid: 63969f998a947e542bdea083fc688153, type: 2}
-  - {fileID: 11400000, guid: 01113266cc2305e4c8adf376ba863800, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

@@ -4897,6 +4897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2648613976461159864}
+  - component: {fileID: 5896385313355256678}
   m_Layer: 0
   m_Name: FlameImpact
   m_TagString: Untagged
@@ -4923,6 +4924,38 @@ Transform:
   - {fileID: 5996384481746986395}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &5896385313355256678
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702452483387676863}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 28.815004, z: 0}
+  m_Size: 68.99002
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8446840417926846087}
+    - renderer: {fileID: 1519904035862061319}
+    - renderer: {fileID: 915105892143802105}
+    - renderer: {fileID: 2150039675031325421}
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8446840417926846087}
+    - renderer: {fileID: 2150039675031325421}
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8446840417926846087}
+    - renderer: {fileID: 2150039675031325421}
+  m_Enabled: 1
 --- !u!1 &5400292905553170466
 GameObject:
   m_ObjectHideFlags: 0

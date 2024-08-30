@@ -9673,6 +9673,7 @@ GameObject:
   - component: {fileID: -7659686065697239092}
   - component: {fileID: 2330162657734004993}
   - component: {fileID: 6198770466447758245}
+  - component: {fileID: 8610641664321153760}
   m_Layer: 0
   m_Name: EffectArea
   m_TagString: Untagged
@@ -14525,3 +14526,34 @@ MonoBehaviour:
   minDamage: 10
   maxDamage: 10
   explosive: {fileID: -7659686065697239092}
+--- !u!205 &8610641664321153760
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135785084644269850}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.4
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2330162657734004993}
+    - renderer: {fileID: 4340916330334147560}
+    - renderer: {fileID: 3732778118280214211}
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2330162657734004993}
+    - renderer: {fileID: 3732778118280214211}
+  - screenRelativeHeight: 0.01
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2330162657734004993}
+    - renderer: {fileID: 3732778118280214211}
+  m_Enabled: 1
