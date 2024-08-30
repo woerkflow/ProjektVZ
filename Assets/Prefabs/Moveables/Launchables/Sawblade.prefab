@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6985170837479736046}
   - component: {fileID: 8343878110494608736}
-  - component: {fileID: 6107806713204068377}
   - component: {fileID: 1014246090093347978}
   m_Layer: 0
   m_Name: Sawblade
@@ -60,36 +59,6 @@ CapsuleCollider:
   m_Height: 0.001
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!205 &6107806713204068377
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2495717381403217344}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0.0014999993}
-  m_Size: 0.0621
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.6
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 5746870120078936625}
-    - renderer: {fileID: 6754215938051629365}
-    - renderer: {fileID: 3665200090192289202}
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 6754215938051629365}
-    - renderer: {fileID: 5746870120078936625}
-  - screenRelativeHeight: 0.1
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 6754215938051629365}
-  m_Enabled: 1
 --- !u!114 &1014246090093347978
 MonoBehaviour:
   m_ObjectHideFlags: 0
