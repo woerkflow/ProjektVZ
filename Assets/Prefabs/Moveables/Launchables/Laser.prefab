@@ -4840,7 +4840,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7073013031397643512}
   - component: {fileID: 2180915785089963818}
-  - component: {fileID: 3767612144692321544}
   - component: {fileID: -8165072237450216475}
   - component: {fileID: 2947592280837685868}
   m_Layer: 0
@@ -4971,35 +4970,6 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!205 &3767612144692321544
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8428514640838481261}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.5, y: 0, z: 0}
-  m_Size: 1.0999999
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.6
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2180915785089963818}
-    - renderer: {fileID: 4275557343914294819}
-    - renderer: {fileID: 8075938256574639749}
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2180915785089963818}
-  - screenRelativeHeight: 0.1
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2180915785089963818}
-  m_Enabled: 1
 --- !u!114 &-8165072237450216475
 MonoBehaviour:
   m_ObjectHideFlags: 0

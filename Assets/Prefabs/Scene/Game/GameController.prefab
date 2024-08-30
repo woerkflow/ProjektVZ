@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 8517787429166594809}
   - component: {fileID: 8599497444412784823}
   - component: {fileID: 9151346582793127711}
+  - component: {fileID: 9136170319900130458}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -157,8 +158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildMenu: {fileID: 0}
-  farmMenu: {fileID: 0}
   upgradeMenu: {fileID: 0}
+  buildingMenu: {fileID: 0}
+  resourceMenu: {fileID: 0}
+  menuHeight: 0
 --- !u!114 &2244862597360753361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,10 +270,24 @@ MonoBehaviour:
   maxWaveAmount: 32
   maxCurrentEnemyAmount: 96
   maxCountDown: 60
+  enemyPoolManager: {fileID: 0}
   swarmManagerPrefab: {fileID: 1209438935485532948, guid: e7d3f0825cb92634ea40deb2ae467468,
     type: 3}
-  swarmManagers: []
   timer: {fileID: 0}
+  fightStartClip: {fileID: 0}
+  fxManager: {fileID: 0}
+--- !u!114 &9136170319900130458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553083597564924198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f866f992bc332df4c8265b27a011e7e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061869966326221827
 GameObject:
   m_ObjectHideFlags: 0

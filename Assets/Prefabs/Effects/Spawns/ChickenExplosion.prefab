@@ -4897,7 +4897,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8075358631116738827}
-  - component: {fileID: 601879959422977995}
   m_Layer: 0
   m_Name: ChickenExplosion
   m_TagString: Untagged
@@ -4923,37 +4922,6 @@ Transform:
   - {fileID: 2050940082006603220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &601879959422977995
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2310196081175101062}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 16.934381, z: -0.0000019073486}
-  m_Size: 57.491276
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.6
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1578260454425669162}
-    - renderer: {fileID: 1218704141606004156}
-    - renderer: {fileID: 703203218632208611}
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1578260454425669162}
-    - renderer: {fileID: 703203218632208611}
-  - screenRelativeHeight: 0.1
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1578260454425669162}
-    - renderer: {fileID: 703203218632208611}
-  m_Enabled: 1
 --- !u!1 &2328823020235599350
 GameObject:
   m_ObjectHideFlags: 0
@@ -10012,7 +9980,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 20
-      minScalar: 10
+      minScalar: 15
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10129,7 +10097,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10453,7 +10421,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.001
+      scalar: 0.008
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -10822,7 +10790,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 20
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2

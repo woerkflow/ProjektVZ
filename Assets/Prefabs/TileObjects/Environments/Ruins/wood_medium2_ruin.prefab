@@ -96,7 +96,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 683ebeb70735ed84dbf8b69fac7ef0d5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00172
+      value: 0.00166
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 683ebeb70735ed84dbf8b69fac7ef0d5,
         type: 3}
@@ -106,7 +106,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 683ebeb70735ed84dbf8b69fac7ef0d5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00286
+      value: 0.00264
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 683ebeb70735ed84dbf8b69fac7ef0d5,
         type: 3}
@@ -196,7 +196,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2332b06d0d3f4ac46b1bff711d815098,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00172
+      value: 0.00166
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2332b06d0d3f4ac46b1bff711d815098,
         type: 3}
@@ -206,7 +206,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2332b06d0d3f4ac46b1bff711d815098,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00286
+      value: 0.00264
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2332b06d0d3f4ac46b1bff711d815098,
         type: 3}
@@ -296,7 +296,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 15054286370b8bb4aa9a90519c9026ae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00172
+      value: 0.00166
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15054286370b8bb4aa9a90519c9026ae,
         type: 3}
@@ -306,7 +306,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 15054286370b8bb4aa9a90519c9026ae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00286
+      value: 0.00264
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15054286370b8bb4aa9a90519c9026ae,
         type: 3}
