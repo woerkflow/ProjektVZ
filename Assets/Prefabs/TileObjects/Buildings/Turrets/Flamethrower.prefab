@@ -158,6 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1393397298157884673}
   - component: {fileID: 7027322523371733080}
+  - component: {fileID: 8310541402296481020}
   - component: {fileID: 7704711399967068129}
   - component: {fileID: 189898130358512659}
   - component: {fileID: 977584462965461348}
@@ -208,6 +209,37 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!205 &8310541402296481020
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151891175055528178}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2820566783175109759}
+    - renderer: {fileID: 8613843301115862957}
+    - renderer: {fileID: 8214691248068281579}
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2820566783175109759}
+    - renderer: {fileID: 8613843301115862957}
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2820566783175109759}
+    - renderer: {fileID: 8613843301115862957}
+  m_Enabled: 1
 --- !u!114 &7704711399967068129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +448,12 @@ PrefabInstance:
 --- !u!4 &4664008611672629091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1338799767700199227, guid: a6eee8f66bbef0643870c205487104dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5921596157032220760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &8214691248068281579 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 2318736423855295667, guid: a6eee8f66bbef0643870c205487104dd,
     type: 3}
   m_PrefabInstance: {fileID: 5921596157032220760}
   m_PrefabAsset: {fileID: 0}

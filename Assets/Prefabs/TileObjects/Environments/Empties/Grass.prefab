@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5578730331220241028}
   - component: {fileID: 858852749531859134}
+  - component: {fileID: 5658905463687094363}
   m_Layer: 0
   m_Name: Grass
   m_TagString: Environment
@@ -54,8 +55,32 @@ MonoBehaviour:
       wood: 0
       waste: 0
       whiskey: 0
-    buildingMaxHealth: 0
     buildingUpgradePrefab: {fileID: 0}
+--- !u!205 &5658905463687094363
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897936333670252998}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3223475763251492211}
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1 &4016342601119569062
 GameObject:
   m_ObjectHideFlags: 0

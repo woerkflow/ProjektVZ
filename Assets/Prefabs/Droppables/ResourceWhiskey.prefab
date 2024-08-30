@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5529944091672099074}
   - component: {fileID: 2214351051881364082}
   - component: {fileID: 3890099266257450164}
+  - component: {fileID: 4507971775908061361}
   m_Layer: 0
   m_Name: ResourceWhiskey
   m_TagString: Untagged
@@ -123,6 +124,34 @@ MonoBehaviour:
     wood: 0
     waste: 0
     whiskey: 1
+--- !u!205 &4507971775908061361
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6628189076459227209}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 9100908157813068710}
+    - renderer: {fileID: 5266926309819533436}
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5266926309819533436}
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5266926309819533436}
+  m_Enabled: 1
 --- !u!1 &8885749697528450392
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +323,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7531238276681730732}
   m_PrefabAsset: {fileID: 0}
+--- !u!199 &5266926309819533436 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 2419476289103807184, guid: bcdeb5539a4e4e341a1ed45b480dd184,
+    type: 3}
+  m_PrefabInstance: {fileID: 7531238276681730732}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8827224878842268972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -395,6 +430,12 @@ PrefabInstance:
 --- !u!4 &41497803151623610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8796643095852451990, guid: 439cfed2991c66a4cad53babc967cd41,
+    type: 3}
+  m_PrefabInstance: {fileID: 8827224878842268972}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &9100908157813068710 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 345776074560724618, guid: 439cfed2991c66a4cad53babc967cd41,
     type: 3}
   m_PrefabInstance: {fileID: 8827224878842268972}
   m_PrefabAsset: {fileID: 0}
