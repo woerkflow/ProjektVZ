@@ -4,9 +4,13 @@ using UnityEngine.Pool;
 
 public class EnemyPoolManager : MonoBehaviour {
     
+    [Header("Prefabs")]
     [SerializeField] private Enemy[] enemyPrefabs = new Enemy[2];
     [SerializeField] private Enemy[] bossPrefabs = new Enemy[2];
     [SerializeField] private Enemy[] minionPrefabs = new Enemy[2];
+    
+    [Header("Pooling")]
+    [SerializeField] private JobSystemManager jobSystemManager;
     
     public bool bossSpawned { get; set; }
     public int currentEnemyAmount { get; set; }
@@ -23,7 +27,7 @@ public class EnemyPoolManager : MonoBehaviour {
     
     
     #region Object Pooling Methods
-
+    
     public void Initialize(int maxCurrentEnemyAmount) {
         _maxCurrentEnemyAmount = maxCurrentEnemyAmount;
         _enemyPool = new ObjectPool<Enemy>(
@@ -63,9 +67,8 @@ public class EnemyPoolManager : MonoBehaviour {
         Enemy enemy = _currentEnemyWave[currentWaveIndex];
         return Instantiate(enemy, enemy.transform.position, enemy.transform.rotation, gameObject.transform);
     }
-        
     
-    private static void OnTakeFromPool(Enemy enemy) {
+    private void OnTakeFromPool(Enemy enemy) {
         enemy.gameObject.SetActive(true);
         enemy.ResetValues();
     }
@@ -75,7 +78,7 @@ public class EnemyPoolManager : MonoBehaviour {
         enemy.gameObject.SetActive(false);
     }
     
-    private static void OnDestroyPoolObject(Enemy enemy) {
+    private void OnDestroyPoolObject(Enemy enemy) {
         Destroy(enemy.gameObject);
     }
     
@@ -104,11 +107,15 @@ public class EnemyPoolManager : MonoBehaviour {
     
 
     #region Public Enemy Pool Methods
-    
-    public Enemy GetEnemyFromPool()
-        => _enemyPool.Get();
+
+    public Enemy GetEnemyFromPool() {
+        Enemy enemy = _enemyPool.Get();
+        jobSystemManager.RegisterEnemy(enemy);
+        return enemy;
+    }
     
     public void ReturnEnemyToPool(Enemy enemy) {
+        jobSystemManager.UnregisterEnemy(enemy);
         _enemyPool.Release(enemy);
     }
     

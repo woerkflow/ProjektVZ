@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawn : MonoBehaviour, ISpawnable {
@@ -9,7 +8,6 @@ public class Spawn : MonoBehaviour, ISpawnable {
     [SerializeField] private SpawnType type;
     [SerializeField] private float perceptionRange;
     
-    private readonly List<GameObject> _targets = new();
     private SphereCollider _triggerCollider;
     private GameObject _target;
     private CapsuleCollider _targetCollider;
@@ -21,7 +19,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
     
     public Vector3 moveTarget { get; private set; }
     
-    private SpawnJobManager _spawnJobManager;
+    private JobSystemManager _jobSystemManager;
     
     [Header("Explosion")]
     [SerializeField] private CapsuleCollider capsuleCollider;
@@ -38,10 +36,6 @@ public class Spawn : MonoBehaviour, ISpawnable {
     #region Unity Methods
     
     private void Start() {
-        _triggerCollider = gameObject.AddComponent<SphereCollider>();
-        _triggerCollider.isTrigger = true;
-        _triggerCollider.radius = perceptionRange;
-        
         InitializeManagers();
         
         _isDead = false;
@@ -58,20 +52,8 @@ public class Spawn : MonoBehaviour, ISpawnable {
         Destroy(gameObject, 0.5f);
     }
     
-    private void OnTriggerEnter(Collider coll) {
-        
-        if (!coll.CompareTag("Zombie")) {
-            return;
-        }
-        _targets.Add(coll.gameObject);
-    }
-    
-    private void OnTriggerExit(Collider coll) {
-        _targets.Remove(coll.gameObject);
-    }
-    
     private void OnDestroy() {
-        _spawnJobManager?.UnregisterSpawn(this);
+        _jobSystemManager?.UnregisterSpawn(this);
         _parentSpawner.Unregister(this);
         
         if (_behaviourCoroutine == null) {
@@ -102,60 +84,28 @@ public class Spawn : MonoBehaviour, ISpawnable {
         }
     }
     
-    private void UpdateTarget() {
-        
-        _targets.RemoveAll(enemy 
-            => !enemy
-               || !enemy.gameObject.activeSelf
-        );
-        
-        if (_targets.Count <= 0) {
-            return;
-        }
-        GameObject nearestTarget = null;
-        float lowestDistance = perceptionRange;
-        
-        for (int i = 0; i < _targets.Count; i++) {
-            GameObject target = _targets[i];
-            float distance = Moveable.GetDistance(
-                target.transform.position,
-                transform.position
-            );
-
-            if (distance > lowestDistance) {
-                continue;
-            }
-            lowestDistance = distance;
-            nearestTarget = target;
-        }
-        _target = nearestTarget;
-        _targetCollider = _target?.GetComponent<CapsuleCollider>();
-    }
-    
     private void UpdateDirection() {
         
-        if (!_target) {
-            moveTarget = Vector3.Distance(_parentSpawner.transform.position, transform.position) < perceptionRange
+        if (!HasValidTarget()) {
+            moveTarget = Moveable.GetDistance(_parentSpawner.transform.position, transform.position) <= perceptionRange
                 ? Moveable.GetRandomPosition(transform)
                 : _parentSpawner.transform.position;
             return;
         }
         moveTarget = _target.transform.position;
-        Vector3 direction = Moveable.Direction(_target.transform.position, transform.position);
+        Vector3 direction = Moveable.Direction(moveTarget, transform.position);
 
-        if (_targetCollider 
-            && direction.magnitude <= capsuleCollider.radius + _targetCollider.radius
-        ) {
-            Explode();
-            Destroy(gameObject, 0.5f);
+        if (direction.magnitude > capsuleCollider.radius + _targetCollider.radius) {
+            return;
         }
+        Explode();
+        Destroy(gameObject, 0.5f);
     }
     
     private IEnumerator BehaviourRoutine() {
         
         while (!_isDead) {
             yield return new WaitForSeconds(1f);
-            UpdateTarget();
             UpdateDirection();
         }
     }
@@ -170,6 +120,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
         _parentSpawner.Register(this);
     }
 
+    public void SetTarget(GameObject target) {
+        _target = target;
+        _targetCollider = target.GetComponent<CapsuleCollider>();
+    }
+
     public float GetSpeed() => speed;
 
     #endregion
@@ -179,14 +134,14 @@ public class Spawn : MonoBehaviour, ISpawnable {
     
     private void InitializeManagers() {
         _fxManager = FindObjectOfType<FXManager>();
-        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
-        
-        if (!_spawnJobManager) {
-            Debug.LogError("SpawnJobManager not found in the scene.");
-            return;
-        }
-        _spawnJobManager.RegisterSpawn(this);
+        _jobSystemManager = FindObjectOfType<JobSystemManager>();
+        _jobSystemManager?.RegisterSpawn(this);
     }
+    
+    private bool HasValidTarget()
+        => _target
+           && _target.gameObject.activeSelf
+           && Moveable.GetDistance(_target.transform.position, transform.position) <= perceptionRange;
     
     private void PlaySound() {
         _fxManager.PlaySound(

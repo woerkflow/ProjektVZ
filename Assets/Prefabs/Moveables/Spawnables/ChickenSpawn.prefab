@@ -119,7 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   perceptionRange: 0.14
-  speed: 0.012
+  speed: 0.014
   capsuleCollider: {fileID: 1225672579551020913}
   minDamage: 1
   maxDamage: 10

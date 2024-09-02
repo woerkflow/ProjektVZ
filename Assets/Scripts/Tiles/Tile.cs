@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour {
     
     public EnemySpawner enemySpawner { get; private set; }
     public PlayerManager playerManager { get; private set; }
+    public JobSystemManager jobSystemManager { get; private set; }
 
     private MenuManager _menuManager;
     
@@ -145,7 +146,7 @@ public class Tile : MonoBehaviour {
         objectRotation = tileObject.transform.rotation;
         
         if (type == TileObjectType.Building) {
-            playerManager.RemoveBuilding(tileObjectBuilding);
+            jobSystemManager.UnregisterBuilding(tileObjectBuilding);
             tileObjectBuilding = null;
         }
         DestroyTileObject(tileObject);
@@ -240,6 +241,7 @@ public class Tile : MonoBehaviour {
     private void InitializeManagers() {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         _menuManager = FindObjectOfType<MenuManager>();
+        jobSystemManager = FindObjectOfType<JobSystemManager>();
         playerManager = FindObjectOfType<PlayerManager>();
         _fxManager = FindObjectOfType<FXManager>();
     }

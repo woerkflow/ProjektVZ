@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class JobSystemManager : MonoBehaviour {
     
+    public List<Turret> Turrets { get; } = new();
+    public List<Spawn> Spawns { get; } = new();
+    public List<Enemy> Enemies { get; } = new();
+    public List<Bullet> Bullets { get; } = new();
+    public List<Building> Buildings { get; } = new();
+    
     private readonly List<IJobSystem> _jobSystems = new();
     private NativeArray<JobHandle> _jobs;
     
@@ -12,47 +18,96 @@ public class JobSystemManager : MonoBehaviour {
     #region Unity Methods
     
     private void Start() {
-        IJobSystem bulletJobManager = FindObjectOfType<BulletJobManager>();
+        IJobSystem seekEnemyJobManager = gameObject.AddComponent<SeekEnemyJobManager>();
+        _jobSystems.Add(seekEnemyJobManager);
+        seekEnemyJobManager.Register(this);
+        
+        IJobSystem seekBuildingJobManager = gameObject.AddComponent<SeekBuildingJobManager>();
+        _jobSystems.Add(seekBuildingJobManager);
+        seekBuildingJobManager.Register(this);
 
-        if (bulletJobManager != null) {
-            _jobSystems.Add(bulletJobManager);
-        }
-        IJobSystem turretJobManager = FindObjectOfType<TurretJobManager>();
-        
-        if (turretJobManager != null) {
-            _jobSystems.Add(turretJobManager);
-        }
-        IJobSystem spawnJobManager = FindObjectOfType<SpawnJobManager>();
-        
-        if (spawnJobManager != null) {
-            _jobSystems.Add(spawnJobManager);
-        }
-        _jobs = new (_jobSystems.Count, Allocator.Persistent);
+        IJobSystem bulletJobManager = gameObject.AddComponent<BulletJobManager>();
+        _jobSystems.Add(bulletJobManager);
+        bulletJobManager.Register(this);
+
+        IJobSystem turretJobManager = gameObject.AddComponent<TurretJobManager>();
+        _jobSystems.Add(turretJobManager);
+        turretJobManager.Register(this);
+
+        IJobSystem spawnJobManager = gameObject.AddComponent<SpawnJobManager>();
+        _jobSystems.Add(spawnJobManager);
+        spawnJobManager.Register(this);
     }
 
     private void Update() {
-
+        _jobs = new NativeArray<JobHandle>(_jobSystems.Count, Allocator.TempJob);
+        
         for (int i = 0; i < _jobSystems.Count; i++) {
-            _jobSystems[i].CalculateJobCount();
+            IJobSystem jobSystem = _jobSystems[i];
+            jobSystem.CalculateJobCount();
             
-            if (_jobSystems[i].GetJobCount() <= 0) {
+            if (jobSystem.GetJobCount() <= 0) {
                 continue;
             }
-            _jobs[i] = _jobSystems[i].ScheduleJobs();
+            jobSystem.EnsureArrayCapacity();
+            _jobs[i] = jobSystem.ScheduleJobs();
         }
         JobHandle.CompleteAll(_jobs);
         
         for (int i = 0; i < _jobSystems.Count; i++) {
-
-            if (_jobSystems[i].GetJobCount() <= 0) {
+            IJobSystem jobSystem = _jobSystems[i];
+            
+            if (jobSystem.GetJobCount() <= 0) {
                 continue;
             }
-            _jobSystems[i].ApplyJobResults();
+            jobSystem.ApplyJobResults();
         }
+        _jobs.Dispose();
+    }
+    
+    #endregion
+    
+    
+    #region Public Class Methods
+    
+    public void RegisterTurret(Turret turret) {
+        Turrets.Add(turret);
     }
 
-    private void OnDestroy() {
-        _jobs.Dispose();
+    public void UnregisterTurret(Turret turret) {
+        Turrets.Remove(turret);
+    }
+    
+    public void RegisterSpawn(Spawn spawn) {
+        Spawns.Add(spawn);
+    }
+
+    public void UnregisterSpawn(Spawn spawn) {
+        Spawns.Remove(spawn);
+    }
+    
+    public void RegisterEnemy(Enemy enemy) {
+        Enemies.Add(enemy);
+    }
+
+    public void UnregisterEnemy(Enemy enemy) {
+        Enemies.Remove(enemy);
+    }
+    
+    public void RegisterBuilding(Building building) {
+        Buildings.Add(building);
+    }
+    
+    public void UnregisterBuilding(Building building) {
+        Buildings.Remove(building);
+    }
+    
+    public void RegisterBullet(Bullet bullet) {
+        Bullets.Add(bullet);
+    }
+    
+    public void UnregisterBullet(Bullet bullet) {
+        Bullets.Remove(bullet);
     }
     
     #endregion

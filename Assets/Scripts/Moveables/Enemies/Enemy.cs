@@ -5,10 +5,8 @@ public class Enemy : MonoBehaviour {
     
     [Header("Target")]
     [SerializeField] private GameObject mainTarget;
-    [SerializeField] private float perceptionRange;
     
-    public GameObject target { get; private set; }
-    
+    private GameObject _target;
     private Building _targetBuildingComponent;
     private float _targetCapsuleRadius;
     
@@ -18,8 +16,6 @@ public class Enemy : MonoBehaviour {
     public float currentSpeed { get; private set; }
     public Vector3 moveTarget { get; private set; }
     
-    private SpawnJobManager _spawnJobManager;
-    
     [Header("Attack")]
     [SerializeField] private float attackSpeed;
     [SerializeField] private int minDamage;
@@ -28,16 +24,15 @@ public class Enemy : MonoBehaviour {
     
     private float _capsuleRadius;
     private float _elapsedAttackTime;
-
+    
     [Header("Animation")] 
     [SerializeField] private Animator animator;
     [SerializeField] private string walkParameter;
     [SerializeField] private string attackParameter;
     [SerializeField] private string dieParameter;
     
-    private SwarmManager _swarmManager;
     private EnemyPoolManager _enemyPoolManager;
-
+    
     [Header("Death")]
     [SerializeField] private int maxHealth;
     [SerializeField] private float deadTime;
@@ -54,7 +49,7 @@ public class Enemy : MonoBehaviour {
     private void Start() {
         InitializeManagers();
         _capsuleRadius = capsuleCollider.radius;
-        target = mainTarget;
+        _target = mainTarget;
         ResetValues();
     }
     
@@ -72,10 +67,6 @@ public class Enemy : MonoBehaviour {
         }
         HandleAttack();
     }
-
-    private void OnDestroy() {
-        _spawnJobManager?.UnregisterEnemy(this);
-    }
     
     #endregion
     
@@ -84,13 +75,6 @@ public class Enemy : MonoBehaviour {
 
     private void InitializeManagers() {
         _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
-        _spawnJobManager = FindObjectOfType<SpawnJobManager>();
-        
-        if (!_spawnJobManager) {
-            Debug.LogError("SpawnJobManager not found in the scene.");
-            return;
-        }
-        _spawnJobManager.RegisterEnemy(this);
     }
     
     #endregion
@@ -99,7 +83,6 @@ public class Enemy : MonoBehaviour {
     #region Object Pooling
     
     private void DestroyEnemy() {
-        _swarmManager?.Unregister(this);
         
         if (_enemyPoolManager) {
             _enemyPoolManager.ReturnEnemyToPool(this);
@@ -124,13 +107,9 @@ public class Enemy : MonoBehaviour {
     }
 
     public void SetTarget(Building newTarget) {
-        target = newTarget.gameObject;
+        _target = newTarget.gameObject;
         _targetBuildingComponent = newTarget;
-        _targetCapsuleRadius = target.GetComponent<CapsuleCollider>().radius;
-    }
-
-    public void SetSwarmManager(SwarmManager swarmManager) {
-        _swarmManager = swarmManager;
+        _targetCapsuleRadius = _target.GetComponent<CapsuleCollider>().radius;
     }
 
     public void ResetValues() {
@@ -166,10 +145,10 @@ public class Enemy : MonoBehaviour {
 
     private void UpdateTarget() {
         
-        if (!target) {
-            target = mainTarget;
+        if (!_target) {
+            _target = mainTarget;
         }
-        moveTarget = target.transform.position;
+        moveTarget = _target.transform.position;
     }
 
     private void MoveTowardsTarget() {
@@ -184,7 +163,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private bool IsWithinAttackRange() 
-        => currentSpeed == 0f && target != mainTarget;
+        => currentSpeed == 0f && _target != mainTarget;
 
     private void HandleAttack() {
         animator.SetFloat(walkParameter, 0f);
@@ -192,7 +171,7 @@ public class Enemy : MonoBehaviour {
         if (_elapsedAttackTime >= attackSpeed) {
             animator.SetTrigger(attackParameter);
             
-            if (target) {
+            if (_target) {
                 _targetBuildingComponent?.TakeDamage(Random.Range(minDamage, maxDamage));
             }
             _elapsedAttackTime = 0f;
@@ -205,11 +184,6 @@ public class Enemy : MonoBehaviour {
         capsuleCollider.enabled = false;
         gameObject.tag = "ZombieDead";
         currentSpeed = 0f;
-    }
-    
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, perceptionRange);
     }
     
     #endregion
