@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -12,6 +11,7 @@ public class EnemySpawner : MonoBehaviour {
     [SerializeField] private int maxCurrentEnemyAmount;
     [SerializeField] private float maxCountDown;
     [SerializeField] private EnemyPoolManager enemyPoolManager;
+    
     public RoundState state { get; private set; }
     public float buildCountDown { get; private set; }
     
@@ -19,11 +19,6 @@ public class EnemySpawner : MonoBehaviour {
     private SpawnPoint[] _currentSpawnPoints;
     private int _roundEnemyAmount;
     private int _currentRoundCount;
-    
-    [Header("Swarm Management")]
-    [SerializeField] private SwarmManager swarmManagerPrefab;
-    
-    private readonly List<SwarmManager> _swarmManagers = new();
     
     [Header("Timer")]
     [SerializeField] private TimerMenu timer;
@@ -131,14 +126,10 @@ public class EnemySpawner : MonoBehaviour {
 
         if (enemyPoolManager.CanSpawnWave()) {
             SpawnPoint spawnPoint = _currentSpawnPoints[Random.Range(0, _currentSpawnPoints.Length)];
-            SwarmManager swarmManager = Instantiate(swarmManagerPrefab);
-            swarmManager.SetSpawnPoint(spawnPoint);
-            _swarmManagers.Add(swarmManager);
             
             StartCoroutine(
                 SpawnWave(
                     enemyPoolManager,
-                    swarmManager,
                     spawnPoint,
                     maxWaveAmount
                 )
@@ -146,17 +137,15 @@ public class EnemySpawner : MonoBehaviour {
             enemyPoolManager.currentEnemyAmount += maxWaveAmount;
             enemyPoolManager.currentSpawnedEnemyAmount += maxWaveAmount;
         }
-        _swarmManagers.RemoveAll(sm => !sm);
 
-        if (_swarmManagers.Count > 0) {
+        if (enemyPoolManager.currentEnemyAmount > 0) {
             return;
         }
         PrepareForNewRound();
     }
 
-    private IEnumerator SpawnWave(
+    private static IEnumerator SpawnWave(
         EnemyPoolManager enemyPoolManager, 
-        SwarmManager swarmManager, 
         SpawnPoint spawnPoint, 
         int waveAmount
     ) {
@@ -166,8 +155,6 @@ public class EnemySpawner : MonoBehaviour {
             if (boss) {
                 boss.transform.position = spawnPoint.transform.position;
                 boss.transform.rotation = spawnPoint.transform.rotation;
-                boss.SetSwarmManager(swarmManager);
-                swarmManager.Register(boss);
                 enemyPoolManager.bossSpawned = true;
                 yield return new WaitForSeconds(1f);
             }
@@ -178,8 +165,6 @@ public class EnemySpawner : MonoBehaviour {
             Enemy enemy = enemyPoolManager.GetEnemyFromPool();
             enemy.transform.position = GetRandomPosition(spawnPoint);
             enemy.transform.rotation = spawnPoint.transform.rotation;
-            enemy.SetSwarmManager(swarmManager);
-            swarmManager.Register(enemy);
             yield return new WaitForSeconds(1f);
         }
     }

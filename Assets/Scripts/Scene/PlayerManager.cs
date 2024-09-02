@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour {
     
     public Resources resources { get; private set; }
-    public List<Building> buildings { get; } = new();
     
     
     #region Unity Methods
@@ -50,13 +48,7 @@ public class PlayerManager : MonoBehaviour {
     
     #region Buildings Management Methods
     
-    public void AddBuilding(Building building) {
-        buildings.Add(building);
-    }
-    
-    public void RemoveBuilding(Building building) {
-        buildings.Remove(building);
-    }
+
     
     #endregion
     

@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour, ILaunchable {
     [SerializeField] protected int maxDamage;
     
     private GameObject _target;
-    private Transform _firePoint;
     
     [Header("Motion")]
     [SerializeField] private float impactHeight;
@@ -17,7 +16,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
     public Vector3 end { get; private set; }
     public float travelTime { get; private set; }
     
-    private BulletJobManager _bulletJobManager;
+    private JobSystemManager _jobSystemManager;
 
     [Header("Impact")] 
     [SerializeField] protected Transform impactAnchor;
@@ -38,7 +37,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
     }
 
     private void OnDestroy() {
-        _bulletJobManager?.Unregister(this);
+        _jobSystemManager?.UnregisterBullet(this);
     }
 
     #endregion
@@ -47,7 +46,6 @@ public class Bullet : MonoBehaviour, ILaunchable {
     #region Public Methods
 
     public void Launch(Transform firePoint, GameObject target) {
-        _firePoint = firePoint;
         start = firePoint.position;
         end = new Vector3(
             target.transform.position.x, 
@@ -68,13 +66,8 @@ public class Bullet : MonoBehaviour, ILaunchable {
 
     private void InitializeManagers() {
         _fxManager = FindObjectOfType<FXManager>();
-        _bulletJobManager = FindObjectOfType<BulletJobManager>();
-        
-        if (!_bulletJobManager) {
-            Debug.LogError("BulletJobManager not found in the scene.");
-            return;
-        }
-        _bulletJobManager.Register(this);
+        _jobSystemManager = FindObjectOfType<JobSystemManager>();
+        _jobSystemManager?.RegisterBullet(this);
     }
 
     protected void PlaySound() {
@@ -94,8 +87,7 @@ public class Bullet : MonoBehaviour, ILaunchable {
         _fxManager.PlayEffect(
             impactEffectPrefab, 
             transform.position, 
-            rotation,
-            _firePoint
+            rotation
         );
     }
 

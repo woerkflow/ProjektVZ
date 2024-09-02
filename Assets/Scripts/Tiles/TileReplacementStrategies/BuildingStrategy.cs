@@ -6,6 +6,6 @@ public class BuildingStrategy : ITileReplacementStrategy {
         GameObject tileObject = Object.Instantiate(newTileObject, tile.GetSpawnPoint().position, tile.GetRotation(), tile.transform);
         tile.tileObject = tileObject.GetComponent<TileObject>();
         tile.tileObjectBuilding = tileObject.gameObject.GetComponent<Building>();
-        tile.playerManager.AddBuilding(tile.tileObjectBuilding);
+        tile.jobSystemManager.RegisterBuilding(tile.tileObjectBuilding);
     }
 }
