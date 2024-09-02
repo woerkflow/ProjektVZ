@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
     private GameObject _target;
     private Building _targetBuildingComponent;
     private float _targetCapsuleRadius;
+    private JobSystemManager _jobSystemManager;
     
     [Header("Movement")]
     [SerializeField] private float speed;
@@ -75,6 +76,8 @@ public class Enemy : MonoBehaviour {
 
     private void InitializeManagers() {
         _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
+        _jobSystemManager = FindObjectOfType<JobSystemManager>();
+        _jobSystemManager?.RegisterEnemy(this);
     }
     
     #endregion
@@ -83,6 +86,7 @@ public class Enemy : MonoBehaviour {
     #region Object Pooling
     
     private void DestroyEnemy() {
+        _jobSystemManager?.UnregisterEnemy(this);
         
         if (_enemyPoolManager) {
             _enemyPoolManager.ReturnEnemyToPool(this);

@@ -110,12 +110,10 @@ public class EnemyPoolManager : MonoBehaviour {
 
     public Enemy GetEnemyFromPool() {
         Enemy enemy = _enemyPool.Get();
-        jobSystemManager.RegisterEnemy(enemy);
         return enemy;
     }
     
     public void ReturnEnemyToPool(Enemy enemy) {
-        jobSystemManager.UnregisterEnemy(enemy);
         _enemyPool.Release(enemy);
     }
     

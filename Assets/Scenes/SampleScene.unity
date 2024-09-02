@@ -29933,6 +29933,18 @@ PrefabInstance:
       propertyPath: jobSystemManager
       value: 
       objectReference: {fileID: 7760570451229823664}
+    - target: {fileID: 5521955275429662775, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: bossPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3070795524686585472, guid: 160f5514fc6bd154bb31b42ca87a8ae5,
+        type: 3}
+    - target: {fileID: 5521955275429662775, guid: 7557698a20d2bb34fb3526ce07ada26f,
+        type: 3}
+      propertyPath: bossPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8831236568028899543, guid: 73dd3802ae21791468d791aea593a4c1,
+        type: 3}
     - target: {fileID: 9151346582793127711, guid: 7557698a20d2bb34fb3526ce07ada26f,
         type: 3}
       propertyPath: timer
