@@ -51,7 +51,6 @@ public class Enemy : MonoBehaviour {
         InitializeManagers();
         _capsuleRadius = capsuleCollider.radius;
         _target = mainTarget;
-        ResetValues();
     }
     
     private void Update() {
@@ -77,7 +76,7 @@ public class Enemy : MonoBehaviour {
     private void InitializeManagers() {
         _enemyPoolManager = FindObjectOfType<EnemyPoolManager>();
         _jobSystemManager = FindObjectOfType<JobSystemManager>();
-        _jobSystemManager?.RegisterEnemy(this);
+        ResetValues();
     }
     
     #endregion
@@ -123,6 +122,7 @@ public class Enemy : MonoBehaviour {
         capsuleCollider.enabled = true;
         gameObject.tag = "Zombie";
         currentSpeed = speed;
+        _jobSystemManager?.RegisterEnemy(this);
     }
     
     #endregion
