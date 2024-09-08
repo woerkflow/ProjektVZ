@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5825883441325706733
 Transform:
@@ -213,6 +213,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Waste
       objectReference: {fileID: 0}
+    - target: {fileID: 2635826936830893589, guid: 1f7d98865936f444dbcdcf5a67dcc009,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2728694780909646651, guid: 1f7d98865936f444dbcdcf5a67dcc009,
         type: 3}
       propertyPath: scalingMode
@@ -331,6 +336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shimmer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379634011767503537, guid: 439cfed2991c66a4cad53babc967cd41,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8796643095852451990, guid: 439cfed2991c66a4cad53babc967cd41,
         type: 3}

@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5825883441325706733
 Transform:
@@ -213,6 +213,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Whiskey
       objectReference: {fileID: 0}
+    - target: {fileID: 4777404735641911049, guid: bcdeb5539a4e4e341a1ed45b480dd184,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4829780317228667431, guid: bcdeb5539a4e4e341a1ed45b480dd184,
         type: 3}
       propertyPath: scalingMode
@@ -321,6 +326,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shimmer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379634011767503537, guid: 439cfed2991c66a4cad53babc967cd41,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8796643095852451990, guid: 439cfed2991c66a4cad53babc967cd41,
         type: 3}

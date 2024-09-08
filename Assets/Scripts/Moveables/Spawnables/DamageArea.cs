@@ -55,7 +55,7 @@ public class DamageArea : MonoBehaviour {
             explosive.Explode(minDamage, maxDamage);
             yield return new WaitForSeconds(tickTime);
         }
-        Destroy(explosive.gameObject);
+        Destroy(explosive.gameObject,0.1f);
     }
     
     #endregion

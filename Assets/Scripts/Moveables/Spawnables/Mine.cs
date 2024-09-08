@@ -36,7 +36,7 @@ public class Mine : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject,0.1f);
     }
     
     private void OnTriggerEnter(Collider coll) {
@@ -45,7 +45,7 @@ public class Mine : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject);
+        Destroy(gameObject,0.1f);
     }
 
     private void OnDestroy() {
