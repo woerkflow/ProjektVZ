@@ -11,7 +11,7 @@ public class SawBlade : Bullet {
         if (transform.position.y > impactAnchor.position.y) {
             return;
         }
-        Destroy(gameObject);
+        Destroy(gameObject,0.1f);
     }
     
     #endregion

@@ -49,7 +49,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject,0.1f);
     }
     
     private void OnDestroy() {
@@ -99,7 +99,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject,0.1f);
     }
     
     private IEnumerator BehaviourRoutine() {
