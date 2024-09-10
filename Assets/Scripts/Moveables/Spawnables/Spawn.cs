@@ -4,31 +4,16 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour, ISpawnable {
     
-    [Header("Spawn")] 
-    [SerializeField] private SpawnType type;
-    [SerializeField] private float perceptionRange;
+    [SerializeField] private SpawnBlueprint blueprint;
+    
+    public Vector3 moveTarget { get; private set; }
     
     private SphereCollider _triggerCollider;
     private GameObject _target;
     private CapsuleCollider _targetCollider;
     private Spawner _parentSpawner;
-    private bool _isDead;
-    
-    [Header("Movement")] 
-    [SerializeField] private float speed;
-    
-    public Vector3 moveTarget { get; private set; }
-    
+    private bool _isExploded;
     private JobSystemManager _jobSystemManager;
-    
-    [Header("Explosion")]
-    [SerializeField] private CapsuleCollider capsuleCollider;
-    [SerializeField] private int minDamage;
-    [SerializeField] private int maxDamage;
-    [SerializeField] private GameObject impactEffectPrefab;
-    [SerializeField] private AudioClip impactEffectClip;
-    [SerializeField] private Explosive explosive;
-
     private FXManager _fxManager;
     private Coroutine _behaviourCoroutine;
     
@@ -37,8 +22,7 @@ public class Spawn : MonoBehaviour, ISpawnable {
     
     private void Start() {
         InitializeManagers();
-        
-        _isDead = false;
+        _isExploded = false;
         moveTarget = transform.position;
         _behaviourCoroutine = StartCoroutine(BehaviourRoutine());
     }
@@ -49,7 +33,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject,0.1f);
+
+        if (!_isExploded) {
+            return;
+        }
+        Destroy(gameObject, 0.3f);
     }
     
     private void OnDestroy() {
@@ -68,26 +56,29 @@ public class Spawn : MonoBehaviour, ISpawnable {
     #region Behavior methods
     
     private void Explode() {
-        _isDead = true;
         
-        switch (type) {
+        if (_isExploded) {
+            return;
+        }
+        
+        switch (blueprint.type) {
             case SpawnType.Chicken:
-                explosive.Explode(minDamage, maxDamage);
                 PlaySound();
                 PlayEffect();
+                blueprint.explosive.Explode(blueprint.minDamage, blueprint.maxDamage);
                 break;
-            case SpawnType.Bull:
-                // Handle Bull specific explosion logic
+            case SpawnType.Mine:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        _isExploded = true;
     }
     
     private void UpdateDirection() {
         
         if (!HasValidTarget()) {
-            moveTarget = Moveable.GetDistance(_parentSpawner.transform.position, transform.position) <= perceptionRange
+            moveTarget = Moveable.GetDistance(_parentSpawner.transform.position, transform.position) <= blueprint.perceptionRange
                 ? Moveable.GetRandomPosition(transform)
                 : _parentSpawner.transform.position;
             return;
@@ -95,16 +86,20 @@ public class Spawn : MonoBehaviour, ISpawnable {
         moveTarget = _target.transform.position;
         Vector3 direction = Moveable.Direction(moveTarget, transform.position);
 
-        if (direction.magnitude > capsuleCollider.radius + _targetCollider.radius) {
+        if (direction.magnitude > blueprint.capsuleCollider.radius + _targetCollider.radius) {
             return;
         }
         Explode();
-        Destroy(gameObject,0.1f);
+        
+        if (!_isExploded) {
+            return;
+        }
+        Destroy(gameObject, 0.3f);
     }
     
     private IEnumerator BehaviourRoutine() {
         
-        while (!_isDead) {
+        while (!_isExploded) {
             yield return new WaitForSeconds(1f);
             UpdateDirection();
         }
@@ -125,7 +120,8 @@ public class Spawn : MonoBehaviour, ISpawnable {
         _targetCollider = target.GetComponent<CapsuleCollider>();
     }
 
-    public float GetSpeed() => speed;
+    public float GetSpeed() 
+        => blueprint.speed;
 
     #endregion
     
@@ -141,11 +137,11 @@ public class Spawn : MonoBehaviour, ISpawnable {
     private bool HasValidTarget()
         => _target
            && _target.gameObject.activeSelf
-           && Moveable.GetDistance(_target.transform.position, transform.position) <= perceptionRange;
+           && Moveable.GetDistance(_target.transform.position, transform.position) <= blueprint.perceptionRange;
     
     private void PlaySound() {
         _fxManager.PlaySound(
-            impactEffectClip, 
+            blueprint.impactEffectClip, 
             transform.position, 
             0.5f
         );
@@ -153,9 +149,9 @@ public class Spawn : MonoBehaviour, ISpawnable {
     
     private void PlayEffect() {
         _fxManager.PlayEffect(
-            impactEffectPrefab, 
+            blueprint.impactEffectPrefab, 
             transform.position, 
-            impactEffectPrefab.transform.rotation,
+            blueprint.impactEffectPrefab.transform.rotation,
             _parentSpawner.transform
         );
     }

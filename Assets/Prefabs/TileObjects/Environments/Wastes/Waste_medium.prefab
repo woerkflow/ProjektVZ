@@ -79,12 +79,12 @@ MonoBehaviour:
     type: 3
     prefab: {fileID: 4879016084386931318}
     ruin: {fileID: 1897936333670252998, guid: 4b70f4e9b18d67e4aa2353f84cc975a9, type: 3}
-    timeCosts: 10
-    resources:
-      wood: 0
-      waste: 100
-      whiskey: 0
     buildingUpgradePrefab: {fileID: 0}
+  resources:
+    wood: 0
+    waste: 100
+    whiskey: 0
+    time: 10
 --- !u!1001 &1090839700664559956
 PrefabInstance:
   m_ObjectHideFlags: 0

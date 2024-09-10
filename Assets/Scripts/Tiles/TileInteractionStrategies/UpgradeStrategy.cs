@@ -4,10 +4,10 @@ public class UpgradeStrategy : ITileInteractionStrategy {
     private Resources _repairCosts;
 
     public bool CanInteract(Tile tile) {
-        _buildCosts = tile.tileObject.GetBluePrint().buildingUpgradePrefab.GetBluePrint().resources;
+        _buildCosts = tile.tileObject.GetUpgradePrefab().GetResources();
         _repairCosts = Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding);
         
-        return tile.tileObject.GetBluePrint().buildingUpgradePrefab 
+        return tile.tileObject.GetUpgradePrefab() 
                && tile.enemySpawner.state.GetType().ToString() == "BuildState" 
                && tile.playerManager.HasEnoughResources( 
                    new Resources {
@@ -35,7 +35,7 @@ public class UpgradeStrategy : ITileInteractionStrategy {
         
         // Manage Tile Object
         tile.DestroyObject();
-        TileObject upgradeBuilding = tile.tileObject.GetBluePrint().buildingUpgradePrefab.GetComponent<TileObject>();
+        TileObject upgradeBuilding = tile.tileObject.GetUpgradePrefab();
         tile.ReplaceObject(upgradeBuilding);
     }
 }

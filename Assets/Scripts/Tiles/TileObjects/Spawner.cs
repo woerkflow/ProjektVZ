@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
-    
-    [SerializeField] private GameObject spawnPrefab;
-    [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private float spawnTime;
-    [SerializeField] private float minSize;
-    [SerializeField] private float maxSize;
+
+    [SerializeField] private SpawnerBlueprint blueprint;
 
     private readonly List<ISpawnable> _spawns = new();
     private Coroutine _spawnCoroutine;
@@ -39,27 +35,22 @@ public class Spawner : MonoBehaviour {
         
         while (!_isDestroyed) {
             
-            if (_spawns.Count < spawnPoints.Length) {
+            if (_spawns.Count < blueprint.spawnPoints.Length) {
                 CreateSpawn();
             }
-            yield return new WaitForSeconds(spawnTime);
+            yield return new WaitForSeconds(blueprint.spawnTime);
         }
     }
 
     private void CreateSpawn() {
-        Transform spawnPoint = spawnPoints[_spawns.Count];
+        Transform spawnPoint = blueprint.spawnPoints[_spawns.Count];
         
-        GameObject newSpawn = Instantiate(spawnPrefab, spawnPoint.position, spawnPoint.rotation, transform);
-        float randomSize = Random.Range(minSize, maxSize);
+        GameObject newSpawn = Instantiate(blueprint.spawnPrefab, spawnPoint.position, spawnPoint.rotation, transform);
+        float randomSize = Random.Range(blueprint.minSize, blueprint.maxSize);
         newSpawn.transform.localScale = Vector3.one * randomSize;
         
         ISpawnable spawnableComponent = newSpawn.GetComponent<ISpawnable>();
-        
-        if (spawnableComponent != null) {
-            spawnableComponent.SetParent(this);
-        } else {
-            Debug.LogWarning($"Spawned object does not have an ISpawnable component: {newSpawn.name}");
-        }
+        spawnableComponent?.SetParent(this);
     }
 
     #endregion

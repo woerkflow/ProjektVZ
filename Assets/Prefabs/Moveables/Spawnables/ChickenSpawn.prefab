@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a59ebd1527297479866700daedeb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.04
+  radius: 0.011
   maxTargets: 10
 --- !u!114 &5426830648720794665
 MonoBehaviour:
@@ -117,16 +117,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8094bd4da7a43a143a3c05203662a2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  perceptionRange: 0.14
-  speed: 0.014
-  capsuleCollider: {fileID: 1225672579551020913}
-  minDamage: 1
-  maxDamage: 10
-  impactEffectPrefab: {fileID: 2310196081175101062, guid: 77545ca4f6364d64c8a1b2fed76e43da,
-    type: 3}
-  impactEffectClip: {fileID: 8300000, guid: 0200d001725a2294f9d0a49da2648e24, type: 3}
-  explosive: {fileID: 3422659713731089772}
+  blueprint:
+    type: 0
+    perceptionRange: 0.165
+    speed: 0.016
+    capsuleCollider: {fileID: 1225672579551020913}
+    minDamage: 1
+    maxDamage: 25
+    impactEffectPrefab: {fileID: 2310196081175101062, guid: 77545ca4f6364d64c8a1b2fed76e43da,
+      type: 3}
+    impactEffectClip: {fileID: 8300000, guid: 0200d001725a2294f9d0a49da2648e24, type: 3}
+    explosive: {fileID: 3422659713731089772}
 --- !u!1001 &1460778988653496042
 PrefabInstance:
   m_ObjectHideFlags: 0

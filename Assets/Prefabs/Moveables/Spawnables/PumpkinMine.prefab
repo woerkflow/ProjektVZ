@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a59ebd1527297479866700daedeb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.06
+  radius: 0.011
   maxTargets: 10
 --- !u!114 &-723218778986860671
 MonoBehaviour:
@@ -96,13 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a5f003d8d89ae449725d7e385d119e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDamage: 1
-  maxDamage: 20
-  perceptionRange: 0.06
-  impactEffectPrefab: {fileID: 3143267052308979211, guid: 57dc7ff54289f8a4092077ccddab6750,
-    type: 3}
-  impactEffectClip: {fileID: 8300000, guid: 9387e03c7fc76054493fb1a5c96be410, type: 3}
-  explosive: {fileID: 3422659713731089772}
+  blueprint:
+    type: 2
+    perceptionRange: 0.011
+    speed: 0
+    capsuleCollider: {fileID: 0}
+    minDamage: 1
+    maxDamage: 50
+    impactEffectPrefab: {fileID: 3143267052308979211, guid: 57dc7ff54289f8a4092077ccddab6750,
+      type: 3}
+    impactEffectClip: {fileID: 8300000, guid: 9387e03c7fc76054493fb1a5c96be410, type: 3}
+    explosive: {fileID: 3422659713731089772}
 --- !u!1 &7408262607374499689
 GameObject:
   m_ObjectHideFlags: 0

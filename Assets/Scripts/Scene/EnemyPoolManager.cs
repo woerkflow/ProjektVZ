@@ -68,7 +68,7 @@ public class EnemyPoolManager : MonoBehaviour {
         return Instantiate(enemy, enemy.transform.position, enemy.transform.rotation, gameObject.transform);
     }
     
-    private void OnTakeFromPool(Enemy enemy) {
+    private static void OnTakeFromPool(Enemy enemy) {
         enemy.gameObject.SetActive(true);
         enemy.ResetValues();
     }
@@ -78,7 +78,7 @@ public class EnemyPoolManager : MonoBehaviour {
         enemy.gameObject.SetActive(false);
     }
     
-    private void OnDestroyPoolObject(Enemy enemy) {
+    private static void OnDestroyPoolObject(Enemy enemy) {
         Destroy(enemy.gameObject);
     }
     
@@ -108,10 +108,8 @@ public class EnemyPoolManager : MonoBehaviour {
 
     #region Public Enemy Pool Methods
 
-    public Enemy GetEnemyFromPool() {
-        Enemy enemy = _enemyPool.Get();
-        return enemy;
-    }
+    public Enemy GetEnemyFromPool() 
+        => _enemyPool.Get();
     
     public void ReturnEnemyToPool(Enemy enemy) {
         _enemyPool.Release(enemy);

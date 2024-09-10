@@ -79,7 +79,7 @@ public class TurretJobManager : MonoBehaviour, IJobSystem {
     }
     
     #endregion
-    
+
     
     #region Private Class Methods
     

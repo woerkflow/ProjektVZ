@@ -99,22 +99,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2e91133440c0a4fb5908430327ffb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
-    type: 3}
-  speed: 0.008
-  attackSpeed: 4
-  minDamage: 25
-  maxDamage: 50
-  capsuleCollider: {fileID: 216100027078578647}
-  animator: {fileID: 9118166580534129672}
-  walkParameter: walk
-  attackParameter: attack
-  dieParameter: die
-  maxHealth: 500
-  deadTime: 2
-  lootAmount: 5
-  loots:
-  - {fileID: 3890099266257450164, guid: 528521f4cc36ab7429369cabf0a155ed, type: 3}
+  blueprint:
+    mainTarget: {fileID: 4177878803941453273, guid: 81926d6102b945b4099521ec97d1fb27,
+      type: 3}
+    speed: 0.01
+    attackSpeed: 8
+    minDamage: 10
+    maxDamage: 250
+    capsuleCollider: {fileID: 216100027078578647}
+    animator: {fileID: 9118166580534129672}
+    walkParameter: walk
+    attackParameter: attack
+    dieParameter: die
+    maxHealth: 1600
+    deadTime: 2
+    lootAmount: 50
+    loots:
+    - {fileID: 3890099266257450164, guid: 528521f4cc36ab7429369cabf0a155ed, type: 3}
 --- !u!1001 &1578890348727731379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200,17 +201,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a62c11e49fb27b94ebc686f5296ebf88,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a62c11e49fb27b94ebc686f5296ebf88,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a62c11e49fb27b94ebc686f5296ebf88,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a62c11e49fb27b94ebc686f5296ebf88,
         type: 3}

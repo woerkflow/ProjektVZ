@@ -71,14 +71,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ce8d9b4ca390d4dbc9d865bc769014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDamage: 1
-  maxDamage: 5
-  impactHeight: 0.01
-  impactAnchor: {fileID: 5051887314268213525, guid: 1d43ed2a3a3165f4aace20758d5025f5,
-    type: 3}
-  impactEffectPrefab: {fileID: 1038379741935105766, guid: d21d586ffb557d447b2fbac4fa7f87ef,
-    type: 3}
-  impactEffectClip: {fileID: 8300000, guid: 7c604f3e4e8daf24e8b8e4857c46d233, type: 3}
+  blueprint:
+    minDamage: 10
+    maxDamage: 15
+    impactHeight: 0.006
+    impactAnchor: {fileID: 5051887314268213525, guid: 1d43ed2a3a3165f4aace20758d5025f5,
+      type: 3}
+    impactEffectPrefab: {fileID: 1038379741935105766, guid: d21d586ffb557d447b2fbac4fa7f87ef,
+      type: 3}
+    impactEffectClip: {fileID: 8300000, guid: 7c604f3e4e8daf24e8b8e4857c46d233, type: 3}
 --- !u!1 &7655653928750999820
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +950,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4926,7 +4927,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 1
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1469257211210988987
 Transform:
@@ -5302,8 +5303,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
-      minScalar: 0.05
+      scalar: 0.2
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5885,7 +5886,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2

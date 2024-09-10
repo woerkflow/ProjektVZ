@@ -21,7 +21,8 @@ public class Building : MonoBehaviour {
     
     #region Public Class Methods
 
-    public int GetMaxHealth() => maxHealth;
+    public int GetMaxHealth() 
+        => maxHealth;
 
     public void SetHealth(int value) {
         currentHealth = value;
@@ -32,13 +33,9 @@ public class Building : MonoBehaviour {
         _isBroken = true;
         Break();
     }
-
-    public int GetHealth() {
-        return currentHealth;
-    }
     
     public void TakeDamage(int value) {
-        SetHealth(GetHealth() - value);
+        SetHealth(currentHealth - value);
     }
     
     #endregion

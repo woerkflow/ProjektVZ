@@ -28,8 +28,8 @@ public class FXManager : MonoBehaviour {
         audioSource.volume = volume;
         audioSource.Play();
 
-        float clipLength = audioSource.clip.length;
-        Destroy(audioSource.gameObject, clipLength);
+        float duration = audioSource.clip.length;
+        Destroy(audioSource.gameObject, duration);
     }
     
     #endregion

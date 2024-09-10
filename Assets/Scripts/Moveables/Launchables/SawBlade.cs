@@ -2,16 +2,23 @@ using UnityEngine;
 
 public class SawBlade : Bullet {
     
+    private bool _isPlayed;
     
     #region Unity Methods
+    
+    private void Start() {
+        InitializeManagers();
+        timeElapsed = 0f;
+        _isPlayed = false;
+    }
     
     private void Update() {
         IncreaseTimer();
         
-        if (transform.position.y > impactAnchor.position.y) {
+        if (transform.position.y > blueprint.impactAnchor.position.y) {
             return;
         }
-        Destroy(gameObject,0.1f);
+        Destroy(gameObject);
     }
     
     #endregion
@@ -29,9 +36,13 @@ public class SawBlade : Bullet {
         if (!enemy) {
             return;
         }
-        PlaySound();
-        PlayEffect(transform.rotation);
-        enemy.TakeDamage(Random.Range(minDamage, maxDamage));
+
+        if (!_isPlayed) {
+            PlaySound();
+            PlayEffect(transform.rotation);
+            _isPlayed = true;
+        }
+        enemy.TakeDamage(Random.Range(blueprint.minDamage, blueprint.maxDamage));
     }
     
     #endregion

@@ -6,7 +6,7 @@ public class DestroyStrategy : ITileInteractionStrategy {
     public void Interact(Tile tile) {
         
         // Manage Resources
-        Resources gain = tile.tileObject.GetBluePrint().resources;
+        Resources gain = tile.tileObject.GetResources();
         Resources costs = Tile.GetRepairCosts(tile.tileObject, tile.tileObjectBuilding);
         tile.playerManager.AddResources(new Resources {
             wood = gain.wood - costs.wood,

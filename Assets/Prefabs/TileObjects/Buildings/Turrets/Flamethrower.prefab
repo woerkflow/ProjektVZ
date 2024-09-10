@@ -260,12 +260,12 @@ MonoBehaviour:
     type: 2
     prefab: {fileID: 6151891175055528178}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
-    timeCosts: 0
-    resources:
-      wood: 50
-      waste: 50
-      whiskey: 50
     buildingUpgradePrefab: {fileID: 0}
+  resources:
+    wood: 50
+    waste: 50
+    whiskey: 50
+    time: 0
 --- !u!114 &189898130358512659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,13 +278,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18238ed1445c77f4f97b606fe67f6006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 328129164580279045}
-  perceptionRange: 0.14
-  partToRotate: {fileID: 8511082067177431578}
-  rotationSpeed: 3.5
-  projectilePrefab: {fileID: 105228381973529086, guid: a1ffafe186887214fb24dcaf4f402dc7,
-    type: 3}
-  fireRate: 3
+  blueprint:
+    firePoint: {fileID: 328129164580279045}
+    perceptionRange: 0.165
+    fireRate: 4
+    partToRotate: {fileID: 8511082067177431578}
+    rotationSpeed: 4
+    projectilePrefab: {fileID: 105228381973529086, guid: a1ffafe186887214fb24dcaf4f402dc7,
+      type: 3}
 --- !u!114 &977584462965461348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838e6812341587146b8636e4e683219f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
+  maxHealth: 800
 --- !u!1 &7035029399023048758
 GameObject:
   m_ObjectHideFlags: 0

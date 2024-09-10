@@ -11,9 +11,7 @@ public class EnemyWaveFactory : IEnemyWaveFactory {
         _enemyAmount = enemyAmount;
     }
 
-    public Enemy CreateBoss() {
-        return null;
-    }
+    public Enemy CreateBoss() => null;
 
     public List<Enemy> CreateWave() {
         List<Enemy> wave = new();

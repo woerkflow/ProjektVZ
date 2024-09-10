@@ -14433,7 +14433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a59ebd1527297479866700daedeb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.02
+  radius: 0.011
   maxTargets: 10
 --- !u!199 &2330162657734004993
 ParticleSystemRenderer:
@@ -14521,11 +14521,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 508e4356dd48f4c43b89ac405f5292cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
-  tickTime: 1
-  minDamage: 10
-  maxDamage: 10
-  explosive: {fileID: -7659686065697239092}
+  blueprint:
+    duration: 5
+    tickTime: 1
+    minDamage: 10
+    maxDamage: 10
+    explosive: {fileID: -7659686065697239092}
 --- !u!205 &8610641664321153760
 LODGroup:
   m_ObjectHideFlags: 0
