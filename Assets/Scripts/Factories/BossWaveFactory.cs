@@ -13,9 +13,7 @@ public class BossWaveFactory : IEnemyWaveFactory {
         _minionAmount = minionAmount;
     }
 
-    public Enemy CreateBoss() {
-        return Object.Instantiate(_bossPrefab);
-    }
+    public Enemy CreateBoss() => Object.Instantiate(_bossPrefab);
 
     public List<Enemy> CreateWave() {
         List<Enemy> wave = new();

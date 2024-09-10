@@ -34,7 +34,6 @@ Transform:
   - {fileID: 2651753987622220319}
   - {fileID: 7846303057573832813}
   - {fileID: 3501841735201559470}
-  - {fileID: 3266744004916415153}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8228221159843304339
@@ -53,12 +52,12 @@ MonoBehaviour:
     type: 3
     prefab: {fileID: 2755791710873141233}
     ruin: {fileID: 1897936333670252998, guid: 8d1179dc1c6460c48845b0551086436f, type: 3}
-    timeCosts: 10
-    resources:
-      wood: 100
-      waste: 0
-      whiskey: 0
     buildingUpgradePrefab: {fileID: 0}
+  resources:
+    wood: 100
+    waste: 0
+    whiskey: 0
+    time: 10
 --- !u!205 &4681578419971908775
 LODGroup:
   m_ObjectHideFlags: 0
@@ -77,97 +76,15 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3785206144892225904}
-    - renderer: {fileID: 5895729528660981602}
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8982578799759594242}
-    - renderer: {fileID: 5895729528660981602}
   - screenRelativeHeight: 0.01
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2364994937382791361}
   m_Enabled: 1
---- !u!1001 &1756024564713717248
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8966394291262549205}
-    m_Modifications:
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00072
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00095
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.00064
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063508215308163027, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_Name
-      value: FlameFirePlaceCamp
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e675e64b5d8ed4144b095639051c3839, type: 3}
---- !u!4 &3266744004916415153 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-    type: 3}
-  m_PrefabInstance: {fileID: 1756024564713717248}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &5895729528660981602 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 5300580413247359330, guid: e675e64b5d8ed4144b095639051c3839,
-    type: 3}
-  m_PrefabInstance: {fileID: 1756024564713717248}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2541812836436268532
 PrefabInstance:
   m_ObjectHideFlags: 0

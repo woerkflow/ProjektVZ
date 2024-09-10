@@ -291,12 +291,12 @@ MonoBehaviour:
     type: 2
     prefab: {fileID: 5574299052485252495}
     ruin: {fileID: 1897936333670252998, guid: 3bfb98c423a9fb549b4b93b60feba27c, type: 3}
-    timeCosts: 0
-    resources:
-      wood: 25
-      waste: 0
-      whiskey: 25
     buildingUpgradePrefab: {fileID: 0}
+  resources:
+    wood: 25
+    waste: 0
+    whiskey: 25
+    time: 0
 --- !u!114 &6437918804375826412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,20 +322,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d376f3d2902bb7b46b21ecf46b3339af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPrefab: {fileID: 4140861100569360921, guid: 8e96108c72229c64bbbd54ed7853788e,
-    type: 3}
-  spawnPoints:
-  - {fileID: 3843130375105541467}
-  - {fileID: 686488251800735275}
-  - {fileID: 6307061485268950348}
-  - {fileID: 6591778918644639902}
-  - {fileID: 7532441580024652322}
-  - {fileID: 1328394741991200487}
-  - {fileID: 4373978704068919787}
-  - {fileID: 4105512738532954488}
-  spawnTime: 10
-  minSize: 0.7
-  maxSize: 1.2
+  blueprint:
+    spawnPrefab: {fileID: 4140861100569360921, guid: 8e96108c72229c64bbbd54ed7853788e,
+      type: 3}
+    spawnPoints:
+    - {fileID: 3843130375105541467}
+    - {fileID: 686488251800735275}
+    - {fileID: 6307061485268950348}
+    - {fileID: 6591778918644639902}
+    - {fileID: 7532441580024652322}
+    - {fileID: 1328394741991200487}
+    - {fileID: 4373978704068919787}
+    - {fileID: 4105512738532954488}
+    spawnTime: 10
+    minSize: 1
+    maxSize: 1.5
 --- !u!1 &6369643693133566875
 GameObject:
   m_ObjectHideFlags: 0

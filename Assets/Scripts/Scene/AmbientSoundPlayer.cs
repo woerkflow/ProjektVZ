@@ -16,12 +16,13 @@ public class AmbientSoundPlayer : MonoBehaviour {
         ScheduleNextPlay();
     }
 
-    private void Update() {
-        
-        if (Time.time >= _nextPlayTime) {
-            PlayAmbientSound();
-            ScheduleNextPlay();
+    private void Update()
+    {
+        if (!(Time.time >= _nextPlayTime)) {
+            return;
         }
+        PlayAmbientSound();
+        ScheduleNextPlay();
     }
     
     #endregion
@@ -33,12 +34,13 @@ public class AmbientSoundPlayer : MonoBehaviour {
         _nextPlayTime = Time.time + Random.Range(minDelay, maxDelay);
     }
 
-    private void PlayAmbientSound() {
-        
-        if (ambientClips.Length > 0) {
-            AudioClip clip = ambientClips[Random.Range(0, ambientClips.Length)];
-            audioSource.PlayOneShot(clip);
+    private void PlayAmbientSound()
+    {
+        if (ambientClips.Length <= 0) {
+            return;
         }
+        AudioClip clip = ambientClips[Random.Range(0, ambientClips.Length)];
+        audioSource.PlayOneShot(clip);
     }
     
     #endregion

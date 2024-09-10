@@ -143,32 +143,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f75c9a8c178c2408c59231398764a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1370234355770273773}
-  selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
-    type: 3}
-  isPlayerHouse: 0
-  replaceEffect: {fileID: 7207182184078915116, guid: 44960a24342258941ac82d010a5479d3,
-    type: 3}
-  buildAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
-  destroyAudioClip: {fileID: 8300000, guid: 3401d720ede5d014abc7b53f3363bfd0, type: 3}
-  farmAudioClip: {fileID: 8300000, guid: fc70b121b3eaa0e4dbf43acb6a4c701f, type: 3}
-  repairAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
-  upgradeAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
-  type: 3
-  startObject: {fileID: 2934032109724957440, guid: d609da79c2ac1e842b3e72ebffa86571,
-    type: 3}
-  objectRotation: {x: 0, y: 0, z: 0, w: 0}
-  randomWood:
-  - {fileID: 1993203892068724891, guid: 33528e100d52d884a831c3c984d65f11, type: 3}
-  - {fileID: 8228221159843304339, guid: 7323a92a626f59a479b1998a85264f1f, type: 3}
-  - {fileID: 1482938058724447030, guid: ab1f2860d9c15184a829d6601e00901d, type: 3}
-  - {fileID: 8634769682614714047, guid: 21f2c33978091a14391a0b34de6d400f, type: 3}
-  - {fileID: 232391392965666681, guid: 6eb0d5bf66a369e47baec02a7e97e3a7, type: 3}
-  - {fileID: 1482938058724447030, guid: 9da7cfa92614a3f489754bff7e366780, type: 3}
-  randomWaste:
-  - {fileID: 6932898813621344442, guid: ab9e919db06ae8345bb461071edb5b1e, type: 3}
-  - {fileID: 6932898813621344442, guid: c0f784e13f2901d419ea47223c8b349e, type: 3}
-  - {fileID: 3682119577708779589, guid: c305260b6b63733489cb7a0a48827113, type: 3}
+  blueprint:
+    spawnPoint: {fileID: 1370234355770273773}
+    selectEffect: {fileID: 704259351718951622, guid: c808dddb85cb0e64086a0d4567f9a52c,
+      type: 3}
+    isPlayerHouse: 0
+    replaceEffect: {fileID: 7207182184078915116, guid: 44960a24342258941ac82d010a5479d3,
+      type: 3}
+    buildAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
+    destroyAudioClip: {fileID: 8300000, guid: 3401d720ede5d014abc7b53f3363bfd0, type: 3}
+    farmAudioClip: {fileID: 8300000, guid: fc70b121b3eaa0e4dbf43acb6a4c701f, type: 3}
+    repairAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
+    upgradeAudioClip: {fileID: 8300000, guid: 50d25aebeddb9134ba78c7442f8dd3bc, type: 3}
+    type: 3
+    startObject: {fileID: 2934032109724957440, guid: d609da79c2ac1e842b3e72ebffa86571,
+      type: 3}
+    objectRotation: {x: 0, y: 0, z: 0, w: 0}
+    randomWood:
+    - {fileID: 1993203892068724891, guid: 33528e100d52d884a831c3c984d65f11, type: 3}
+    - {fileID: 8634769682614714047, guid: 21f2c33978091a14391a0b34de6d400f, type: 3}
+    - {fileID: 8228221159843304339, guid: 7323a92a626f59a479b1998a85264f1f, type: 3}
+    - {fileID: 232391392965666681, guid: 6eb0d5bf66a369e47baec02a7e97e3a7, type: 3}
+    - {fileID: 1482938058724447030, guid: ab1f2860d9c15184a829d6601e00901d, type: 3}
+    - {fileID: 1482938058724447030, guid: 9da7cfa92614a3f489754bff7e366780, type: 3}
+    randomWaste:
+    - {fileID: 6932898813621344442, guid: ab9e919db06ae8345bb461071edb5b1e, type: 3}
+    - {fileID: 6932898813621344442, guid: c0f784e13f2901d419ea47223c8b349e, type: 3}
+    - {fileID: 3682119577708779589, guid: c305260b6b63733489cb7a0a48827113, type: 3}
 --- !u!1001 &6485776214404877161
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -46,13 +46,6 @@ public class PlayerManager : MonoBehaviour {
     #endregion
     
     
-    #region Buildings Management Methods
-    
-
-    
-    #endregion
-    
-    
     #region Scene Management
 
     public static void LoadMainMenu() {

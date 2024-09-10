@@ -34,7 +34,6 @@ Transform:
   - {fileID: 59297467601014401}
   - {fileID: 5757471364118412845}
   - {fileID: 8346121396419758161}
-  - {fileID: 3498551587093519595}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!205 &2736563473922239618
@@ -80,91 +79,12 @@ MonoBehaviour:
     type: 3
     prefab: {fileID: 8772616442239940868}
     ruin: {fileID: 1897936333670252998, guid: 1029983d1bdde844a9c421794e3575d7, type: 3}
-    timeCosts: 5
-    resources:
-      wood: 0
-      waste: 50
-      whiskey: 0
     buildingUpgradePrefab: {fileID: 0}
---- !u!1001 &398062195153725530
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2047161491223151969}
-    m_Modifications:
-    - target: {fileID: 1874938440136411257, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.0083
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0017
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.0026
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063508215308163027, guid: e675e64b5d8ed4144b095639051c3839,
-        type: 3}
-      propertyPath: m_Name
-      value: FlameFirePlaceCamp
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e675e64b5d8ed4144b095639051c3839, type: 3}
---- !u!4 &3498551587093519595 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3822264522508399793, guid: e675e64b5d8ed4144b095639051c3839,
-    type: 3}
-  m_PrefabInstance: {fileID: 398062195153725530}
-  m_PrefabAsset: {fileID: 0}
+  resources:
+    wood: 0
+    waste: 50
+    whiskey: 0
+    time: 5
 --- !u!1001 &529194701414017386
 PrefabInstance:
   m_ObjectHideFlags: 0

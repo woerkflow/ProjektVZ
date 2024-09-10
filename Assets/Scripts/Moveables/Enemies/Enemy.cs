@@ -3,45 +3,19 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour {
     
-    [Header("Target")]
-    [SerializeField] private GameObject mainTarget;
-    
-    private GameObject _target;
-    private Building _targetBuildingComponent;
-    private float _targetCapsuleRadius;
-    private JobSystemManager _jobSystemManager;
-    
-    [Header("Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] private EnemyBlueprint blueprint;
     
     public float currentSpeed { get; private set; }
     public Vector3 moveTarget { get; private set; }
-    
-    [Header("Attack")]
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private int minDamage;
-    [SerializeField] private int maxDamage;
-    [SerializeField] private CapsuleCollider capsuleCollider;
-    
-    private float _capsuleRadius;
-    private float _elapsedAttackTime;
-    
-    [Header("Animation")] 
-    [SerializeField] private Animator animator;
-    [SerializeField] private string walkParameter;
-    [SerializeField] private string attackParameter;
-    [SerializeField] private string dieParameter;
-    
-    private EnemyPoolManager _enemyPoolManager;
-    
-    [Header("Death")]
-    [SerializeField] private int maxHealth;
-    [SerializeField] private float deadTime;
-    [SerializeField] private int lootAmount;
-    [SerializeField] private Loot[] loots = new Loot[3];
-    
     public int currentHealth { get; private set; }
     
+    private JobSystemManager _jobSystemManager;
+    private EnemyPoolManager _enemyPoolManager;
+    private GameObject _target;
+    private Building _targetBuildingComponent;
+    private float _targetCapsuleRadius;
+    private float _capsuleRadius;
+    private float _elapsedAttackTime;
     private float _elapsedDeadTime;
     
     
@@ -49,8 +23,8 @@ public class Enemy : MonoBehaviour {
     
     private void Start() {
         InitializeManagers();
-        _capsuleRadius = capsuleCollider.radius;
-        _target = mainTarget;
+        _capsuleRadius = blueprint.capsuleCollider.radius;
+        _target = blueprint.mainTarget;
     }
     
     private void Update() {
@@ -105,7 +79,7 @@ public class Enemy : MonoBehaviour {
         if (currentHealth > 0) { 
             return;
         }
-        animator.SetTrigger(dieParameter);
+        blueprint.animator.SetTrigger(blueprint.dieParameter);
         DeactivateValues();
     }
 
@@ -116,12 +90,12 @@ public class Enemy : MonoBehaviour {
     }
 
     public void ResetValues() {
-        currentHealth = maxHealth;
-        _elapsedAttackTime = attackSpeed;
+        currentHealth = blueprint.maxHealth;
+        _elapsedAttackTime = blueprint.attackSpeed;
         _elapsedDeadTime = 0f;
-        capsuleCollider.enabled = true;
+        blueprint.capsuleCollider.enabled = true;
         gameObject.tag = "Zombie";
-        currentSpeed = speed;
+        currentSpeed = blueprint.speed;
         _jobSystemManager?.RegisterEnemy(this);
     }
     
@@ -132,7 +106,7 @@ public class Enemy : MonoBehaviour {
     
     private void HandleDeath() {
         
-        if (_elapsedDeadTime < deadTime) {
+        if (_elapsedDeadTime < blueprint.deadTime) {
             _elapsedDeadTime += Time.deltaTime;
             return;
         }
@@ -142,15 +116,15 @@ public class Enemy : MonoBehaviour {
 
     private void DropLoot() {
 
-        for (int i = 0; i < lootAmount; i++) {
-            Instantiate(loots[Random.Range(0, loots.Length)], transform.position, transform.rotation);
+        for (int i = 0; i < blueprint.lootAmount; i++) {
+            Instantiate(blueprint.loots[Random.Range(0, blueprint.loots.Length)], transform.position, transform.rotation);
         }
     }
 
     private void UpdateTarget() {
         
         if (!_target) {
-            _target = mainTarget;
+            _target = blueprint.mainTarget;
         }
         moveTarget = _target.transform.position;
     }
@@ -159,24 +133,25 @@ public class Enemy : MonoBehaviour {
         Vector3 direction = Moveable.Direction(moveTarget, transform.position);
 
         if (direction.magnitude > _targetCapsuleRadius + _capsuleRadius) {
-            animator.SetFloat(walkParameter, 1f, 0.1f, Time.deltaTime);
-            currentSpeed = speed;
+            blueprint.animator.SetFloat(blueprint.walkParameter, 1f, 0.1f, Time.deltaTime);
+            currentSpeed = blueprint.speed;
             return;
         }
         currentSpeed = 0f;
     }
 
     private bool IsWithinAttackRange() 
-        => currentSpeed == 0f && _target != mainTarget;
+        => currentSpeed == 0f 
+           && _target != blueprint.mainTarget;
 
     private void HandleAttack() {
-        animator.SetFloat(walkParameter, 0f);
+        blueprint.animator.SetFloat(blueprint.walkParameter, 0f);
         
-        if (_elapsedAttackTime >= attackSpeed) {
-            animator.SetTrigger(attackParameter);
+        if (_elapsedAttackTime >= blueprint.attackSpeed) {
+            blueprint.animator.SetTrigger(blueprint.attackParameter);
             
             if (_target) {
-                _targetBuildingComponent?.TakeDamage(Random.Range(minDamage, maxDamage));
+                _targetBuildingComponent?.TakeDamage(Random.Range(blueprint.minDamage, blueprint.maxDamage));
             }
             _elapsedAttackTime = 0f;
             return;
@@ -185,7 +160,7 @@ public class Enemy : MonoBehaviour {
     }
     
     private void DeactivateValues() {
-        capsuleCollider.enabled = false;
+        blueprint.capsuleCollider.enabled = false;
         gameObject.tag = "ZombieDead";
         currentSpeed = 0f;
     }

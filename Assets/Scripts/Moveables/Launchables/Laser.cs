@@ -2,17 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 public class Laser : MonoBehaviour, ILaunchable {
-    
-    [Header("Line Renderer")] 
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private GameObject effectFirePoint;
-    [SerializeField] private GameObject effectTarget;
-    [SerializeField] private GameObject effectArea;
-    
-    [Header("Laser")]
-    [SerializeField] private int damage;
-    [SerializeField] private int duration;
-    [SerializeField] private int tickTime;
+
+    [SerializeField] private LaserBlueprint blueprint;
     
     private GameObject _effectArea;
     private Enemy _target;
@@ -30,7 +21,7 @@ public class Laser : MonoBehaviour, ILaunchable {
         }
         
         if (_target && !_effectArea) {
-            _effectArea = CreateDamageArea(effectArea, _target);
+            _effectArea = CreateDamageArea(blueprint.effectArea, _target);
         }
         Destroy(gameObject);
     }
@@ -47,10 +38,10 @@ public class Laser : MonoBehaviour, ILaunchable {
         
         StartCoroutine(
             StartTickDamage(
-                duration, 
-                tickTime,
+                blueprint.duration, 
+                blueprint.tickTime,
                 _target, 
-                damage, 
+                blueprint.damage, 
                 gameObject
             )
         );
@@ -64,18 +55,18 @@ public class Laser : MonoBehaviour, ILaunchable {
     private void SetPositions() {
         Vector3 targetCenter = _target.GetComponent<CapsuleCollider>().center;
         
-        lineRenderer.SetPosition(
+        blueprint.lineRenderer.SetPosition(
             0, 
             _firePoint.position
         );
-        lineRenderer.SetPosition(
+        blueprint.lineRenderer.SetPosition(
             1, 
             _target.transform.position + targetCenter
         );
-        effectFirePoint.transform.position = _firePoint.position;
-        effectFirePoint.transform.rotation = _firePoint.rotation;
-        effectTarget.transform.position = _target.transform.position + targetCenter;
-        effectTarget.transform.rotation = Quaternion.Inverse(_firePoint.rotation);
+        blueprint.effectFirePoint.transform.position = _firePoint.position;
+        blueprint.effectFirePoint.transform.rotation = _firePoint.rotation;
+        blueprint.effectTarget.transform.position = _target.transform.position + targetCenter;
+        blueprint.effectTarget.transform.rotation = Quaternion.Inverse(_firePoint.rotation);
     }
 
     private static GameObject CreateDamageArea(GameObject effectArea, Enemy target)

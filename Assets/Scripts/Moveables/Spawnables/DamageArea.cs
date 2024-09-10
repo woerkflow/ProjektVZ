@@ -2,13 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 public class DamageArea : MonoBehaviour {
-
-    [Header("Tick Explosion")]
-    [SerializeField] private int duration;
-    [SerializeField] private float tickTime;
-    [SerializeField] private int minDamage;
-    [SerializeField] private int maxDamage;
-    [SerializeField] private Explosive explosive;
+    
+    [SerializeField] private DamageAreaBlueprint blueprint;
 
     private Coroutine _tickCoroutine;
 
@@ -18,11 +13,11 @@ public class DamageArea : MonoBehaviour {
     private void Start() {
         _tickCoroutine = StartCoroutine(
             StartTick(
-                duration, 
-                tickTime, 
-                explosive, 
-                minDamage, 
-                maxDamage
+                blueprint.duration, 
+                blueprint.tickTime, 
+                blueprint.explosive, 
+                blueprint.minDamage, 
+                blueprint.maxDamage
             )
         );
     }
@@ -55,7 +50,7 @@ public class DamageArea : MonoBehaviour {
             explosive.Explode(minDamage, maxDamage);
             yield return new WaitForSeconds(tickTime);
         }
-        Destroy(explosive.gameObject,0.1f);
+        Destroy(explosive.gameObject);
     }
     
     #endregion

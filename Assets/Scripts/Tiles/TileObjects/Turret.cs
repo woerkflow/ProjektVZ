@@ -2,26 +2,15 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour {
     
-    [Header("Turret")]
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float perceptionRange;
-    
-    private Enemy _target;
-    private float _elapsedTime;
-    private SphereCollider _triggerCollider;
-    private Coroutine _updateTargetCoroutine;
-    
-    [Header("Rotation")]
-    [SerializeField] private Transform partToRotate;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private TurretBlueprint blueprint;
     
     public Vector3 rotateTarget { get; private set; }
     
     private JobSystemManager _jobSystemManager;
-    
-    [Header("Projectile")]
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float fireRate;
+    private Enemy _target;
+    private float _elapsedTime;
+    private SphereCollider _triggerCollider;
+    private Coroutine _updateTargetCoroutine;
     
     
     #region Unity Methods
@@ -58,9 +47,9 @@ public class Turret : MonoBehaviour {
     
     #region Public Methods
     
-    public Transform GetPartToRotate() => partToRotate;
+    public Transform GetPartToRotate() => blueprint.partToRotate;
     
-    public float GetRotationSpeed() => rotationSpeed;
+    public float GetRotationSpeed() => blueprint.rotationSpeed;
     
     public void SetTarget(Enemy target) {
         _target = target;
@@ -79,14 +68,14 @@ public class Turret : MonoBehaviour {
     private bool HasNotValidTarget()
         => !_target
            || _target.gameObject.activeSelf == false
-           || !(Moveable.GetDistance(_target.transform.position, firePoint.transform.position) <= perceptionRange);
+           || !(Moveable.GetDistance(_target.transform.position, blueprint.firePoint.transform.position) <= blueprint.perceptionRange);
 
     private void ResetTarget() {
         _target = null;
     }
     
     private void ResetTurret() {
-        rotateTarget = partToRotate.position;
+        rotateTarget = blueprint.partToRotate.position;
     }
     
     private void IncreaseTimer() {
@@ -101,11 +90,11 @@ public class Turret : MonoBehaviour {
         rotateTarget = _target.transform.position;
     }
     
-    private bool CanFireProjectile() => _elapsedTime >= fireRate;
+    private bool CanFireProjectile() => _elapsedTime >= blueprint.fireRate;
     
     private void FireProjectile() {
-        GameObject projectile = Instantiate(projectilePrefab);
-        projectile.GetComponent<ILaunchable>().Launch(firePoint, _target.gameObject);
+        GameObject projectile = Instantiate(blueprint.projectilePrefab);
+        projectile.GetComponent<ILaunchable>().Launch(blueprint.firePoint, _target.gameObject);
     }
     
     #endregion

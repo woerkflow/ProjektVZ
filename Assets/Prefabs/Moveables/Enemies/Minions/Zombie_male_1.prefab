@@ -97,22 +97,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2e91133440c0a4fb5908430327ffb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTarget: {fileID: 6117828115786003077, guid: 81926d6102b945b4099521ec97d1fb27,
-    type: 3}
-  speed: 0.012
-  attackSpeed: 3
-  minDamage: 1
-  maxDamage: 10
-  capsuleCollider: {fileID: 9195502220633551029}
-  animator: {fileID: 7865448950503957293}
-  walkParameter: walk
-  attackParameter: attack
-  dieParameter: die
-  maxHealth: 50
-  deadTime: 2
-  lootAmount: 1
-  loots:
-  - {fileID: 3890099266257450164, guid: 528521f4cc36ab7429369cabf0a155ed, type: 3}
+  blueprint:
+    mainTarget: {fileID: 4177878803941453273, guid: 81926d6102b945b4099521ec97d1fb27,
+      type: 3}
+    speed: 0.012
+    attackSpeed: 4
+    minDamage: 1
+    maxDamage: 25
+    capsuleCollider: {fileID: 9195502220633551029}
+    animator: {fileID: 7865448950503957293}
+    walkParameter: walk
+    attackParameter: attack
+    dieParameter: die
+    maxHealth: 50
+    deadTime: 2
+    lootAmount: 1
+    loots:
+    - {fileID: 3890099266257450164, guid: 528521f4cc36ab7429369cabf0a155ed, type: 3}
 --- !u!1001 &4345170499748323004
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,7 +16,8 @@ public class SpawnPoint : MonoBehaviour {
     
     #region Public Methods
 
-    public float GetSpawnRange() => spawnRange;
+    public float GetSpawnRange() 
+        => spawnRange;
 
     #endregion
 }

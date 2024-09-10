@@ -3,12 +3,12 @@ public class BuildStrategy : ITileInteractionStrategy {
     public bool CanInteract(Tile tile)
         => tile.selectedBuilding 
            && tile.enemySpawner.state.GetType().ToString() == "BuildState"
-           && tile.playerManager.HasEnoughResources(tile.selectedBuilding.GetBluePrint().resources);
+           && tile.playerManager.HasEnoughResources(tile.selectedBuilding.GetResources());
     
     public void Interact(Tile tile) {
 
         // Manage Resources
-        Resources buildCosts = tile.selectedBuilding.GetBluePrint().resources;
+        Resources buildCosts = tile.selectedBuilding.GetResources();
         tile.playerManager.SubtractResources(buildCosts);
         
         // Manage Effects & Sounds

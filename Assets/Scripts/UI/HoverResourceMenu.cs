@@ -12,11 +12,11 @@ public class HoverResourceMenu : UIMenu {
     #region Public Class Methods
     
     public void SetValues(Tile tile) {
-        Resources tileObjectResources = tile.tileObject.GetBluePrint().resources;
+        Resources tileObjectResources = tile.tileObject.GetResources();
         SetStringValue(labels[0], GetLabelText(tileObjectResources));
         SetStringValue(labels[1], "Time:");
         SetStringValue(values[0], GetValueText(tileObjectResources));
-        SetStringValue(values[1], "-" + tile.tileObject.GetBluePrint().timeCosts + "s");
+        SetStringValue(values[1], "-" + tile.tileObject.GetResources().time + "s");
     }
     
     #endregion

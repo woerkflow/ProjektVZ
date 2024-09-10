@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class TileObject : MonoBehaviour {
     
-    [Header("Tile Object")]
     [SerializeField] private TileObjectBlueprint blueprint;
+    [SerializeField] private Resources resources;
     
     private Tile _parentTile;
     
     
     #region Public Methods
-
-    public TileObjectBlueprint GetBluePrint() => blueprint;
+    
+    public TileObjectType GetTileObjectType() => blueprint.type;
+    
+    public GameObject GetPrefab() => blueprint.prefab;
+    
+    public GameObject GetRuin() => blueprint.ruin;
+    
+    public Resources GetResources() => resources;
+    
+    public TileObject GetUpgradePrefab() => blueprint.buildingUpgradePrefab;
 
     public Tile GetParentTile() => _parentTile;
 

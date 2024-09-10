@@ -2,23 +2,12 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour, ISpawnable {
 
-    [Header("Common")]
-    [SerializeField] private int minDamage;
-    [SerializeField] private int maxDamage;
+    [SerializeField] private SpawnBlueprint blueprint;
 
     private Spawner _parentSpawner;
-    
-    [Header("Target")]
-    [SerializeField] private float perceptionRange;
-    
     private SphereCollider _triggerCollider;
-
-    [Header("Explosion")]
-    [SerializeField] private GameObject impactEffectPrefab;
-    [SerializeField] private AudioClip impactEffectClip;
-    [SerializeField] private Explosive explosive;
-
     private FXManager _fxManager;
+    private bool _isExploded;
     
     
     #region Unity Methods
@@ -26,8 +15,9 @@ public class Mine : MonoBehaviour, ISpawnable {
     private void Start() {
         _triggerCollider = gameObject.AddComponent<SphereCollider>();
         _triggerCollider.isTrigger = true;
-        _triggerCollider.radius = perceptionRange;
+        _triggerCollider.radius = blueprint.perceptionRange;
         InitializeManagers();
+        _isExploded = false;
     }
 
     private void Update() {
@@ -36,7 +26,11 @@ public class Mine : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject,0.1f);
+
+        if (!_isExploded) {
+            return;
+        }
+        Destroy(gameObject);
     }
     
     private void OnTriggerEnter(Collider coll) {
@@ -45,7 +39,11 @@ public class Mine : MonoBehaviour, ISpawnable {
             return;
         }
         Explode();
-        Destroy(gameObject,0.1f);
+        
+        if (!_isExploded) {
+            return;
+        }
+        Destroy(gameObject);
     }
 
     private void OnDestroy() {
@@ -72,14 +70,19 @@ public class Mine : MonoBehaviour, ISpawnable {
     }
 
     private void Explode() {
-        explosive.Explode(minDamage, maxDamage);
+        
+        if (_isExploded) {
+            return;
+        }
+        blueprint.explosive.Explode(blueprint.minDamage, blueprint.maxDamage);
         PlaySound();
         PlayEffect();
+        _isExploded = true;
     }
     
     private void PlaySound() {
         _fxManager.PlaySound(
-            impactEffectClip, 
+            blueprint.impactEffectClip, 
             transform.position, 
             0.5f
         );
@@ -87,9 +90,9 @@ public class Mine : MonoBehaviour, ISpawnable {
     
     private void PlayEffect() {
         _fxManager.PlayEffect(
-            impactEffectPrefab, 
+            blueprint.impactEffectPrefab, 
             transform.position, 
-            impactEffectPrefab.transform.rotation,
+            blueprint.impactEffectPrefab.transform.rotation,
             _parentSpawner.transform
         );
     }

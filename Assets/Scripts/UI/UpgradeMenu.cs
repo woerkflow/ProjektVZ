@@ -36,7 +36,7 @@ public class UpgradeMenu : UIMenu {
     public void SelectTile(Tile tile) {
         _selectedTile = tile;
         Building tileObjectBuilding = _selectedTile.tileObjectBuilding;
-        SetStringValue(buildingHealth, tileObjectBuilding.GetHealth() + "/" + tileObjectBuilding.GetMaxHealth());
+        SetStringValue(buildingHealth, tileObjectBuilding.currentHealth + "/" + tileObjectBuilding.GetMaxHealth());
     }
     
     #endregion
